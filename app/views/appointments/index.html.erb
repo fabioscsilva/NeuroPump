@@ -33,7 +33,7 @@
                         <label for="start">Hora de Início: </label>
 
                         <div style="width: 250px; position: relative;">
-                        <select name="start" id="start">
+                        <select name="start" id="start" onchange="atualizaDuracaoMinutos()">
                           <option value="">Escolha a hora de início</option>
                         </select>
                         </div>
@@ -49,14 +49,16 @@
                     <!-- <span class="add-on"><i class="icon-calendar"></i></span> -->
                   <!--</div>-->
 
-                  <input id="duracao"></input>
+                  <li style="list-style-type: none;">
+                      <%= f.input :duration, :required => true, :input_html => {:style => 'display: none;'} %>
+                  </li>
 
                 </li>
                 <li style="list-style-type: none;">
                         <label for="end">Hora de Fim: </label>
 
                         <div style="width: 250px; position: relative;">
-                        <select name="end" id="end">
+                        <select name="end" id="end" onchange="atualizaDuracaoMinutos()">
                           <option value="">Escolha a hora de fim</option>
                         </select>
                         </div>
@@ -97,7 +99,7 @@
                         <% @status = AppointmentStatus.all %>
                         
                         <div style="width: 250px; position: relative;">
-                          <%= f.select(:appointment_status_id, @status.map{ |c| [c.name, c.id] }, {:html_options => { :class => 'asdasdasd' }}) %>
+                          <%= f.select(:appointment_status_id, @status.map{ |c| [c.name, c.id] }) %>
                           <!-- <%= f.association :appointment_status %> -->
                         </div>
 
@@ -125,7 +127,7 @@
                 -->
 
                 <div class="actions">
-                  <%= f.submit :id => "submeterDados", :style => "display:none" %>
+                  <%= f.submit :id => "submeterDados", :style => "display: none;" %>
                 </div>
             </ul>
         <% end %>
@@ -160,12 +162,12 @@
                     <td><%= appointment.appointment_day.strftime('%d-%m-%Y') %></td>
                     <td><%= link_to appointment.patient.name, appointment.patient%></td>
                     <td><%= appointment.appointment_type.name %></td>
-					<!--   MUDAR COR CONSOANTE ESTADO -->    <!--                                  
+          <!--   MUDAR COR CONSOANTE ESTADO -->    <!--                                  
                     <% if appointment.appointment_status.name == 'Marcada' %>
-                    	<td><p class="text-success"><%= appointment.appointment_status.name %></p></td>
-                   	<% else %>
-                   		<td><p class="text-error"><%= appointment.appointment_status.name %></p></td>
-                   	<% end %>
+                      <td><p class="text-success"><%= appointment.appointment_status.name %></p></td>
+                    <% else %>
+                      <td><p class="text-error"><%= appointment.appointment_status.name %></p></td>
+                    <% end %>
                 </tr>
             <% end %>
             </tbody>
@@ -315,7 +317,7 @@ $(document).ready(function() {
                   calEvent.neuropsicologo = neunome;
                   
                   //calEvent.body = bodyField.val();
-                  //$('#submeterDados').click();
+                  $('#submeterDados').click();
 
                   $('span.select2').each(function(){
                     $(this).remove();
@@ -335,7 +337,7 @@ $(document).ready(function() {
          }).show();
 
         var timeMin = get_time_difference(calEvent.start, calEvent.end);
-        $("#duracao").val(timeMin);
+        $("#appointment_duration").val(timeMin);
 
          $dialogContent.find(".date_holder").text($calendar.weekCalendar("formatDate", calEvent.start));
          setupStartAndEndTimeFields(startField, endField, calEvent, $calendar.weekCalendar("getTimeslotTimes", calEvent.start));
@@ -428,7 +430,7 @@ $(document).ready(function() {
                   calEvent.neuropsicologo = neunome;
                   //calEvent.body = bodyField.val();
 
-                  //$('#submeterDados').click();
+                  $('#submeterDados').click();
 
                   $('span.select2').each(function(){
                     $(this).remove();
@@ -465,7 +467,7 @@ $(document).ready(function() {
          ChangeSelectByValue('appointment_neuropsychologist_id', calEvent.neuropsicologo, true);
 
          var timeMin = get_time_difference(calEvent.start, calEvent.end);
-         $("#duracao").val(timeMin);
+         $("#appointment_duration").val(timeMin);
 
          $dialogContent.find(".date_holder").text($calendar.weekCalendar("formatDate", calEvent.start));
          setupStartAndEndTimeFields(startField, endField, calEvent, $calendar.weekCalendar("getTimeslotTimes", calEvent.start));
@@ -512,13 +514,21 @@ $(document).ready(function() {
       return {
          events : [
             <% @appointments.each do |appointment| %>
-            <% @hora = appointment.appointment_day.strftime('%H').to_i + 2 %> /* aqui vai passar a ter o appointment.appointment_duration */
+            <% @hora = appointment.appointment_day.strftime('%H').to_i + appointment.duration / 60 %> /* aqui !!! vai passar a ter o appointment.appointment_duration */
+            <% if appointment.duration / 60 > 0 && appointment.appointment_day.strftime('%M').to_i == 0 %>
+              <% @minuto = 30 %>
+            <% elsif appointment.duration / 60 > 0 && appointment.appointment_day.strftime('%M').to_i == 30 %>
+              <% @minuto = 0 %>
+              <% @hora = @hora + 1 %>
+            <% else %>
+              <% @minuto = appointment.appointment_day.strftime('%M').to_i %>
+            <% end %>
             <% @mes = appointment.appointment_day.strftime('%m').to_i - 1 %>
               <% if( appointment.appointment_status.id != 3 ) %> //isto é para nao por os appointments cancelados
               {
                   "id":<%= appointment.id %>,
                   "start": new Date(<%= appointment.appointment_day.strftime('%Y, '+ @mes.to_s() +', %d, %H, %M, %S') %>),
-                  "end": new Date(<%= appointment.appointment_day.strftime('%Y, '+ @mes.to_s() +', %d, '+ @hora.to_s() +', %M, %S') %>),
+                  "end": new Date(<%= appointment.appointment_day.strftime('%Y, '+ @mes.to_s() +', %d, '+ @hora.to_s() +', '+ @minuto.to_s() +', %S') %>),
                   "description": "<%= appointment.description %>",
                   "paciente": "<%= appointment.patient.name %>",
                   "neuropsicologo": "<%= appointment.neuropsychologist.name %>",
@@ -647,6 +657,7 @@ $(document).ready(function() {
 });
 </script>
 
+
 <script type="text/javascript">
 function get_time_difference(earlierDate,laterDate)
 {
@@ -668,6 +679,20 @@ function get_time_difference(earlierDate,laterDate)
  
        return oDiff;*/
  
+}
+
+function atualizaDuracaoMinutos()
+{
+  var $dialogContent = $("#event_edit_container");
+
+  var startField = $dialogContent.find("select[name='start']").val();
+  var dataInicio = new Date(startField);
+
+  var endField = $dialogContent.find("select[name='end']").val();
+  var dataFim = new Date(endField);
+
+  var timeMin = get_time_difference(dataInicio, dataFim);
+  $("#appointment_duration").val(timeMin);
 }
 </script>
 
@@ -728,12 +753,6 @@ textarea{
   transition: border linear 0.2s, box-shadow linear 0.2s;
 }
 
-<<<<<<< HEAD
-textarea:focus{
-  outline: none;
-}
-</style>
-=======
 textarea:focus{
   outline: none;
 }
