@@ -1,0 +1,35 @@
+<h1>Listing administrators</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Password</th>
+    <th>Address</th>
+    <th>Telephone</th>
+    <th>Mobilephone</th>
+    <th>Email</th>
+    <th>Active</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @administrators.each do |administrator| %>
+  <tr>
+    <td><%= administrator.name %></td>
+    <td><%= administrator.password %></td>
+    <td><%= administrator.address %></td>
+    <td><%= administrator.telephone %></td>
+    <td><%= administrator.mobilephone %></td>
+    <td><%= administrator.email %></td>
+    <td><%= administrator.active %></td>
+    <td><%= link_to 'Show', administrator %></td>
+    <td><%= link_to 'Edit', edit_administrator_path(administrator) %></td>
+    <td><%= link_to 'Destroy', administrator, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Administrator', new_administrator_path %>

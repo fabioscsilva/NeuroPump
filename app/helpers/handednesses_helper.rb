@@ -1,0 +1,2 @@
+module HandednessesHelper
+end

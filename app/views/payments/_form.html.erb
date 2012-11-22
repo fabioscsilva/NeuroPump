@@ -1,0 +1,45 @@
+<%= form_for(@payment) do |f| %>
+  <% if @payment.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@payment.errors.count, "error") %> prohibited this payment from being saved:</h2>
+
+      <ul>
+      <% @payment.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :payment_date %><br />
+    <%= f.datetime_select :payment_date %>
+  </div>
+  <div class="field">
+    <%= f.label :due_date %><br />
+    <%= f.datetime_select :due_date %>
+  </div>
+  <div class="field">
+    <%= f.label :creation_date %><br />
+    <%= f.datetime_select :creation_date %>
+  </div>
+  <div class="field">
+    <%= f.label :reference %><br />
+    <%= f.text_field :reference %>
+  </div>
+  <div class="field">
+    <%= f.label :value %><br />
+    <%= f.text_field :value %>
+  </div>
+  <div class="field">
+    <%= f.label :payed %><br />
+    <%= f.check_box :payed %>
+  </div>
+  <div class="field">
+    <%= f.label 'Clinic ID' %><br />
+    <%= f.text_field :clinic_id %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

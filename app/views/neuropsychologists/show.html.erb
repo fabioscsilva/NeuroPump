@@ -1,0 +1,65 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @neuropsychologist.name %>
+</p>
+
+<p>
+  <b>Password:</b>
+  <%= @neuropsychologist.password %>
+</p>
+
+<p>
+  <b>Address:</b>
+  <%= @neuropsychologist.address %>
+</p>
+
+<p>
+  <b>Telephone:</b>
+  <%= @neuropsychologist.telephone %>
+</p>
+
+<p>
+  <b>Mobilephone:</b>
+  <%= @neuropsychologist.mobilephone %>
+</p>
+
+<p>
+  <b>Email:</b>
+  <%= @neuropsychologist.email %>
+</p>
+
+<p>
+  <b>Photo:</b>
+  <%= @neuropsychologist.photo %>
+</p>
+
+<p>
+  <b>Date of birth:</b>
+  <%= @neuropsychologist.date_of_birth %>
+</p>
+
+<p>
+  <b>Identification code:</b>
+  <%= @neuropsychologist.identification_code %>
+</p>
+
+<p>
+  <b>Active:</b>
+  <%= @neuropsychologist.active %>
+</p>
+
+<p>
+  <b>Gender ID:</b>
+  <%= @neuropsychologist.gender_id %>
+</p>
+
+<p>
+  <b>Clinic ID:</b>
+  <%= @neuropsychologist.clinic_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_neuropsychologist_path(@neuropsychologist) %> |
+<%= link_to 'Back', neuropsychologists_path %>

@@ -1,0 +1,33 @@
+<h1>Listing managers</h1>
+
+<table>
+  <tr>
+    <th>Password</th>
+    <th>Telephone</th>
+    <th>Mobilephone</th>
+    <th>Email</th>
+    <th>Gender ID</th>
+    <th>Clinic ID</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @managers.each do |manager| %>
+  <tr>
+    <td><%= manager.password %></td>
+    <td><%= manager.telephone %></td>
+    <td><%= manager.mobilephone %></td>
+    <td><%= manager.email %></td>
+    <td><%= manager.gender_id %></td>
+    <td><%= manager.clinic_id %></td>
+    <td><%= link_to 'Show', manager %></td>
+    <td><%= link_to 'Edit', edit_manager_path(manager) %></td>
+    <td><%= link_to 'Destroy', manager, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Manager', new_manager_path %>

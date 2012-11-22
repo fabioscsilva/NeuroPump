@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Password:</b>
+  <%= @manager.password %>
+</p>
+
+<p>
+  <b>Telephone:</b>
+  <%= @manager.telephone %>
+</p>
+
+<p>
+  <b>Mobilephone:</b>
+  <%= @manager.mobilephone %>
+</p>
+
+<p>
+  <b>Email:</b>
+  <%= @manager.email %>
+</p>
+
+<p>
+  <b>Gender ID:</b>
+  <%= @manager.gender_id %>
+</p>
+
+<p>
+  <b>Clinic ID:</b>
+  <%= @manager.clinic_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_manager_path(@manager) %> |
+<%= link_to 'Back', managers_path %>

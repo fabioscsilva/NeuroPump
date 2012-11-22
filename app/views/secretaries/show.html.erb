@@ -1,0 +1,65 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @secretary.name %>
+</p>
+
+<p>
+  <b>Password:</b>
+  <%= @secretary.password %>
+</p>
+
+<p>
+  <b>Address:</b>
+  <%= @secretary.address %>
+</p>
+
+<p>
+  <b>Telephone:</b>
+  <%= @secretary.telephone %>
+</p>
+
+<p>
+  <b>Mobilephone:</b>
+  <%= @secretary.mobilephone %>
+</p>
+
+<p>
+  <b>Email:</b>
+  <%= @secretary.email %>
+</p>
+
+<p>
+  <b>Photo:</b>
+  <%= @secretary.photo %>
+</p>
+
+<p>
+  <b>Date of birth:</b>
+  <%= @secretary.date_of_birth %>
+</p>
+
+<p>
+  <b>Identification code:</b>
+  <%= @secretary.identification_code %>
+</p>
+
+<p>
+  <b>Active:</b>
+  <%= @secretary.active %>
+</p>
+
+<p>
+  <b>Gender ID:</b>
+  <%= @secretary.gender_id %>
+</p>
+
+<p>
+  <b>Clinic ID:</b>
+  <%= @secretary.clinic_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_secretary_path(@secretary) %> |
+<%= link_to 'Back', secretaries_path %>

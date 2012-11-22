@@ -1,0 +1,37 @@
+<%= form_for(@session) do |f| %>
+  <% if @session.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@session.errors.count, "error") %> prohibited this session from being saved:</h2>
+
+      <ul>
+      <% @session.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :session_day %><br />
+    <%= f.date_select :session_day %>
+  </div>
+  <div class="field">
+    <%= f.label :description %><br />
+    <%= f.text_area :description %>
+  </div>
+  <div class="field">
+    <%= f.label 'Patient ID' %><br />
+    <%= f.text_field :patient_id %>
+  </div>
+  <div class="field">
+    <%= f.label 'Secretary ID' %><br />
+    <%= f.text_field :secretary_id %>
+  </div>
+  <div class="field">
+    <%= f.label 'Neuropsychologist ID' %><br />
+    <%= f.text_field :neuropsychologist_id %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

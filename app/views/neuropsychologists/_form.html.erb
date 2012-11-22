@@ -1,0 +1,65 @@
+<%= form_for(@neuropsychologist) do |f| %>
+  <% if @neuropsychologist.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@neuropsychologist.errors.count, "error") %> prohibited this neuropsychologist from being saved:</h2>
+
+      <ul>
+      <% @neuropsychologist.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :password %><br />
+    <%= f.text_field :password %>
+  </div>
+  <div class="field">
+    <%= f.label :address %><br />
+    <%= f.text_field :address %>
+  </div>
+  <div class="field">
+    <%= f.label :telephone %><br />
+    <%= f.text_field :telephone %>
+  </div>
+  <div class="field">
+    <%= f.label :mobilephone %><br />
+    <%= f.text_field :mobilephone %>
+  </div>
+  <div class="field">
+    <%= f.label :email %><br />
+    <%= f.text_field :email %>
+  </div>
+  <div class="field">
+    <%= f.label :photo %><br />
+    <%= f.text_field :photo %>
+  </div>
+  <div class="field">
+    <%= f.label :date_of_birth %><br />
+    <%= f.date_select :date_of_birth %>
+  </div>
+  <div class="field">
+    <%= f.label :identification_code %><br />
+    <%= f.text_field :identification_code %>
+  </div>
+  <div class="field">
+    <%= f.label :active %><br />
+    <%= f.check_box :active %>
+  </div>
+  <div class="field">
+    <%= f.label 'Gender ID' %><br />
+    <%= f.text_field :gender_id %>
+  </div>
+  <div class="field">
+    <%= f.label 'Clinic ID' %><br />
+    <%= f.text_field :clinic_id %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

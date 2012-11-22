@@ -1,0 +1,40 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Payment date:</b>
+  <%= @payment.payment_date %>
+</p>
+
+<p>
+  <b>Due date:</b>
+  <%= @payment.due_date %>
+</p>
+
+<p>
+  <b>Creation date:</b>
+  <%= @payment.creation_date %>
+</p>
+
+<p>
+  <b>Reference:</b>
+  <%= @payment.reference %>
+</p>
+
+<p>
+  <b>Value:</b>
+  <%= @payment.value %>
+</p>
+
+<p>
+  <b>Payed:</b>
+  <%= @payment.payed %>
+</p>
+
+<p>
+  <b>clinic id:</b>
+  <%= @payment.clinic_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_payment_path(@payment) %> |
+<%= link_to 'Back', payments_path %>
