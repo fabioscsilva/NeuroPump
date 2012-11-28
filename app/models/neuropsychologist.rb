@@ -1,7 +1,7 @@
 class Neuropsychologist < ActiveRecord::Base
-  belongs_to :clinics
-  belongs_to :genders
-  belongs_to :logins
+  belongs_to :clinic
+  belongs_to :gender
+  belongs_to :login
   has_many :sessions
   
   attr_accessible :active, :address, :date_of_birth, :identification_code, :mobilephone, :name, :photo, :telephone

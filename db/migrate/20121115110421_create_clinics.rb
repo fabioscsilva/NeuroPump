@@ -10,8 +10,8 @@ class CreateClinics < ActiveRecord::Migration
       # num_patients
       # num_secretaries
       # num_neuropsychologists 
-      #to be derived
-      t.integer :administrator_id
+      # to be derived
+      t.references :administrator
 
       t.timestamps
     end

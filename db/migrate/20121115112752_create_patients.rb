@@ -6,17 +6,18 @@ class CreatePatients < ActiveRecord::Migration
       t.string :telephone
       t.string :mobilephone
       t.string :photo
+      t.string :profession
+      t.string :education
       t.date :date_of_birth, :null => false
       t.string :identification_code, :null => false
       t.boolean :active, :default => true
-      t.integer :gender_id, :null => false
-      t.integer :clinic_id, :null => false
-      t.integer :civil_status_id, :null => false
-      t.integer :handedness_id, :null => false
-      t.integer :login_id, :null => false
+      t.references :gender
+      t.references :clinic
+      t.references :civil_status
+      t.references :handedness
+      t.references :login
 
       t.timestamps
     end
-    
   end
 end

@@ -15,6 +15,8 @@
     <th>Civil Status ID</th>
     <th>Handedness ID</th>
     <th>Login ID</th>
+    <th>Education</th>
+    <th>Profession</th>
     <th></th>
     <th></th>
     <th></th>
@@ -35,6 +37,8 @@
     <td><%= patient.civil_status_id %></td>
     <td><%= patient.handedness_id %></td>
     <td><%= patient.login_id %></td>
+    <td><%= patient.education %></td>
+    <td><%= patient.profession %></td>
     <td><%= link_to 'Show', patient %></td>
     <td><%= link_to 'Edit', edit_patient_path(patient) %></td>
     <td><%= link_to 'Destroy', patient, method: :delete, data: { confirm: 'Are you sure?' } %></td>

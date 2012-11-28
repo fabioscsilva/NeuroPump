@@ -1,5 +1,5 @@
 class Clinic < ActiveRecord::Base
-  belongs_to :administrators
+  belongs_to :administrator
   has_many :payments
   has_many :managers
   has_many :neuropsychologists

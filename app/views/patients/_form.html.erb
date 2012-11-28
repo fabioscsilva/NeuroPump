@@ -1,4 +1,4 @@
-<%= form_for(@patient) do |f| %>
+<%= simple_form_for(@patient) do |f| %>
   <% if @patient.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@patient.errors.count, "error") %> prohibited this patient from being saved:</h2>
@@ -40,24 +40,29 @@
     <%= f.text_field :identification_code %>
   </div>
   <div class="field">
+    <%= f.label :education %><br />
+    <%= f.text_field :education %>
+  </div>
+  <div class="field">
+    <%= f.label :profession %><br />
+    <%= f.text_field :profession %>
+  </div>
+  <div class="field">
     <%= f.label :active %><br />
     <%= f.check_box :active %>
   </div>
   <div class="field">
-    <%= f.label 'Gender ID' %><br />
-    <%= f.text_field :gender_id %>
+    <%= f.association :gender, label_method: :description, :prompt => "Please select a gender" %>
   </div>
   <div class="field">
-    <%= f.label 'Clinic ID' %><br />
-    <%= f.text_field :clinic_id %>
+    <%= f.association :clinic, label_method: :name, :prompt => "Please select a clinic" %>
   </div>
   <div class="field">
     <%= f.label 'Civil Status ID' %><br />
     <%= f.text_field :civil_status_id %>
   </div>
   <div class="field">
-    <%= f.label 'Handedness ID' %><br />
-    <%= f.text_field :handedness_id %>
+    <%= f.association :handedness, label_method: :description, :prompt => "Please select a category" %>
   </div>
   <div class="field">
     <%= f.label 'Login ID' %><br />

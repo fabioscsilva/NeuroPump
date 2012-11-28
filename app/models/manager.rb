@@ -1,7 +1,7 @@
 class Manager < ActiveRecord::Base
-  belongs_to :genders
-  belongs_to :clinics
-  belongs_to :logins
+  belongs_to :gender
+  belongs_to :clinic
+  belongs_to :login
 
   attr_accessible :mobilephone, :telephone
 end

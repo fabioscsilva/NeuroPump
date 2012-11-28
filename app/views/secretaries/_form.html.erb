@@ -1,4 +1,4 @@
-<%= form_for(@secretary) do |f| %>
+<%= simple_form_for(@secretary) do |f| %>
   <% if @secretary.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@secretary.errors.count, "error") %> prohibited this secretary from being saved:</h2>
@@ -43,13 +43,12 @@
     <%= f.label :active %><br />
     <%= f.check_box :active %>
   </div>
-    <div class="field">
-    <%= f.label 'Gender ID' %><br />
-    <%= f.text_field :gender_id %>
+  <div class="field">
+    <%= f.association :gender, label_method: :description, :prompt => "Please select a gender" %>
   </div>
-    <div class="field">
-    <%= f.label 'Clinic ID' %><br />
-    <%= f.text_field :clinic_id %>
+
+  <div class="field">
+    <%= f.association :clinic, label_method: :name, :prompt => "Please select a clinic" %>
   </div>
   </div>
     <div class="field">

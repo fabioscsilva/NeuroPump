@@ -1,5 +1,5 @@
 class Login < ActiveRecord::Base
-  belongs_to :types
+  belongs_to :type
   has_many :managers
   has_many :neuropsychologists
   has_many :secretaries

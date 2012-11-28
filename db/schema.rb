@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121124201509) do
+ActiveRecord::Schema.define(:version => 20121128153521) do
 
   create_table "administrators", :force => true do |t|
     t.string   "name",        :null => false
@@ -33,7 +33,7 @@ ActiveRecord::Schema.define(:version => 20121124201509) do
 
   create_table "clinical_histories", :force => true do |t|
     t.string   "description", :null => false
-    t.integer  "patient_id",  :null => false
+    t.integer  "patient_id"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
   end
@@ -65,7 +65,7 @@ ActiveRecord::Schema.define(:version => 20121124201509) do
   create_table "logins", :force => true do |t|
     t.string   "email",      :null => false
     t.string   "password",   :null => false
-    t.integer  "type_id",    :null => false
+    t.integer  "type_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
@@ -73,9 +73,9 @@ ActiveRecord::Schema.define(:version => 20121124201509) do
   create_table "managers", :force => true do |t|
     t.string   "telephone"
     t.string   "mobilephone"
-    t.integer  "gender_id",   :null => false
-    t.integer  "clinic_id",   :null => false
-    t.integer  "login_id",    :null => false
+    t.integer  "gender_id"
+    t.integer  "clinic_id"
+    t.integer  "login_id"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
   end
@@ -89,9 +89,9 @@ ActiveRecord::Schema.define(:version => 20121124201509) do
     t.date     "date_of_birth",                         :null => false
     t.string   "identification_code",                   :null => false
     t.boolean  "active",              :default => true
-    t.integer  "gender_id",                             :null => false
-    t.integer  "clinic_id",                             :null => false
-    t.integer  "login_id",                              :null => false
+    t.integer  "gender_id"
+    t.integer  "clinic_id"
+    t.integer  "login_id"
     t.datetime "created_at",                            :null => false
     t.datetime "updated_at",                            :null => false
   end
@@ -105,11 +105,11 @@ ActiveRecord::Schema.define(:version => 20121124201509) do
     t.date     "date_of_birth",                         :null => false
     t.string   "identification_code",                   :null => false
     t.boolean  "active",              :default => true
-    t.integer  "gender_id",                             :null => false
-    t.integer  "clinic_id",                             :null => false
-    t.integer  "civil_status_id",                       :null => false
-    t.integer  "handedness_id",                         :null => false
-    t.integer  "login_id",                              :null => false
+    t.integer  "gender_id"
+    t.integer  "clinic_id"
+    t.integer  "civil_status_id"
+    t.integer  "handedness_id"
+    t.integer  "login_id"
     t.datetime "created_at",                            :null => false
     t.datetime "updated_at",                            :null => false
   end
@@ -121,7 +121,7 @@ ActiveRecord::Schema.define(:version => 20121124201509) do
     t.string   "reference",                        :null => false
     t.decimal  "value",                            :null => false
     t.boolean  "payed",         :default => false
-    t.integer  "clinic_id",                        :null => false
+    t.integer  "clinic_id"
     t.datetime "created_at",                       :null => false
     t.datetime "updated_at",                       :null => false
   end
@@ -135,9 +135,9 @@ ActiveRecord::Schema.define(:version => 20121124201509) do
     t.date     "date_of_birth",                         :null => false
     t.string   "identification_code",                   :null => false
     t.boolean  "active",              :default => true
-    t.integer  "gender_id",                             :null => false
-    t.integer  "clinic_id",                             :null => false
-    t.integer  "login_id",                              :null => false
+    t.integer  "gender_id"
+    t.integer  "clinic_id"
+    t.integer  "login_id"
     t.datetime "created_at",                            :null => false
     t.datetime "updated_at",                            :null => false
   end
@@ -145,9 +145,9 @@ ActiveRecord::Schema.define(:version => 20121124201509) do
   create_table "sessions", :force => true do |t|
     t.date     "session_day",          :null => false
     t.text     "description"
-    t.integer  "patient_id",           :null => false
-    t.integer  "secretary_id",         :null => false
-    t.integer  "neuropsychologist_id", :null => false
+    t.integer  "patient_id"
+    t.integer  "secretary_id"
+    t.integer  "neuropsychologist_id"
     t.datetime "created_at",           :null => false
     t.datetime "updated_at",           :null => false
   end

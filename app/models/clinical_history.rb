@@ -1,5 +1,5 @@
 class ClinicalHistory < ActiveRecord::Base
-  belongs_to :patients
+  belongs_to :patient
 
   attr_accessible :description
 end
