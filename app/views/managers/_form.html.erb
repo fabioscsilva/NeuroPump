@@ -11,10 +11,7 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :password %><br />
-    <%= f.text_field :password %>
-  </div>
+  
   <div class="field">
     <%= f.label :telephone %><br />
     <%= f.text_field :telephone %>
@@ -22,10 +19,6 @@
   <div class="field">
     <%= f.label :mobilephone %><br />
     <%= f.text_field :mobilephone %>
-  </div>
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.text_field :email %>
   </div>
     <div class="field">
     <%= f.label 'Gender ID' %><br />
@@ -35,6 +28,10 @@
   <div class="field">
     <%= f.label 'Clinic ID' %><br />
     <%= f.text_field :clinic_id %>
+  </div>
+  <div class="field">
+    <%= f.label 'Login ID' %><br />
+    <%= f.text_field :login_id %>
   </div>
   <div class="actions">
     <%= f.submit %>

@@ -40,10 +40,12 @@ class SecretariesController < ApplicationController
   # POST /secretaries
   # POST /secretaries.json
   def create
+    login_id = params[:secretary].delete(:login_id)
     gender_id = params[:secretary].delete(:gender_id)
     clinic_id = params[:secretary].delete(:clinic_id)
     @secretary = Secretary.new(params[:secretary])
 
+    @secretary.login_id = login_id
     @secretary.gender_id = gender_id
     @secretary.clinic_id = clinic_id
 
@@ -61,10 +63,12 @@ class SecretariesController < ApplicationController
   # PUT /secretaries/1
   # PUT /secretaries/1.json
   def update
+    login_id = params[:secretary].delete(:login_id)
     gender_id = params[:secretary].delete(:gender_id)
     clinic_id = params[:secretary].delete(:clinic_id)
     @secretary = Secretary.find(params[:id])
 
+    @secretary.login_id = login_id
     @secretary.gender_id = gender_id
     @secretary.clinic_id = clinic_id
 

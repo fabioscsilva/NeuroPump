@@ -40,10 +40,12 @@ class ManagersController < ApplicationController
   # POST /managers
   # POST /managers.json
   def create
+    login_id = params[:manager].delete(:login_id)
     gender_id = params[:manager].delete(:gender_id)
     clinic_id = params[:manager].delete(:clinic_id)
     @manager = Manager.new(params[:manager])
   
+    @manager.login_id = login_id
     @manager.gender_id = gender_id
     @manager.clinic_id = clinic_id
 
@@ -61,10 +63,12 @@ class ManagersController < ApplicationController
   # PUT /managers/1
   # PUT /managers/1.json
   def update
+    login_id = params[:manager].delete(:login_id)
     gender_id = params[:manager].delete(:gender_id)
     clinic_id = params[:manager].delete(:clinic_id)
     @manager = Manager.find(params[:id])
 
+    @manager.login_id = login_id
     @manager.gender_id = gender_id
     @manager.clinic_id = clinic_id
 

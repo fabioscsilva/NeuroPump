@@ -3,17 +3,16 @@
 <table>
   <tr>
     <th>Name</th>
-    <th>Password</th>
     <th>Address</th>
     <th>Telephone</th>
     <th>Mobilephone</th>
-    <th>Email</th>
     <th>Photo</th>
     <th>Date of birth</th>
     <th>Identification code</th>
     <th>Active</th>
     <th>Gender ID</th>
     <th>Clinic ID</th>
+    <th>Login ID</th>
     <th></th>
     <th></th>
     <th></th>
@@ -22,17 +21,16 @@
 <% @secretaries.each do |secretary| %>
   <tr>
     <td><%= secretary.name %></td>
-    <td><%= secretary.password %></td>
     <td><%= secretary.address %></td>
     <td><%= secretary.telephone %></td>
     <td><%= secretary.mobilephone %></td>
-    <td><%= secretary.email %></td>
     <td><%= secretary.photo %></td>
     <td><%= secretary.date_of_birth %></td>
     <td><%= secretary.identification_code %></td>
     <td><%= secretary.active %></td>
     <td><%= secretary.gender_id %></td>
     <td><%= secretary.clinic_id %></td>
+    <td><%= secretary.login_id %></td>
     <td><%= link_to 'Show', secretary %></td>
     <td><%= link_to 'Edit', edit_secretary_path(secretary) %></td>
     <td><%= link_to 'Destroy', secretary, method: :delete, data: { confirm: 'Are you sure?' } %></td>

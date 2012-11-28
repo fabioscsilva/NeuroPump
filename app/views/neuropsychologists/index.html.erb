@@ -3,17 +3,16 @@
 <table>
   <tr>
     <th>Name</th>
-    <th>Password</th>
     <th>Address</th>
     <th>Telephone</th>
     <th>Mobilephone</th>
-    <th>Email</th>
     <th>Photo</th>
     <th>Date of birth</th>
     <th>Identification code</th>
     <th>Active</th>
     <th>Gender ID</th>
     <th>Clinic ID</th>
+    <th>Login ID</th>
     <th></th>
     <th></th>
     <th></th>
@@ -22,17 +21,16 @@
 <% @neuropsychologists.each do |neuropsychologist| %>
   <tr>
     <td><%= neuropsychologist.name %></td>
-    <td><%= neuropsychologist.password %></td>
     <td><%= neuropsychologist.address %></td>
     <td><%= neuropsychologist.telephone %></td>
     <td><%= neuropsychologist.mobilephone %></td>
-    <td><%= neuropsychologist.email %></td>
     <td><%= neuropsychologist.photo %></td>
     <td><%= neuropsychologist.date_of_birth %></td>
     <td><%= neuropsychologist.identification_code %></td>
     <td><%= neuropsychologist.active %></td>
     <td><%= neuropsychologist.gender_id %></td>
     <td><%= neuropsychologist.clinic_id %></td>
+    <td><%= neuropsychologist.login_id %></td>
     <td><%= link_to 'Show', neuropsychologist %></td>
     <td><%= link_to 'Edit', edit_neuropsychologist_path(neuropsychologist) %></td>
     <td><%= link_to 'Destroy', neuropsychologist, method: :delete, data: { confirm: 'Are you sure?' } %></td>

@@ -40,11 +40,12 @@ class NeuropsychologistsController < ApplicationController
   # POST /neuropsychologists
   # POST /neuropsychologists.json
   def create
-    
+    login_id = params[:neuropsychologist].delete(:login_id)
     clinic_id = params[:neuropsychologist].delete(:clinic_id)
     gender_id = params[:neuropsychologist].delete(:gender_id)
     @neuropsychologist = Neuropsychologist.new(params[:neuropsychologist])
 
+    @neuropsychologist.login_id = login_id
     @neuropsychologist.clinic_id = clinic_id
     @neuropsychologist.gender_id = gender_id
 
@@ -62,10 +63,12 @@ class NeuropsychologistsController < ApplicationController
   # PUT /neuropsychologists/1
   # PUT /neuropsychologists/1.json
   def update
+    login_id = params[:neuropsychologist].delete(:login_id)
     clinic_id = params[:neuropsychologist].delete(:clinic_id)
     gender_id = params[:neuropsychologist].delete(:gender_id)
     @neuropsychologist = Neuropsychologist.find(params[:id])
 
+    @neuropsychologist.login_id = login_id
     @neuropsychologist.clinic_id = clinic_id
     @neuropsychologist.gender_id = gender_id
 

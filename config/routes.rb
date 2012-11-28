@@ -1,4 +1,8 @@
 NeuroPump::Application.routes.draw do
+  resources :logins
+
+  resources :types
+
   resources :clinical_histories
 
   resources :patients
