@@ -1,4 +1,4 @@
-<%= form_for(@clinic) do |f| %>
+<%= simple_form_for(@clinic) do |f| %>
   <% if @clinic.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@clinic.errors.count, "error") %> prohibited this clinic from being saved:</h2>
@@ -36,8 +36,7 @@
     <%= f.check_box :active %>
   </div>
   <div class="field">
-    <%= f.label 'Administrator ID' %><br />
-    <%= f.text_field :administrator_id %>
+    <%= f.association :administrator, label_method: :name, :prompt => "Please select a category" %>
   </div>
   <div class="actions">
     <%= f.submit %>

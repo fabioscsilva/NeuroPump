@@ -3,9 +3,9 @@ class CreateSessions < ActiveRecord::Migration
     create_table :sessions do |t|
       t.date :session_day, :null => false
       t.text :description
-      t.integer :patient_id, :null => false
-      t.integer :secretary_id, :null => false
-      t.integer :neuropsychologist_id, :null => false
+      t.references :patient
+      t.references :secretary
+      t.references :neuropsychologist
 
       t.timestamps
     end

@@ -3,9 +3,9 @@ class CreateLogins < ActiveRecord::Migration
     create_table :logins do |t|
       t.string :email, :null => false
       t.string :password, :null => false
-      t.integer :type_id, :null => false
+      t.references :type
 
       t.timestamps
     end
-  end
+   end
 end

@@ -7,7 +7,7 @@ class CreatePayments < ActiveRecord::Migration
       t.string :reference, :null => false
       t.decimal :value, :null => false
       t.boolean :payed, :default => false
-      t.integer :clinic_id, :null => false
+      t.references :clinic
 
       t.timestamps
     end

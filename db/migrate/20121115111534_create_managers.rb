@@ -3,9 +3,9 @@ class CreateManagers < ActiveRecord::Migration
     create_table :managers do |t|
       t.string :telephone
       t.string :mobilephone
-      t.integer :gender_id, :null => false
-      t.integer :clinic_id, :null => false
-      t.integer :login_id, :null => false
+      t.references :gender
+      t.references :clinic
+      t.references :login
 
       t.timestamps
     end
