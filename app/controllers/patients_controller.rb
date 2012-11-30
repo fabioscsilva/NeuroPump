@@ -41,14 +41,14 @@ class PatientsController < ApplicationController
   # POST /patients.json
   def create
     login_id = params[:patient].delete(:login_id)
-    #gender_id = params[:patient].delete(:gender_id)
+    gender_id = params[:patient].delete(:gender_id)
     clinic_id = params[:patient].delete(:clinic_id)
     civil_status_id = params[:patient].delete(:civil_status_id)
     handedness_id = params[:patient].delete(:handedness_id)
     @patient = Patient.new(params[:patient])
 
     @patient.login_id = login_id
-    #@patient.gender_id = gender_id
+    @patient.gender_id = gender_id
     @patient.clinic_id = clinic_id
     @patient.civil_status_id = civil_status_id
     @patient.handedness_id = handedness_id
