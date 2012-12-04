@@ -2,6 +2,10 @@ class ManagersController < ApplicationController
   # GET /managers
   # GET /managers.json
   def index
+
+    #É preciso ir buscar a clinica do gestor atual para carregar a informação
+    @clinic = Clinic.find(1)
+
     @managers = Manager.all
 
     respond_to do |format|

@@ -94,4 +94,23 @@ class SecretariesController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  def invite
+  end
+
+  def sendInvite
+    #raise params.inspect
+
+    emailsAux = params[:email].to_s.split('["')
+    emailsAux2 = emailsAux[1].to_s.split('"]')
+    @emails = emailsAux2[0].to_s.split(';')
+
+    @emails.each do |email|
+      UserMailer.send_email_secretaries(email.to_s).deliver
+
+      session[:emailsSentSec] = true
+
+      redirect_to '/inviteSecretaries'
+    end
+  end
 end

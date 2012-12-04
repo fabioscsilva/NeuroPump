@@ -1,3 +1,5 @@
+<%# encoding: utf-8 %>
+
 <div class="container navbar-wrapper">
 
       <div class="navbar navbar-inverse">
@@ -12,10 +14,12 @@
           <!-- Responsive Navbar Part 2: Place all navbar contents you want collapsed withing .navbar-collapse.collapse. -->
           <div class="nav-collapse collapse">
             <ul class="nav">
-              <li><a href="#">Dashboard</a></li>
-              <li><a href="#clinica">Clínica</a></li>
-              <li><a href="#secretarios">Secretários</a></li>
-              <li class="active"><a href="#neuropsicologos">Neuropsicólogos</a></li>
+              <li><a href="<%= managers_path%>">Dashboard</a></li>
+              <li><a href="">Clínica</a></li>
+              <li><a href="">Secretários</a></li>
+              <li><a href="inviteSecretaries">Adicionar Sec</a></li>
+              <li><a href="">Neuropsicólogos</a></li>
+              <li><a href="inviteNeuropsychologists">Adicionar Neuro</a></li>
             </ul>
             
             <ul class="nav pull-right">
