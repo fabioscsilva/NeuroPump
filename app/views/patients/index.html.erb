@@ -1,51 +1,32 @@
-<h1>Listing patients</h1>
+<div class="container">
+    <div class="row-fluid">  
+        <h2>Lista de Pacientes</h2>
 
-<table>
-  <tr>
-    <th>NameS</th>
-    <th>Address</th>
-    <th>Telephone</th>
-    <th>Mobilephone</th>
-    <th>Photo</th>
-    <th>Date of birth</th>
-    <th>Identification code</th>
-    <th>Active</th>
-    <th>Gender ID</th>
-    <th>Clinic ID</th>
-    <th>Civil Status ID</th>
-    <th>Handedness ID</th>
-    <th>Login ID</th>
-    <th>Education</th>
-    <th>Profession</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
-<% @patients.each do |patient| %>
-  <tr>
-    <td><%= patient.name %></td>
-    <td><%= patient.address %></td>
-    <td><%= patient.telephone %></td>
-    <td><%= patient.mobilephone %></td>
-    <td><%= patient.photo %></td>
-    <td><%= patient.date_of_birth %></td>
-    <td><%= patient.identification_code %></td>
-    <td><%= patient.active %></td>
-    <td><%= patient.gender_id %></td>
-    <td><%= patient.clinic_id %></td>
-    <td><%= patient.civil_status_id %></td>
-    <td><%= patient.handedness_id %></td>
-    <td><%= patient.login_id %></td>
-    <td><%= patient.education %></td>
-    <td><%= patient.profession %></td>
-    <td><%= link_to 'Show', patient %></td>
-    <td><%= link_to 'Edit', edit_patient_path(patient) %></td>
-    <td><%= link_to 'Destroy', patient, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-  </tr>
-<% end %>
-</table>
-
-<br />
-
-<%= link_to 'New Patient', new_patient_path %>
+        <table id="patients" class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Email</th>
+                    <th>Morada</th>
+                    <th>Data de nascimento</th>
+                    <th>Sexo</th>
+                    <th>Profissão</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+            <% @patients.each do |patient| %>
+                <tr onClick="window.location.href = '<%= url_for patient  %>'">
+                    <td><%= link_to patient.name, patient%></td>
+                    <td><%= patient.login.email %></td>
+                    <td><%= patient.address %></td>
+                    <td><%= patient.date_of_birth %></td>
+                    <td><%= patient.gender.description %></td>
+                    <td><%= patient.profession %></td>
+                    <td><%= link_to 'Abrir', patient, :class => 'btn btn-primary' %></td>
+                </tr>
+            <% end %>
+            </tbody>
+        </table>
+    </div>
+</div>
