@@ -8,8 +8,12 @@ NeuroPump::Application.routes.draw do
   resources :patients 
   
   resources :secretaries
+  match 'sendSecretariesInvite' => 'secretaries#sendInvite'
+  match 'inviteSecretaries' => 'secretaries#invite'
 
   resources :neuropsychologists
+  match 'inviteNeuropsychologists' => 'neuropsychologists#invite'
+  match 'sendNeuropsychologistsInvite' => 'neuropsychologists#sendInvite'
 
   resources :managers
 
