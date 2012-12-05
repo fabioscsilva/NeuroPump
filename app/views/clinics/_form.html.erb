@@ -10,34 +10,40 @@
       </ul>
     </div>
   <% end %>
-
-    <div>
-      <%= f.label :name, "Nome" %>
-      <%= f.text_field :name,  :class => "span12", :placeholder => "Introduza o nome da clinica" %>
-    </div>
-    <div>
-      <%= f.label :address, "Morada" %>
-      <%= f.text_field :address, :class => "span12", :placeholder => "Introduza a morada da clinica" %>
-    </div>
-    <div class="row-fluid">
-      <div class="span6">
-        <%= f.label :telephone, "Telefone" %>
-        <%= f.text_field :telephone, :class => "span12", :placeholder => "2XXXXXXXX" %>
-      </div>
-      <div class="span6">
-        <%= f.label :email, "Email" %>
-        <%= f.text_field :email, :class => "span12", :placeholder => "example@neuropump.com" %>
-      </div>
-    </div>
-    <div>
-      <%= f.label :fiscal_number, "NIF" %>
-      <%= f.text_field :fiscal_number, :class => "span12", :placeholder => "1XXXXXXXX" %>
-    </div>
-    <br/>
-    <div>
-      <%= submit_tag "Submeter", :class => "btn btn-success span2 offset05 pull-right" %>
-    </div>
-    <div>
-      <%= button_tag "Limpar", :class => "btn btn-danger span2 pull-right", :type => "reset" %>
+  
+    <div class="span12">
+        <form>
+            <fieldset>
+                <div>
+                	<label>Nome</label>
+    				<%= f.text_field :name, :onfocus => "alertas()", :id => "name", :class => "span12", :type => "text", :placeholder => "ex: Sérgio Barbosa" %>
+                    </div>
+                <div>
+                	<label>Morada</label>
+    				<%= f.text_field :address, :onfocus => "alertas()", :id => "address", :class => "span12", :type => "text", :placeholder => "ex: Rua da Bouça" %>
+                </div>
+				<div>
+                    <label>NIF</label>
+                    <%= f.text_field :fiscal_number, :onfocus => "alertas()", :id => "fiscal_number", :class => "span12", :type => "text", :placeholder => "ex: 123456789" %>
+                </div>
+                <div class="row-fluid">
+                    <div class="span6">
+                        <label>Telefone</label>
+                        <%= f.text_field :telephone, :maxlength=>"8", :onfocus=>"alertas()", :id=>"telefone", :class=>"span12", :type=>"text", :placeholder=>"ex: 91203492" %>
+                    </div>
+                    <div class="span6">
+						<label>Email</label>
+						<%= f.text_field :email, :onfocus=>"alertas()", :id=>"email", :class=>"span12", :type=>"text", :placeholder=>"ex: example@neuropump.com"%>
+                    </div>
+                </div>
+                <br>
+                <div>
+                    <%= f.submit :Submeter, :type=>"submit", :class=>"btn span2 offset05 pull-right"%>
+                </div>
+                <div>
+                    <%= button_to_function "Limpar", "limpaDados()", :class=>"btn span2 pull-right" %>
+                </div>
+            </fieldset>
+          </form>
     </div>
 <% end %>
