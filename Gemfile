@@ -6,7 +6,7 @@ gem 'rails', '3.2.8'
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 # gem 'sqlite3'
-gem 'activerecord-postgresql-adapter'
+gem 'pg'
 gem 'simple_form'
 
 # Gems used only for assets and not required
@@ -15,10 +15,15 @@ group :assets do
   gem 'sass-rails',   '~> 3.2.3'
   gem 'coffee-rails', '~> 3.2.1'
 
-# See https://github.com/sstephenson/execjs#readme for more supported runtimes
-gem 'therubyracer', :platforms => :ruby
+  # See https://github.com/sstephenson/execjs#readme for more supported runtimes
+  # gem 'therubyracer', :platforms => :ruby
 
   gem 'uglifier', '>= 1.0.3'
+  
+  gem 'jquery-datatables-rails'
+  gem 'twitter-bootstrap-rails'
+  gem 'less-rails-bootstrap'
+  gem 'therubyracer'
 end
 
 gem 'jquery-rails'
