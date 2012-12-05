@@ -25,7 +25,7 @@ group :assets do
   gem 'jquery-datatables-rails'
   gem 'twitter-bootstrap-rails'
   gem 'less-rails-bootstrap'
-  gem 'therubyracer'
+  gem 'therubyracer', '~>0.10.2'
 end
 
 gem 'jquery-rails'
