@@ -6,6 +6,7 @@ class Patient < ActiveRecord::Base
   belongs_to :login
   has_many :sessions
   has_many :clinical_histories
+  has_attached_file :photo
 
   attr_accessible :active, :address, :date_of_birth, :identification_code, :mobilephone, :name, :photo, :telephone, :education, :profession, :email, :palavrapass
   attr_accessor :email, :palavrapass
