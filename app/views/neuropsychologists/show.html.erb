@@ -1,59 +1,159 @@
-<p id="notice"><%= notice %></p>
+<!-- Implemented by Fábio Silva - 29/11/2012 -->
+
+<%= render :file => '/navbars/_navbar_manager.html.erb'%>
+
+<p id="notice">
+	<%= notice %>
+</p>
+<!-- /.container -->
+<div class="container">
+	<div class="row-fluid">
+		<div class="span8 offset2" style="padding: 40px;padding-top: 20px;-webkit-box-shadow: 0 2px 10px rgba(0, 0, 0, .25);-moz-box-shadow: 0 2px 10px rgba(0,0,0,.25);box-shadow: 0 2px 10px rgba(0, 0, 0, .25);background-color: white;">
+			<div class="span4 pull-right">
+				<%= image_tag("noimage.jpg", :alt => "photo") %>
+				<td><%= link_to 'Editar Perfil', edit_neuropsychologist_path(@neuropsychologist), :class => "btn btn-warning pull-right span12", :style => "margin-top:10px;" %></td>
+				<td><%= link_to 'Remover Perfil', neuropsychologist_path(@neuropsychologist), :method => :delete, :confirm => "Tem a certeza?", :class => "btn btn-danger pull-right span12", :style => "margin-top:10px;" %></td>
+			</div>
+			<div class="span8">
+				<h4 style="margin-bottom: 30px;"> <%= @neuropsychologist.name %> </h4>
+				<div class="row-fluid">
+					<div class="span3">
+						<b>BI</b>
+					</div>
+					<div class="span9">
+						<%= @neuropsychologist.identification_code %>
+					</div>
+				</div>
+				<div class="row-fluid">
+					<div class="span3">
+						<b>Morada</b>
+					</div>
+					<div class="span9">
+						<%= @neuropsychologist.address %>
+					</div>
+				</div>
+				<div class="row-fluid">
+					<div class="span3">
+						<b>Sexo</b>
+					</div>
+					<div class="span9">
+						<%= @neuropsychologist.gender.description %>
+					</div>
+				</div>
+				<div class="row-fluid">
+					<div class="span3">
+						<b>Data de Nascimento</b>
+					</div>
+					<div class="span9">
+						<%= @neuropsychologist.date_of_birth %>
+					</div>
+				</div>
+				<br/>
+				<div class="row-fluid">
+					<div class="span3">
+						<b>Telefone</b>
+					</div>
+					<div class="span9">
+						<%= @neuropsychologist.telephone %>
+					</div>
+				</div>
+				<div class="row-fluid">
+					<div class="span3">
+						<b>Telemóvel</b>
+					</div>
+					<div class="span9">
+						<%= @neuropsychologist.mobilephone %>
+					</div>
+				</div>
+				<div class="row-fluid">
+					<div class="span3">
+						<b>Email</b>
+					</div>
+					<div class="span9">
+						<%= @neuropsychologist.login.email %>
+					</div>
+				</div>
+				<br/>
+
+<!-- 				<div class="row-fluid">
+				<div class="span3">
+				<b>Clínica</b>
+				</div>
+				<div class="span9">
+				<%= @neuropsychologist.clinic.name %>
+				</div>
+				</div> -->
+				<div class="row-fluid">
+					<div class="span3">
+						<b>Cargo</b>
+					</div>
+					<div class="span9">
+						Neuropsicólogo(a)
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+	<div class="span3"></div>
+</div>
+
+<!-- Scaffolding -->
+<!-- <p id="notice"><%= notice %></p>
 
 <p>
-  <b>Name:</b>
-  <%= @neuropsychologist.name %>
+<b>Name:</b>
+<%= @neuropsychologist.name %>
 </p>
 <p>
-  <b>Address:</b>
-  <%= @neuropsychologist.address %>
+<b>Address:</b>
+<%= @neuropsychologist.address %>
 </p>
 
 <p>
-  <b>Telephone:</b>
-  <%= @neuropsychologist.telephone %>
+<b>Telephone:</b>
+<%= @neuropsychologist.telephone %>
 </p>
 
 <p>
-  <b>Mobilephone:</b>
-  <%= @neuropsychologist.mobilephone %>
+<b>Mobilephone:</b>
+<%= @neuropsychologist.mobilephone %>
 </p>
 
 <p>
-  <b>Photo:</b>
-  <%= @neuropsychologist.photo %>
+<b>Photo:</b>
+<%= @neuropsychologist.photo %>
 </p>
 
 <p>
-  <b>Date of birth:</b>
-  <%= @neuropsychologist.date_of_birth %>
+<b>Date of birth:</b>
+<%= @neuropsychologist.date_of_birth %>
 </p>
 
 <p>
-  <b>Identification code:</b>
-  <%= @neuropsychologist.identification_code %>
+<b>Identification code:</b>
+<%= @neuropsychologist.identification_code %>
 </p>
 
 <p>
-  <b>Active:</b>
-  <%= @neuropsychologist.active %>
+<b>Active:</b>
+<%= @neuropsychologist.active %>
 </p>
 
 <p>
-  <b>Gender ID:</b>
-  <%= @neuropsychologist.gender_id %>
+<b>Gender ID:</b>
+<%= @neuropsychologist.gender_id %>
 </p>
 
 <p>
-  <b>Clinic ID:</b>
-  <%= @neuropsychologist.clinic_id %>
+<b>Clinic ID:</b>
+<%= @neuropsychologist.clinic_id %>
 </p>
 
 <p>
-  <b>Login ID:</b>
-  <%= @neuropsychologist.login_id %>
+<b>Login ID:</b>
+<%= @neuropsychologist.login_id %>
 </p>
-
 
 <%= link_to 'Edit', edit_neuropsychologist_path(@neuropsychologist) %> |
-<%= link_to 'Back', neuropsychologists_path %>
+<%= link_to 'Back', neuropsychologists_path %> -->
