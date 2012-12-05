@@ -23,8 +23,8 @@ NeuroPump::Application.configure do
       :port           => 587,
       :authentication => 'plain',
       :content_type   => "text/html",
-      :user_name      => "brunomiguelas@gmail.com",
-      :password       => "fordtaurus"
+      :user_name      => "teste@gmail.com",
+      :password       => "teste"
   }
 
   config.action_mailer.perform_deliveries = true
