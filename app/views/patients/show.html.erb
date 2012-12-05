@@ -1,86 +1,67 @@
-<p id="notice"><%= notice %></p>
+    <div class="container">
+    <div class="row-fluid">
+    <div class="span8 offset2" style="padding: 40px;padding-right:80px;padding-top: 20px;-webkit-box-shadow: 0 2px 10px rgba(0, 0, 0, .25);-moz-box-shadow: 0 2px 10px rgba(0,0,0,.25);box-shadow: 0 2px 10px rgba(0, 0, 0, .25);background-color: white;">
 
-<p>
-  <b>Name:</b>
-  <%= @patient.name %>
-</p>
+    <div class="span4 pull-right">
+      <img style="margin-top: 10px;" src=<%= @patient.photo %> >
+      <button type="button" class="btn-success" style="width:100%; margin-top:10px;">Editar Perfil</button>
+    </div>
 
-<p>
-  <b>Address:</b>
-  <%= @patient.address %>
-</p>
+    <div class="span8">
+      <h3 style="margin-bottom: 30px;"><%= @patient.name %></h3>
+      <div class="row-fluid">
+        <div class="span3"><b>Morada</b></div>
+        <div class="span9"><%= @patient.address %></div>
+      </div>
+      <div class="row-fluid">
+        <div class="span3"><b>BI</b></div>
+        <div class="span9"><%= @patient.identification_code %></div>      
+      </div>
+      <div class="row-fluid">
+        <div class="span3"><b>Sexo</b></div>
+        <div class="span9"><%= @patient.gender.description %></div>
+      </div>
+      <div class="row-fluid">
+        <div class="span3"><b>Data de Nascimento</b></div>
+        <div class="span9"><%= @patient.date_of_birth %></div>
+      </div>
+      <div class="row-fluid">
+        <div class="span3"><b>Telefone</b></div>
+        <div class="span9"><%= @patient.telephone %></div>      
+      </div>
+      <div class="row-fluid">
+        <div class="span3"><b>Telemóvel</b></div>
+        <div class="span9"><%= @patient.mobilephone %></div>      
+      </div>
+      <div class="row-fluid">
+        <div class="span3"><b>Email</b></div>
+        <div class="span9"><%= @patient.login.email %></div>      
+      </div>
+      <div class="row-fluid">
+        <div class="span3"><b>Estado civil</b></div>
+        <div class="span9"><%= @patient.civil_status.description %></div>      
+      </div>
+      <div class="row-fluid">
+        <div class="span3"><b>lateralidadde</b></div>
+        <div class="span9"><%= @patient.handedness.description %></div>      
+      </div>
+      <div class="row-fluid">
+        <div class="span3"><b>Escolaridade</b></div>
+        <div class="span9"><%= @patient.education %></div>      
+      </div>
+      <div class="row-fluid">
+        <div class="span3"><b>Profissão</b></div>
+        <div class="span9"><%= @patient.profession%></div>      
+      </div>
 
-<p>
-  <b>Telephone:</b>
-  <%= @patient.telephone %>
-</p>
+      <br/>
 
-<p>
-  <b>Mobilephone:</b>
-  <%= @patient.mobilephone %>
-</p>
-
-<p>
-  <b>Photo:</b>
-  <%= @patient.photo %>
-</p>
-
-<p>
-  <b>Date of birth:</b>
-  <%= @patient.date_of_birth %>
-</p>
-
-<p>
-  <b>Identification code:</b>
-  <%= @patient.identification_code %>
-</p>
-
-<p>
-  <b>Active:</b>
-  <%= @patient.active %>
-</p>
-
-<p>
-  <b>Gender ID:</b>
-  <%= @patient.gender_id %>
-</p>
-
-<p>
-  <b>Clinic ID:</b>
-  <%= @patient.clinic_id %>
-</p>
-
-<p>
-  <b>Civil Status ID:</b>
-  <%= @patient.civil_status_id %>
-</p>
-
-<p>
-  <b>Handedness ID:</b>
-  <%= @patient.handedness_id %>
-</p>
-
-
-<p>
-  <b>Login ID:</b>
-  <%= @patient.login_id %>
-</p>
-
-<p>
-  <b>Education:</b>
-  <%= @patient.education %>
-</p>
-
-<p>
-  <b>Profession:</b>
-  <%= @patient.profession%>
-</p>
+      
+    </div>
 
 
-<p>
-  <b>Active:</b>
-  <%= @patient.active %>
-</p>
-
-<%= link_to 'Edit', edit_patient_path(@patient) %> |
-<%= link_to 'Back', patients_path %>
+    </div>
+    </div>
+    <div class="span3"></div>
+    </div>
+    <br/> 

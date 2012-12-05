@@ -7,5 +7,6 @@ class Patient < ActiveRecord::Base
   has_many :sessions
   has_many :clinical_histories
 
-  attr_accessible :active, :address, :date_of_birth, :identification_code, :mobilephone, :name, :photo, :telephone, :education, :profession
+  attr_accessible :active, :address, :date_of_birth, :identification_code, :mobilephone, :name, :photo, :telephone, :education, :profession, :email, :palavrapass
+  attr_accessor :email, :palavrapass
 end
