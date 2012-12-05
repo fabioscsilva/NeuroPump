@@ -40,25 +40,25 @@ production:
   adapter: postgresql
   encoding: utf8
   reconnect: false
-  database: neuropump_development
+  database: neuropump_production
   pool: 5
   username: developer
   password: d45Zmo
   #timeout: 5000
-  host: localhost
+  host: teste93.di.uminho.pt
   port: 5432
 
-# test:
-  # adapter: postgresql
-  # encoding: utf8
-  # reconnect: false
-  # database: neuropump_test
-  # pool: 5
-  # username: developer
-  # password: d45Zmo
-  # #timeout: 5000
-  # host: teste93.di.uminho.pt
-  # port: 5432
+test:
+  adapter: postgresql
+  encoding: utf8
+  reconnect: false
+  database: neuropump_test
+  pool: 5
+  username: developer
+  password: d45Zmo
+  #timeout: 5000
+  host: teste93.di.uminho.pt
+  port: 5432
 
 
 
