@@ -100,6 +100,8 @@ ActiveRecord::Schema.define(:version => 20121130172148) do
     t.string   "telephone"
     t.string   "mobilephone"
     t.string   "photo"
+    t.string   "profession"
+    t.string   "education"
     t.date     "date_of_birth",                         :null => false
     t.string   "identification_code",                   :null => false
     t.boolean  "active",              :default => true

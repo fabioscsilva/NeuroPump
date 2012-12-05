@@ -66,6 +66,7 @@ class ClinicsController < ApplicationController
 
     respond_to do |format|
       if @clinic.update_attributes(params[:clinic])
+        session[:clinicUpdate] = true
         format.html { redirect_to @clinic, notice: 'Clinic was successfully updated.' }
         format.json { head :no_content }
       else

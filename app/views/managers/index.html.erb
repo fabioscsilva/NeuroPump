@@ -1,31 +1,130 @@
-<h1>Listing managers</h1>
+<%# encoding: utf-8 %>
 
-<table>
-  <tr>
-    <th>Telephone</th>
-    <th>Mobilephone</th>
-    <th>Gender ID</th>
-    <th>Clinic ID</th>
-    <th>Login ID</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
+<%= render :file => "/navbars/_navbar_manager.html.erb" %>
 
-<% @managers.each do |manager| %>
-  <tr>
-    <td><%= manager.telephone %></td>
-    <td><%= manager.mobilephone %></td>
-    <td><%= manager.gender_id %></td>
-    <td><%= manager.clinic_id %></td>
-    <td><%= manager.login_id %></td>
-    <td><%= link_to 'Show', manager %></td>
-    <td><%= link_to 'Edit', edit_manager_path(manager) %></td>
-    <td><%= link_to 'Destroy', manager, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-  </tr>
-<% end %>
-</table>
+<div class="span12 offset1">
+  <div class="slate clearfix">
+    <a class="stat-column" href="#">
+      <span style="font-size: 20px;color: #777;padding-top: 10px;text-align: left;line-height: 27px;"><%= @clinic.name %></span>
+    </a>
+    <a class="stat-column" href="#">
+      <span class="number"><%= @clinic.patients.count %></span>
+      <span>Pacientes</span>
+    </a>
+    <a class="stat-column" href="#">
+      <span class="number"><%= @clinic.secretaries.count %></span>
+      <span>Secretários</span>
+    </a>
+    <a class="stat-column" href="#">
+      <span class="number"><%= @clinic.neuropsychologists.count %></span>
+      <span>Neuropsicólogos</span>
+    </a>
+    <a class="stat-column" href="#">
+      <span class="number"> !! </span>
+      <span>Consultas agendadas</span>
+    </a>
+  </div>
+</div>
 
-<br />
+<div class="container navbar-wrapper">
+  <div class="span6" id="chart_div2" style="height: 500px;">
+  </div>
 
-<%= link_to 'New Manager', new_manager_path %>
+  <div class="span6 pull-right" id="chart_div" style="height: 500px;">
+  </div>
+</div>
+
+<div class="container navbar-wrapper">
+  <div class="span6">
+    <h4>Lista de Secretários</h4>
+
+    <div class="accordion" id="accordion">
+      <% i = 0 %>
+      <% @clinic.secretaries.each do |secretary| %>
+          <% i=i+1 %>
+          <div class="accordion-group">
+            <div class="accordion-heading">
+              <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapse<%= i %>">
+                <%= secretary.name %>
+              </a>
+            </div>
+            <div id="collapse<%= i %>" class="accordion-body collapse">
+              <div class="accordion-inner">
+                Nº de Telemóvel: <%= secretary.name %>
+                <br/>
+                Data de Nascimento: <%= secretary.name %>
+                <br/>
+                Nº de consultas marcadas: !!
+              </div>
+            </div>
+          </div>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="span6 pull-right">
+    <h4>Lista de Neuropsicólogos</h4>
+
+    <div class="accordion" id="accordion2">
+      <% i = 0 %>
+      <% @clinic.neuropsychologists.each do |neuropsychologist| %>
+          <% i=i+1 %>
+          <div class="accordion-group">
+            <div class="accordion-heading">
+              <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapse<%= i %>">
+                <%= neuropsychologist.name %>
+              </a>
+            </div>
+            <div id="collapse<%= i %>" class="accordion-body collapse">
+              <div class="accordion-inner">
+                Nº de Telemóvel: <%= neuropsychologist.telephone %>
+                <br/>
+                Data de Nascimento: <%= neuropsychologist.date_of_birth %>
+                <br/>
+                Nº de consultas marcadas: !!
+              </div>
+            </div>
+          </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<h2 style="margin-left: 60px;">Historial de Pagamentos</h2>
+
+<div class="container navbar-wrapper">
+  <div class="span12" id="chart_div3" style="height: 300px; margin-bottom: 60px;">
+  </div>
+</div>
+
+<div class="container marketing">
+  <div class="row" style="margin-left: 0px;">
+    <div class="span4">
+      <a href="#">
+        <img class="img-circle" width="160px" src="http://www.ryancompanies.com/upload/SAFO%20Clinic%20008-Lg.jpg">
+
+        <h2>Clínica</h2>
+      </a>
+    </div>
+    <div class="span4">
+      <a href="#">
+        <img class="img-circle" width="160px" src="https://community.emc.com/servlet/JiveServlet/downloadImage/38-3053-26026/279-190/business-man-and-woman.jpg">
+
+        <h2>Secretários</h2>
+      </a>
+    </div>
+    <div class="span4">
+      <a href="#">
+        <img class="img-circle" width="160px" src="http://www.peakhealth.com.au/img/content/medicals.jpg">
+
+        <h2>Neuropsicólogos</h2>
+      </a>
+    </div>
+  </div>
+
+  <footer>
+    <p class="pull-right"><a href="#">Back to top</a></p>
+
+    <p>&copy; 2012 NeuroPump, Inc. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
+  </footer>
+</div>

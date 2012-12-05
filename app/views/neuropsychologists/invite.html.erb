@@ -1,0 +1,41 @@
+<%# encoding: utf-8 %>
+
+<%= render :file => "/navbars/_navbar_manager.html.erb" %>
+
+<div class="container">
+  <div class="row-fluid">
+    <% if session[:emailsSentNeuro] == true%>
+        <div class="alert alert-success fade in" >
+          <button type="button" class="close" data-dismiss="alert">×</button>
+          <strong>Emails enviados com sucesso para os destinatários introduzidos.</strong>
+        </div>
+        <% session[:emailsSentNeuro] = false %>
+    <% end %>
+
+    <div class="span8 offset2" style="padding: 40px;padding-right:80px;padding-top: 20px;-webkit-box-shadow: 0 2px 10px rgba(0, 0, 0, .25);-moz-box-shadow: 0 2px 10px rgba(0,0,0,.25);box-shadow: 0 2px 10px rgba(0, 0, 0, .25);background-color: white;">
+      <legend>Adicionar Neuropsicólogo(a)</legend>
+      <div class="span12">
+        <p align="justify">Para adicionar um Neuropsicólogo(a) é necessário que indique o seu email na caixa abaixo
+          representada.
+          De seguida o Neuropsicólogo(a) será notificado(a) e redirecionado(a) um formulário de preenchimento de dados
+          pessoais.</p>
+
+        <p>Se pretender enviar o formulário para mais do que um secretário(a) separe os emails por <b>;</b></p>
+        <%= form_tag("sendNeuropsychologistsInvite", :method => "post") do %>
+            <div>
+              <label>Email(s)</label>
+              <%= text_field :email, nil, :class => "span12", :placeholder => "example@neuropump.com;example2@neuropump.com" %>
+            </div>
+            <div class="span12" style="height: 30px;"></div>
+            <div>
+              <%= submit_tag "Enviar", :class => "btn btn-success span2 offset05 pull-right" %>
+            </div>
+            <div>
+              <%= button_tag "Limpar", :class => "btn btn-danger span2 pull-right", :type => "reset" %>
+            </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <div class="span3"></div>
+</div>
