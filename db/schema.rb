@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121130172148) do
+ActiveRecord::Schema.define(:version => 20121205103156) do
 
   create_table "administrators", :force => true do |t|
     t.string   "name",        :null => false
@@ -83,7 +83,6 @@ ActiveRecord::Schema.define(:version => 20121130172148) do
     t.string   "address",                               :null => false
     t.string   "telephone"
     t.string   "mobilephone"
-    t.string   "photo"
     t.date     "date_of_birth",                         :null => false
     t.string   "identification_code",                   :null => false
     t.boolean  "active",              :default => true
@@ -92,6 +91,10 @@ ActiveRecord::Schema.define(:version => 20121130172148) do
     t.integer  "login_id"
     t.datetime "created_at",                            :null => false
     t.datetime "updated_at",                            :null => false
+    t.string   "photo_file_name"
+    t.string   "photo_content_type"
+    t.integer  "photo_file_size"
+    t.datetime "photo_updated_at"
   end
 
   create_table "patients", :force => true do |t|
@@ -99,9 +102,6 @@ ActiveRecord::Schema.define(:version => 20121130172148) do
     t.string   "address",                               :null => false
     t.string   "telephone"
     t.string   "mobilephone"
-    t.string   "photo"
-    t.string   "profession"
-    t.string   "education"
     t.date     "date_of_birth",                         :null => false
     t.string   "identification_code",                   :null => false
     t.boolean  "active",              :default => true
@@ -114,6 +114,10 @@ ActiveRecord::Schema.define(:version => 20121130172148) do
     t.datetime "updated_at",                            :null => false
     t.string   "education"
     t.string   "profession"
+    t.string   "photo_file_name"
+    t.string   "photo_content_type"
+    t.integer  "photo_file_size"
+    t.datetime "photo_updated_at"
   end
 
   create_table "payments", :force => true do |t|
@@ -133,7 +137,6 @@ ActiveRecord::Schema.define(:version => 20121130172148) do
     t.string   "address",                               :null => false
     t.string   "telephone"
     t.string   "mobilephone"
-    t.string   "photo"
     t.date     "date_of_birth",                         :null => false
     t.string   "identification_code",                   :null => false
     t.boolean  "active",              :default => true
@@ -142,6 +145,10 @@ ActiveRecord::Schema.define(:version => 20121130172148) do
     t.integer  "login_id"
     t.datetime "created_at",                            :null => false
     t.datetime "updated_at",                            :null => false
+    t.string   "photo_file_name"
+    t.string   "photo_content_type"
+    t.integer  "photo_file_size"
+    t.datetime "photo_updated_at"
   end
 
   create_table "sessions", :force => true do |t|
