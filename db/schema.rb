@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121206133228) do
+ActiveRecord::Schema.define(:version => 20121206111903) do
 
   create_table "administrators", :force => true do |t|
     t.string   "name",        :null => false
@@ -78,7 +78,6 @@ ActiveRecord::Schema.define(:version => 20121206133228) do
     t.string   "last_sign_in_ip"
   end
 
-  add_index "logins", ["email"], :name => "index_logins_on_email", :unique => true
   add_index "logins", ["reset_password_token"], :name => "index_logins_on_reset_password_token", :unique => true
 
   create_table "managers", :force => true do |t|
