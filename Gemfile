@@ -10,6 +10,7 @@ gem 'pg'
 gem 'activerecord-postgresql-adapter'
 gem 'simple_form'
 gem 'paperclip'
+gem 'devise'
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -25,7 +26,7 @@ group :assets do
   gem 'jquery-datatables-rails'
   gem 'twitter-bootstrap-rails'
   gem 'less-rails-bootstrap'
-  gem 'therubyracer', '~>0.10.2'
+  gem 'therubyracer'
 end
 
 gem 'jquery-rails'
