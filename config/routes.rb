@@ -1,4 +1,6 @@
 NeuroPump::Application.routes.draw do
+  devise_for :logins
+
   resources :logins
 
   resources :types
