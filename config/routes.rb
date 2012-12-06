@@ -31,7 +31,7 @@ NeuroPump::Application.routes.draw do
 
   resources :genders
 
-  resources :sessions
+  #resources :sessions
 
   resources :civil_statuses
 
