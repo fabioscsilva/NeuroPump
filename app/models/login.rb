@@ -6,5 +6,5 @@ class Login < ActiveRecord::Base
   has_many :patients
 
 
-  attr_accessible :email, :password
+  attr_accessible :email, :password, :type_id
 end
