@@ -25,7 +25,19 @@ class SecretariesController < ApplicationController
   # GET /secretaries/new.json
   def new
     @secretary = Secretary.new
+    @pageType = "new"
+    
+    #@person.build_address
+    
+    
+     # @secretary.login = Login.new
+      
+     @secretary.build_login
+      
+    
+    #@secretary.login << Login.new
 
+    
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @secretary }
@@ -35,11 +47,13 @@ class SecretariesController < ApplicationController
   # GET /secretaries/1/edit
   def edit
     @secretary = Secretary.find(params[:id])
+    @pageType = "edit"
   end
 
   # POST /secretaries
   # POST /secretaries.json
   def create
+    # raise params.inspect
     login_id = params[:secretary].delete(:login_id)
     gender_id = params[:secretary].delete(:gender_id)
     clinic_id = params[:secretary].delete(:clinic_id)
@@ -63,6 +77,7 @@ class SecretariesController < ApplicationController
   # PUT /secretaries/1
   # PUT /secretaries/1.json
   def update
+    #raise params.inspect
     login_id = params[:secretary].delete(:login_id)
     gender_id = params[:secretary].delete(:gender_id)
     clinic_id = params[:secretary].delete(:clinic_id)

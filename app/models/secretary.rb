@@ -5,5 +5,9 @@ class Secretary < ActiveRecord::Base
   has_many :sessions
   has_attached_file :photo, :default_url => "/assets/noimage.jpg"
 
-  attr_accessible :active, :address, :date_of_birth, :identification_code, :mobilephone, :name, :photo, :telephone
+  attr_accessible :active, :address, :date_of_birth, :identification_code, :mobilephone, :name, :photo, :telephone, :login_attributes
+
+  accepts_nested_attributes_for :login
+ 
+
 end
