@@ -23,9 +23,11 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
   
   gem 'jquery-datatables-rails'
-  gem 'twitter-bootstrap-rails'
-  gem 'less-rails-bootstrap'
-  gem 'therubyracer', '~>0.10.2'
+  gem 'bootstrap-sass'
+  # gem 'twitter-bootstrap-rails'
+  # gem 'less-rails-bootstrap'
+  # gem 'therubyracer'
+
 end
 
 gem 'jquery-rails'

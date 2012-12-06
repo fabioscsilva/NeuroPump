@@ -51,7 +51,9 @@ ActiveRecord::Schema.define(:version => 20121205103156) do
   end
 
   create_table "genders", :force => true do |t|
-    t.string "description", :null => false
+    t.string   "description", :null => false
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
   end
 
   create_table "handednesses", :force => true do |t|

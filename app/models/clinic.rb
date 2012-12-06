@@ -7,5 +7,5 @@ class Clinic < ActiveRecord::Base
   has_many :patients
 
 
-  attr_accessible :active, :address, :email, :fiscal_number, :name, :telephone
+  attr_accessible :active, :address, :email, :fiscal_number, :name, :telephone, :administrator_id
 end
