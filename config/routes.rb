@@ -1,5 +1,4 @@
 NeuroPump::Application.routes.draw do
-  get "home/index"
 
   authenticated :user do
     root :to => 'home#index'
@@ -32,7 +31,7 @@ NeuroPump::Application.routes.draw do
 
   resources :genders
 
-  resources :sessions
+  #resources :sessions
 
   resources :civil_statuses
 
