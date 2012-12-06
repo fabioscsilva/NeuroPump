@@ -1,35 +1,46 @@
-<h1>Listing clinics</h1>
-
-<table>
-  <tr>
-    <th>Name</th>
-    <th>Address</th>
-    <th>Fiscal number</th>
-    <th>Email</th>
-    <th>Telephone</th>
-    <th>Active</th>
-    <th>Administrator ID</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
-<% @clinics.each do |clinic| %>
-  <tr>
-    <td><%= clinic.name %></td>
-    <td><%= clinic.address %></td>
-    <td><%= clinic.fiscal_number %></td>
-    <td><%= clinic.email %></td>
-    <td><%= clinic.telephone %></td>
-    <td><%= clinic.active %></td>
-    <td><%= clinic.administrator_id %></td>
-    <td><%= link_to 'Show', clinic %></td>
-    <td><%= link_to 'Edit', edit_clinic_path(clinic) %></td>
-    <td><%= link_to 'Destroy', clinic, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-  </tr>
-<% end %>
-</table>
-
-<br />
+     </div><!-- /.container -->
+      <div class="container">
+      <div class="row-fluid">
+          <div class="span8 offset2" style="padding: 40px;padding-top: 20px;-webkit-box-shadow: 0 2px 10px rgba(0, 0, 0, .25);-moz-box-shadow: 0 2px 10px rgba(0,0,0,.25);box-shadow: 0 2px 10px rgba(0, 0, 0, .25);background-color: white;">
+                <div>
+                  <legend>Clínicas</legend>
+                  <table class="table table-hover table-bordered">
+                    <thead>
+                      <tr>
+                        <th>Nome</th>
+                        <th>Telefone</th>
+                        <th>Email</th>
+                        <th>Capacidade</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+					<% @clinics.each do |clinic| %>
+                      <tr>
+                        <td><%= link_to clinic.name, clinic_path(clinic) %></td>
+                        <td><%= clinic.telephone %></td>
+                        <td><%= clinic.email %></td>
+                        <td>
+                          <div class="row-fluid">
+                            <div class="span8">
+                              <div class="progress">
+                                <div class="bar bar-danger" style="width: 100%;"></div>
+                              </div>
+                            </div>
+                            <div class="span2 offset1">
+                              10/10
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+					<% end %>
+                    </tbody>
+                  </table>
+                  <!--<p><a href="#" class="pull-right">View All &raquo;</a></p>-->
+                </div>
+              </div>
+      </div>
+      <div class="span3"></div>
+      </div>
+      <br/>
 
 <%= link_to 'New Clinic', new_clinic_path %>
