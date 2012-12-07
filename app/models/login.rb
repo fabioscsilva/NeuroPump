@@ -1,4 +1,5 @@
 class Login < ActiveRecord::Base
+  rolify
   
   has_many :managers
   has_many :neuropsychologists
