@@ -1,7 +1,9 @@
 class SecretariesController < ApplicationController
+  before_filter :authenticate_login!
   # GET /secretaries
   # GET /secretaries.json
   def index
+    authorize! :index, @login, :message => 'Not authorized as an administrator.'
     # @secretaries = Secretary.all
     @secretaries = Secretary.is_active.all(:conditions => "clinic_id = 1")
     respond_to do |format|

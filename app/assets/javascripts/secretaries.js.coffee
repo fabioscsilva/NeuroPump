@@ -3,11 +3,3 @@
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 jQuery ->
         $('#secretary').dataTable
-            "sDom": "<'row-fluid'<'form-actions'>rtp>"
-            "bInfo": false
-            "bLengthChange": false
-            "sPaginationType": "bootstrap"
-            "iDisplayLength": 10
-            "aoColumnDefs": [
-                        { "bSearchable": false, "aTargets": [ 1 ] }
-             ]

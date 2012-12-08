@@ -1,7 +1,9 @@
 class NeuropsychologistsController < ApplicationController
+  before_filter :authenticate_login!
   # GET /neuropsychologists
   # GET /neuropsychologists.json
   def index
+    authorize! :index, @login, :message => 'Not authorized!'
     @neuropsychologists = Neuropsychologist.all
 
     respond_to do |format|
