@@ -2,8 +2,8 @@ class SecretariesController < ApplicationController
   # GET /secretaries
   # GET /secretaries.json
   def index
-    @secretaries = Secretary.all
-
+    # @secretaries = Secretary.all
+    @secretaries = Secretary.is_active.all(:conditions => "clinic_id = 1")
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @secretaries }
@@ -26,18 +26,7 @@ class SecretariesController < ApplicationController
   def new
     @secretary = Secretary.new
     @pageType = "new"
-    
-    #@person.build_address
-    
-    
-     # @secretary.login = Login.new
-      
-     @secretary.build_login
-      
-    
-    #@secretary.login << Login.new
-
-    
+    @secretary.build_login
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @secretary }
@@ -57,12 +46,16 @@ class SecretariesController < ApplicationController
     login_id = params[:secretary].delete(:login_id)
     gender_id = params[:secretary].delete(:gender_id)
     clinic_id = params[:secretary].delete(:clinic_id)
+    
     @secretary = Secretary.new(params[:secretary])
 
     @secretary.login_id = login_id
     @secretary.gender_id = gender_id
-    @secretary.clinic_id = clinic_id
-
+    # @secretary.clinic_id = clinic_id
+    
+    @secretary.clinic_id = 1
+    @secretary.active = true
+    
     respond_to do |format|
       if @secretary.save
         format.html { redirect_to @secretary, notice: 'Secretary was successfully created.' }
@@ -102,8 +95,8 @@ class SecretariesController < ApplicationController
   # DELETE /secretaries/1.json
   def destroy
     @secretary = Secretary.find(params[:id])
-    @secretary.destroy
-
+    # @secretary.destroy
+    @secretary.update_attribute(:active ,false)
     respond_to do |format|
       format.html { redirect_to secretaries_url }
       format.json { head :no_content }

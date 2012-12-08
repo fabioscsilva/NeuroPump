@@ -10,4 +10,11 @@ class Patient < ActiveRecord::Base
 
   attr_accessible :active, :address, :date_of_birth, :identification_code, :mobilephone, :name, :photo, :telephone, :education, :profession, :email, :palavrapass
   attr_accessor :email, :palavrapass
+  
+  
+  validates_presence_of  :active, :address, :email,:date_of_birth, :identification_code, :name, :palavrapass
+  validates :email,
+             :format => {
+              :with    => /^([^\s]+)((?:[-a-z0-9]\.)[a-z]{2,})$/i,
+              :message => "formato incorreto" }
 end
