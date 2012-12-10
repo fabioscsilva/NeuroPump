@@ -11,3 +11,7 @@ body { padding-top: 60px; }
 
 // And finally bootswatch style itself
 @import "bootswatch/cerulean/bootswatch";
+
+input[type=number]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
