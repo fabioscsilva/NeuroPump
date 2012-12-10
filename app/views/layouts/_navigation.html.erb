@@ -1,18 +1,26 @@
-<%= link_to "Home", patients_path, :class => 'brand' %>
-<ul class="nav">
-  <% if login_signed_in? %>
+<%= link_to "Neuropump", patients_path, :class => 'brand' %>
+<div class="nav-collapse collapse">
+	<ul class="nav pull-right">
+		<li>
+			<%= link_to "Home", neuropsychologists_path %>
+		</li>
+		<li>
+			<%= link_to "Help",    '#' %>
+		</li>
+		<% if login_signed_in? %>
 	<% if Login.find(current_login.id).has_role? :manager %> 
   		<%= render :file => "/layouts/_managerNavbar.html.erb" %>
     <% end %>
-    <li>
-    <%= link_to('Logout', destroy_login_session_path, :method=>'delete') %>        
-    </li>
-  <% else %>
-    <li>
-    <%= link_to('Login', new_login_session_path)  %>  
-    </li>
-    <li>
-    <%= link_to('Sign up', new_login_registration_path)  %>
-    </li>
-  <% end %>
-</ul>
+		<li>
+			<%= link_to('Logout', destroy_login_session_path, :method=>'delete') %>
+		</li>
+		<% else %>
+		<li>
+			<%= link_to('Login', new_login_session_path)  %>
+		</li>
+		<li>
+			<%= link_to('Sign up', new_login_registration_path)  %>
+		</li>
+		<% end %>
+	</ul>
+</div>
