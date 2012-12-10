@@ -16,6 +16,7 @@
 <% end %>
 
 <div class="span12">
+	<%= link_to "Change your password", edit_login_registration_path %>>
 	<div class="field">
 		<%= f.label :name, "Nome" %>
 		<%= f.text_field :name, :class => "span12", :placeholder => "Escreva o nome", :required => true %>
@@ -34,27 +35,22 @@
 			<%= f.label 'login_id', "Email" %>
 			<%= f.fields_for :login do |builder|  %>
 			<%= builder.text_field :email , :class => "span12", :placeholder => "Escreva o Email", :type => "email", :required => true %>
-			
+
 		</div>
 	</div>
+	<% if @pageType == "new" %>
 	<div class="row-fluid">
 		<div class="span6">
-			<%= builder.label :password, "Password" %>
-			<%= builder.text_field :password , :class => "span12", :onfocus => "alertas()", :placeholder => "Escreva a password",
-        :type => "password" %>
+			<%= f.label :password, "Password" %>
+			<%= builder.password_field :password, :autocomplete => "off",  :placeholder => "Escreva a password", :class => "span12"  %>
 		</div>
 		<div class="span6">
 			<%= builder.label "Password" %>
-			<%= builder.text_field :password, :id => "confirm_password", :onfocusout => "checkPasswords()"  , :class => "span12", :onfocus => "alertas()", :placeholder => "Repita a password",
-        :type => "password" %>
-
+			<%= builder.password_field :password_confirmation, :class => "span12", :placeholder => "Repita a password" %>
 		</div>
-		<%= builder.text_field :type_id , :class => "span12", :onfocus => "alertas()", :type => "hidden", :value => "1"  %>
-		<% if @pageType == "edit" %>
-		<%= f.text_field :login_id , :class => "span12", :onfocus => "alertas()", :type => "hidden"  %>
-		<% end %>
-		<% end %>
 	</div>
+	<% end %>
+	<% end %>
 	<div class="row-fluid">
 		<div class="field span6">
 			<%= f.label :telephone, "Telefone" %>
