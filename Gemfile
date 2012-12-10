@@ -29,6 +29,8 @@ group :assets do
   
   gem 'jquery-datatables-rails'
   gem 'bootstrap-sass'
+  gem 'bootswatch-rails'
+  
   # gem 'twitter-bootstrap-rails'
   # gem 'less-rails-bootstrap'
   # gem 'therubyracer'
