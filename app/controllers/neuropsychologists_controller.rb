@@ -3,7 +3,7 @@ class NeuropsychologistsController < ApplicationController
   # GET /neuropsychologists
   # GET /neuropsychologists.json
   def index
-    authorize! :index, @login, :message => 'Not authorized!'
+    #authorize! :index, @login, :message => 'Not authorized!'
     @neuropsychologists = Neuropsychologist.all
 
     respond_to do |format|
@@ -27,7 +27,10 @@ class NeuropsychologistsController < ApplicationController
   # GET /neuropsychologists/new.json
   def new
     @neuropsychologist = Neuropsychologist.new
-
+    @pageType = "new"
+    
+    @neuropsychologist.build_login
+    
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @neuropsychologist }
@@ -37,6 +40,7 @@ class NeuropsychologistsController < ApplicationController
   # GET /neuropsychologists/1/edit
   def edit
     @neuropsychologist = Neuropsychologist.find(params[:id])
+    @pageType = "edit"
   end
 
   # POST /neuropsychologists
@@ -53,7 +57,7 @@ class NeuropsychologistsController < ApplicationController
 
     respond_to do |format|
       if @neuropsychologist.save
-        format.html { redirect_to @neuropsychologist, notice: 'Neuropsychologist was successfully created.' }
+        format.html { redirect_to @neuropsychologist, notice: 'Neuropsicologo criado com sucesso.' }
         format.json { render json: @neuropsychologist, status: :created, location: @neuropsychologist }
       else
         format.html { render action: "new" }
@@ -76,7 +80,7 @@ class NeuropsychologistsController < ApplicationController
 
     respond_to do |format|
       if @neuropsychologist.update_attributes(params[:neuropsychologist])
-        format.html { redirect_to @neuropsychologist, notice: 'Neuropsychologist was successfully updated.' }
+        format.html { redirect_to @neuropsychologist, notice: 'Neuropsicologo editado com sucesso.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
