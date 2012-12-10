@@ -27,7 +27,7 @@
 				<% else %>
 				Não existem secretários no sistema.
 				<% end %>
-				<%= link_to 'New Secretary', new_secretary_path %>
+				<%= link_to 'Novo Secretário', {:controller => "secretaries", :action => "invite" },:class => "btn btn-primary pull-right" %>
 			</div>
 		</div>
 	</div>

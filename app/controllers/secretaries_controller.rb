@@ -5,7 +5,8 @@ class SecretariesController < ApplicationController
   def index
     authorize! :index, @login, :message => 'Not authorized as an administrator.'
     # @secretaries = Secretary.all
-    @secretaries = Secretary.is_active.all(:conditions => "clinic_id = 1")
+    manager = Manager.first(:conditions => "login_id = #{current_login.id}")
+    @secretaries = Secretary.is_active.all(:conditions => "clinic_id = #{manager.clinic.id}")
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @secretaries }
@@ -26,7 +27,9 @@ class SecretariesController < ApplicationController
   # GET /secretaries/new
   # GET /secretaries/new.json
   def new
+    unauthorize! if cannot? :create, @secretary
     @secretary = Secretary.new
+    @genders = Gender.all
     @pageType = "new"
     @secretary.build_login
     respond_to do |format|
@@ -53,9 +56,9 @@ class SecretariesController < ApplicationController
 
     @secretary.login_id = login_id
     @secretary.gender_id = gender_id
-    # @secretary.clinic_id = clinic_id
+    manager = Manager.first(:conditions => "login_id = #{current_login.id}")
+    @secretary.clinic_id = manager.clinic.id
     
-    @secretary.clinic_id = 1
     @secretary.active = true
     
     respond_to do |format|

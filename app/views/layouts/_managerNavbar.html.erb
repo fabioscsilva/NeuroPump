@@ -1,0 +1,12 @@
+
+ <% manager = Manager.first(:conditions => "login_id = #{current_login.id}") %>
+
+<li>
+	<%= link_to('Clínica', clinic_path(manager.clinic))  %>
+</li>
+<li>
+	<%= link_to('Secretários', secretaries_path)  %>
+</li>
+<li>
+	<%= link_to('Neuropsicólogos', neuropsychologists_path)  %>
+</li>
