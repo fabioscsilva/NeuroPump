@@ -4,7 +4,8 @@ class NeuropsychologistsController < ApplicationController
   # GET /neuropsychologists.json
   def index
     #authorize! :index, @login, :message => 'Not authorized!'
-    @neuropsychologists = Neuropsychologist.all
+    manager = Manager.first(:conditions => "login_id = #{current_login.id}")
+    @neuropsychologists = Neuropsychologist.is_active.all(:conditions => "clinic_id = #{manager.clinic.id}")
 
     respond_to do |format|
       format.html # index.html.erb
@@ -93,7 +94,8 @@ class NeuropsychologistsController < ApplicationController
   # DELETE /neuropsychologists/1.json
   def destroy
     @neuropsychologist = Neuropsychologist.find(params[:id])
-    @neuropsychologist.destroy
+    # @neuropsychologist.destroy
+    @neuropsychologist.update_attribute(:active ,false)
 
     respond_to do |format|
       format.html { redirect_to neuropsychologists_url }

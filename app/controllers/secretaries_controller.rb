@@ -63,7 +63,7 @@ class SecretariesController < ApplicationController
     
     respond_to do |format|
       if @secretary.save
-        format.html { redirect_to @secretary, notice: 'Secretary was successfully created.' }
+        format.html { redirect_to @secretary, notice: 'Secretaria criada com sucesso.' }
         format.json { render json: @secretary, status: :created, location: @secretary }
       else
         format.html { render action: "new" }
@@ -76,18 +76,18 @@ class SecretariesController < ApplicationController
   # PUT /secretaries/1.json
   def update
     #raise params.inspect
-    login_id = params[:secretary].delete(:login_id)
-    gender_id = params[:secretary].delete(:gender_id)
-    clinic_id = params[:secretary].delete(:clinic_id)
+    # login_id = params[:secretary].delete(:login_id)
+    # gender_id = params[:secretary].delete(:gender_id)
+    # clinic_id = params[:secretary].delete(:clinic_id)
     @secretary = Secretary.find(params[:id])
 
-    @secretary.login_id = login_id
-    @secretary.gender_id = gender_id
-    @secretary.clinic_id = clinic_id
+    # @secretary.login_id = login_id
+    # @secretary.gender_id = gender_id
+    # @secretary.clinic_id = clinic_id
 
     respond_to do |format|
       if @secretary.update_attributes(params[:secretary])
-        format.html { redirect_to @secretary, notice: 'Secretary was successfully updated.' }
+        format.html { redirect_to @secretary, notice: 'Secretaria atualizada com sucesso.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

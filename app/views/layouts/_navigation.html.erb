@@ -1,16 +1,13 @@
-<%= link_to "Neuropump", patients_path, :class => 'brand' %>
+<%= link_to "Neuropump", "#", :class => 'brand' %>
 <div class="nav-collapse collapse">
 	<ul class="nav pull-right">
-		<li>
-			<%= link_to "Home", neuropsychologists_path %>
-		</li>
+		<% if login_signed_in? %>
+		<% if Login.find(current_login.id).has_role? :manager %>
+		<%= render :file => "/layouts/_managerNavbar.html.erb" %>
+		<% end %>
 		<li>
 			<%= link_to "Help",    '#' %>
 		</li>
-		<% if login_signed_in? %>
-	<% if Login.find(current_login.id).has_role? :manager %> 
-  		<%= render :file => "/layouts/_managerNavbar.html.erb" %>
-    <% end %>
 		<li>
 			<%= link_to('Logout', destroy_login_session_path, :method=>'delete') %>
 		</li>

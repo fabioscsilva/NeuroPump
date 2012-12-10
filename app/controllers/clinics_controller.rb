@@ -46,7 +46,7 @@ class ClinicsController < ApplicationController
 
     respond_to do |format|
       if @clinic.save
-        format.html { redirect_to @clinic, notice: 'Clinic was successfully created.' }
+        format.html { redirect_to @clinic, notice: 'Clinica criada com sucesso.' }
         format.json { render json: @clinic, status: :created, location: @clinic }
       else
         format.html { render action: "new" }
@@ -58,16 +58,15 @@ class ClinicsController < ApplicationController
   # PUT /clinics/1
   # PUT /clinics/1.json
   def update
-    admin_id = params[:clinic].delete(:administrator_id)
+    #admin_id = params[:clinic].delete(:administrator_id)
     
     @clinic = Clinic.find(params[:id])
     
-    @clinic.administrator_id = admin_id
+    #@clinic.administrator_id = admin_id
 
     respond_to do |format|
       if @clinic.update_attributes(params[:clinic])
-        session[:clinicUpdate] = true
-        format.html { redirect_to @clinic, notice: 'Clinic was successfully updated.' }
+        format.html { redirect_to @clinic, notice: 'Clinica editada com sucesso.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

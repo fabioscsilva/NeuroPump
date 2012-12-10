@@ -13,11 +13,11 @@
 
     <div>
       <%= f.label :name, "Nome" %>
-      <%= f.text_field :name,  :class => "span12", :placeholder => "Introduza o nome da clinica" %>
+      <%= f.text_field :name,  :class => "span12", :placeholder => "Introduza o nome da clinica", :required => true %>
     </div>
     <div>
       <%= f.label :address, "Morada" %>
-      <%= f.text_field :address, :class => "span12", :placeholder => "Introduza a morada da clinica" %>
+      <%= f.text_field :address, :class => "span12", :placeholder => "Introduza a morada da clinica", :required => true  %>
     </div>
     <div class="row-fluid">
       <div class="span6">
@@ -26,18 +26,18 @@
       </div>
       <div class="span6">
         <%= f.label :email, "Email" %>
-        <%= f.text_field :email, :class => "span12", :placeholder => "example@neuropump.com" %>
+        <%= f.text_field :email, :class => "span12", :placeholder => "example@neuropump.com", :required => true, :type => "email"  %>
       </div>
     </div>
     <div>
       <%= f.label :fiscal_number, "NIF" %>
-      <%= f.text_field :fiscal_number, :class => "span12", :placeholder => "1XXXXXXXX" %>
+      <%= f.text_field :fiscal_number, :class => "span12", :placeholder => "1XXXXXXXX", :required => true, :type => "number"  %>
     </div>
     <br/>
     <div>
       <%= submit_tag "Submeter", :class => "btn btn-success span2 offset05 pull-right", :style => "margin-left: 10px;" %>
     </div>
     <div>
-      <%= button_tag "Limpar", :class => "btn btn-danger span2 pull-right", :type => "reset" %>
+      <%= button_tag "Reverter", :class => "btn btn-warning span2 pull-right", :type => "reset" %>
     </div>
 <% end %>

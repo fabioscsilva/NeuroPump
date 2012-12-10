@@ -17,7 +17,7 @@
 					<tbody>
 						<%  @secretaries.each do |secretary|  %>
 						<tr onmouseover="this.style.cursor ='pointer'" onclick="location.href='<%= secretary_url(secretary) %>'">
-							<td><%= link_to secretary.name, secretary %></td>
+							<td><%= secretary.name %></td>
 							<td><%= secretary.login.email %></td>
 							<td><%= secretary.mobilephone %></td>
 						</tr>
@@ -27,7 +27,7 @@
 				<% else %>
 				Não existem secretários no sistema.
 				<% end %>
-				<%= link_to 'Novo Secretário', {:controller => "secretaries", :action => "invite" },:class => "btn btn-primary pull-right" %>
+				<%= link_to 'Convidar Secretário', {:controller => "secretaries", :action => "invite" },:class => "btn btn-primary pull-right" %>
 			</div>
 		</div>
 	</div>

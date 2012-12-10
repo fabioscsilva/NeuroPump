@@ -10,5 +10,7 @@ class Neuropsychologist < ActiveRecord::Base
   accepts_nested_attributes_for :login
   
   validates_presence_of :active, :address, :date_of_birth, :identification_code, :name
+  
+  scope :is_active, where(:active => true)
 
 end

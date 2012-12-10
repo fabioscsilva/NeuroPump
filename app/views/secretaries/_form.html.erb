@@ -32,12 +32,12 @@
 		<%= builder.text_field :email , :class => "span12", :onfocus => "alertas()", :placeholder => "Escreva o Email",  :type => "email", :required => true%>
 		 		
 	</div>
-	
+	<% if @pageType == "new" %>
 	<div class="row-fluid">
 		<div class="span6">
 			<%= builder.label "Password" %>
 			<%= builder.text_field :encrypted_password , :class => "span12", :onfocus => "alertas()", :placeholder => "Escreva a password",
-        :type => "password", :required => true%>
+        :required => true%>
 		</div>
 		<div class="span6">
 			<%= builder.label "Confirmação Password" %>
@@ -47,6 +47,7 @@
 		</div>
 					<%= builder.text_field :type_id , :class => "span12", :onfocus => "alertas()", :type => "hidden", :value => "1"  %>
 	</div>
+	<% end %>
 
 	<% if @pageType == "edit" %>
 		<%= f.text_field :login_id , :class => "span12", :onfocus => "alertas()", :type => "hidden"  %>
@@ -82,10 +83,10 @@
 </div>
 <br>
 <div class="actions">
-	<%= f.submit :Submeter , :onclick =>"limpaDados()" ,:class => "btn btn-success span2 pull-right"%>
+	<%= f.submit :Submeter ,:class => "btn btn-success span2 pull-right" , :style => "margin-left: 10px;" %>
 </div>
 <div>
-	<%= button_tag "Limpar", :class => "btn btn-warning span2 pull-right", :type => "reset" %>
+	<%= button_tag "Reverter", :class => "btn btn-warning span2 pull-right", :type => "reset" %>
 </div>
 
 	<script>
