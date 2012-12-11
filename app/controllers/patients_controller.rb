@@ -4,8 +4,9 @@ class PatientsController < ApplicationController
   # GET /patients
   # GET /patients.json
   def index
-    authorize! :index, :message => 'Not authorized!'
-    @patients = Patient.all
+    authorize! :index, @login, :message => 'Not authorized!'
+    # aqui tem de se ir buscar o id da clinica da secretaria logada
+    @patients = Patient.is_active.in_clinic(1).all
 
     respond_to do |format|
       format.html # index.html.erb

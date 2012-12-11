@@ -22,7 +22,7 @@
                     <td><%= patient.address %></td>
                     <td><%= patient.date_of_birth %></td>
                     <td><%= patient.gender.description %></td>
-                    <td><%= patient.profession %></td>
+                    <td><%= patient.clinic.name %></td>
                     <td><%= link_to 'Abrir', patient, :class => 'btn btn-primary' %></td>
                 </tr>
             <% end %>

@@ -12,6 +12,7 @@
 			<%= link_to('Logout', destroy_login_session_path, :method=>'delete') %>
 		</li>
 		<% else %>
+			<%= render :file => "/layouts/_visitorNavbar.html.erb" %>
 		<li>
 			<%= link_to('Login', new_login_session_path)  %>
 		</li>

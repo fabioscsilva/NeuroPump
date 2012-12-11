@@ -46,9 +46,9 @@ male = genders.second.id
 #Logins
 logins = Login.create([{email:'smr@fpce.uc.pt', password:'qwerty', type_id: neuropsychologist},
                       {email:'sus.antunes@ipnp.pt', password:'qwerty', type_id: neuropsychologist},
-                      {email:'fabioscsilva@gmail.com', password:'qwerty', type_id: neuropsychologist},
-                       {email:'srodrigues14@gmail.com', password:'qwerty', type_id: secretary},
-                        {email:'brunomiguelas@gmail.com', password:'qwerty', type_id: secretary},
+                      {email:'fabioscsilva@gmail.pt', password:'qwerty', type_id: neuropsychologist},
+                       {email:'srodrigues14@gmail.pt', password:'qwerty', type_id: secretary},
+                        {email:'brunomiguelas@gmail.pt', password:'qwerty', type_id: secretary},
                         {email:'manager@gmail.com', password:'qwerty', type_id: manager}])
 login1 = logins.first.id
 login2 = logins.second.id
@@ -82,6 +82,5 @@ Login.find(login2).add_role :neuropsychologist
 Login.find(login3).add_role :neuropsychologist
 Login.find(login4).add_role :secretary
 Login.find(login5).add_role :secretary
-
 
 puts "Success: Data loaded"
