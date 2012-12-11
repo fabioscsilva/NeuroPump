@@ -2,22 +2,23 @@
 <div class="nav-collapse collapse">
 	<ul class="nav pull-right">
 		<% if login_signed_in? %>
-		<% if Login.find(current_login.id).has_role? :manager %>
-		<%= render :file => "/layouts/_managerNavbar.html.erb" %>
-		<% end %>
-		<li>
-			<%= link_to "Help",    '#' %>
-		</li>
-		<li>
-			<%= link_to('Logout', destroy_login_session_path, :method=>'delete') %>
-		</li>
+			<% if Login.find(current_login.id).has_role? :manager %>
+				<%= render :file => "/layouts/_managerNavbar.html.erb" %>
+			<% end %>
+			<li>
+				<%= link_to "Help",    '#' %>
+			</li>
+			<li>
+				<%= link_to('Logout', destroy_login_session_path, :method=>'delete') %>
+			</li>
 		<% else %>
-		<li>
-			<%= link_to('Login', new_login_session_path)  %>
-		</li>
-		<li>
-			<%= link_to('Sign up', new_login_registration_path)  %>
-		</li>
+			<%= render :file => "/layouts/_visitorNavbar.html.erb" %>
+			<li>
+				<%= link_to('Login', new_login_session_path)  %>
+			</li>
+			<li>
+				<%= link_to('Sign up', new_login_registration_path)  %>
+			</li>
 		<% end %>
 	</ul>
 </div>
