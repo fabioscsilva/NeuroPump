@@ -66,5 +66,10 @@ secretaries = Secretary.create([{name:'Nuno Costa', address:'Rua das Fontainhas,
 manager = Manager.create([{telephone:'223421566', mobilephone:'923214007', gender_id: male, clinic_id: clinic1, login_id: login6}])
 
 Login.find(login6).add_role :manager
+Login.find(login1).add_role :neuropsychologist
+Login.find(login2).add_role :neuropsychologist
+Login.find(login3).add_role :neuropsychologist
+Login.find(login4).add_role :secretary
+Login.find(login5).add_role :secretary
 
 puts "Success: Data loaded"
