@@ -1,9 +1,10 @@
 class PatientsController < ApplicationController
   before_filter :authenticate_login!
+  #load_and_authorize_resource
   # GET /patients
   # GET /patients.json
   def index
-    authorize! :index, @login, :message => 'Not authorized!'
+    authorize! :index, :message => 'Not authorized!'
     @patients = Patient.all
 
     respond_to do |format|
@@ -15,8 +16,9 @@ class PatientsController < ApplicationController
   # GET /patients/1
   # GET /patients/1.json
   def show
-    authorize! :show, @login, :message => 'Not authorized!'
+    
     @patient = Patient.find(params[:id])
+    authorize! :show, @patient.login, :message => 'Not authorized!'
 
     respond_to do |format|
       format.html # show.html.erb
@@ -27,6 +29,7 @@ class PatientsController < ApplicationController
   # GET /patients/new
   # GET /patients/new.json
   def new
+    authorize! :new, :message => 'Not authorized'
     @pageType = "new"
     @patient = Patient.new
 
@@ -39,21 +42,21 @@ class PatientsController < ApplicationController
 
   # GET /patients/1/edit
   def edit
-    authorize! :edit, @login, :message => 'Not authorized'
     @pageType = "edit"
     @patient = Patient.find(params[:id])
+    authorize! :edit, @patient.login, :message => 'Not authorized'
     @patient.email = @patient.login.email
+
   end
 
   # POST /patients
   # POST /patients.json
   def create
+    authorize! :create, :message => 'Not authorized!'
     login = Login.new
     login.email = params[:patient][:email]
     login.password = "passwordGerada" 
 
-    #hard coded type for patients
-    login.type_id = 2
     login.add_role :patient
 
     gender_id = params[:patient].delete(:gender_id)
@@ -62,13 +65,14 @@ class PatientsController < ApplicationController
     handedness_id = params[:patient].delete(:handedness_id)
     @patient = Patient.new(params[:patient])
 
-    @patient.date_of_birth = Date.today
     @patient.gender_id = gender_id
-    @patient.clinic_id = clinic_id
+    secretary = Secretary.first(:conditions => "login_id = #{current_login.id}")
+    @patient.clinic_id = secretary.clinic.id
     @patient.civil_status_id = civil_status_id
     @patient.handedness_id = handedness_id
 
 
+    flag = true
     begin
       Patient.transaction do
         Login.transaction do
@@ -80,26 +84,28 @@ class PatientsController < ApplicationController
       rescue ActiveRecord::RecordInvalid => invalid
         respond_to do |format| 
           format.html { render action: "new" }
+          flag = false
         end
     end
+    if flag == true
       respond_to do |format|
         format.html { redirect_to @patient, notice: 'Patient was successfully created.' }
       end
-  
+    end
 
   end
 
   # PUT /patients/1
   # PUT /patients/1.json
   def update
-
-
+    
     
     gender_id = params[:patient].delete(:gender_id)
     clinic_id = params[:patient].delete(:clinic_id)
     civil_status_id = params[:patient].delete(:civil_status_id)
     handedness_id = params[:patient].delete(:handedness_id)
     @patient = Patient.find(params[:id])
+    authorize! :update, @patient.login, :message => 'Not authorized!'
     login = @patient.login
     
     
@@ -140,6 +146,7 @@ class PatientsController < ApplicationController
   # DELETE /patients/1
   # DELETE /patients/1.json
   def destroy
+    #authorize! :destroy, @login, :message => 'Not authorized'
     @patient = Patient.find(params[:id])
     @patient.destroy
 

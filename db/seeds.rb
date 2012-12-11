@@ -18,7 +18,16 @@ Gender.delete_all
 Role.delete_all
 
 Login.delete_all
-Type.delete_all
+Type.delete_all
+Handedness.delete_all
+CivilStatus.delete_all
+
+
+#Civil_Statuses
+statuses = CivilStatus.create([{description:'Solteiro'},{description: 'Casado'}, {description: 'Divorciado'}, {description: 'Viuvo'}])
+
+#Handedness
+hand = Handedness.create([{description: 'Destro'}, {description: 'Esquerdino'}])
 
 #Types
 types = Type.create([{description:'Administrador'}, {description:'Gestor'}, {description:'Secretaria'}, {description:'Neuropsicologo'}, {description:'Paciente'}])
@@ -29,9 +38,10 @@ neuropsychologist = types.fourth.id
 patient = types.fifth.id
 
 #Genders
-genders = Gender.create([{description:'Feminino'}, {description:'Masculino'}])
+genders = Gender.create([{description:'Feminino'}, {description:'Masculino'}, {description: 'Outro'}])
 female = genders.first.id
 male = genders.second.id
+
 
 #Logins
 logins = Login.create([{email:'smr@fpce.uc.pt', password:'qwerty', type_id: neuropsychologist},
@@ -49,7 +59,8 @@ login6 = logins.last.id
 
 #Admin
 admins = Administrator.create([{name:'Admin1', password:'qwerty', address:'Braga - UMinho', telephone:'222333444', mobilephone:'912333444', email:'fabio@neuropump.com', active:'true'}])
-admin = admins.first.id
+admin = admins.first.id
+
 #Clinics
 clinics = Clinic.create([{name:'Instituto de psicologia e neuropsicologia do porto', address:'Porto',fiscal_number:'321456712', email:'geral@ipnp.pt', telephone:'232444111', active:'true', administrator_id: admin}])
 clinic1 = clinics.first.id
@@ -66,5 +77,11 @@ secretaries = Secretary.create([{name:'Nuno Costa', address:'Rua das Fontainhas,
 manager = Manager.create([{telephone:'223421566', mobilephone:'923214007', gender_id: male, clinic_id: clinic1, login_id: login6}])
 
 Login.find(login6).add_role :manager
+Login.find(login1).add_role :neuropsychologist
+Login.find(login2).add_role :neuropsychologist
+Login.find(login3).add_role :neuropsychologist
+Login.find(login4).add_role :secretary
+Login.find(login5).add_role :secretary
+
 
 puts "Success: Data loaded"

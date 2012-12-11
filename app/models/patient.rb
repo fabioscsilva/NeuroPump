@@ -12,7 +12,7 @@ class Patient < ActiveRecord::Base
   attr_accessor :email, :palavrapass
   
   
-  validates_presence_of  :active, :address, :email,:date_of_birth, :identification_code, :name, :palavrapass
+  validates_presence_of  :active, :address, :email,:date_of_birth, :identification_code, :name
   validates :email,
              :format => {
               :with    => /^([^\s]+)((?:[-a-z0-9]\.)[a-z]{2,})$/i,
