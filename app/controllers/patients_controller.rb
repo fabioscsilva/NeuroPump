@@ -2,7 +2,8 @@ class PatientsController < ApplicationController
   # GET /patients
   # GET /patients.json
   def index
-    @patients = Patient.all
+    # aqui tem de se ir buscar o id da clinica da secretaria logada
+    @patients = Patient.is_active.in_clinic(1).all
 
     respond_to do |format|
       format.html # index.html.erb

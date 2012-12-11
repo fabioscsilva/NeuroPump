@@ -8,6 +8,12 @@ class Patient < ActiveRecord::Base
   has_many :clinical_histories
   has_attached_file :photo, :default_url => "/assets/noimage.jpg"
 
-  attr_accessible :active, :address, :date_of_birth, :identification_code, :mobilephone, :name, :photo, :telephone, :education, :profession, :email, :palavrapass
+  attr_accessible :active, :address, :date_of_birth, :identification_code, :mobilephone, 
+                  :name, :photo, :telephone, :education, :profession, :email, :palavrapass
   attr_accessor :email, :palavrapass
+
+  scope :is_active, where(:active => true)
+  scope :in_clinic, lambda { |clinic_id| 
+    where(:clinic_id => clinic_id)
+  }  
 end
