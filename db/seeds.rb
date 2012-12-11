@@ -25,9 +25,11 @@ CivilStatus.delete_all
 
 #Civil_Statuses
 statuses = CivilStatus.create([{description:'Solteiro'},{description: 'Casado'}, {description: 'Divorciado'}, {description: 'Viuvo'}])
+st1 = statuses.first.id
 
 #Handedness
 hand = Handedness.create([{description: 'Destro'}, {description: 'Esquerdino'}])
+h1 = hand.first.id
 
 #Types
 types = Type.create([{description:'Administrador'}, {description:'Gestor'}, {description:'Secretaria'}, {description:'Neuropsicologo'}, {description:'Paciente'}])
@@ -49,16 +51,20 @@ logins = Login.create([{email:'smr@fpce.uc.pt', password:'qwerty', type_id: neur
                       {email:'fabioscsilva@gmail.pt', password:'qwerty', type_id: neuropsychologist},
                        {email:'srodrigues14@gmail.pt', password:'qwerty', type_id: secretary},
                         {email:'brunomiguelas@gmail.pt', password:'qwerty', type_id: secretary},
-                        {email:'manager@gmail.com', password:'qwerty', type_id: manager}])
+                        {email:'manager@gmail.com', password:'qwerty', type_id: manager},
+                        {email: 'fabio@neuropump.com', password: 'qwerty', type_id: admin},
+                        {email: 'BLFPortela@gmail.com', password: 'qwerty', type_id: patient}])
 login1 = logins.first.id
 login2 = logins.second.id
 login3 = logins.third.id
 login4 = logins.fourth.id
 login5 = logins.fifth.id
-login6 = logins.last.id
+login6 = logins[5].id
+login7 = logins[6].id
+login8 = logins[7].id
 
 #Admin
-admins = Administrator.create([{name:'Admin1', password:'qwerty', address:'Braga - UMinho', telephone:'222333444', mobilephone:'912333444', email:'fabio@neuropump.com', active:'true'}])
+admins = Administrator.create([{name:'Admin1', login_id: login7, address:'Braga - UMinho', telephone:'222333444', mobilephone:'912333444', active:'true'}])
 admin = admins.first.id
 
 #Clinics
@@ -76,11 +82,14 @@ secretaries = Secretary.create([{name:'Nuno Costa', address:'Rua das Fontainhas,
                                
 manager = Manager.create([{telephone:'223421566', mobilephone:'923214007', gender_id: male, clinic_id: clinic1, login_id: login6}])
 
+patient = Patient.create([{name:'Bernardo Portela', address:'Urb.Feijo, Barroselas', telephone:'223421566', mobilephone:'915226087', education: 'Superior', profession: 'Estudante', date_of_birth:'12/10/1990', identification_code:'981324999', gender_id: male, clinic_id: clinic1, civil_status_id: st1, handedness_id: h1, login_id: login8 }])
+
 Login.find(login6).add_role :manager
 Login.find(login1).add_role :neuropsychologist
 Login.find(login2).add_role :neuropsychologist
 Login.find(login3).add_role :neuropsychologist
 Login.find(login4).add_role :secretary
 Login.find(login5).add_role :secretary
+Login.find(login8).add_role :patient
 
 puts "Success: Data loaded"
