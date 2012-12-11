@@ -12,7 +12,9 @@
 </div>
 <% end %>
 <div class="span12">
+	<% if @pageType == "edit" %>
 	<%= link_to "Mudar password", edit_login_registration_path %>
+	<% end %>
 	<div>
 		<%= f.label :Nome %>
 		<%= f.text_field :name, :class => "span12", :onfocus => "alertas()", :placeholder => "Escreva o nome", :required => true%>
@@ -27,14 +29,15 @@
 			<%= f.text_field :identification_code, :class => "span12", :onfocus => "alertas()", :placeholder => "Numero do BI/CC", :maxlength => 10,
         :type => "number",:required => true %>
 		</div>
+		
+		<% if @pageType == "new" %>
 		<div class="span6">
 			<%= f.label :Email %>
 
 			<%= f.fields_for :login do |builder|  %>
-			<%= builder.text_field :email , :class => "span12", :onfocus => "alertas()", :placeholder => "Escreva o Email",  :type => "email", :required => true%>
+			<%= builder.text_field :email , :class => "span12", :onfocus => "alertas()", :value => @login.email,  :type => "email", :readonly => true ,:required => true%>
 
 		</div>
-		<% if @pageType == "new" %>
 		<div class="row-fluid">
 			<div class="span6">
 				<%= f.label :password, "Password" %>
@@ -44,7 +47,29 @@
 				<%= builder.label "Password" %>
 				<%= builder.password_field :password_confirmation, :class => "span12", :placeholder => "Repita a password" %>
 			</div>
+		</div>	
+			<%= hidden_field_tag :clinic_id, @clinic_id  %>
+			<% end %>
+		<% end %>
+		
+		<% if @pageType == "edit" %>
+		<div class="span6">
+			<%= f.label :Email %>
+
+			<%= f.fields_for :login do |builder|  %>
+			<%= builder.text_field :email , :class => "span12", :onfocus => "alertas()", :placeholder => "Escreva o Email",  :type => "email", :required => true%>
+
 		</div>
+<!-- 		<div class="row-fluid">
+			<div class="span6">
+				<%= f.label :password, "Password" %>
+				<%= builder.password_field :password, :autocomplete => "off",  :placeholder => "Escreva a password", :class => "span12"  %>
+			</div>
+			<div class="span6">
+				<%= builder.label "Password" %>
+				<%= builder.password_field :password_confirmation, :class => "span12", :placeholder => "Repita a password" %>
+			</div>
+		</div> -->
 		<% end %>
 		<% end %>
 	</div>
