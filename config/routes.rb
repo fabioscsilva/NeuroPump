@@ -1,4 +1,12 @@
 NeuroPump::Application.routes.draw do
+  
+  authenticated :user do
+    root :to => 'home#index'
+  end
+  root :to => "home#index"
+  
+  devise_for :logins
+
   resources :logins
 
   resources :types
@@ -23,7 +31,7 @@ NeuroPump::Application.routes.draw do
 
   resources :genders
 
-  resources :sessions
+  #resources :sessions
 
   resources :civil_statuses
 

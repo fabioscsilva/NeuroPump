@@ -1,60 +1,145 @@
+<div class="container">
+	<div class="row-fluid">
+		<div class="span8 offset2" style="padding: 40px;padding-right:80px;padding-top: 20px;-webkit-box-shadow: 0 2px 10px rgba(0, 0, 0, .25);-moz-box-shadow: 0 2px 10px rgba(0,0,0,.25);box-shadow: 0 2px 10px rgba(0, 0, 0, .25);background-color: white;">
+			<div class="span4 pull-right">
+				<%= image_tag @secretary.photo.url %>
+				<!-- <button type="button" class="btn-success" style="width:100%; margin-top:10px;" >Editar Perfil</button>
+				<button type="button" class="btn-danger" style="width:100%; margin-top:10px;">Remover Perfil</button> -->
+				<%= link_to "Editar", edit_secretary_path(@secretary), :method => "get", :class => "btn btn-warning pull-right span12", :style => "margin-top:10px;"%>
+				<%= link_to "Desativar", @secretary, :method => :delete, :confirm => "Tem a certeza?",  :class => "btn btn-danger pull-right span12", :style => "margin-top:10px;" %>
+			</div>
+			<div class="span8">
+				<h3 style="margin-bottom: 30px;"><%= @secretary.name %></h3>
+				<div class="row-fluid">
+					<div class="span3">
+						<b>BI</b>
+					</div>
+					<div class="span9">
+						<%= @secretary.identification_code %>
+					</div>
+				</div>
+				<div class="row-fluid">
+					<div class="span3">
+						<b>Morada</b>
+					</div>
+					<div class="span9">
+						<%= @secretary.address %>
+					</div>
+				</div>
+				<div class="row-fluid">
+					<div class="span3">
+						<b>Sexo</b>
+					</div>
+					<div class="span9">
+						<%= @secretary.gender.description %>
+					</div>
+				</div>
+				<div class="row-fluid">
+					<div class="span3">
+						<b>Data de Nascimento</b>
+					</div>
+					<div class="span9">
+						<%= @secretary.date_of_birth %>
+					</div>
+				</div>
+				<br/>
+				<div class="row-fluid">
+					<div class="span3">
+						<b>Telefone</b>
+					</div>
+					<div class="span9">
+						<% if @secretary.telephone.to_str.blank?  %>
+							Sem contacto
+						<% else %>
+							<%= @secretary.telephone %>
+						<% end %>	
+					</div>
+				</div>
+				<div class="row-fluid">
+					<div class="span3">
+						<b>Telemóvel</b>
+					</div>
+					<div class="span9">
+						<% if @secretary.mobilephone.to_str.blank?  %>
+							Sem contacto
+						<% else %>
+							<%= @secretary.mobilephone %>
+						<% end %>						
+					</div>
+				</div>
+				<div class="row-fluid">
+					<div class="span3">
+						<b>Email</b>
+					</div>
+					<div class="span9">
+						<%= @secretary.login.email %>
+					</div>
+				</div>
+				<br/>
+			</div>
+
+		</div>
+	</div>
+	<div class="span3"></div>
+</div>
+
+<!--
 <p id="notice"><%= notice %></p>
 
 <p>
-  <b>Name:</b>
-  <%= @secretary.name %>
+<b>Name:</b>
+<%= @secretary.name %>
 </p>
 
 <p>
-  <b>Address:</b>
-  <%= @secretary.address %>
+<b>Address:</b>
+<%= @secretary.address %>
 </p>
 
 <p>
-  <b>Telephone:</b>
-  <%= @secretary.telephone %>
+<b>Telephone:</b>
+<%= @secretary.telephone %>
 </p>
 
 <p>
-  <b>Mobilephone:</b>
-  <%= @secretary.mobilephone %>
+<b>Mobilephone:</b>
+<%= @secretary.mobilephone %>
 </p>
 
 <p>
-  <b>Photo:</b>
-  <%= @secretary.photo %>
+<b>Photo:</b>
+<%= @secretary.photo %>
 </p>
 
 <p>
-  <b>Date of birth:</b>
-  <%= @secretary.date_of_birth %>
+<b>Date of birth:</b>
+<%= @secretary.date_of_birth %>
 </p>
 
 <p>
-  <b>Identification code:</b>
-  <%= @secretary.identification_code %>
+<b>Identification code:</b>
+<%= @secretary.identification_code %>
 </p>
 
 <p>
-  <b>Active:</b>
-  <%= @secretary.active %>
+<b>Active:</b>
+<%= @secretary.active %>
 </p>
 
 <p>
-  <b>Gender ID:</b>
-  <%= @secretary.gender_id %>
+<b>Gender ID:</b>
+<%= @secretary.gender_id %>
 </p>
 
 <p>
-  <b>Clinic ID:</b>
-  <%= @secretary.clinic_id %>
+<b>Clinic ID:</b>
+<%= @secretary.clinic_id %>
 </p>
 
 <p>
-  <b>Login ID:</b>
-  <%= @secretary.login_id %>
+<b>Login ID:</b>
+<%= @secretary.login_id %>
 </p>
-
 
 <%= link_to 'Edit', edit_secretary_path(@secretary) %> |
-<%= link_to 'Back', secretaries_path %>
+<%= link_to 'Back', secretaries_path %> -->

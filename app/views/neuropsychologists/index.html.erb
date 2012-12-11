@@ -1,15 +1,10 @@
 <!-- Implemented by Fábio Silva - 29/11/2012 -->
-<!-- $('tr').click(function(){
-    document.location.href='www.google.com';
-}) -->
-<%= render :file => '/navbars/_navbar_manager.html.erb'%>
-<!-- /.container -->
 <div class="container">
 	<div class="row-fluid">
 		<div class="span8 offset2" style="padding: 40px;padding-top: 20px;-webkit-box-shadow: 0 2px 10px rgba(0, 0, 0, .25);-moz-box-shadow: 0 2px 10px rgba(0,0,0,.25);box-shadow: 0 2px 10px rgba(0, 0, 0, .25);background-color: white;">
 			<div>
 				<legend>
-					Neuropsicólogos(as) da Clínica
+					Neuropsicólogos da Clínica
 				</legend>
 				<table id="neuropsychologist" class="table table-hover table-bordered">
 					<thead>
@@ -21,7 +16,7 @@
 					</thead>
 					<tbody>
 						<% @neuropsychologists.each do |neuropsychologist| %>
-						<tr onclick="location.href='<%= neuropsychologist_url(neuropsychologist) %>'">
+						<tr onmouseover="this.style.cursor ='pointer'" onclick="location.href='<%= neuropsychologist_url(neuropsychologist) %>'">
 							<td><%= neuropsychologist.name %></td>
 							<td><%= neuropsychologist.login.email %></td>
 							<td><%= neuropsychologist.mobilephone %></td>
@@ -29,7 +24,7 @@
 						<% end %>
 					</tbody>
 				</table>
-				<%= link_to 'Novo Neuropsicólogo', new_neuropsychologist_path, :class => "btn btn-primary pull-right" %>
+				<%= link_to 'Convidar Neuropsicólogo',{:controller => "neuropsychologists", :action => "invite" }, :class => "btn btn-primary pull-right" %>
 			</div>
 		</div>
 	</div>

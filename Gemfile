@@ -11,6 +11,11 @@ gem 'activerecord-postgresql-adapter'
 gem 'simple_form'
 gem 'paperclip'
 
+# Gems used for log-in / authentication
+gem 'devise'
+gem 'cancan'
+gem 'rolify'
+
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
@@ -23,9 +28,13 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
   
   gem 'jquery-datatables-rails'
-  gem 'twitter-bootstrap-rails'
-  gem 'less-rails-bootstrap'
-  gem 'therubyracer', '~>0.10.2'
+  gem 'bootstrap-sass'
+  gem 'bootswatch-rails'
+  
+  # gem 'twitter-bootstrap-rails'
+  # gem 'less-rails-bootstrap'
+  # gem 'therubyracer'
+
 end
 
 gem 'jquery-rails'

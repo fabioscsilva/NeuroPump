@@ -1,3 +1,9 @@
+<% if login_signed_in? %>
+	<% if Login.find(current_login.id).has_role? :manager %> 
+  		<%= render :file => "/clinics/showManager.html.erb" %>
+    <% else %>
+    
+	
 
     </div><!-- /.container -->
     <div class="container">
@@ -106,3 +112,6 @@
 
 
     </div>
+    <%end %>
+    
+<%end %>

@@ -1,8 +1,11 @@
 class NeuropsychologistsController < ApplicationController
+  before_filter :authenticate_login!
   # GET /neuropsychologists
   # GET /neuropsychologists.json
   def index
-    @neuropsychologists = Neuropsychologist.all
+    #authorize! :index, @login, :message => 'Not authorized!'
+    manager = Manager.first(:conditions => "login_id = #{current_login.id}")
+    @neuropsychologists = Neuropsychologist.is_active.all(:conditions => "clinic_id = #{manager.clinic.id}")
 
     respond_to do |format|
       format.html # index.html.erb
@@ -25,7 +28,10 @@ class NeuropsychologistsController < ApplicationController
   # GET /neuropsychologists/new.json
   def new
     @neuropsychologist = Neuropsychologist.new
-
+    @pageType = "new"
+    
+    @neuropsychologist.build_login
+    
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @neuropsychologist }
@@ -35,6 +41,7 @@ class NeuropsychologistsController < ApplicationController
   # GET /neuropsychologists/1/edit
   def edit
     @neuropsychologist = Neuropsychologist.find(params[:id])
+    @pageType = "edit"
   end
 
   # POST /neuropsychologists
@@ -51,7 +58,7 @@ class NeuropsychologistsController < ApplicationController
 
     respond_to do |format|
       if @neuropsychologist.save
-        format.html { redirect_to @neuropsychologist, notice: 'Neuropsychologist was successfully created.' }
+        format.html { redirect_to @neuropsychologist, notice: 'Neuropsicologo criado com sucesso.' }
         format.json { render json: @neuropsychologist, status: :created, location: @neuropsychologist }
       else
         format.html { render action: "new" }
@@ -63,18 +70,18 @@ class NeuropsychologistsController < ApplicationController
   # PUT /neuropsychologists/1
   # PUT /neuropsychologists/1.json
   def update
-    login_id = params[:neuropsychologist].delete(:login_id)
-    clinic_id = params[:neuropsychologist].delete(:clinic_id)
-    gender_id = params[:neuropsychologist].delete(:gender_id)
+    # login_id = params[:neuropsychologist].delete(:login_id)
+    # clinic_id = params[:neuropsychologist].delete(:clinic_id)
+    # gender_id = params[:neuropsychologist].delete(:gender_id)
     @neuropsychologist = Neuropsychologist.find(params[:id])
 
-    @neuropsychologist.login_id = login_id
-    @neuropsychologist.clinic_id = clinic_id
-    @neuropsychologist.gender_id = gender_id
+    # @neuropsychologist.login_id = login_id
+    # @neuropsychologist.clinic_id = clinic_id
+    # @neuropsychologist.gender_id = gender_id
 
     respond_to do |format|
       if @neuropsychologist.update_attributes(params[:neuropsychologist])
-        format.html { redirect_to @neuropsychologist, notice: 'Neuropsychologist was successfully updated.' }
+        format.html { redirect_to @neuropsychologist, notice: 'Neuropsicologo editado com sucesso.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -87,7 +94,8 @@ class NeuropsychologistsController < ApplicationController
   # DELETE /neuropsychologists/1.json
   def destroy
     @neuropsychologist = Neuropsychologist.find(params[:id])
-    @neuropsychologist.destroy
+    # @neuropsychologist.destroy
+    @neuropsychologist.update_attribute(:active ,false)
 
     respond_to do |format|
       format.html { redirect_to neuropsychologists_url }

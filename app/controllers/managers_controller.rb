@@ -1,10 +1,12 @@
 class ManagersController < ApplicationController
+  before_filter :authenticate_login!
   # GET /managers
   # GET /managers.json
   def index
-
+    #authorize! :index, @login, :message => 'Not authorized as an administrator.'
     #É preciso ir buscar a clinica do gestor atual para carregar a informação
-    @clinic = Clinic.find(1)
+    manager = Manager.first(:conditions => "login_id = #{current_login.id}")
+    @clinic = manager.clinic
 
     @managers = Manager.all
 

@@ -1,7 +1,9 @@
 class PatientsController < ApplicationController
+  before_filter :authenticate_login!
   # GET /patients
   # GET /patients.json
   def index
+    authorize! :index, @login, :message => 'Not authorized!'
     @patients = Patient.all
 
     respond_to do |format|
@@ -13,6 +15,7 @@ class PatientsController < ApplicationController
   # GET /patients/1
   # GET /patients/1.json
   def show
+    authorize! :show, @login, :message => 'Not authorized!'
     @patient = Patient.find(params[:id])
 
     respond_to do |format|
@@ -36,6 +39,7 @@ class PatientsController < ApplicationController
 
   # GET /patients/1/edit
   def edit
+    authorize! :edit, @login, :message => 'Not authorized'
     @pageType = "edit"
     @patient = Patient.find(params[:id])
     @patient.email = @patient.login.email
@@ -44,13 +48,13 @@ class PatientsController < ApplicationController
   # POST /patients
   # POST /patients.json
   def create
-
     login = Login.new
     login.email = params[:patient][:email]
     login.password = "passwordGerada" 
 
     #hard coded type for patients
     login.type_id = 2
+    login.add_role :patient
 
     gender_id = params[:patient].delete(:gender_id)
     clinic_id = params[:patient].delete(:clinic_id)
