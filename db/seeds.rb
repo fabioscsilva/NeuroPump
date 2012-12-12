@@ -84,12 +84,13 @@ manager = Manager.create([{telephone:'223421566', mobilephone:'923214007', gende
 
 patient = Patient.create([{name:'Bernardo Portela', address:'Urb.Feijo, Barroselas', telephone:'223421566', mobilephone:'915226087', education: 'Superior', profession: 'Estudante', date_of_birth:'12/10/1990', identification_code:'981324999', gender_id: male, clinic_id: clinic1, civil_status_id: st1, handedness_id: h1, login_id: login8 }])
 
-Login.find(login6).add_role :manager
 Login.find(login1).add_role :neuropsychologist
 Login.find(login2).add_role :neuropsychologist
 Login.find(login3).add_role :neuropsychologist
 Login.find(login4).add_role :secretary
 Login.find(login5).add_role :secretary
+Login.find(login6).add_role :manager
+Login.find(login7).add_role :administrator
 Login.find(login8).add_role :patient
 
 puts "Success: Data loaded"

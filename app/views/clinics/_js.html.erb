@@ -1,0 +1,184 @@
+<script type="text/javascript">
+        function echeck(str) {
+            var at="@"
+            var dot="."
+            var lat=str.indexOf(at)
+            var lstr=str.length
+            var ldot=str.indexOf(dot)
+
+            if (str.indexOf(at)==-1){
+                return false
+            }
+            if (str.indexOf(at)==-1 || str.indexOf(at)==0 || str.indexOf(at)==lstr){
+                return false
+            }
+            if (str.indexOf(dot)==-1 || str.indexOf(dot)==0 || str.indexOf(dot)==lstr){
+                return false
+            }
+            if (str.indexOf(at,(lat+1))!=-1){
+                return false
+            }
+            if (str.substring(lat-1,lat)==dot || str.substring(lat+1,lat+2)==dot){
+                alert("Invalid E-mail ID")
+                return false
+            }
+            if (str.indexOf(dot,(lat+2))==-1){
+                return false
+            }
+
+            if (str.indexOf(" ")!=-1){
+                return false
+            }
+            return true;
+        }
+
+        function nameValidation()
+        {
+            if (document.getElementById('name').value) {
+                $('#name').css({"border":"solid 1px #6CD54B"});
+                nvalidation = true;
+            } else{
+                $('#name').css({"border":"solid 1px #f00"});
+                nvalidation = false;
+            };
+
+            return nvalidation;
+        }
+
+        function addressValidation()
+        {
+            if (document.getElementById('address').value) {
+                $('#address').css({"border":"solid 1px #6CD54B"});
+                avalidation = true;
+            } else{
+                $('#address').css({"border":"solid 1px #f00"});
+                avalidation = false;
+            };
+
+            return avalidation;
+        }
+
+        function fiscalValidation()
+        {
+            if (document.getElementById('fiscal_number').value.length>8) {
+                $('#fiscal_number').css({"border":"solid 1px #6CD54B"});
+                fvalidation = true;
+            } else{
+                $('#fiscal_number').css({"border":"solid 1px #f00"});
+                fvalidation = false;
+            };
+
+            return fvalidation;
+        }
+
+        function telephoneValidation()
+        {
+            if (document.getElementById('telefone').value && document.getElementById('telefone').value.length>=9) {
+                $('#telefone').css({"border":"solid 1px #6CD54B"});
+                tvalidation = true;
+            } else{
+                if (document.getElementById('telefone').value && document.getElementById('telefone').value.length<9) {
+                    $('#telefone').css({"border":"solid 1px #f00"});
+                    tvalidation = false;
+                } else{
+                   $('#telefone').css({"border":"solid 1px #0052FF"});
+                    tvalidation = true;
+                };
+            };
+
+            return tvalidation;
+        }
+
+        function emailValidation()
+        {
+            if (echeck(document.getElementById('email').value)) {
+                $('#email').css({"border":"solid 1px #6CD54B"});
+                evalidation = true;
+            } else{
+                $('#email').css({"border":"solid 1px #f00"});
+                evalidation = false;
+            };
+            return evalidation;
+        }
+
+        function validation()
+        {
+            return nameValidation() && addressValidation() && fiscalValidation() && telephoneValidation() && emailValidation();
+        }
+    </script>
+    
+    <script type="text/javascript">
+        function limpaDados()
+        {
+            document.getElementById("name").value='';
+            document.getElementById("address").value='';
+            document.getElementById("fiscal_number").value='';
+            document.getElementById("telefone").value='';
+            document.getElementById("email").value='';
+        }
+    </script>
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="../assets/js/jquery.js"></script>
+    <script src="../assets/js/bootstrap-transition.js"></script>
+    <script src="../assets/js/bootstrap-alert.js"></script>
+    <script src="../assets/js/bootstrap-modal.js"></script>
+    <script src="../assets/js/bootstrap-dropdown.js"></script>
+    <script src="../assets/js/bootstrap-scrollspy.js"></script>
+    <script src="../assets/js/bootstrap-tab.js"></script>
+    <script src="../assets/js/bootstrap-tooltip.js"></script>
+    <script src="../assets/js/bootstrap-popover.js"></script>
+    <script src="../assets/js/bootstrap-button.js"></script>
+    <script src="../assets/js/bootstrap-collapse.js"></script>
+    <script src="../assets/js/bootstrap-carousel.js"></script>
+    <script src="../assets/js/bootstrap-typeahead.js"></script>
+    <script src="../assets/js/bootstrap-datepicker.js"></script>
+    <script>
+            $(function(){
+                    window.prettyPrint && prettyPrint();
+                    $('#dp1').datepicker({
+                            format: 'mm-dd-yyyy'
+                    });
+                    $('#dp2').datepicker();
+                    $('#dp3').datepicker();
+                    $('#dp3').datepicker();
+                    $('#dpYears').datepicker();
+                    $('#dpMonths').datepicker();
+
+
+                    var startDate = new Date(2012,1,20);
+                    var endDate = new Date(2012,1,25);
+                    $('#dp4').datepicker()
+                            .on('changeDate', function(ev){
+                                    if (ev.date.valueOf() > endDate.valueOf()){
+                                            $('#alert').show().find('strong').text('The start date can not be greater then the end date');
+                                    } else {
+                                            $('#alert').hide();
+                                            startDate = new Date(ev.date);
+                                            $('#startDate').text($('#dp4').data('date'));
+                                    }
+                                    $('#dp4').datepicker('hide');
+                            });
+                    $('#dp5').datepicker()
+                            .on('changeDate', function(ev){
+                                    if (ev.date.valueOf() < startDate.valueOf()){
+                                            $('#alert').show().find('strong').text('The end date can not be less then the start date');
+                                    } else {
+                                            $('#alert').hide();
+                                            endDate = new Date(ev.date);
+                                            $('#endDate').text($('#dp5').data('date'));
+                                    }
+                                    $('#dp5').datepicker('hide');
+                            });
+            });
+    </script>
+    <script>
+      !function ($) {
+        $(function(){
+          // carousel demo
+          $('#myCarousel').carousel()
+        })
+      }(window.jQuery)
+    </script>
