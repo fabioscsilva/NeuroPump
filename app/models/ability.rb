@@ -10,31 +10,44 @@ class Ability
   def initialize(login)
     
     login ||= Login.new 
-    # The patient can only RU its own personal information
+    # O paciente só pode ver/editar a própria informação
     if login.has_role? :patient
       can [:show, :edit, :update], Patient do |patient|
         patient.login.email == login.email
       end
-    # The neuropsychologist is able to RU/List all patients' data and RU its own information
+    # O neuropsicólogo pode ver/editar os pacientes da clínica e ver/editar o seu perfil
     elsif login.has_role? :neuropsychologist
-      can [:index, :show, :edit, :update], Patient
+      can [:index, :show, :edit, :update], Patient do |patient|
+        patient.clinic_id == login.neuropsychologists.first.clinic_id
+      end
       can [:show, :edit, :update], Neuropsychologist do |neuropsychologist|
         neuropsychologist.login.email == login.email
       end
-    # The secretary is able to CRU patients, Read/List neuropsychologists and RU its own information
+    # A secretária pode fazer manage dos clientes da própria clínica, ver psicólogos da própria clínica e editar o seu perfil
     elsif login.has_role? :secretary
-      can :manage, Patient
-      can [:index, :show], Neuropsychologist
+      can :manage, Patient do |patient|
+        patient.clinic_id == login.secretaries.first.clinic_id
+      end
+      can [:index, :show], Neuropsychologist do |neuropsychologist|
+        neuropsychologist.clinic_id == login.secretaries.first.clinic_id
+      end
       can [:show, :edit, :update], Secretary do |secretary|
         secretary.login.email == login.email
       end 
-    # The manager is able to CRU/List both neuropsychologists and secretaries
+    # O manager por fazer manage de neuropsicólogos/secretárias da própria clínica e ver/editar o seu perfil e a sua clínica
     elsif login.has_role? :manager
-      can :manage, Neuropsychologist 
-      can :manage, Secretary 
-      can :manage, Manager 
-      can :manage, Clinic # !! Para já manager pode alterar clínicas, estou a corrigir isto.
-    # The administrator is able to CRU both clinics and managers
+      can :manage, Neuropsychologist do |neuropsychologist|
+        neuropsychologist.clinic_id == login.managers.first.clinic_id
+      end
+      can :manage, Secretary do |secretary|
+        secretary.clinic_id == login.managers.first.clinic_id
+      end
+      can :manage, Manager
+      cannot :create, Manager # Não pode 
+      can [:show, :edit, :update], Clinic do |clinic|
+        clinic.id == login.managers.first.clinic_id
+      end
+    # O administrador pode fazer manage de clínicas e managers
     elsif login.has_role? :administrator
       can :manage, Clinic
       can :manage, Manager
