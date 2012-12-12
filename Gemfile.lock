@@ -34,6 +34,8 @@ GEM
     bcrypt-ruby (3.0.1-x86-mingw32)
     bootstrap-sass (2.2.1.1)
       sass (~> 3.2)
+    bootswatch-rails (0.1.0)
+      railties (>= 3.1)
     builder (3.0.4)
     cancan (1.6.8)
     cocaine (0.4.2)
@@ -133,6 +135,7 @@ PLATFORMS
 DEPENDENCIES
   activerecord-postgresql-adapter
   bootstrap-sass
+  bootswatch-rails
   cancan
   coffee-rails (~> 3.2.1)
   devise

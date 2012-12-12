@@ -80,7 +80,7 @@
 	<div class="span6">
 		<%= f.label ':date_of_birth', "Data de Nascimento" %>
 		<div class="input-append date"  data-date="01-01-1990" data-date-format="dd-mm-yyyy" >
-			<%= f.text_field :date_of_birth, :class => "span11", :value => "01-01-1990", :readonly => true ,:required => true, :id => "dp1"%>
+			<%= f.text_field :date_of_birth, :class => "span11", :value => @secretary.date_of_birth, :readonly => true ,:required => true, :id => "dp1"%>
 			<span class="add-on"><i  style="cursor: default" class="icon-calendar"></i></span>
 		</div>
 	</div>

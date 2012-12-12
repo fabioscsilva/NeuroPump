@@ -6,7 +6,7 @@ class PatientsController < ApplicationController
   def index
     authorize! :index, @login, :message => 'Not authorized!'
     # aqui tem de se ir buscar o id da clinica da secretaria logada
-    @patients = Patient.is_active.in_clinic(1).all
+    @patients = Patient.is_active.in_clinic(10).all
 
     respond_to do |format|
       format.html # index.html.erb
@@ -102,7 +102,7 @@ class PatientsController < ApplicationController
     
     
     gender_id = params[:patient].delete(:gender_id)
-    clinic_id = params[:patient].delete(:clinic_id)
+    #clinic_id = params[:patient].delete(:clinic_id)
     civil_status_id = params[:patient].delete(:civil_status_id)
     handedness_id = params[:patient].delete(:handedness_id)
     @patient = Patient.find(params[:id])
@@ -112,7 +112,7 @@ class PatientsController < ApplicationController
     
     
     @patient.gender_id = gender_id
-    @patient.clinic_id = clinic_id
+    #@patient.clinic_id = clinic_id
     @patient.civil_status_id = civil_status_id
     @patient.handedness_id = handedness_id
 
