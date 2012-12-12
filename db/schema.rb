@@ -11,18 +11,27 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121207105007) do
+ActiveRecord::Schema.define(:version => 20121212192353) do
 
   create_table "administrators", :force => true do |t|
     t.string   "name",        :null => false
-    t.string   "password",    :null => false
     t.string   "address",     :null => false
     t.string   "telephone"
     t.string   "mobilephone"
-    t.string   "email",       :null => false
     t.boolean  "active",      :null => false
+    t.integer  "login_id"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
+  end
+
+  create_table "appointments", :force => true do |t|
+    t.date     "appointment_day",      :null => false
+    t.text     "description"
+    t.integer  "patient_id"
+    t.integer  "secretary_id"
+    t.integer  "neuropsychologist_id"
+    t.datetime "created_at",           :null => false
+    t.datetime "updated_at",           :null => false
   end
 
   create_table "civil_statuses", :force => true do |t|
@@ -78,7 +87,6 @@ ActiveRecord::Schema.define(:version => 20121207105007) do
     t.string   "last_sign_in_ip"
   end
 
-  add_index "logins", ["email"], :name => "index_logins_on_email", :unique => true
   add_index "logins", ["reset_password_token"], :name => "index_logins_on_reset_password_token", :unique => true
 
   create_table "logins_roles", :id => false, :force => true do |t|
@@ -122,6 +130,8 @@ ActiveRecord::Schema.define(:version => 20121207105007) do
     t.string   "address",                               :null => false
     t.string   "telephone"
     t.string   "mobilephone"
+    t.string   "education"
+    t.string   "profession"
     t.date     "date_of_birth",                         :null => false
     t.string   "identification_code",                   :null => false
     t.boolean  "active",              :default => true
@@ -132,8 +142,6 @@ ActiveRecord::Schema.define(:version => 20121207105007) do
     t.integer  "login_id"
     t.datetime "created_at",                            :null => false
     t.datetime "updated_at",                            :null => false
-    t.string   "education"
-    t.string   "profession"
     t.string   "photo_file_name"
     t.string   "photo_content_type"
     t.integer  "photo_file_size"

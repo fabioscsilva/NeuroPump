@@ -4,7 +4,7 @@ class Patient < ActiveRecord::Base
   belongs_to :civil_status
   belongs_to :handedness
   belongs_to :login
-  has_many :sessions
+  has_many :appointments
   has_many :clinical_histories
   has_attached_file :photo, :default_url => "/assets/noimage.jpg"
 

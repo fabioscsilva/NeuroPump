@@ -1,7 +1,7 @@
-class CreateSessions < ActiveRecord::Migration
+class CreateAppointments < ActiveRecord::Migration
   def change
-    create_table :sessions do |t|
-      t.date :session_day, :null => false
+    create_table :appointments do |t|
+      t.date :appointment_day, :null => false
       t.text :description
       t.references :patient
       t.references :secretary
