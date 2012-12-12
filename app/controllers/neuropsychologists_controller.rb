@@ -1,9 +1,9 @@
 class NeuropsychologistsController < ApplicationController
-  #before_filter :authenticate_login!
+  before_filter :authenticate_login!
+  load_and_authorize_resource
   # GET /neuropsychologists
   # GET /neuropsychologists.json
   def index
-    #authorize! :index, @login, :message => 'Not authorized!'
     manager = Manager.first(:conditions => "login_id = #{current_login.id}")
     @neuropsychologists = Neuropsychologist.is_active.all(:conditions => "clinic_id = #{manager.clinic.id}")
 
@@ -16,8 +16,6 @@ class NeuropsychologistsController < ApplicationController
   # GET /neuropsychologists/1
   # GET /neuropsychologists/1.json
   def show
-    @neuropsychologist = Neuropsychologist.find(params[:id])
-
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @neuropsychologist }
@@ -35,7 +33,6 @@ class NeuropsychologistsController < ApplicationController
       @clinic = Clinic.find_by_id(clinic_id)
       if !@login.nil? && !@clinic.nil? 
         if @login.neuropsychologists.count == 0 && @login.type == Type.find_by_description("Neuropsicologo")
-        #unauthorize! if cannot? :create, @secretary
         @clinic_id =  clinic_id
         @neuropsychologist = Neuropsychologist.new
         @genders = Gender.all
@@ -62,7 +59,6 @@ class NeuropsychologistsController < ApplicationController
 
   # GET /neuropsychologists/1/edit
   def edit
-    @neuropsychologist = Neuropsychologist.find(params[:id])
     @pageType = "edit"
   end
 

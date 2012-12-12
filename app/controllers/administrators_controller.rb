@@ -1,4 +1,6 @@
 class AdministratorsController < ApplicationController
+  before_filter :authenticate_login!
+  load_and_authorize_resource
   # GET /administrators
   # GET /administrators.json
   def index
@@ -13,8 +15,6 @@ class AdministratorsController < ApplicationController
   # GET /administrators/1
   # GET /administrators/1.json
   def show
-    @administrator = Administrator.find(params[:id])
-
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @administrator }
@@ -34,7 +34,7 @@ class AdministratorsController < ApplicationController
 
   # GET /administrators/1/edit
   def edit
-    @administrator = Administrator.find(params[:id])
+
   end
 
   # POST /administrators
@@ -56,8 +56,6 @@ class AdministratorsController < ApplicationController
   # PUT /administrators/1
   # PUT /administrators/1.json
   def update
-    @administrator = Administrator.find(params[:id])
-
     respond_to do |format|
       if @administrator.update_attributes(params[:administrator])
         format.html { redirect_to @administrator, notice: 'Administrator was successfully updated.' }
@@ -72,7 +70,6 @@ class AdministratorsController < ApplicationController
   # DELETE /administrators/1
   # DELETE /administrators/1.json
   def destroy
-    @administrator = Administrator.find(params[:id])
     @administrator.destroy
 
     respond_to do |format|

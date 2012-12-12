@@ -1,9 +1,9 @@
 class ClinicsController < ApplicationController
   before_filter :authenticate_login!
+  load_and_authorize_resource
   # GET /clinics
   # GET /clinics.json
   def index
-    authorize! :index, @login, :message => 'Nao autorizado!'
     if current_login.has_role? :manager
       @clinics = Clinic.where(:active => true)
     elsif current_login.has_role? :administrator
@@ -19,9 +19,6 @@ class ClinicsController < ApplicationController
   # GET /clinics/1
   # GET /clinics/1.json
   def show
-    authorize! :index, @login, :message => 'Nao autorizado!'
-    @clinic = Clinic.find(params[:id])
-
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @clinic }
@@ -31,7 +28,6 @@ class ClinicsController < ApplicationController
   # GET /clinics/new
   # GET /clinics/new.json
   def new
-    authorize! :index, @login, :message => 'Nao autorizado!'
     @clinic = Clinic.new
 
     respond_to do |format|
@@ -42,14 +38,12 @@ class ClinicsController < ApplicationController
 
   # GET /clinics/1/edit
   def edit
-    authorize! :index, @login, :message => 'Nao autorizado!'
-    @clinic = Clinic.find(params[:id])
+
   end
 
   # POST /clinics
   # POST /clinics.json
   def create
-    authorize! :index, @login, :message => 'Nao autorizado!'
     admin_id = params[:clinic].delete(:administrator_id)
     @clinic = Clinic.new(params[:clinic])
     @clinic.active = true;
@@ -69,10 +63,6 @@ class ClinicsController < ApplicationController
   # PUT /clinics/1
   # PUT /clinics/1.json
   def update
-    authorize! :index, @login, :message => 'Nao autorizado!'
-    #admin_id = params[:clinic].delete(:administrator_id)
-    
-    @clinic = Clinic.find(params[:id])
     
     #@clinic.administrator_id = admin_id
 
@@ -90,8 +80,6 @@ class ClinicsController < ApplicationController
   # DELETE /clinics/1
   # DELETE /clinics/1.json
   def destroy
-    authorize! :index, @login, :message => 'Nao autorizado!'
-    @clinic = Clinic.find(params[:id])
     @clinic.update_attribute(:active ,false)
 
     respond_to do |format|

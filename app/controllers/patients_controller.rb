@@ -1,10 +1,9 @@
 class PatientsController < ApplicationController
   before_filter :authenticate_login!
-  #load_and_authorize_resource
+  load_and_authorize_resource
   # GET /patients
   # GET /patients.json
   def index
-    authorize! :index, @login, :message => 'Not authorized!'
     
     #Fazer a verificação se é neuropsicologo
     if current_login.has_role? :secretary
@@ -24,10 +23,6 @@ class PatientsController < ApplicationController
   # GET /patients/1
   # GET /patients/1.json
   def show
-    
-    @patient = Patient.find(params[:id])
-    authorize! :show, @patient.login, :message => 'Not authorized!'
-
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @patient }
@@ -37,10 +32,8 @@ class PatientsController < ApplicationController
   # GET /patients/new
   # GET /patients/new.json
   def new
-    authorize! :new, :message => 'Not authorized'
     @pageType = "new"
     @patient = Patient.new
-
 
     respond_to do |format|
       format.html # new.html.erb
@@ -51,8 +44,6 @@ class PatientsController < ApplicationController
   # GET /patients/1/edit
   def edit
     @pageType = "edit"
-    @patient = Patient.find(params[:id])
-    authorize! :edit, @patient.login, :message => 'Not authorized'
     @patient.email = @patient.login.email
 
   end
@@ -60,7 +51,6 @@ class PatientsController < ApplicationController
   # POST /patients
   # POST /patients.json
   def create
-    authorize! :create, :message => 'Not authorized!'
     login = Login.new
     login.email = params[:patient][:email]
     login.password = "passwordGerada" 
@@ -112,8 +102,6 @@ class PatientsController < ApplicationController
     #clinic_id = params[:patient].delete(:clinic_id)
     civil_status_id = params[:patient].delete(:civil_status_id)
     handedness_id = params[:patient].delete(:handedness_id)
-    @patient = Patient.find(params[:id])
-    authorize! :update, @patient.login, :message => 'Not authorized!'
     login = @patient.login
     
     
@@ -154,7 +142,6 @@ class PatientsController < ApplicationController
   # DELETE /patients/1
   # DELETE /patients/1.json
   def destroy
-    #authorize! :destroy, @login, :message => 'Not authorized'
     @patient = Patient.find(params[:id])
     @patient.destroy
 
