@@ -5,7 +5,7 @@ class ClinicsController < ApplicationController
   def index
     authorize! :index, @login, :message => 'Nao autorizado!'
     if current_login.has_role? :manager
-      @clinics = Clinic.where(:active => false)
+      @clinics = Clinic.where(:active => true)
     elsif current_login.has_role? :administrator
       @clinics = Clinic.all
     end
@@ -52,6 +52,7 @@ class ClinicsController < ApplicationController
     authorize! :index, @login, :message => 'Nao autorizado!'
     admin_id = params[:clinic].delete(:administrator_id)
     @clinic = Clinic.new(params[:clinic])
+    @clinic.active = true;
     @clinic.administrator_id = admin_id
 
     respond_to do |format|
@@ -91,7 +92,7 @@ class ClinicsController < ApplicationController
   def destroy
     authorize! :index, @login, :message => 'Nao autorizado!'
     @clinic = Clinic.find(params[:id])
-    @clinic.destroy
+    @clinic.update_attribute(:active ,false)
 
     respond_to do |format|
       format.html { redirect_to clinics_url }
