@@ -1,27 +1,40 @@
-<%= link_to "Neuropump", "#", :class => 'brand' %>
-<div class="nav-collapse collapse">
-	<ul class="nav pull-right">
-		<% if login_signed_in? %>
-			<% if Login.find(current_login.id).has_role? :manager %>
-				<%= render :file => "/layouts/_managerNavbar.html.erb" %>
-			<% elsif Login.find(current_login.id).has_role? :secretary %>
-				<%= render :file => "/layouts/_secretaryNavbar.html.erb" %>
-			<% end %>
-			<% if Login.find(current_login.id).has_role? :administrator %>
-				<%= render :file => "/layouts/_adminNavbar.html.erb" %>
-			<% end %>
-		<li>
-			<%= link_to "Help",    '#' %>
-		</li>
-		<li>
-			<%= link_to('Logout', destroy_login_session_path, :method=>'delete') %>
-		</li>
-		<% else %>
-			<%= render :file => "/layouts/_visitorNavbar.html.erb" %>
-		<li>
-			<%= link_to('Login', new_login_session_path)  %>
-		</li>
-		
-		<% end %>
-	</ul>
+<div class="container">
+	<div class="row">
+		<div class="logo span3">
+			<i class="ico-charts circle"></i><a class="" href="#"><img src="/assets/logo-website-01.png" alt="Neuropump" style="height:60px;"> </a>
+		</div>
+		<div class="span9">
+			<div class="navbar navbar-inverse">
+				<div class="navbar-inner">
+					<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </a>
+					<div class="nav-collapse collapse">
+						<ul class="nav">
+							<% if login_signed_in? %>
+							<% if Login.find(current_login.id).has_role? :manager %>
+							<%= render :file => "/layouts/_managerNavbar.html.erb" %>
+							<% elsif Login.find(current_login.id).has_role? :secretary %>
+							<%= render :file => "/layouts/_secretaryNavbar.html.erb" %>
+							<% end %>
+							<% if Login.find(current_login.id).has_role? :administrator %>
+							<%= render :file => "/layouts/_adminNavbar.html.erb" %>
+							<% end %>
+							<li>
+								<%= link_to "Help",    '#' %>
+							</li>
+							<li>
+								<%= link_to('Logout', destroy_login_session_path, :method=>'delete') %>
+							</li>
+							<% else %>
+							<%= render :file => "/layouts/_visitorNavbar.html.erb" %>
+							<li>
+								<%= link_to('Login', new_login_session_path)  %>
+							</li>
+
+							<% end %>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>

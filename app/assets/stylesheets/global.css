@@ -49,7 +49,7 @@ body {
 
 /* Navbar links: increase padding for taller navbar */
 .navbar .nav > li > a {
-  padding: 15px 20px;
+  padding: 18px 20px;
 }
 
 /* Offset the responsive button for proper vertical alignment */
