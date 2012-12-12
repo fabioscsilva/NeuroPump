@@ -430,7 +430,7 @@
 						'</thead>',
 		contTemplate: '<tbody><tr><td colspan="7"></td></tr></tbody>'
 	};
-	DPGlobal.template = '<div class="datepicker dropdown-menu">'+
+	DPGlobal.template = '<div class="datepicker dropdown-menu" id="datepickerid">'+
 							'<div class="datepicker-days">'+
 								'<table class=" table-condensed">'+
 									DPGlobal.headTemplate+
@@ -452,3 +452,15 @@
 						'</div>';
 
 }( window.jQuery )
+
+$(function(){
+	var contador = 0;
+	window.prettyPrint && prettyPrint();
+	$('#dp1').datepicker()
+	.on('changeDate',function(ev){
+	contador ++;
+	if(contador == 3){
+	document.getElementById("datepickerid").style.display="none";
+	}
+	})
+});

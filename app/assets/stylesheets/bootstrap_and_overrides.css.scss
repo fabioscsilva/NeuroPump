@@ -3,6 +3,11 @@
 // Then bootstrap itself
 @import "bootstrap";
 
+select {
+width: 100%;
+border: 1px solid #CCC;
+background-color: white;
+}
 // Bootstrap body padding for fixed navbar
 body { padding-top: 60px; }
 

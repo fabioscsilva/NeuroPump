@@ -1,5 +1,5 @@
 class NeuropsychologistsController < ApplicationController
-  before_filter :authenticate_login!
+  #before_filter :authenticate_login!
   # GET /neuropsychologists
   # GET /neuropsychologists.json
   def index
@@ -27,15 +27,37 @@ class NeuropsychologistsController < ApplicationController
   # GET /neuropsychologists/new
   # GET /neuropsychologists/new.json
   def new
-    @neuropsychologist = Neuropsychologist.new
-    @pageType = "new"
-    
-    @neuropsychologist.build_login
-    
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @neuropsychologist }
+  login_id = params[:id]
+  clinic_id = params[:clinic]
+  @login = nil
+    if !login_id.blank? && !clinic_id.blank?
+      @login = Login.find_by_id(login_id)
+      @clinic = Clinic.find_by_id(clinic_id)
+      if !@login.nil? && !@clinic.nil? 
+        if @login.neuropsychologists.count == 0 && @login.type == Type.find_by_description("Neuropsicologo")
+        #unauthorize! if cannot? :create, @secretary
+        @clinic_id =  clinic_id
+        @neuropsychologist = Neuropsychologist.new
+        @genders = Gender.all
+        @pageType = "new"
+        @neuropsychologist.build_login
+        respond_to do |format|
+          format.html # new.html.erb
+          format.json { render json: @neuropsychologist }
+        end
+        else
+          redirect_to new_login_session_path 
+        end
+     else
+       redirect_to new_login_session_path
+     end
+      
+        
+    else
+      redirect_to new_login_session_path 
     end
+      
+    
   end
 
   # GET /neuropsychologists/1/edit
@@ -47,18 +69,28 @@ class NeuropsychologistsController < ApplicationController
   # POST /neuropsychologists
   # POST /neuropsychologists.json
   def create
-    login_id = params[:neuropsychologist].delete(:login_id)
-    clinic_id = params[:neuropsychologist].delete(:clinic_id)
+    #raise params.inspect
+    #login_id = params[:secretary].delete(:login_id)
+    # clinic_id = params[:secretary].delete(:clinic_id)
     gender_id = params[:neuropsychologist].delete(:gender_id)
+    
+    email = params[:neuropsychologist][:login_attributes].delete(:email)
+    pass = params[:neuropsychologist][:login_attributes].delete(:password)
+    params[:neuropsychologist][:login_attributes].delete(:password_confirmation)
+    params[:neuropsychologist].delete(:login_attributes)
     @neuropsychologist = Neuropsychologist.new(params[:neuropsychologist])
-
-    @neuropsychologist.login_id = login_id
-    @neuropsychologist.clinic_id = clinic_id
+    login = Login.find_by_email(email)
+    login.update_attribute(:password,pass)
+    @neuropsychologist.login_id = login.id
     @neuropsychologist.gender_id = gender_id
-
+    # manager = Manager.first(:conditions => "login_id = #{current_login.id}")
+    @neuropsychologist.clinic_id = params[:clinic_id]
+    @neuropsychologist.active = true
     respond_to do |format|
       if @neuropsychologist.save
-        format.html { redirect_to @neuropsychologist, notice: 'Neuropsicologo criado com sucesso.' }
+
+        Login.find(@neuropsychologist.login.id).add_role :neuropsychologist
+        format.html { redirect_to new_login_session_path, notice: 'Conta criada com sucesso. Por favor entre com as credenciais introduzidas.'}
         format.json { render json: @neuropsychologist, status: :created, location: @neuropsychologist }
       else
         format.html { render action: "new" }
@@ -104,21 +136,29 @@ class NeuropsychologistsController < ApplicationController
   end
 
   def invite
+    if login_signed_in?
+      if !Login.find(current_login.id).has_role? :manager
+        redirect_to new_login_session_path   
+      end
+    else
+      redirect_to new_login_session_path  
+    end
   end
 
   def sendInvite
-    #raise params.inspect
-
+    manager = Manager.first(:conditions => "login_id = #{current_login.id}")
     emailsAux = params[:email].to_s.split('["')
     emailsAux2 = emailsAux[1].to_s.split('"]')
     @emails = emailsAux2[0].to_s.split(';')
-
+    
+    type_neuro = Type.find_by_description("Neuropsicologo").id
     @emails.each do |email|
-      UserMailer.send_email_neuropsychologists(email.to_s).deliver
-
-    session[:emailsSentNeuro] = true
-
-    redirect_to '/inviteNeuropsychologists'
+      
+      log = Login.create([{email:"#{email.to_s}", password:"qwerty", type_id: "#{type_neuro}"}])
+      UserMailer.send_email_neuropsychologists(email.to_s,log.first.id,manager.clinic.id).deliver
+      puts "#{type_neuro}!!!!!!!!!!!!!!!!"
     end
+      session[:emailsSentNeuro] = true
+      redirect_to '/inviteNeuropsychologists'
   end
 end
