@@ -5,8 +5,15 @@ class PatientsController < ApplicationController
   # GET /patients.json
   def index
     authorize! :index, @login, :message => 'Not authorized!'
-    # aqui tem de se ir buscar o id da clinica da secretaria logada
-    @patients = Patient.is_active.in_clinic(10).all
+    
+    #Fazer a verificação se é neuropsicologo
+    if current_login.has_role? :secretary
+      logged_user = Secretary.first(:conditions => "login_id = #{current_login.id}")
+    elsif 
+      logged_user = Neuropsychologist.first(:conditions => "login_id = #{current_login.id}")
+    end
+
+    @patients = Patient.is_active.in_clinic(logged_user.clinic.id).all
 
     respond_to do |format|
       format.html # index.html.erb
