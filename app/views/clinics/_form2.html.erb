@@ -1,0 +1,57 @@
+<%= simple_form_for(@clinic) do |f| %>
+  <% if @clinic.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@clinic.errors.count, "error") %> prohibited this clinic from being saved:</h2>
+
+      <ul>
+      <% @clinic.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+    <div class="span12">
+        <form>
+            <fieldset>
+                <div>
+                	<label>Nome</label>
+    				<%= f.text_field :name, :onkeyup => "nameValidation()", :id => "name", :class => "span12", :type => "text", :placeholder => "ex: Sérgio Barbosa" %>
+                    </div>
+                <div>
+                	<label>Morada</label>
+    				<%= f.text_field :address, :onkeyup => "addressValidation()", :id => "address", :class => "span12", :type => "text", :placeholder => "ex: Rua da Bouça" %>
+                </div>
+                <div class="row-fluid">
+                    <div>
+                    <label>NIF</label>
+                    <%= f.text_field :fiscal_number, :onkeyup => "fiscalValidation()", :id => "fiscal_number", :class => "span12", :type => "number", :min=>"9", :placeholder => "ex: 123456789" %>
+                    </div>
+                    <% if current_login.has_role? :administrator %>
+                    <div class="span6">
+                      <label>Activo</label>
+                      <%= f.check_box :active, :id => "activo", :class => "span12", :type => "checkbox", :checked=> "checked" %>
+                    </div>
+                    <% end %>
+                </div>
+                <div class="row-fluid">
+                    <div class="span6">
+                        <label>Telefone</label>
+                        <%= f.text_field :telephone, :maxlength=>"8", :onkeyup=>"telephoneValidation()", :id=>"telefone", :class=>"span12", :type => "number", :min=>"9", :placeholder=>"ex: 91203492" %>
+                    </div>
+                    <div class="span6">
+						<label>Email</label>
+						<%= f.text_field :email, :onkeyup=>"emailValidation()", :id=>"email", :class=>"span12", :type=>"email", :placeholder=>"ex: example@neuropump.com"%>
+                    </div>
+                </div>
+                <br>
+                <div>
+                    <%= button_to_function "Limpar", "limpaDados()", :class=>"btn span2 pull-right" %>
+                </div>
+                <div>
+                    <%= f.submit :Submeter, :type=>"submit", :onclick=>"return validation();", :class=>"btn span2 offset05 pull-right"%>
+                </div>
+            </fieldset>
+          </form>
+    </div>
+<% end %>

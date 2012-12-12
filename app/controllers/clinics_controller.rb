@@ -1,8 +1,14 @@
 class ClinicsController < ApplicationController
+  before_filter :authenticate_login!
   # GET /clinics
   # GET /clinics.json
   def index
-    @clinics = Clinic.all
+    authorize! :index, @login, :message => 'Nao autorizado!'
+    if current_login.has_role? :manager
+      @clinics = Clinic.where(:active => false)
+    elsif current_login.has_role? :administrator
+      @clinics = Clinic.all
+    end
 
     respond_to do |format|
       format.html # index.html.erb
@@ -13,6 +19,7 @@ class ClinicsController < ApplicationController
   # GET /clinics/1
   # GET /clinics/1.json
   def show
+    authorize! :index, @login, :message => 'Nao autorizado!'
     @clinic = Clinic.find(params[:id])
 
     respond_to do |format|
@@ -24,6 +31,7 @@ class ClinicsController < ApplicationController
   # GET /clinics/new
   # GET /clinics/new.json
   def new
+    authorize! :index, @login, :message => 'Nao autorizado!'
     @clinic = Clinic.new
 
     respond_to do |format|
@@ -34,12 +42,14 @@ class ClinicsController < ApplicationController
 
   # GET /clinics/1/edit
   def edit
+    authorize! :index, @login, :message => 'Nao autorizado!'
     @clinic = Clinic.find(params[:id])
   end
 
   # POST /clinics
   # POST /clinics.json
   def create
+    authorize! :index, @login, :message => 'Nao autorizado!'
     admin_id = params[:clinic].delete(:administrator_id)
     @clinic = Clinic.new(params[:clinic])
     @clinic.administrator_id = admin_id
@@ -58,6 +68,7 @@ class ClinicsController < ApplicationController
   # PUT /clinics/1
   # PUT /clinics/1.json
   def update
+    authorize! :index, @login, :message => 'Nao autorizado!'
     #admin_id = params[:clinic].delete(:administrator_id)
     
     @clinic = Clinic.find(params[:id])
@@ -78,6 +89,7 @@ class ClinicsController < ApplicationController
   # DELETE /clinics/1
   # DELETE /clinics/1.json
   def destroy
+    authorize! :index, @login, :message => 'Nao autorizado!'
     @clinic = Clinic.find(params[:id])
     @clinic.destroy
 
