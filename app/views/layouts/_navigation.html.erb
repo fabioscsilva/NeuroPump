@@ -2,9 +2,12 @@
 <div class="nav-collapse collapse">
 	<ul class="nav pull-right">
 		<% if login_signed_in? %>
-		<% if Login.find(current_login.id).has_role? :manager %>
-		<%= render :file => "/layouts/_managerNavbar.html.erb" %>
-		<% end %>
+			<% if Login.find(current_login.id).has_role? :manager %>
+				<%= render :file => "/layouts/_managerNavbar.html.erb" %>
+			<% end %>
+			<% if Login.find(current_login.id).has_role? :administrator %>
+				<%= render :file => "/layouts/_adminNavbar.html.erb" %>
+			<% end %>
 		<li>
 			<%= link_to "Help",    '#' %>
 		</li>
