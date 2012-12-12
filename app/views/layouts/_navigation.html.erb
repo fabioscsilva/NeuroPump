@@ -4,6 +4,8 @@
 		<% if login_signed_in? %>
 			<% if Login.find(current_login.id).has_role? :manager %>
 				<%= render :file => "/layouts/_managerNavbar.html.erb" %>
+			<% elsif Login.find(current_login.id).has_role? :secretary %>
+				<%= render :file => "/layouts/_secretaryNavbar.html.erb" %>
 			<% end %>
 			<li>
 				<%= link_to "Help",    '#' %>

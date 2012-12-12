@@ -9,8 +9,7 @@ jQuery ->
             "sPaginationType": "bootstrap"
             "iDisplayLength": 5
             "aoColumnDefs": [
-                        { "bSearchable": false,	"aTargets": [ 3 ] }
-                        { "bSortable"  : false,	"aTargets": [ 6 ] }
+                        { "bSortable"  : false,	"aTargets": [ 2, 3 ] }
              ]
 
   	
