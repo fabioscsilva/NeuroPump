@@ -81,5 +81,11 @@ class Constraints < ActiveRecord::Migration
     execute <<-SQL
       ALTER TABLE logins ADD CONSTRAINT fk_logins_types FOREIGN KEY (type_id) REFERENCES types(id)
     SQL
+    
+    ##Admin
+    execute <<-SQL
+      ALTER TABLE administrators ADD CONSTRAINT fk_administrators_logins FOREIGN KEY (login_id) REFERENCES logins(id)
+    SQL
+
   end
 end
