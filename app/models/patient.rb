@@ -9,10 +9,10 @@ class Patient < ActiveRecord::Base
   has_attached_file :photo, :default_url => "/assets/noimage.jpg"
 
   attr_accessible :active, :address, :date_of_birth, :identification_code, :mobilephone, 
-                  :name, :photo, :telephone, :education, :profession, :email, :palavrapass
+                  :name, :photo, :telephone, :education, :profession, :email, :palavrapass, :gender_id, :clinic_id, :civil_status_id, :handedness_id, :login_id
   attr_accessor :email, :palavrapass
 
-  validates_presence_of  :active, :address, :email,:date_of_birth, :identification_code, :name, :palavrapass
+  validates_presence_of  :active, :address, :email,:date_of_birth, :identification_code, :name
   validates :email,
              :format => {
               :with    => /^([^\s]+)((?:[-a-z0-9]\.)[a-z]{2,})$/i,
