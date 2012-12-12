@@ -9,7 +9,7 @@ class PatientsController < ApplicationController
     #Fazer a verificação se é neuropsicologo
     if current_login.has_role? :secretary
       logged_user = Secretary.first(:conditions => "login_id = #{current_login.id}")
-    elsif 
+    elsif current_login.has_role? :neuropsychologist
       logged_user = Neuropsychologist.first(:conditions => "login_id = #{current_login.id}")
     end
 
