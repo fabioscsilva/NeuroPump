@@ -1,7 +1,10 @@
 class Administrator < ActiveRecord::Base
   has_many :clinics
-
-  attr_accessible :active, :address, :email, :mobilephone, :name, :password, :telephone
+  belongs_to :login
+  
+  attr_accessible :active, :address, :mobilephone, :name, :telephone, :login_id
+  
+  validates_presence_of :name, :active, :address
   
   validates_presence_of :name, :active, :address, :email, :password
   validates :email,:format => {
