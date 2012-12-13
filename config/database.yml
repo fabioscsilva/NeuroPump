@@ -36,7 +36,7 @@ development:
   reconnect: false
   database: neuropump_development
   pool: 5
-  username: postgres
+  username: developer
   password: d45Zmo
   #timeout: 5000
   host: teste93.di.uminho.pt

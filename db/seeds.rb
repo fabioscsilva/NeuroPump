@@ -52,8 +52,9 @@ logins = Login.create([{email:'smr@fpce.uc.pt', password:'qwerty', type_id: neur
                        {email:'srodrigues14@gmail.pt', password:'qwerty', type_id: secretary},
                         {email:'brunomiguelas@gmail.pt', password:'qwerty', type_id: secretary},
                         {email:'manager@gmail.com', password:'qwerty', type_id: manager},
-                        {email: 'fabio@neuropump.com', password: 'qwerty', type_id: admin},
-                        {email: 'BLFPortela@gmail.com', password: 'qwerty', type_id: patient}])
+                        {email:'fabio@neuropump.com', password:'qwerty', type_id: admin},
+                        {email:'BLFPortela@gmail.com', password:'qwerty', type_id: patient},
+                        {email:'ruipereir@gmail.com', password:'qwerty', type_id: patient}])
 login1 = logins.first.id
 login2 = logins.second.id
 login3 = logins.third.id
@@ -62,6 +63,7 @@ login5 = logins.fifth.id
 login6 = logins[5].id
 login7 = logins[6].id
 login8 = logins[7].id
+login9 = logins[8].id
 
 #Admin
 admins = Administrator.create([{name:'Admin1', login_id: login7, address:'Braga - UMinho', telephone:'222333444', mobilephone:'912333444', active:'true'}])
@@ -82,7 +84,7 @@ secretaries = Secretary.create([{name:'Nuno Costa', address:'Rua das Fontainhas,
                                
 manager = Manager.create([{telephone:'223421566', mobilephone:'923214007', gender_id: male, clinic_id: clinic1, login_id: login6}])
 
-patient = Patient.create([{name:'Bernardo Portela', address:'Urb.Feijo, Barroselas', telephone:'223421566', mobilephone:'915226087', education: 'Superior', profession: 'Estudante', date_of_birth:'12/10/1990', identification_code:'981324999', gender_id: male, clinic_id: clinic1, civil_status_id: st1, handedness_id: h1, login_id: login8 }])
+patient = Patient.create([{name:'Rui Pereira',address:'Rua Cabral de Sousa', telephone:'223421566', mobilephone:'923214007', education:'Superior', profession:'Estudante', date_of_birth:'09/12/1960', identification_code:'981324214', active:'true', gender_id: male, clinic_id: clinic1, civil_status_id: st1, handedness_id: h1, login_id: login9}, {name:'Bernardo Portela',address:'Rua Cabral de Sousa', telephone:'223421566', mobilephone:'923214007', education:'Superior', profession:'Estudante', date_of_birth:'09/12/1960', identification_code:'981324214', active:'true', gender_id: male, clinic_id: clinic1, civil_status_id: st1, handedness_id: h1, login_id: login8}])
 
 Login.find(login1).add_role :neuropsychologist
 Login.find(login2).add_role :neuropsychologist
