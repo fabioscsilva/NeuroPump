@@ -93,6 +93,22 @@
 					</div>
 				</div>
 				<% if current_login.has_role? :administrator %>
+				<div class="row-fluid">
+					<div class="span3">
+						<b>Estado</b>
+					</div>
+					<% if @clinic.active == true %>
+					<div class="span9">
+						Ativo
+					</div>
+					<% else %>
+					<div class="span9">
+						Desativo
+					</div>
+					<% end %>
+				</div>
+				<% end %>
+				<% if current_login.has_role? :administrator %>
 				<h6 style="color: lightgray; font-weight: normal; text-transform: uppercase;">Dados do gestor</h6>
 				<hr/>
 				<div class="row-fluid">
@@ -123,9 +139,13 @@
 			<div class="row-fluid span12">
 				<%= link_to "Editar" ,edit_clinic_path(@clinic),  :class => 'btn btn-success span2', :style => 'margin-top:10px;' %>
 
-				<% if current_login.has_role? :administrator %>
-				<%= link_to "Desativar" , clinic_path(@clinic), :method => :delete, :confirm => "Tem a certeza?", :class => 'btn btn-danger span2', :style => 'margin-top:10px;' %>
-				<%end%>
+				<% if current_login.has_role? :administrator%>
+					<% if @clinic.active == true%>
+						<%= link_to "Desativar" , clinic_path(@clinic), :method => :delete, :confirm => "Tem a certeza?", :class => 'btn btn-danger span2', :style => 'margin-top:10px;' %>
+					<% else %>
+						<%= link_to "Ativar" , clinic_path(@clinic), :method => :delete, :confirm => "Tem a certeza?", :class => 'btn btn-danger span2', :style => 'margin-top:10px;' %>
+				<% end %>
+				<% end %>
 			</div>
 
 		</div>

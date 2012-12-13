@@ -63,6 +63,10 @@ class ClinicsController < ApplicationController
   # PUT /clinics/1
   # PUT /clinics/1.json
   def update
+    authorize! :index, @login, :message => 'Nao autorizado!'
+    #admin_id = params[:clinic].delete(:administrator_id)
+    
+    @clinic = Clinic.find(params[:id])
     
     #@clinic.administrator_id = admin_id
 
@@ -80,7 +84,13 @@ class ClinicsController < ApplicationController
   # DELETE /clinics/1
   # DELETE /clinics/1.json
   def destroy
-    @clinic.update_attribute(:active ,false)
+    authorize! :index, @login, :message => 'Nao autorizado!'
+    @clinic = Clinic.find(params[:id])
+    if @clinic.active == true 
+      @clinic.update_attribute(:active ,false)
+    else
+       @clinic.update_attribute(:active ,true)
+    end
 
     respond_to do |format|
       format.html { redirect_to clinics_url }
