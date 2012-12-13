@@ -77,6 +77,11 @@ select {
   border-bottom-color: #fff !important; 
 }
 
+li.dropdown.open > .dropdown-toggle, .navbar .nav li.dropdown.active > .dropdown-toggle, .navbar .nav li.dropdown.open.active > .dropdown-toggle {
+  background-color: #F6F6F6;
+  color: #555;
+}
+
 footer{  
   position: fixed; 
   bottom: 0;
