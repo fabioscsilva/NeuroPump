@@ -1,9 +1,20 @@
 <!-- Implemented by Fábio Silva - 29/11/2012 -->
 <div class="container">
 	<div class="row-fluid">
-		<div class="span10 offset1">
+		<div class="span8 offset2">
 
-			<h2>Editar Neuropsicólogo</h2>
+			<div class="row-fluid">
+				<div class="span9">
+					<h2>Editar Neuropsicólogo</h2>
+				</div>
+
+				<% if @pageType == "edit" %>
+				<% if current_login.has_role? :neuropsychologist%>
+				<%= link_to "Mudar password", edit_login_registration_path %>
+				<%end%>
+				<% end %>
+
+			</div>
 
 			<%= render 'form' %>
 

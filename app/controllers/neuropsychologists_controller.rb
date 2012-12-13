@@ -5,7 +5,7 @@ class NeuropsychologistsController < ApplicationController
   # GET /neuropsychologists.json
   def index
     manager = Manager.first(:conditions => "login_id = #{current_login.id}")
-    @neuropsychologists = Neuropsychologist.is_active.all(:conditions => "clinic_id = #{manager.clinic.id}")
+    @neuropsychologists = Neuropsychologist.all(:conditions => "clinic_id = #{manager.clinic.id}")
 
     respond_to do |format|
       format.html # index.html.erb
@@ -123,7 +123,11 @@ class NeuropsychologistsController < ApplicationController
   def destroy
     @neuropsychologist = Neuropsychologist.find(params[:id])
     # @neuropsychologist.destroy
-    @neuropsychologist.update_attribute(:active ,false)
+    if @neuropsychologist.active == true
+      @neuropsychologist.update_attribute(:active ,false)
+    else
+       @neuropsychologist.update_attribute(:active ,true)
+    end
 
     respond_to do |format|
       format.html { redirect_to neuropsychologists_url }
