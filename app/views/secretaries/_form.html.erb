@@ -12,9 +12,7 @@
 </div>
 <% end %>
 <div class="span12">
-	<% if @pageType == "edit" %>
-	<%= link_to "Mudar password", edit_login_registration_path %>
-	<% end %>
+
 	<div class="field">
 		<%= f.label :Nome %>
 		<%= f.text_field :name, :class => "span12", :onfocus => "alertas()", :placeholder => "Escreva o nome", :required => true%>

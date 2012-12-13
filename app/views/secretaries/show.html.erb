@@ -6,7 +6,12 @@
 				<!-- <button type="button" class="btn-success" style="width:100%; margin-top:10px;" >Editar Perfil</button>
 				<button type="button" class="btn-danger" style="width:100%; margin-top:10px;">Remover Perfil</button> -->
 				<%= link_to "Editar", edit_secretary_path(@secretary), :method => "get", :class => "btn btn-warning pull-right span12", :style => "margin-top:10px;"%>
+
+				<% if @secretary.active == true %>
 				<%= link_to "Desativar", @secretary, :method => :delete, :confirm => "Tem a certeza?",  :class => "btn btn-danger pull-right span12", :style => "margin-top:10px;" %>
+				<%else%>
+				<%= link_to "Ativar", @secretary, :method => :delete, :confirm => "Tem a certeza?",  :class => "btn btn-success pull-right span12", :style => "margin-top:10px;" %>
+				<%end%>
 			</div>
 			<div class="span8">
 				<h3 style="margin-bottom: 30px;"><%= @secretary.name %></h3>
@@ -49,10 +54,10 @@
 					</div>
 					<div class="span9">
 						<% if @secretary.telephone.to_str.blank?  %>
-							Sem contacto
+						Sem contacto
 						<% else %>
-							<%= @secretary.telephone %>
-						<% end %>	
+						<%= @secretary.telephone %>
+						<% end %>
 					</div>
 				</div>
 				<div class="row-fluid">
@@ -61,10 +66,10 @@
 					</div>
 					<div class="span9">
 						<% if @secretary.mobilephone.to_str.blank?  %>
-							Sem contacto
+						Sem contacto
 						<% else %>
-							<%= @secretary.mobilephone %>
-						<% end %>						
+						<%= @secretary.mobilephone %>
+						<% end %>
 					</div>
 				</div>
 				<div class="row-fluid">

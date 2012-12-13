@@ -12,6 +12,7 @@
 							<th>Nome</th>
 							<th>Email</th>
 							<th>Telemóvel</th>
+							<th>Estado</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -20,6 +21,13 @@
 							<td><%= neuropsychologist.name %></td>
 							<td><%= neuropsychologist.login.email %></td>
 							<td><%= neuropsychologist.mobilephone %></td>
+							<td>
+								<% if neuropsychologist.active == true  %>
+									<p class="text-success">Ativo</p>
+								<%else%>
+									<p class="text-error">Inativo</p>
+								<%end%>
+							</td>
 						</tr>
 						<% end %>
 					</tbody>

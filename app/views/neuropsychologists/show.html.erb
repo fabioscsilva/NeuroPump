@@ -5,7 +5,13 @@
 			<div class="span4 pull-right" style = "margin-top: 20px;">
 				<%= image_tag @neuropsychologist.photo.url %>
 				<td><%= link_to 'Editar', edit_neuropsychologist_path(@neuropsychologist), :class => "btn btn-warning pull-right span12", :style => "margin-top:10px;" %></td>
-				<td><%= link_to 'Desativar', neuropsychologist_path(@neuropsychologist), :method => :delete, :confirm => "Tem a certeza?", :class => "btn btn-danger pull-right span12", :style => "margin-top:10px;" %></td>
+				<td>
+					<% if @neuropsychologist.active == true %>
+						<%= link_to 'Desativar', neuropsychologist_path(@neuropsychologist), :method => :delete, :confirm => "Tem a certeza?", :class => "btn btn-danger pull-right span12", :style => "margin-top:10px;" %>
+					<%else%>
+						<%= link_to 'Ativar', neuropsychologist_path(@neuropsychologist), :method => :delete, :confirm => "Tem a certeza?", :class => "btn btn-success pull-right span12", :style => "margin-top:10px;" %>
+					<%end%>									
+				</td>
 			</div>
 			<div class="span8">
 				<h3 style="margin-bottom: 30px;"> <%= @neuropsychologist.name %> </h3>

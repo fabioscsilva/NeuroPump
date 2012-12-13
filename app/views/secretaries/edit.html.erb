@@ -1,8 +1,21 @@
 <div class="container">
 	<div class="row-fluid">
-		<div class="span10 offset1">
+		<div class="span8 offset2">
 
-			<h2>Editar Secretário</h2>
+			<div class="row-fluid">
+				<div class="span9">
+					<h2>Editar Secretário</h2>
+				</div>
+
+				<% if @pageType == "edit"%>
+					<% if current_login.has_role? :secretary%>
+					<div class="span4">
+						( <%= link_to "Mudar password", edit_login_registration_path %> )
+					</div>
+					<%end%>
+				<% end %>
+
+			</div>
 
 			<%= render 'form' %>
 

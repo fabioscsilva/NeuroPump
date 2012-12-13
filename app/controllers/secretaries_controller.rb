@@ -6,7 +6,7 @@ class SecretariesController < ApplicationController
   def index
     # @secretaries = Secretary.all
     manager = Manager.first(:conditions => "login_id = #{current_login.id}")
-    @secretaries = Secretary.is_active.all(:conditions => "clinic_id = #{manager.clinic.id}")
+    @secretaries = Secretary.all(:conditions => "clinic_id = #{manager.clinic.id}")
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @secretaries }
@@ -130,7 +130,11 @@ class SecretariesController < ApplicationController
   # DELETE /secretaries/1.json
   def destroy
     # @secretary.destroy
-    @secretary.update_attribute(:active ,false)
+    if @secretary.active == true
+      @secretary.update_attribute(:active ,false)
+    else
+       @secretary.update_attribute(:active ,true)
+    end
     respond_to do |format|
       format.html { redirect_to secretaries_url }
       format.json { head :no_content }
