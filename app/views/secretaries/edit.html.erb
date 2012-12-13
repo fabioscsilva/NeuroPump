@@ -1,159 +1,18 @@
- <div class="container">
-    <div class="row-fluid">
-    <div class="span8 offset2" style="padding: 40px;padding-right:80px;padding-top: 20px;-webkit-box-shadow: 0 2px 10px rgba(0, 0, 0, .25);-moz-box-shadow: 0 2px 10px rgba(0,0,0,.25);box-shadow: 0 2px 10px rgba(0, 0, 0, .25);background-color: white;">
-        
-    <h2>Editar Secretário</h2>
-    <div class="span12">
-   	
-<%= render 'form' %>
+<div class="container">
+	<div class="row-fluid">
+		<div class="span10 offset1">
 
-<!-- <%= link_to 'Show', @secretary %> |
-<%= link_to 'Back', secretaries_path %> -->
-    </div>
-    </div>
-    </div>
-    </div>
-    <!--button-succes--> <!--button-danger--> <!--button-warning--> 
-    <script type="text/javascript">
-        function echeck(str) {
-            var at="@"
-            var dot="."
-            var lat=str.indexOf(at)
-            var lstr=str.length
-            var ldot=str.indexOf(dot)
-            if (str.indexOf(at)==-1){
-                return false
-            }
-            if (str.indexOf(at)==-1 || str.indexOf(at)==0 || str.indexOf(at)==lstr){
-                return false
-            }
-            if (str.indexOf(dot)==-1 || str.indexOf(dot)==0 || str.indexOf(dot)==lstr){
-                return false
-            }
-            if (str.indexOf(at,(lat+1))!=-1){
-                return false
-            }
-            if (str.substring(lat-1,lat)==dot || str.substring(lat+1,lat+2)==dot){
-            alert("Invalid E-mail ID")
-            return false
-            }
-            if (str.indexOf(dot,(lat+2))==-1){
-                return false
-            }
+			<h2>Editar Secretário</h2>
 
-            if (str.indexOf(" ")!=-1){
-                return false
-            }
-            return true
-        }
-        function validarEmail(){
-            var emailID=document.getElementById('email')
-            
-            if ((emailID.value==null)||(emailID.value=="")){
-                return false
-            }
-            if (echeck(emailID.value)==false){
-                emailID.focus()
-                return false
-            }
-            return true
-        }
-        function alertas()
-        {
-            if(document.getElementById('bi').value.length<=8){
-               $('#bi').css({"border":"solid 1px #f00"}); 
-            }
-            else
-            {
-                $('#bi').css({"border":"solid 1px #6CD54B"}); 
-            }
-            if((document.getElementById('palavrapass').value == null || document.getElementById('palavrapass').value == "") ||
-                (document.getElementById('palavrapass').value != document.getElementById('palavrapassrepete').value)){
-               $('#palavrapass').css({"border":"solid 1px #f00"}); 
-               $('#palavrapassrepete').css({"border":"solid 1px #f00"}); 
-            }
-            else
-            {
-                $('#palavrapass').css({"border":"solid 1px #6CD54B"}); 
-                $('#palavrapassrepete').css({"border":"solid 1px #6CD54B"}); 
-            }
-            if(!validarEmail())
-            {   
-                $('#email').css({"border":"solid 1px #f00"}); 
-            }
-            else
-            {
-                $('#email').css({"border":"solid 1px #6CD54B"}); 
-            }
-            if(document.getElementById('nome').value == null || document.getElementById('nome').value == "")
-            {
-                $('#nome').css({"border":"solid 1px #f00"}); 
-            }
-            else
-            {
-                $('#nome').css({"border":"solid 1px #6CD54B"}); 
-            }
-            if(document.getElementById('morada').value == null || document.getElementById('morada').value == "")
-            {
-                $('#morada').css({"border":"solid 1px #f00"}); 
-            }
-            else
-            {
-                $('#morada').css({"border":"solid 1px #6CD54B"}); 
-            }
-            if(document.getElementById('telefone').value == null || document.getElementById('telefone').value == "")
-            {
-                $('#telefone').css({"border":"solid 1px #0052FF"}); 
-            }
-            else if(isNaN(document.getElementById('telefone').value))
-            {
-                $('#telefone').css({"border":"solid 1px #f00"}); 
-            }
-            else
-            {
-                $('#telefone').css({"border":"solid 1px #6CD54B"});                
-            }
-            if(document.getElementById('telemovel').value == null || document.getElementById('telemovel').value == "")
-            {
-                $('#telemovel').css({"border":"solid 1px #0052FF"}); 
-            }
-            else if(isNaN(document.getElementById('telemovel').value))
-            {
-                $('#telemovel').css({"border":"solid 1px #f00"}); 
-            }
-            else
-            {
-                $('#telemovel').css({"border":"solid 1px #6CD54B"}); 
-            }
-        }
-    </script>
-    
-    <script type="text/javascript">
-        function limpaDados()
-        {
-            document.getElementById("nome").value='';
-            document.getElementById("morada").value='';
-            document.getElementById("bi").value='';
-            document.getElementById("email").value='';
-            document.getElementById("palavrapass").value='';
-            document.getElementById("palavarapassrepete").value='';
-            document.getElementById("telefone").value='';
-            document.getElementById("telemovel").value='';
-            
-        }
-    </script>
-    
-    <!-- Marketing messaging and featurettes
-    ================================================== -->
-    <!-- Wrap the rest of the page in another container to center all the 
+			<%= render 'form' %>
 
+			<!-- <%= link_to 'Show', @secretary %> |
+			<%= link_to 'Back', secretaries_path %> -->
+		</div>
+	</div>
+</div>
 
-
-
-
-
-
-
-
-
+<!--button-succes-->
+<!--button-danger-->
+<!--button-warning-->
 

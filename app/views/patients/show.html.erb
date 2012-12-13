@@ -4,7 +4,7 @@
 
     <div class="span4 pull-right">
       <img style="margin-top: 10px;" src=<%= @patient.photo %> >
-      <button type="button" class="btn-success" style="width:100%; margin-top:10px;">Editar Perfil</button>
+      <%= link_to "Editar", edit_patient_path(@patient), :method => "get", :class => "btn btn-success", :style => "margin-top:10px;width:100%;" %>
     </div>
 
     <div class="span8">

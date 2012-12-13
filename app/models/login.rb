@@ -6,6 +6,7 @@ class Login < ActiveRecord::Base
   has_many :secretaries
   has_many :patients
   belongs_to :type
+  has_many :administrators
 
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
@@ -13,6 +14,6 @@ class Login < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  # Setup accessible (or protected) attributes for your model
+    # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me, :type_id
 end

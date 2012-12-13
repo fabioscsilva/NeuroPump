@@ -7,18 +7,14 @@
 		<meta name="description" content="">
 		<meta name="author" content="NeuroPump">
 		<%= stylesheet_link_tag "application", :media => "all" %>
+		<%= javascript_include_tag "application" %>
 		<%= csrf_meta_tags %>
 	</head>
 	<body>
-		<header class="navbar navbar-fixed-top">
-			<nav class="navbar-inner">
-				<div class="container">
-					<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </a>
-					<%= render 'layouts/navigation' %>
-				</div>
-			</nav>
+		<header class="navbar navbar-fixed-top clearfix" style="border-bottom: solid 4px #e6e6e6;">
+			<%= render 'layouts/navigation' %>
 		</header>
-		<div id="main" role="main">
+		<div id="main" role="main" style="margin-top: 20px;">
 			<div class="container">
 				<div class="content">
 					<div class="row">
@@ -27,18 +23,18 @@
 							<%= yield %>
 						</div>
 					</div>
-					<footer>
-						&copy; Company 2012
-					</footer>
+
 				</div>
 			</div>
 			<!--! end of .container -->
 		</div>
 		<!--! end of #main -->
-	</body>
+		<footer>
+			<div class="pull-right" style="  padding-right: 50px;">Copyright &copy; NeuroPump | Designed by NeuroPump</div>
+		</footer>
+	</body >
 	<!-- Javascripts
 	================================================== -->
 	<!-- Placed at the end of the document so the pages load faster -->
-	<%= javascript_include_tag "application" %>
 
 </html>

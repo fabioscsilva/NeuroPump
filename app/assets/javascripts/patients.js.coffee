@@ -2,16 +2,12 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 jQuery ->
-        $('#patients').dataTable
-            "sDom": "<'row-fluid'<'form-actions'>rtp>"
-            "bInfo": false
-            "bLengthChange": false
-            "sPaginationType": "bootstrap"
-            "iDisplayLength": 10
-            "aoColumnDefs": [
-                        { "bSearchable": false,	"aTargets": [ 3 ] }
-                        { "bSortable"  : false,	"aTargets": [ 6 ] }
-             ]
-
-  	
- 
+  $('#patients').dataTable
+            "sDom": "<'row-fluid'<'form-actions'f>rtp>"
+            "bInfo": false
+            "bLengthChange": false
+            "sPaginationType": "bootstrap"
+            "iDisplayLength": 5
+            "aoColumnDefs": [
+                { "bSortable"  : false,	"aTargets": [ 2, 3 ] }
+              ]

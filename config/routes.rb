@@ -1,5 +1,7 @@
 NeuroPump::Application.routes.draw do
   
+  resources :appointments
+
   authenticated :user do
     root :to => 'home#index'
   end

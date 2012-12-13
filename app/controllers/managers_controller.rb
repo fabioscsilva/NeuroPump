@@ -1,5 +1,6 @@
 class ManagersController < ApplicationController
   before_filter :authenticate_login!
+  load_and_authorize_resource
   # GET /managers
   # GET /managers.json
   def index
@@ -19,8 +20,6 @@ class ManagersController < ApplicationController
   # GET /managers/1
   # GET /managers/1.json
   def show
-    @manager = Manager.find(params[:id])
-
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @manager }
@@ -40,7 +39,7 @@ class ManagersController < ApplicationController
 
   # GET /managers/1/edit
   def edit
-    @manager = Manager.find(params[:id])
+    
   end
 
   # POST /managers

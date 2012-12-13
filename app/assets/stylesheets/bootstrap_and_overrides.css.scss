@@ -1,16 +1,100 @@
-@import "bootswatch/cerulean/variables";
+// @import "bootswatch/cerulean/variables";
 
 // Then bootstrap itself
 @import "bootstrap";
 
 // Bootstrap body padding for fixed navbar
-body { padding-top: 60px; }
+body { padding-top: 60px;}
+
+select {
+  width: 100%;
+  border: 1px solid #CCC;
+  background-color: white;
+}
+
+.nav-collapse.collapse {
+    height: auto \9 !important;
+    overflow: visible \9 !important;
+}
+
+.navbar, 
+.navbar-inner, 
+.nav,
+.navbar-inverse {
+  float: right;
+  background: #f6f6f6 !important;
+  filter: none !important;
+  border: none;
+  -webkit-box-shadow: none !important;
+       -moz-box-shadow: none !important;
+            box-shadow: none !important;
+  padding: 0px;
+  margin: 0;  
+}
+
+.navbar-inner {
+  padding-left: 0px !important;
+  padding-right: 0px !important;
+}
+
+.navbar .nav > li > a {
+  color: #666;
+  border-top:4px solid #f6f6f6;
+  text-shadow: none;
+  font-size: 16px;
+  padding: 20px;
+  padding: 20px 15px \9;
+}
+
+.navbar .nav > li > a:focus,
+.navbar .nav > li > a:hover {
+  border-top:4px solid #29a9df !important;  
+    background: #29a9df !important;   
+    color: #fff;
+}
+.navbar .nav > .active > a,
+.navbar .nav > .active > a:focus {
+    color: #29a9df !important;  
+    text-decoration: none;
+  border-top:4px solid #29a9df !important;  
+    background-color: #f6f6f6 !important;  
+    -webkit-box-shadow: none;
+       -moz-box-shadow: none;
+            box-shadow: none;
+}
+
+.navbar .nav > .active > a:hover {
+  border-top:4px solid #29a9df !important;  
+    background: #29a9df !important;   
+    color: #fff !important;
+    -webkit-box-shadow: none;
+       -moz-box-shadow: none;
+            box-shadow: none;
+}
+
+.navbar .nav .active a:hover > .caret {
+  border-top-color: #fff !important;  
+  border-bottom-color: #fff !important; 
+}
+
+footer{  
+  position: fixed; 
+  bottom: 0;
+  background: #222;
+  margin-top: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  width: 100%;
+  border-top: solid 2px #29a9df;
+  color: #DDD;
+  font-size: 13px;
+}
 
 // Responsive styles go here in case you want them
 @import "bootstrap-responsive";
 
 // And finally bootswatch style itself
-@import "bootswatch/cerulean/bootswatch";
+//@import "bootswatch/cerulean/bootswatch";
 
 input[type=number]::-webkit-inner-spin-button {
     -webkit-appearance: none;

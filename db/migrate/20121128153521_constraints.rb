@@ -1,17 +1,6 @@
 class Constraints < ActiveRecord::Migration
   def change
 
-  	###sessions
-  	execute <<-SQL
-      ALTER TABLE sessions ADD CONSTRAINT fk_sessions_patients FOREIGN KEY (patient_id) REFERENCES patients(id)
-    SQL
-    execute <<-SQL
-      ALTER TABLE sessions ADD CONSTRAINT fk_sessions_secretaries FOREIGN KEY (secretary_id) REFERENCES secretaries(id)
-    SQL
-    execute <<-SQL
-      ALTER TABLE sessions ADD CONSTRAINT fk_sessions_neuropsychologists FOREIGN KEY (neuropsychologist_id) REFERENCES neuropsychologists(id)
-    SQL
-
     ###clinics
     execute <<-SQL
       ALTER TABLE clinics ADD CONSTRAINT fk_clinics_administrator FOREIGN KEY (administrator_id) REFERENCES administrators(id)
@@ -81,5 +70,11 @@ class Constraints < ActiveRecord::Migration
     execute <<-SQL
       ALTER TABLE logins ADD CONSTRAINT fk_logins_types FOREIGN KEY (type_id) REFERENCES types(id)
     SQL
+    
+    ##Admin
+    execute <<-SQL
+      ALTER TABLE administrators ADD CONSTRAINT fk_administrators_logins FOREIGN KEY (login_id) REFERENCES logins(id)
+    SQL
+
   end
 end
