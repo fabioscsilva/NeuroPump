@@ -63,11 +63,10 @@ class ClinicsController < ApplicationController
   # PUT /clinics/1
   # PUT /clinics/1.json
   def update
-    authorize! :index, @login, :message => 'Nao autorizado!'
+    #raise params.inspect
     #admin_id = params[:clinic].delete(:administrator_id)
     
     @clinic = Clinic.find(params[:id])
-    
     #@clinic.administrator_id = admin_id
 
     respond_to do |format|
