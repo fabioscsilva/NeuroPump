@@ -18,12 +18,12 @@
 							<% if Login.find(current_login.id).has_role? :administrator %>
 							<%= render :file => "/layouts/_adminNavbar.html.erb" %>
 							<% end %>
-							<li>
+<!-- 							<li>
 								<%= link_to "Help",    '#' %>
 							</li>
 							<li>
 								<%= link_to('Logout', destroy_login_session_path, :method=>'delete') %>
-							</li>
+							</li> -->
 							<% else %>
 							<%= render :file => "/layouts/_visitorNavbar.html.erb" %>
 							<li>
