@@ -39,7 +39,7 @@ development:
   username: postgres
   password: d45Zmo
   #timeout: 5000
-  host: localhost
+  host: teste93.di.uminho.pt
   port: 5432
   
 production:
