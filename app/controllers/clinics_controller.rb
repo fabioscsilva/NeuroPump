@@ -84,7 +84,7 @@ class ClinicsController < ApplicationController
   # DELETE /clinics/1
   # DELETE /clinics/1.json
   def destroy
-    authorize! :index, @login, :message => 'Nao autorizado!'
+    #authorize! :index, @login, :message => 'Nao autorizado!'
     @clinic = Clinic.find(params[:id])
     if @clinic.active == true 
       @clinic.update_attribute(:active ,false)
