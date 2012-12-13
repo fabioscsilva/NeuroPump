@@ -17,6 +17,7 @@ jQuery ->
                                       }
                         }          
             "sPaginationType": "bootstrap"
+            "aaSorting": [[4, "asc"], [0, "asc"]]
             "iDisplayLength": 5
             "aoColumnDefs": [
                         { "bSearchable": false, "aTargets": [ 3 ] }
