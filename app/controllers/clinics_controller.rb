@@ -73,7 +73,6 @@ class ClinicsController < ApplicationController
     #admin_id = params[:clinic].delete(:administrator_id)
     
     @clinic = Clinic.find(params[:id])
-    
     #@clinic.administrator_id = admin_id
 
     respond_to do |format|
@@ -92,7 +91,11 @@ class ClinicsController < ApplicationController
   def destroy
     authorize! :index, @login, :message => 'Nao autorizado!'
     @clinic = Clinic.find(params[:id])
-    @clinic.update_attribute(:active ,false)
+    if @clinic.active == true 
+      @clinic.update_attribute(:active ,false)
+    else
+       @clinic.update_attribute(:active ,true)
+    end
 
     respond_to do |format|
       format.html { redirect_to clinics_url }
