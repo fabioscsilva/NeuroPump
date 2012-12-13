@@ -6,6 +6,16 @@ jQuery ->
             "sDom": "<'row-fluid'<'form-actions'f>rtp>"
             "bInfo": false
             "bLengthChange": false
+            "oLanguage":
+                        {
+                          "sZeroRecords": "Não foram encontrados resultados."
+                          "sSearch": "Procurar:"
+                          "oPaginate":
+                                      {
+                                        "sNext":"Próximo"
+                                        "sPrevious":"Anterior"
+                                      }                                                                             
+                        }
             "sPaginationType": "bootstrap"
             "iDisplayLength": 5
             "aoColumnDefs": [
