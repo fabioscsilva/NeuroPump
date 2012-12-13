@@ -1,15 +1,9 @@
-<% manager = Manager.first(:conditions => "login_id = #{current_login.id}") %>
-<li class="<%= highlight(managers_path) %>">
-	<%= link_to "Home", managers_path %>
-</li >
-<li class="<%= highlight(clinic_path(manager.clinic)) %>">
-	<%= link_to('Clínica', clinic_path(manager.clinic))  %>
+<% secretary = Secretary.first(:conditions => "login_id = #{current_login.id}") %>
+<li>
+	<%= link_to "Sessões", "#" %>
 </li>
-<li class="<%= highlight(secretaries_path) %>">
-	<%= link_to('Secretários', secretaries_path)  %>
-</li>
-<li class="<%= highlight(neuropsychologists_path) %>">
-	<%= link_to('Neuropsicólogos', neuropsychologists_path)  %>
+<li>
+	<%= link_to('Pacientes', patients_path)  %>
 </li>
 
 <ul class="nav pull-right">
