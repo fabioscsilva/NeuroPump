@@ -1,5 +1,8 @@
 <% secretary = Secretary.first(:conditions => "login_id = #{current_login.id}") %>
 <li>
+	<%= link_to "Home", "#" %>
+</li>
+<li>
 	<%= link_to "Sessões", "#" %>
 </li>
 <li>
@@ -18,10 +21,6 @@
 			<li>
 				<%= link_to('Logout', destroy_login_session_path, :method=>'delete') %>
 			</li>
-<!-- 			<li class="divider"></li>
-			<li>
-				<%= link_to "Help",    '#' %>
-			</li> -->
 		</ul>
 	</li>
 </ul>

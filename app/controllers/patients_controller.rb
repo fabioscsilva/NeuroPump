@@ -87,7 +87,7 @@ class PatientsController < ApplicationController
     end
     if flag == true
       respond_to do |format|
-        format.html { redirect_to @patient, notice: 'Patient was successfully created.' }
+        format.html { redirect_to @patient, notice: 'Paciente criado com cuscesso.' }
       end
     end
 
@@ -132,13 +132,13 @@ class PatientsController < ApplicationController
         end
     end
       respond_to do |format|
-        format.html { redirect_to @patient, notice: 'Patient was successfully created.' }
+        format.html { redirect_to @patient, notice: 'Paciente atualizado com sucesso.' }
       end
 
 
 
   end
-
+ 
   # DELETE /patients/1
   # DELETE /patients/1.json
   def destroy

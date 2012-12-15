@@ -47,8 +47,8 @@ class ClinicalHistoriesController < ApplicationController
 
     respond_to do |format|
       if @clinical_history.save
-        format.html { redirect_to @clinical_history, notice: 'Clinical history was successfully created.' }
-        format.json { render json: @clinical_history, status: :created, location: @clinical_history }
+        format.html { redirect_to patient_path(Patient.find(patient_id)), notice: 'Historial clinico criado com sucesso.' }
+        format.json { render json: patient_path(Patient.find(patient_id)), status: :created, location: @clinical_history }
       else
         format.html { render action: "new" }
         format.json { render json: @clinical_history.errors, status: :unprocessable_entity }
@@ -63,10 +63,11 @@ class ClinicalHistoriesController < ApplicationController
     @clinical_history = ClinicalHistory.find(params[:id])
 
     @clinical_history.patient_id = patient_id
+    
 
     respond_to do |format|
       if @clinical_history.update_attributes(params[:clinical_history])
-        format.html { redirect_to @clinical_history, notice: 'Clinical history was successfully updated.' }
+        format.html { redirect_to patient_path(Patient.find(patient_id)), notice: 'Historial clinico atualizado com sucesso.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
