@@ -5,14 +5,19 @@ class PatientsController < ApplicationController
   # GET /patients.json
   def index
     
+    @patients = nil
     #Fazer a verificação se é neuropsicologo
     if current_login.has_role? :secretary
       logged_user = Secretary.first(:conditions => "login_id = #{current_login.id}")
+      @patients = Patient.is_active.in_clinic(logged_user.clinic.id).all
     elsif current_login.has_role? :neuropsychologist
       logged_user = Neuropsychologist.first(:conditions => "login_id = #{current_login.id}")
+      # para obter os pacientes do neuropsicolgo é necessario ir a tabela das sessoes
+      appointments = Appointment.where(:neuropsychologist_id => logged_user.id)
+      @patients = appointments.collect(&:patient).uniq
     end
 
-    @patients = Patient.is_active.in_clinic(logged_user.clinic.id).all
+    
 
     respond_to do |format|
       format.html # index.html.erb
