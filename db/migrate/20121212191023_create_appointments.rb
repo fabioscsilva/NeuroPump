@@ -1,11 +1,13 @@
 class CreateAppointments < ActiveRecord::Migration
   def change
     create_table :appointments do |t|
-      t.date :appointment_day, :null => false
+      t.datetime :appointment_day, :null => false
       t.text :description
       t.references :patient
       t.references :secretary
       t.references :neuropsychologist
+      t.references :appointment_type
+      t.references :appointment_status
 
       t.timestamps
     end

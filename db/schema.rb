@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121218115049) do
+ActiveRecord::Schema.define(:version => 20121218161350) do
 
   create_table "administrators", :force => true do |t|
     t.string   "name",        :null => false
@@ -24,14 +24,35 @@ ActiveRecord::Schema.define(:version => 20121218115049) do
     t.datetime "updated_at",  :null => false
   end
 
+  create_table "appointment_plans", :force => true do |t|
+    t.integer  "appointment_id"
+    t.integer  "test_id"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+  end
+
+  create_table "appointment_statuses", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "appointment_types", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "appointments", :force => true do |t|
-    t.date     "appointment_day",      :null => false
+    t.datetime "appointment_day",       :null => false
     t.text     "description"
     t.integer  "patient_id"
     t.integer  "secretary_id"
     t.integer  "neuropsychologist_id"
-    t.datetime "created_at",           :null => false
-    t.datetime "updated_at",           :null => false
+    t.integer  "appointment_type_id"
+    t.integer  "appointment_status_id"
+    t.datetime "created_at",            :null => false
+    t.datetime "updated_at",            :null => false
   end
 
   create_table "civil_statuses", :force => true do |t|
@@ -199,9 +220,18 @@ ActiveRecord::Schema.define(:version => 20121218115049) do
     t.datetime "photo_updated_at"
   end
 
-  create_table "tests", :force => true do |t|
+  create_table "test_areas", :force => true do |t|
+    t.string   "name"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+  end
+
+  create_table "tests", :force => true do |t|
+    t.string   "name"
+    t.string   "description"
+    t.integer  "test_area_id"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
   end
 
   create_table "types", :force => true do |t|
