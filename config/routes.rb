@@ -1,5 +1,7 @@
 NeuroPump::Application.routes.draw do
-  
+
+  resources :exercises
+
   resources :appointments
 
   authenticated :user do
@@ -32,8 +34,6 @@ NeuroPump::Application.routes.draw do
   resources :clinics
 
   resources :genders
-
-  #resources :sessions
 
   resources :civil_statuses
 

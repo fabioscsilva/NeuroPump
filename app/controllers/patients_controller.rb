@@ -85,15 +85,17 @@ class PatientsController < ApplicationController
         end
       end
       rescue ActiveRecord::RecordInvalid => invalid
-        respond_to do |format| 
-          format.html { render action: "new" }
-          flag = false
-        end
+        flag = false
     end
     if flag == true
       respond_to do |format|
-        format.html { redirect_to @patient, notice: 'Paciente criado com cuscesso.' }
+        UserMailer.send_email_paciente(login.email.to_s,login.password.to_s).deliver
+        format.html { redirect_to @patient, notice: 'Paciente criado com successo.' }
       end
+    else
+      respond_to do |format| 
+          format.html { render action: "new", notice: 'Paciente nao foi criado com successo' }
+        end
     end
 
   end
@@ -128,7 +130,6 @@ class PatientsController < ApplicationController
         Login.transaction do
           @patient.update_attributes(params[:patient])
           login.update_attributes(:email => params[:patient][:email], :password => pass)
-
         end
       end
       rescue ActiveRecord::RecordInvalid => invalid

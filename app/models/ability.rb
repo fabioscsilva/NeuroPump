@@ -25,9 +25,8 @@ class Ability
       end
     # A secretária pode fazer manage dos clientes da própria clínica, ver psicólogos da própria clínica e editar o seu perfil
     elsif login.has_role? :secretary
-      can :manage, Patient do |patient|
-        patient.clinic_id == login.secretaries.first.clinic_id
-      end
+    # BERNARDO TENS D CORRIGIR ESTA MERDA TRABALHA BOI
+      can :manage, :all
       can [:index, :show], Neuropsychologist do |neuropsychologist|
         neuropsychologist.clinic_id == login.secretaries.first.clinic_id
       end
