@@ -18,7 +18,7 @@
                     <td><%= link_to appointment.patient.name, appointment.patient%></td>
                     <td><%= appointment.appointment_type.name %></td>
 					<!--   MUDAR COR CONSOANTE ESTADO -->                                      
-                    <% if appointment.appointment_status.id == 1 %>
+                    <% if appointment.appointment_status.name == 'Marcada' %>
                     	<td><p class="text-success"><%= appointment.appointment_status.name %></p></td>
                    	<% else %>
                    		<td><p class="text-error"><%= appointment.appointment_status.name %></p></td>

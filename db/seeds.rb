@@ -14,14 +14,14 @@ Patient.delete_all
 Clinic.delete_all
 Administrator.delete_all
 Gender.delete_all
-
 Role.delete_all
-
 Login.delete_all
 Type.delete_all
 Handedness.delete_all
 CivilStatus.delete_all
-
+Appointment.delete_all
+AppointmentStatus.delete_all
+AppointmentType.delete_all
 
 #Civil_Statuses
 statuses = CivilStatus.create([{description:'Solteiro'},{description: 'Casado'}, {description: 'Divorciado'}, {description: 'Viuvo'}])
@@ -78,14 +78,23 @@ neuropsychologists = Neuropsychologist.create([{name:'Mario Rodrigues Simoes', a
                                                {name:'Susana Amaral Antunes', address:'Rua das Flores, Porto', telephone:'223421566', mobilephone:'915226087', date_of_birth:'10/11/1987', identification_code:'981324214', active:'true', gender_id: female, clinic_id: clinic1, login_id: login2},
                                                {name:'Fabio Samuel Coelho da Silva', address:'Rua Tomas Pimenta, Porto', telephone:'224224252', mobilephone:'913264006', date_of_birth:'04/07/1980', identification_code:'981324214', active:'true', gender_id: male, clinic_id: clinic1, login_id: login3}])
 
+neuro1 = neuropsychologists.first.id    
+neuro2 = neuropsychologists.second.id 
+neuro3 = neuropsychologists.third.id
 
 secretaries = Secretary.create([{name:'Nuno Costa', address:'Rua das Fontainhas, Coimbra', telephone:'223421566', mobilephone:'923214007', date_of_birth:'09/12/1960', identification_code:'981324214', active:'true', gender_id: male, clinic_id: clinic1, login_id: login4},
                                {name:'Maria Amaral Antunes', address:'Rua das Flores, Porto', telephone:'223421566', mobilephone:'915226087', date_of_birth:'10/11/1987', identification_code:'981324214', active:'true', gender_id: female, clinic_id: clinic1, login_id: login5}])
+
+secretary1 =   secretaries.first.id       
+secretary2 =   secretaries.second.id          
                                
 manager = Manager.create([{telephone:'223421566', mobilephone:'923214007', gender_id: male, clinic_id: clinic1, login_id: login6}])
 
-patient = Patient.create([{name:'Rui Pereira',address:'Rua Cabral de Sousa', telephone:'223421566', mobilephone:'923214007', education:'Superior', profession:'Estudante', date_of_birth:'09/12/1960', identification_code:'981324214', active:'true', gender_id: male, clinic_id: clinic1, civil_status_id: st1, handedness_id: h1, login_id: login9}, 
+patients = Patient.create([{name:'Rui Pereira',address:'Rua Cabral de Sousa', telephone:'223421566', mobilephone:'923214007', education:'Superior', profession:'Estudante', date_of_birth:'09/12/1960', identification_code:'981324214', active:'true', gender_id: male, clinic_id: clinic1, civil_status_id: st1, handedness_id: h1, login_id: login9}, 
   {name:'Bernardo Portela',address:'Rua Cabral de Sousa', telephone:'223421566', mobilephone:'923214007', education:'Superior', profession:'Estudante', date_of_birth:'09/12/1960', identification_code:'981324214', active:'true', gender_id: male, clinic_id: clinic1, civil_status_id: st1, handedness_id: h1, login_id: login8}])
+
+patient1 = patients.first.id
+patient2 = patients.second.id
 
 Login.find(login1).add_role :neuropsychologist
 Login.find(login2).add_role :neuropsychologist
@@ -96,5 +105,20 @@ Login.find(login6).add_role :manager
 Login.find(login7).add_role :administrator
 Login.find(login8).add_role :patient
 Login.find(login9).add_role :patient
+
+
+appointment_types = AppointmentType.create([{name:'Avaliacao'},{name:'Estimulacao'}])
+app_type1 = appointment_types.first.id
+app_type2 = appointment_types.second.id
+
+
+appointment_statuses = AppointmentStatus.create([{name:'Marcada'},{name:'Realizada'}])
+app_status1 = appointment_statuses.first.id
+app_status2 = appointment_statuses.second.id
+
+appointments = Appointment.create([{description:'Sessao que permite ao paciente desenvolver as suas capacidades visuais',appointment_day:'15-12-2012',patient_id:patient1,secretary_id:secretary1,neuropsychologist_id:neuro3,appointment_status_id:app_status2,appointment_type_id:app_type1},
+                                  {description:'Sessao que permite ao paciente desenvolver as suas capacidades sonoras',appointment_day:'12-12-2012',patient_id:patient1,secretary_id:secretary1,neuropsychologist_id:neuro3,appointment_status_id:app_status2,appointment_type_id:app_type1},
+                                  {description:'Sessao que permite ao paciente desenvolver as suas capacidades visuais',appointment_day:'11-02-2013',patient_id:patient2,secretary_id:secretary2,neuropsychologist_id:neuro3,appointment_status_id:app_status1,appointment_type_id:app_type1},
+                                  {description:'Sessao que permite ao paciente desenvolver as suas capacidades visuais',appointment_day:'15-02-2013',patient_id:patient2,secretary_id:secretary2,neuropsychologist_id:neuro3,appointment_status_id:app_status1,appointment_type_id:app_type1}])
 
 puts "Success: Data loaded"
