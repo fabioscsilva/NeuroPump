@@ -2,7 +2,13 @@ class AppointmentsController < ApplicationController
   # GET /appointments
   # GET /appointments.json
   def index
-    @appointments = Appointment.all
+    
+    if current_login.has_role? :neuropsychologist
+      logged_user = Neuropsychologist.first(:conditions => "login_id = #{current_login.id}")
+      @appointments = Appointment.where(:neuropsychologist_id => logged_user.id)
+    else
+      @appointments = Appointment.all
+    end
 
     respond_to do |format|
       format.html # index.html.erb
