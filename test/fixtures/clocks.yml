@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  screen_result: 1
+  number_seq_result: 1
+  pointers_loc_result: 1
+  observations: MyText
+
+two:
+  screen_result: 1
+  number_seq_result: 1
+  pointers_loc_result: 1
+  observations: MyText

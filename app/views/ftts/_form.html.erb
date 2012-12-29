@@ -1,0 +1,65 @@
+<%= form_for(@ftt) do |f| %>
+  <% if @ftt.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@ftt.errors.count, "error") %> prohibited this ftt from being saved:</h2>
+
+      <ul>
+      <% @ftt.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :test_phase %><br />
+    <%= f.number_field :test_phase %>
+  </div>
+  <div class="field">
+    <%= f.label :first %><br />
+    <%= f.number_field :first %>
+  </div>
+  <div class="field">
+    <%= f.label :second %><br />
+    <%= f.number_field :second %>
+  </div>
+  <div class="field">
+    <%= f.label :third %><br />
+    <%= f.number_field :third %>
+  </div>
+  <div class="field">
+    <%= f.label :fourth %><br />
+    <%= f.number_field :fourth %>
+  </div>
+  <div class="field">
+    <%= f.label :fifth %><br />
+    <%= f.number_field :fifth %>
+  </div>
+  <div class="field">
+    <%= f.label :sixth %><br />
+    <%= f.number_field :sixth %>
+  </div>
+  <div class="field">
+    <%= f.label :seventh %><br />
+    <%= f.number_field :seventh %>
+  </div>
+  <div class="field">
+    <%= f.label :eighth %><br />
+    <%= f.number_field :eighth %>
+  </div>
+  <div class="field">
+    <%= f.label :ninth %><br />
+    <%= f.number_field :ninth %>
+  </div>
+  <div class="field">
+    <%= f.label :tenth %><br />
+    <%= f.number_field :tenth %>
+  </div>
+  <div class="field">
+    <%= f.label :observations %><br />
+    <%= f.text_area :observations %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

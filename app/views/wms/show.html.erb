@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Phase:</b>
+  <%= @wm.phase %>
+</p>
+
+<p>
+  <b>Correct items:</b>
+  <%= @wm.correct_items %>
+</p>
+
+<p>
+  <b>Wrong items:</b>
+  <%= @wm.wrong_items %>
+</p>
+
+<p>
+  <b>Observations:</b>
+  <%= @wm.observations %>
+</p>
+
+
+<%= link_to 'Edit', edit_wm_path(@wm) %> |
+<%= link_to 'Back', wms_path %>

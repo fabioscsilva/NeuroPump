@@ -1,0 +1,29 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  test_phase: 1
+  first: 1
+  second: 1
+  third: 1
+  fourth: 1
+  fifth: 1
+  sixth: 1
+  seventh: 1
+  eighth: 1
+  ninth: 1
+  tenth: 1
+  observations: MyText
+
+two:
+  test_phase: 1
+  first: 1
+  second: 1
+  third: 1
+  fourth: 1
+  fifth: 1
+  sixth: 1
+  seventh: 1
+  eighth: 1
+  ninth: 1
+  tenth: 1
+  observations: MyText
