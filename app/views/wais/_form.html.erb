@@ -1,0 +1,37 @@
+<%= form_for(@wai) do |f| %>
+  <% if @wai.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@wai.errors.count, "error") %> prohibited this wai from being saved:</h2>
+
+      <ul>
+      <% @wai.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :phase %><br />
+    <%= f.number_field :phase %>
+  </div>
+  <div class="field">
+    <%= f.label :spent_time %><br />
+    <%= f.time_select :spent_time %>
+  </div>
+  <div class="field">
+    <%= f.label :correct_items %><br />
+    <%= f.number_field :correct_items %>
+  </div>
+  <div class="field">
+    <%= f.label :wrong_items %><br />
+    <%= f.number_field :wrong_items %>
+  </div>
+  <div class="field">
+    <%= f.label :observations %><br />
+    <%= f.text_area :observations %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
