@@ -2,12 +2,19 @@ class ClocksController < ApplicationController
   # GET /clocks
   # GET /clocks.json
   def index
-    @clocks = Clock.all
+    @clock = Clock.new
 
     respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @clocks }
+      format.html # new.html.erb
+      format.json { render json: @clock }
     end
+
+    # @clocks = Clock.all
+# 
+    # respond_to do |format|
+      # format.html # index.html.erb
+      # format.json { render json: @clocks }
+    # end
   end
 
   # GET /clocks/1
@@ -79,5 +86,10 @@ class ClocksController < ApplicationController
       format.html { redirect_to clocks_url }
       format.json { head :no_content }
     end
+  end
+
+  def download
+    url = "public/clock.pdf"
+    send_file url, :type=>"application/pdf"
   end
 end
