@@ -1,5 +1,40 @@
-<h1>New wm</h1>
+<!-- Implemented by Fábio Silva - 29/11/2012 -->
+<div class="container">
+	<div class="row-fluid">
+		<div class="span12">
 
-<%= render 'form' %>
+			<div class="span3 pull-left">
+				<legend>
+					Sessão
+				</legend>
+				<div class="well">
+					<ul class="nav nav-list" style="float:none">
+						<li>
+							<a href="#"><i class="icon-chevron-right"></i> TMT</a>
+						</li>
+						<li>
+							<a href="#"><i class="icon-chevron-right"></i> FTT</a>
+						</li>
+						<li class="active">
+							<a href="#"><i class="icon-chevron-right"></i> Relógio</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="span9">
+				<legend>
+					<% if @wmsPhase == 1 %>
+						WMS III - Sequência Letra-Número
+					<% else %>
+						WMS III - Sequência Espacial Direta
+					<%end %>
+				</legend>
+					<%= render 'form' %>
+			</div>
+		</div>
+	</div>
+	<div class="span3"></div>
+</div>
 
-<%= link_to 'Back', wms_path %>
+
+
