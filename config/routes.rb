@@ -11,6 +11,7 @@ NeuroPump::Application.routes.draw do
   resources :ftts
 
   resources :clocks
+  match 'downloadClock' => 'clocks#download'
 
   resources :appointments
 
