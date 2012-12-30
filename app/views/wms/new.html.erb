@@ -24,17 +24,40 @@
 			<div class="span9">
 				<legend>
 					<% if @wmsPhase == 1 %>
-						WMS III - Sequência Letra-Número
+					WMS III - Sequência Letra-Número
 					<% else %>
-						WMS III - Sequência Espacial Direta
+					WMS III - Sequência Espacial Direta
 					<%end %>
+					<div class="pull-right">
+						<a href="#myModal" role="button" class="btn btn-primary btn-small" data-toggle="modal"><i class="icon-white icon-info-sign"></i></a>
+
+						<!-- Modal -->
+						<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+									×
+								</button>
+								<h4 id="myModalLabel">Wescheler Memory Scale III</h4>
+							</div>
+							<div class="modal-body" style="font-size: 12px; line-height: 20px;">
+								<p align="justify">
+									O teste Wescheler Memory Scale III Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum
+									Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum
+									Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum
+									Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum
+									Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum
+									Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum
+								</p>
+							</div>
+
+						</div>
+					</div>
+
 				</legend>
-					<%= render 'form' %>
+				<%= render 'form' %>
 			</div>
 		</div>
 	</div>
 	<div class="span3"></div>
 </div>
-
-
 
