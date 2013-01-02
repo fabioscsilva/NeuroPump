@@ -44,7 +44,7 @@
 
 </script>
 
-<% if @wmsPhase == 1 %>
+<% if session["wms_phase"] == 1 %>
 
 <table id="" class="table table-bordered table-striped">
 	<thead>
@@ -386,7 +386,6 @@
 			<td>
 			<center>
 				<%= hidden_field 'hiddenResult', nil %>
-				<%= hidden_field_tag 'wmsPhase', @wmsPhase %>
 				<label id="testResultTotal">0</label>
 			</center></td>
 		</tr>
@@ -661,8 +660,6 @@
 			<td>
 			<center>
 				<%= hidden_field 'hiddenResult', nil %>
-				<%= hidden_field_tag 'wmsPhase', @wmsPhase %>
-				<%= hidden_field_tag 'test_id', @test_id %>
 				<label id="testResultTotal">0</label>
 			</center></td>
 		</tr>

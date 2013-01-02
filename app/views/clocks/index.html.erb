@@ -14,6 +14,13 @@
 </div>
 <% end %>
 
+<script language="JavaScript">
+	function changeScreenField(id, num) {
+		var screenResult = document.getElementById(id);
+		screenResult.value = num;
+	}
+</script>
+
 <div class="container">
 	<div class="row-fluid">
 		<div class="span12">
@@ -42,46 +49,82 @@
 				</legend>
 
 				<b>Critérios de Pontuação do Teste do relógio (J. Cacho et al.):</b>
-				<table id="" class="table table-hover table-bordered table-striped">
+				<table id="" class="table table-bordered table-striped">
 					<tbody>
 						<tr>
-							<td>1. Mostrador do Relógio (máximo 2 pontos)</td>
-							<td>
-							<div class="btn-group" data-toggle="buttons-radio">
-								<%= f.radio_button :screen_result, "0" %>
-								<%= f.radio_button :screen_result, "1" %>
-								<%= f.radio_button :screen_result, "2" %>
-							</div></td>
+							<td class="span8">1. Mostrador do Relógio (máximo 2 pontos)</td>
+							<td> <%= f.hidden_field :screen_result, value: nil %>
+							<center>
+								<div class="btn-group" data-toggle="buttons-radio">
+									<button type="button" onclick="changeScreenField('clock_screen_result',0)" class="btn btn-info">
+										0
+									</button>
+									<button type="button" onclick="changeScreenField('clock_screen_result',1)" class="btn btn-info">
+										1
+									</button>
+									<button type="button" onclick="changeScreenField('clock_screen_result',2)" class="btn btn-info">
+										2
+									</button>
+								</div>
+							</center></td>
 						</tr>
 						<tr>
 							<td>2. Presença ou sequência dos números (máximo 4 pontos)</td>
-							<td>
-							<div class="btn-group" data-toggle="buttons-radio">
-								<%= f.radio_button :number_seq_result, "0" %>
-								<%= f.radio_button :number_seq_result, "1" %>
-								<%= f.radio_button :number_seq_result, "2" %>
-								<%= f.radio_button :number_seq_result, "3" %>
-								<%= f.radio_button :number_seq_result, "3.5" %>
-								<%= f.radio_button :number_seq_result, "4" %>
-							</div></td>
+							<td> <%= f.hidden_field :number_seq_result, value: nil %>
+							<center>
+								<div class="btn-group" data-toggle="buttons-radio">
+									<button type="button" onclick="changeScreenField('clock_number_seq_result',0)" class="btn btn-info">
+										0
+									</button>
+									<button type="button" onclick="changeScreenField('clock_number_seq_result',1)" class="btn btn-info">
+										1
+									</button>
+									<button type="button" onclick="changeScreenField('clock_number_seq_result',2)" class="btn btn-info">
+										2
+									</button>
+									<button type="button" onclick="changeScreenField('clock_number_seq_result',3)" class="btn btn-info">
+										3
+									</button>
+									<button type="button" onclick="changeScreenField('clock_number_seq_result',3.5)" class="btn btn-info">
+										3,5
+									</button>
+									<button type="button" onclick="changeScreenField('clock_number_seq_result',4)" class="btn btn-info">
+										4
+									</button>
+								</div>
+							</center></td>
 						</tr>
 						<tr>
 							<td>3. Presença e localização dos ponteiros (máximo 4 pontos)</td>
-							<td>
-							<div class="btn-group" data-toggle="buttons-radio">
-								<%= f.radio_button :pointers_loc_result, "0" %>
-								<%= f.radio_button :pointers_loc_result, "1" %>
-								<%= f.radio_button :pointers_loc_result, "2" %>
-								<%= f.radio_button :pointers_loc_result, "3" %>
-								<%= f.radio_button :pointers_loc_result, "3.5" %>
-								<%= f.radio_button :pointers_loc_result, "4" %>
-							</div></td>
+							<td> <%= f.hidden_field :pointers_loc_result, value: nil %>
+							<center>
+								<div class="btn-group" data-toggle="buttons-radio">
+									<button type="button" onclick="changeScreenField('clock_pointers_loc_result',0)" class="btn btn-info">
+										0
+									</button>
+									<button type="button" onclick="changeScreenField('clock_pointers_loc_result',1)" class="btn btn-info">
+										1
+									</button>
+									<button type="button" onclick="changeScreenField('clock_pointers_loc_result',2)" class="btn btn-info">
+										2
+									</button>
+									<button type="button" onclick="changeScreenField('clock_pointers_loc_result',3)" class="btn btn-info">
+										3
+									</button>
+									<button type="button" onclick="changeScreenField('clock_pointers_loc_result',3.5)" class="btn btn-info">
+										3,5
+									</button>
+									<button type="button" onclick="changeScreenField('clock_pointers_loc_result',4)" class="btn btn-info">
+										4
+									</button>
+								</div>
+							</center></td>
 						</tr>
 					</tbody>
 				</table>
 				<b>Observações:</b>
-				<%=f.text_area :observations, :rows => 5, :class => "span12", :style => "resize:vertical;"%>
-<!-- 				<label class="pull-right">Total:7</label> -->
+				<%= f.text_area :observations, :rows => 5, :class => "span12", :style => "resize:vertical;"%>
+				<!-- 				<label class="pull-right">Total:7</label> -->
 			</div>
 		</div>
 	</div>

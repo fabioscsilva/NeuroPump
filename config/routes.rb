@@ -5,6 +5,7 @@ NeuroPump::Application.routes.draw do
   resources :wms
 
   resources :wais
+  match 'downloadWais' => 'wais#download'
 
   resources :tmts
 
