@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130102142926) do
+ActiveRecord::Schema.define(:version => 20130102150129) do
 
   create_table "administrators", :force => true do |t|
     t.string   "name",        :null => false
@@ -86,6 +86,7 @@ ActiveRecord::Schema.define(:version => 20130102142926) do
     t.integer  "number_seq_result"
     t.float    "pointers_loc_result"
     t.text     "observations"
+    t.integer  "appointment_plan_id"
     t.datetime "created_at",          :null => false
     t.datetime "updated_at",          :null => false
   end
@@ -103,8 +104,9 @@ ActiveRecord::Schema.define(:version => 20130102142926) do
     t.integer  "ninth"
     t.integer  "tenth"
     t.text     "observations"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.integer  "appointment_plan_id"
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
   end
 
   create_table "genders", :force => true do |t|
@@ -256,8 +258,9 @@ ActiveRecord::Schema.define(:version => 20130102142926) do
     t.integer  "phase"
     t.time     "time"
     t.text     "observations"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.integer  "appointment_plan_id"
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
   end
 
   create_table "wais_results", :force => true do |t|
@@ -266,8 +269,9 @@ ActiveRecord::Schema.define(:version => 20130102142926) do
     t.integer  "correct_items"
     t.integer  "wrong_items"
     t.text     "observations"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+    t.integer  "appointment_plan_id"
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
   end
 
   create_table "wms_results", :force => true do |t|
@@ -275,8 +279,9 @@ ActiveRecord::Schema.define(:version => 20130102142926) do
     t.integer  "correct_items"
     t.integer  "wrong_items"
     t.text     "observations"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+    t.integer  "appointment_plan_id"
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
   end
 
 end
