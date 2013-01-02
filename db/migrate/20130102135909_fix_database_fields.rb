@@ -5,12 +5,12 @@ class FixDatabaseFields < ActiveRecord::Migration
   	drop_table :types
   	drop_table :exercises
 
-    # Renomear colunas
-    rename_table :clocks, :clock_results
-    rename_table :wms, :wms_results
-    rename_table :wais, :wais_results
-    rename_table :ftts, :ftts_results
-    rename_table :tmts, :tmts_results
+    # Renomear colunas <- BLOCO APAGADO
+    #rename_table :clocks, :clock_results
+    #rename_table :wms, :wms_results
+    #rename_table :wais, :wais_results
+    #rename_table :ftts, :ftts_results
+    #rename_table :tmts, :tmts_results
 
     # Corrigir tipos para float
     change_column :clock_results, :pointers_loc_result, :float
