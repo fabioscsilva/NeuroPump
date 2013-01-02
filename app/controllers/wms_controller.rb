@@ -24,16 +24,14 @@ class WmsController < ApplicationController
   # GET /wms/new
   # GET /wms/new.json
   def new
-    @test_id = params[:id]
-
-    @wmsPhase = 1
-
-    if !@test_id.blank?
-      @wmsPhase = 2
-    end
-
     @wm = Wm.new
-
+    
+    if session["wms_phase"].blank?
+      session["wms_phase"] = 1
+    else  
+      session["wms_phase"] = 2
+    end  
+    
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @wm }
@@ -50,7 +48,7 @@ class WmsController < ApplicationController
   def create
     #raise params.inspect
 
-    wmsPhase = params[:wmsPhase].to_f
+    wmsPhase = session["wms_phase"].to_f
     total = 0
     
     #number of answers
@@ -69,17 +67,14 @@ class WmsController < ApplicationController
     @wm.correct_items = correct
     @wm.wrong_items = wrong
     @wm.phase = wmsPhase
-    
-    if wmsPhase == 2 #verificar como se força as duas chaves primárias sem ser em Postgres
-      @wm.id = params[:test_id].to_f
-    end
 
     respond_to do |format|
       if @wm.save
         if wmsPhase == 1
-          format.html { redirect_to :controller => "wms", :action => "new", :id => @wm.id }
+          format.html { redirect_to new_wm_path, notice: 'WMS II - Sequencia Letra-Numero guardada com sucesso.' }
         else
-          format.html { redirect_to new_wm_path, notice: 'Resultados do teste guardados com sucesso.' }
+          format.html { redirect_to new_wm_path, notice: 'WMS II - Sequencia Espacial Direta guardada com sucesso.' }
+          session["wms_phase"] = nil
         end
         format.json { render json: @wm, status: :created, location: @wm }
       else
