@@ -20,9 +20,16 @@ NeuroPump::Application.routes.draw do
   end
   root :to => "home#index"
 
-  devise_for :logins
+  devise_for :logins, :controllers => {:sessions => "sessions"}
 
   resources :logins
+
+  devise_scope :login do
+  #  root :to => "devise/sessions#new"
+    get "sign_in", :to => "devise/sessions#new"
+    get "sign_out", :to => "devise/sessions#destroy"
+  #  get "sign_up", :to => "devise/registrations#new"
+  end
 
   resources :types
 
