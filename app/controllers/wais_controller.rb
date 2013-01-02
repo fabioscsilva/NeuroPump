@@ -32,6 +32,12 @@ class WaisController < ApplicationController
   def new
      @wai = Wai.new
 
+    if session["wais_phase"].blank?
+       session["wais_phase"] = 1
+    else
+       session["wais_phase"] = 2
+    end
+
      respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @wai }
@@ -48,9 +54,18 @@ class WaisController < ApplicationController
   def create
      @wai = Wai.new(params[:wai])
 
+    @wai.phase = session["wais_phase"]
+
      respond_to do |format|
       if @wai.save
-        format.html { redirect_to @wai, notice: 'Wai was successfully created.' }
+        format.html {
+          if session["wais_phase"] == 2
+             session["wais_phase"] = nil
+             redirect_to @wai, notice: 'WAIS III - Resultados Pesquisa de simbolos gravados com sucesso.'
+          else
+             redirect_to new_wai_path, notice: 'WAIS III - Resultados Codigo gravados com sucesso.'
+          end
+        }
         format.json { render json: @wai, status: :created, location: @wai }
       else
         format.html { render action: "new" }
@@ -85,5 +100,10 @@ class WaisController < ApplicationController
       format.html { redirect_to wais_url }
       format.json { head :no_content }
     end
+  end
+
+  def download
+    url = "public/wais.pdf"
+     send_file url, :type=>"application/pdf"
   end
 end

@@ -2,20 +2,12 @@ class ClocksController < ApplicationController
   # GET /clocks
   # GET /clocks.json
   def index
-    @clock = Clock.new
+    @clocks = Clock.all
 
     respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @clock }
-    end
-
-    # @clocks = Clock.all
-# 
-    # respond_to do |format|
-      # format.html # index.html.erb
-      # format.json { render json: @clocks }
-    # end
-  end
+      format.html # index.html.erb
+      format.json { render json: @clocks }
+    end  end
 
   # GET /clocks/1
   # GET /clocks/1.json

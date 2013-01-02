@@ -40,30 +40,28 @@
 				</legend>
 				<div class="row-fluid">
 					<div class="span8">
-						<div>
+<!-- 						<div>
 							<%= f.label :phase, "Fase" %>
 							<%= f.number_field :phase %>
-						</div>
+						</div> -->
 						<div>
 							<%= f.label :spent_time, "Tempo Despendido" %>
-							<%= f.time_select :spent_time %>
+							<%= f.number_field :spent_time %>
 						</div>
-						<div>
-							<%= f.label :correct_items, "Itens Certos" %>
-							<%= f.number_field :correct_items %>
-						</div>
-						<div>
-							<%= f.label :wrong_items, "Itens Errados" %>
-							<%= f.number_field :wrong_items %>
-						</div>
-						<div>
-							<b>Observações:</b>
-							<%= f.text_area :observations, :rows => 5, :class => "span12", :style => "resize:vertical;"%>
+						<div class="row-fluid">
+							<div class="span6">
+								<%= f.label :correct_items, "Itens Certos" %>
+								<%= f.number_field :correct_items %>
+							</div>
+							<div class="span6">
+								<%= f.label :wrong_items, "Itens Errados" %>
+								<%= f.number_field :wrong_items %>
+							</div>
 						</div>
 					</div>
 					<div class="span4 pull-right">
 						<center>
-							<h1>120<label>seconds</label></h1>
+							<h1>120<label>SEGUNDOS</label></h1>
 							<p>
 								<button type="button" class="btn btn-success">
 									Iniciar
@@ -76,6 +74,10 @@
 								</button>
 							</p>
 						</center>
+					</div>
+					<div>
+						<%= f.label :observations, "Observações:", :class => "span12" %>
+						<%= f.text_area :observations, :rows => 5, :class => "span12", :style => "resize:vertical;"%>
 					</div>
 				</div>
 				<div class="actions">
