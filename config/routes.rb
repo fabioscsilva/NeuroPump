@@ -1,7 +1,5 @@
 NeuroPump::Application.routes.draw do
 
-  resources :exercises
-
   resources :wms_results
 
   resources :wais_results
@@ -31,8 +29,6 @@ NeuroPump::Application.routes.draw do
     get "sign_out", :to => "devise/sessions#destroy"
   #  get "sign_up", :to => "devise/registrations#new"
   end
-
-  resources :types
 
   resources :clinical_histories
 
