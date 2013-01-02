@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121218161350) do
+ActiveRecord::Schema.define(:version => 20130102135909) do
 
   create_table "administrators", :force => true do |t|
     t.string   "name",        :null => false
@@ -44,15 +44,16 @@ ActiveRecord::Schema.define(:version => 20121218161350) do
   end
 
   create_table "appointments", :force => true do |t|
-    t.datetime "appointment_day",       :null => false
+    t.datetime "appointment_day",                       :null => false
     t.text     "description"
     t.integer  "patient_id"
     t.integer  "secretary_id"
     t.integer  "neuropsychologist_id"
     t.integer  "appointment_type_id"
     t.integer  "appointment_status_id"
-    t.datetime "created_at",            :null => false
-    t.datetime "updated_at",            :null => false
+    t.datetime "created_at",                            :null => false
+    t.datetime "updated_at",                            :null => false
+    t.integer  "duration",              :default => 60
   end
 
   create_table "civil_statuses", :force => true do |t|
@@ -62,7 +63,7 @@ ActiveRecord::Schema.define(:version => 20121218161350) do
   end
 
   create_table "clinical_histories", :force => true do |t|
-    t.string   "description", :null => false
+    t.text     "description", :null => false
     t.integer  "patient_id"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
@@ -80,13 +81,30 @@ ActiveRecord::Schema.define(:version => 20121218161350) do
     t.datetime "updated_at",                          :null => false
   end
 
-  create_table "exercises", :force => true do |t|
-    t.string   "name",        :null => false
-    t.string   "description", :null => false
-    t.string   "path",        :null => false
-    t.string   "type",        :null => false
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+  create_table "clock_results", :force => true do |t|
+    t.integer  "screen_result"
+    t.integer  "number_seq_result"
+    t.float    "pointers_loc_result"
+    t.text     "observations"
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
+  end
+
+  create_table "ftts_results", :force => true do |t|
+    t.integer  "test_phase"
+    t.integer  "first"
+    t.integer  "second"
+    t.integer  "third"
+    t.integer  "fourth"
+    t.integer  "fifth"
+    t.integer  "sixth"
+    t.integer  "seventh"
+    t.integer  "eighth"
+    t.integer  "ninth"
+    t.integer  "tenth"
+    t.text     "observations"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
   end
 
   create_table "genders", :force => true do |t|
@@ -104,7 +122,6 @@ ActiveRecord::Schema.define(:version => 20121218161350) do
   create_table "logins", :force => true do |t|
     t.string   "email",                                 :null => false
     t.string   "encrypted_password",                    :null => false
-    t.integer  "type_id"
     t.datetime "created_at",                            :null => false
     t.datetime "updated_at",                            :null => false
     t.string   "reset_password_token"
@@ -115,6 +132,7 @@ ActiveRecord::Schema.define(:version => 20121218161350) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
+    t.datetime "deleted_at"
   end
 
   add_index "logins", ["reset_password_token"], :name => "index_logins_on_reset_password_token", :unique => true
@@ -228,16 +246,37 @@ ActiveRecord::Schema.define(:version => 20121218161350) do
 
   create_table "tests", :force => true do |t|
     t.string   "name"
-    t.string   "description"
+    t.text     "description"
     t.integer  "test_area_id"
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
   end
 
-  create_table "types", :force => true do |t|
-    t.string   "description", :null => false
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+  create_table "tmts_results", :force => true do |t|
+    t.integer  "phase"
+    t.time     "time"
+    t.text     "observations"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
+
+  create_table "wais_results", :force => true do |t|
+    t.integer  "phase"
+    t.time     "spent_time"
+    t.integer  "correct_items"
+    t.integer  "wrong_items"
+    t.text     "observations"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
+
+  create_table "wms_results", :force => true do |t|
+    t.integer  "phase"
+    t.integer  "correct_items"
+    t.integer  "wrong_items"
+    t.text     "observations"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
   end
 
 end
