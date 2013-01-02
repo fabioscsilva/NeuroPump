@@ -1,8 +1,8 @@
-class FttsController < ApplicationController
+class FttResultsController < ApplicationController
   # GET /ftts
   # GET /ftts.json
   def index
-    @ftts = Ftt.all
+    @ftts = FttResult.all
 
     respond_to do |format|
       format.html # index.html.erb
@@ -13,7 +13,7 @@ class FttsController < ApplicationController
   # GET /ftts/1
   # GET /ftts/1.json
   def show
-    @ftt = Ftt.find(params[:id])
+    @ftt = FttResult.find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -24,7 +24,7 @@ class FttsController < ApplicationController
   # GET /ftts/new
   # GET /ftts/new.json
   def new
-    @ftt = Ftt.new
+    @ftt = FttResult.new
 
     respond_to do |format|
       format.html # new.html.erb
@@ -34,13 +34,13 @@ class FttsController < ApplicationController
 
   # GET /ftts/1/edit
   def edit
-    @ftt = Ftt.find(params[:id])
+    @ftt = FttResult.find(params[:id])
   end
 
   # POST /ftts
   # POST /ftts.json
   def create
-    @ftt = Ftt.new(params[:ftt])
+    @ftt = FttResult.new(params[:ftt])
 
     respond_to do |format|
       if @ftt.save
@@ -56,7 +56,7 @@ class FttsController < ApplicationController
   # PUT /ftts/1
   # PUT /ftts/1.json
   def update
-    @ftt = Ftt.find(params[:id])
+    @ftt = FttResult.find(params[:id])
 
     respond_to do |format|
       if @ftt.update_attributes(params[:ftt])
@@ -72,11 +72,11 @@ class FttsController < ApplicationController
   # DELETE /ftts/1
   # DELETE /ftts/1.json
   def destroy
-    @ftt = Ftt.find(params[:id])
+    @ftt = FttResult.find(params[:id])
     @ftt.destroy
 
     respond_to do |format|
-      format.html { redirect_to ftts_url }
+      format.html { redirect_to ftt_results_url }
       format.json { head :no_content }
     end
   end

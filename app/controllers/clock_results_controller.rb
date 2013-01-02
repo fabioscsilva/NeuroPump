@@ -1,18 +1,19 @@
-class ClocksController < ApplicationController
+class ClockResultsController < ApplicationController
   # GET /clocks
   # GET /clocks.json
   def index
-    @clocks = Clock.all
+    @clocks = ClockResult.all
 
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @clocks }
-    end  end
+    end
+  end
 
   # GET /clocks/1
   # GET /clocks/1.json
   def show
-    @clock = Clock.find(params[:id])
+    @clock = ClockResult.find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -23,7 +24,7 @@ class ClocksController < ApplicationController
   # GET /clocks/new
   # GET /clocks/new.json
   def new
-    @clock = Clock.new
+    @clock = ClockResult.new
 
     respond_to do |format|
       format.html # new.html.erb
@@ -33,13 +34,13 @@ class ClocksController < ApplicationController
 
   # GET /clocks/1/edit
   def edit
-    @clock = Clock.find(params[:id])
+    @clock = ClockResult.find(params[:id])
   end
 
   # POST /clocks
   # POST /clocks.json
   def create
-    @clock = Clock.new(params[:clock])
+    @clock = ClockResult.new(params[:clock])
 
     respond_to do |format|
       if @clock.save
@@ -55,7 +56,7 @@ class ClocksController < ApplicationController
   # PUT /clocks/1
   # PUT /clocks/1.json
   def update
-    @clock = Clock.find(params[:id])
+    @clock = ClockResult.find(params[:id])
 
     respond_to do |format|
       if @clock.update_attributes(params[:clock])
@@ -71,11 +72,11 @@ class ClocksController < ApplicationController
   # DELETE /clocks/1
   # DELETE /clocks/1.json
   def destroy
-    @clock = Clock.find(params[:id])
+    @clock = ClockResult.find(params[:id])
     @clock.destroy
 
     respond_to do |format|
-      format.html { redirect_to clocks_url }
+      format.html { redirect_to clock_results_url }
       format.json { head :no_content }
     end
   end
