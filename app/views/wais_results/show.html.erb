@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Phase:</b>
+  <%= @wai.phase %>
+</p>
+
+<p>
+  <b>Spent time:</b>
+  <%= @wai.spent_time %>
+</p>
+
+<p>
+  <b>Correct items:</b>
+  <%= @wai.correct_items %>
+</p>
+
+<p>
+  <b>Wrong items:</b>
+  <%= @wai.wrong_items %>
+</p>
+
+<p>
+  <b>Observations:</b>
+  <%= @wai.observations %>
+</p>
+
+
+<%= link_to 'Edit', edit_wais_result_path(@wai) %> |
+<%= link_to 'Back', wais_results_path %>

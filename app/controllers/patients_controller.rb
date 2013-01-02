@@ -1,6 +1,15 @@
 class PatientsController < ApplicationController
   before_filter :authenticate_login!
   load_and_authorize_resource
+
+  def games
+    
+  end
+
+  def stimulation
+    
+  end
+
   # GET /patients
   # GET /patients.json
   def index
@@ -85,8 +94,8 @@ class PatientsController < ApplicationController
         end
       end
       rescue ActiveRecord::RecordInvalid => invalid
-        flag = false
-    end
+          flag = false
+        end
     if flag == true
       respond_to do |format|
         UserMailer.send_email_paciente(login.email.to_s,login.password.to_s).deliver

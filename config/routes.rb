@@ -2,17 +2,17 @@ NeuroPump::Application.routes.draw do
 
   resources :exercises
 
-  resources :wms
+  resources :wms_results
 
-  resources :wais
-  match 'downloadWais' => 'wais#download'
+  resources :wais_results
+  match 'downloadWais' => 'wais_results#download'
 
-  resources :tmts
+  resources :tmt_results
 
-  resources :ftts
+  resources :ftt_results
 
-  resources :clocks
-  match 'downloadClock' => 'clocks#download'
+  resources :clock_results
+  match 'downloadClock' => 'clock_results#download'
 
   resources :appointments
 
@@ -36,7 +36,9 @@ NeuroPump::Application.routes.draw do
 
   resources :clinical_histories
 
-  resources :patients
+  match "patients/:id/games/:xid", :as => "stimulation", :controller => 'patients', :id => /[1-9]+/, :action => 'stimulation'
+  match "patients/:id/games", :as => "games", :controller => 'patients', :id => /[1-9]+/, :action => 'games'
+  resources :patients 
 
   resources :secretaries
   match 'sendSecretariesInvite' => 'secretaries#sendInvite'
