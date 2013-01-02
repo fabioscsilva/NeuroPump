@@ -12,7 +12,7 @@ class Ability
     login ||= Login.new 
     # O paciente só pode ver/editar a própria informação
     if login.has_role? :patient
-      can [:show, :edit, :update], Patient do |patient|
+      can [:show, :edit, :update, :games, :stimulation], Patient do |patient|
         patient.login.email == login.email
       end
     # O neuropsicólogo pode ver/editar os pacientes da clínica e ver/editar o seu perfil
