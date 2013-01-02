@@ -7,6 +7,9 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 # Implemented by Fábio Silva - 06/12/2012
+Appointment.delete_all
+AppointmentStatus.delete_all
+AppointmentType.delete_all
 Neuropsychologist.delete_all
 Secretary.delete_all
 Manager.delete_all
@@ -19,9 +22,6 @@ Login.delete_all
 Type.delete_all
 Handedness.delete_all
 CivilStatus.delete_all
-Appointment.delete_all
-AppointmentStatus.delete_all
-AppointmentType.delete_all
 
 #Civil_Statuses
 statuses = CivilStatus.create([{description:'Solteiro'},{description: 'Casado'}, {description: 'Divorciado'}, {description: 'Viuvo'}])
