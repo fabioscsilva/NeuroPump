@@ -16,4 +16,11 @@ class UserMailer < ActionMailer::Base
           :subject => "[NeuroPump] Faca o Registo na nossa plataforma",
     )
   end
+
+  def send_email_paciente(email,pass)
+    @password = pass
+    mail( :to => email,
+          :subject => "[NeuroPump] Bem-vindo ao NeuroPump",
+    )
+  end
 end

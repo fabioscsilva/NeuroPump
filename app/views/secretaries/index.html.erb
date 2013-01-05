@@ -6,12 +6,13 @@
 					Secretários da Clínica
 				</legend>
 				<% unless @secretaries.blank? %>
-				<table id="secretaries" class="table table-hover table-bordered">
+				<table id="secretaries" class="table table-hover table-bordered table-striped">
 					<thead>
 						<tr>
 							<th>Nome</th>
 							<th>Email</th>
 							<th>Telemóvel</th>
+							<th>Estado</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -20,6 +21,14 @@
 							<td><%= secretary.name %></td>
 							<td><%= secretary.login.email %></td>
 							<td><%= secretary.mobilephone %></td>
+							<td> <% if secretary.active == true  %>
+								<p class="text-success">
+									Ativo
+								</p> <%else%>
+								<p class="text-error">
+									Inativo
+								</p> <%end%> 
+							</td>
 						</tr>
 						<% end %>
 					</tbody>

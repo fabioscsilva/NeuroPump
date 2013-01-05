@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Phase:</b>
+  <%= @tmt.phase %>
+</p>
+
+<p>
+  <b>Time:</b>
+  <%= @tmt.time %>
+</p>
+
+<p>
+  <b>Observations:</b>
+  <%= @tmt.observations %>
+</p>
+
+
+<%= link_to 'Edit', edit_tmt_result_path(@tmt) %> |
+<%= link_to 'Back', tmt_results_path %>

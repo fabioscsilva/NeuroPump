@@ -1,18 +1,19 @@
 </div><!-- /.container -->
 <div class="container">
 	<div class="row-fluid">
-		<div class="span8 offset2" style="padding: 40px;padding-top: 20px;-webkit-box-shadow: 0 2px 10px rgba(0, 0, 0, .25);-moz-box-shadow: 0 2px 10px rgba(0,0,0,.25);box-shadow: 0 2px 10px rgba(0, 0, 0, .25);background-color: white;">
+		<div class="span10 offset1">
 			<div>
 				<legend>
 					Clínicas
 				</legend>
-				<table id="clinics" class="table table-hover table-bordered" id="clinics">
+				<table id="clinics" class="table table-hover table-bordered table-striped" id="clinics">
 					<thead>
 						<tr>
 							<th>Nome</th>
 							<th>Telefone</th>
 							<th>Email</th>
 							<th>Capacidade</th>
+							<th>Estado</th>
 						</tr>
 					</thead>
 					<% if @clinics %>
@@ -24,7 +25,7 @@
 							<td><%= clinic.email %></td>
 							<td>
 							<div class="row-fluid">
-								<div class="span8">
+								<div class="span7">
 									<div class="progress">
 										<div class="bar bar-danger" style="width: 100%;"></div>
 									</div>
@@ -33,6 +34,13 @@
 									10/10
 								</div>
 							</div></td>
+							<td> <% if clinic.active == true %>
+							<p class="text-success">
+								Activa
+							</p> <%else%>
+							<p class="text-error">
+								Inativa
+							</p> <%end%> </td>
 						</tr>
 						<% end %>
 					</tbody>
@@ -40,7 +48,7 @@
 				</table>
 				<!--<p><a href="#" class="pull-right">View All &raquo;</a></p>-->
 			</div>
-
+			<br>
 			<%= link_to 'Adicionar Clínica',new_clinic_path, :class => "btn btn-primary pull-right" %>
 
 		</div>

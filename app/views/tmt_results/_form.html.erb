@@ -1,0 +1,29 @@
+<%= form_for(@tmt) do |f| %>
+  <% if @tmt.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@tmt.errors.count, "error") %> prohibited this tmt from being saved:</h2>
+
+      <ul>
+      <% @tmt.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :phase %><br />
+    <%= f.number_field :phase %>
+  </div>
+  <div class="field">
+    <%= f.label :time %><br />
+    <%= f.time_select :time %>
+  </div>
+  <div class="field">
+    <%= f.label :observations %><br />
+    <%= f.text_area :observations %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

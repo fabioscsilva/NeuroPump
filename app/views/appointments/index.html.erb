@@ -1,21 +1,495 @@
-<h1>Listing appointments</h1>
+<div class="span2">
+  <div style="margin-left: 9%; margin-right: 9%" class="input-append date" id="dpYears" data-date="05-12-2012" data-date-format="dd-mm-yyyy" data-date-viewmode="years">
+      <input style="width:80%" onfocus="alertas()" class="span11" size="16" type="text" value="05-12-2012" readonly>
+      <span class="add-on"><i class="icon-calendar"></i></span>
+  </div>
+</div>
+  
+<div class="span10">
+<div id='calendar' style="width: 100%; margin-left: 2%; margin-bottom: 10%;">
+    
+</div>
+<div id="event_edit_container">
+        <%= form_for(@appointment, :remote => true) do |f| %>
 
-<table>
-  <tr>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
+            <% if @appointment.errors.any? %>
+              <div id="error_explanation">
+                <h2><%= pluralize(@appointment.errors.count, "error") %> prohibited this appointment from being saved:</h2>
 
-<% @appointments.each do |appointment| %>
-  <tr>
-    <td><%= link_to 'Show', appointment %></td>
-    <td><%= link_to 'Edit', edit_appointment_path(appointment) %></td>
-    <td><%= link_to 'Destroy', appointment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-  </tr>
-<% end %>
-</table>
+                <ul>
+                <% @appointment.errors.full_messages.each do |msg| %>
+                  <li><%= msg %></li>
+                <% end %>
+                </ul>
+              </div>
+            <% end %>
 
-<br />
+            <input type="hidden" />
+            <ul id="ulform">
+                <li id="idtoappend" style="display: none; list-style-type: none;"></li>
+                <!--<p style="width: 100%" class="date_holder"></p> -->
+                <div style="float: left; width: 40%; margin-right: 10%;font-size: 10px;">
+                <li style="list-style-type: none;">
+                        <label for="start">Hora de Início: </label>
+                        <select name="start">
+                          <option value="">Escolha a hora de início</option>
+                        </select>
+                </li>
+                <li style="list-style-type: none;">
 
-<%= link_to 'New Appointment', new_appointment_path %>
+                  <!-- <%= f.label :date, "Data" %> -->
+                  <%= f.text_field :appointment_day, :id => "valor_data", :class => "span3", :placeholder => "Introduza a data", :required => true, :type => "hidden" %>
+
+                  <!-- <%= f.label :date, "Data" %> 
+                  <div class="input-append date" data-date="01-01-2013" data-date-format="dd-mm-yyyy" >
+                    <%= f.text_field :appointment_day, :class => "span2", :value => @appointment.appointment_day, :readonly => true, :required => true, :id => 'dp', :style => "cursor:pointer"%> <!-- , :type => 'hidden' %> -->
+                    <!-- <span class="add-on"><i class="icon-calendar"></i></span> -->
+                  <!--</div>-->
+
+                </li>
+                <li style="list-style-type: none;">
+                        <label for="end">Hora de Fim: </label>
+                        <select name="end">
+                          <option value="">Escolha a hora de fim</option>
+                        </select>
+                </li>
+                </div>
+                <div style="float: left; width: 45%;font-size: 10px;">
+                <li style="list-style-type: none;">
+                        <label for="paciente">Paciente: </label>
+                        <% logged_user = Secretary.first(:conditions => "login_id = #{current_login.id}")
+                        @patients = Patient.is_active.in_clinic(logged_user.clinic.id).all %>
+                        <%= f.select :patient_id, @patients.map{ |c| [c.name, c.id] } %>
+                        <!-- <input type="text" name="paciente" /> -->
+                </li>
+                <li style="list-style-type: none;">
+                        <label for="neuropsicologo">Neuropsicologo: </label>
+                        <% @neuropsychologists = Neuropsychologist.is_active.in_clinic(logged_user.clinic.id).all %>
+                        <%= f.select :neuropsychologist_id, @neuropsychologists.map{ |c| [c.name, c.id] } %>
+                        <!-- <input type="text" name="neuropsicologo" /> -->
+                </li>
+                <li style="list-style-type: none;">
+                        <label for="Tipo">Tipo de consulta: </label>
+                        <% @types = AppointmentType.all %>
+                        <%= f.select :appointment_type_id, @types.map{ |c| [c.name, c.id] } %>
+                        <select id="tipoconsulta" name="tipo" style="display:none">
+                            <option value="1">Estimulação</option>
+                            <option value="2">Avaliação</option>
+                        </select>
+                        <!-- <input id="tipocons" type="text" name="tipo" /> -->
+                </li>
+                <li style="list-style-type: none;">
+                        <label for="Estado">Estado da consulta: </label>
+                        <% @status = AppointmentStatus.all %>
+                        <%= f.select :appointment_status_id, @status.map{ |c| [c.name, c.id] } %>    
+                        <select id="estadoconsulta" name="estado" style="display:none">
+                            <option value="1">Criada</option>
+                            <option value="2">Iniciada</option>
+                            <option value="3">Cancelada</option>
+                            <option value="4">Realizada</option>
+                        </select>
+                        <!-- <input id="estadocons" type="text" name="estado" /> -->
+                </li>
+                </div>
+
+                <div style="margin-left: 5%; width: 88%;">
+                  <li style="list-style-type: none;">
+                      <label for="description">Descrição: </label>
+                      <%= f.text_field :description, :name2 => "description", :required => true %>
+                  </li>
+                </div>
+
+                <!--
+                <% @appointments.each do |appointment| %>
+                  <%= link_to "Desativar", @appointment, :method => :delete, :confirm => "Tem a certeza?",  :class => "btn btn-danger pull-right span4", :id => "id#{appointment.id}" , :style => "display: none;" %> 
+                <% end %>
+                -->
+
+                <div class="actions">
+                  <%= f.submit :id => "submeterDados", :style => "display:none" %>
+                </div>
+            </ul>
+        <% end %>
+</div>
+</div>
+
+<!--<div class="container">
+    <div class="row-fluid">  
+        <h2>Lista de Sessões</h2>
+
+        <table id="appointments" class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>Data</th>
+                    <th>Paciente</th>
+                    <th>Tipo</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+            <% @appointments.each do |appointment| %>
+                <tr onMouseOver="this.style.cursor ='pointer'" onClick="window.location.href = '<%= url_for appointment  %>'">
+                    <td><%= appointment.appointment_day.strftime('%d-%m-%Y') %></td>
+                    <td><%= link_to appointment.patient.name, appointment.patient%></td>
+                    <td><%= appointment.appointment_type.name %></td>
+					<!--   MUDAR COR CONSOANTE ESTADO -->    <!--                                  
+                    <% if appointment.appointment_status.name == 'Marcada' %>
+                    	<td><p class="text-success"><%= appointment.appointment_status.name %></p></td>
+                   	<% else %>
+                   		<td><p class="text-error"><%= appointment.appointment_status.name %></p></td>
+                   	<% end %>
+                </tr>
+            <% end %>
+            </tbody>
+        </table>
+    </div>
+</div>-->
+
+<!-- <%= link_to 'Nova sessão manual', {:controller => "appointments", :action => "new" },:class => "btn btn-primary pull-right" %> -->
+
+<!-- isto tem de sair daqui , sao imports as bibliotecas -->
+<%= javascript_include_tag 'jquery-ui-1.8rc3.custom.min.js' %>
+<%= javascript_include_tag 'jquery.weekcalendar.js' %>
+<%= javascript_include_tag 'demo.js' %>
+
+<%= javascript_include_tag 'bootstrap-datepicker.js' %>
+<script type="text/javascript">
+$(function(){
+        window.prettyPrint && prettyPrint();
+        var startDate = new Date(2012,1,20);
+        var endDate = new Date(2012,1,25);
+        var contador = 0;
+        
+        var $calendar = $('#calendar');
+        
+        $('#dpYears').datepicker()
+        .on('changeDate', function(ev){
+            
+            globalev = ev;
+            
+            contador ++;
+            if(contador == 3)
+            {
+                $calendar.weekCalendar("goToDate");
+                contador = 0;
+                document.getElementById("datapickerid").style.display="none";
+                
+            }
+            
+          if (ev.date.valueOf() > startDate.valueOf()){
+          }
+          if (ev.date.valueOf() > startDate.valueOf()){
+          }
+        });        
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function() {
+
+   var $calendar = $('#calendar');
+   var id = 10;
+
+   $calendar.weekCalendar({
+      timeslotsPerHour : 4,
+      allowCalEventOverlap : true,
+      overlapEventsSeparate: true,
+      firstDayOfWeek : 1,
+      businessHours :{start: 8, end: 20, limitDisplay: true },
+      daysToShow : 6,
+      height : function($calendar) {
+         return $(window).height() - $("h1").outerHeight() - 1;
+      },
+      eventRender : function(calEvent, $event) {
+        //var $dialogContent = $("#event_edit_container");
+          //cores var tipoField = $("#event_edit_container").find("input[name='tipo']").val(calEvent.tipo);
+          e = document.getElementById("appointment_appointment_type_id");          
+          //alert(calEvent.tipo);
+          //e.selectedIndex = tipoField.val() - 1;
+          
+          //cores alert(calEvent.tipo);
+          //cores if(calEvent.tipo != null)
+          //cores {
+            //cores e.selectedIndex = calEvent.tipo - 1;
+          //cores }
+          //cores else
+          //cores {
+            //cores e.selectedIndex = 0;
+          //cores }
+
+          //alert('tipo' + tipoField.val());
+
+          //alert('valor render:' + e.options[e.selectedIndex].value);
+          //alert(e.options[e.selectedIndex].value);
+         if (e.options[e.selectedIndex].value == 1) {
+            $event.css("backgroundColor", "#e8fac6");
+            $event.css("color", "#247428");
+            $event.find(".wc-time").css({
+               "backgroundColor" : "#e8fac6",
+               "color" : "#247428",
+               "border" : "none"
+            });
+         }
+      },
+      draggable : function(calEvent, $event) {
+         return calEvent.readOnly != true;
+      },
+      resizable : function(calEvent, $event) {
+         return calEvent.readOnly != true;
+      },
+      eventNew : function(calEvent, $event) {
+         var $dialogContent = $("#event_edit_container");
+         resetForm($dialogContent);
+         var startField = $dialogContent.find("select[name='start']").val(calEvent.start);
+         var endField = $dialogContent.find("select[name='end']").val(calEvent.end);
+         var descriptionField = $dialogContent.find("input[name2='description']");
+
+         var pacienteField = $dialogContent.find("input[name='paciente']");
+         var neuropsicologoField = $dialogContent.find("input[name='neuropsicologo']");
+         var tipoField = $dialogContent.find("input[name='tipo']");
+         var estadoField = $dialogContent.find("input[name='estado']");
+         var bodyField = $dialogContent.find("textarea[name='body']");
+
+         $dialogContent.dialog({
+            modal: true,
+            description: "Descrição da sessão",
+            close: function() {
+               $dialogContent.dialog("destroy");
+               $dialogContent.hide();
+               $('#calendar').weekCalendar("removeUnsavedEvents");
+            },
+            buttons: {
+               save : function() {
+                  calEvent.id = id;
+                  id++;
+                  calEvent.start = new Date(startField.val());
+                  calEvent.end = new Date(endField.val());
+                  calEvent.description = descriptionField.val();
+                  calEvent.tipo = tipoField.val();
+                  calEvent.estado = estadoField.val();
+                  calEvent.paciente = pacienteField.val();
+                  calEvent.neuropsicologo = neuropsicologoField.val();
+                  calEvent.body = bodyField.val();
+
+                  $('#submeterDados').click();
+
+                  $calendar.weekCalendar("removeUnsavedEvents");
+                  $calendar.weekCalendar("updateEvent", calEvent);
+                  $dialogContent.dialog("close");
+               },
+               cancel : function() {
+                  $dialogContent.dialog("close");
+               }
+            }
+         }).show();
+
+         $dialogContent.find(".date_holder").text($calendar.weekCalendar("formatDate", calEvent.start));
+         setupStartAndEndTimeFields(startField, endField, calEvent, $calendar.weekCalendar("getTimeslotTimes", calEvent.start));
+
+      },
+      eventDrop : function(calEvent, $event) {
+        
+      },
+      eventResize : function(calEvent, $event) {
+      },
+      eventClick : function(calEvent, $event) {
+         if (calEvent.readOnly) {
+            return;
+         }
+         var $dialogContent = $("#event_edit_container");
+         resetForm($dialogContent);
+         var startField = $dialogContent.find("select[name='start']").val(calEvent.start);
+         var endField = $dialogContent.find("select[name='end']").val(calEvent.end);
+         var descriptionField = $dialogContent.find("input[name2='description']").val(calEvent.description);
+         var tipoField = $dialogContent.find("input[name='tipo']").val(calEvent.tipo);
+         //document.getElementById('appointment_appointment_type_id').selectedIndex = document.getElementById('tipocons').value - 1;
+         
+         //alert(document.getElementById('tipocons').value);
+         //alert(document.getElementById('appointment_appointment_type_id').selectedIndex);
+         //f = document.getElementById("appointment_appointment_type_id");
+         //alert('valor:' + f.options[f.selectedIndex].value);
+
+         var estadoField = $dialogContent.find("input[name='estado']").val(calEvent.estado);
+         //document.getElementById('appointment_appointment_status_id').selectedIndex = document.getElementById('estadocons').value - 1;
+         var pacienteField = $dialogContent.find("input[name='paciente']").val(calEvent.paciente);
+         var neuropsicologoField =  $dialogContent.find("input[name='neuropsicologo']").val(calEvent.neuropsicologo);
+         var bodyField = $dialogContent.find("textarea[name='body']");
+         
+
+         //aqui vai fazer append do id para depois o controller saber que ele tem de fazer update e nao create
+         $('#idtoappend').append('<input id="appointment_id" name="appointment[id]" size="30" type="text" value="'+calEvent.id+'"/>');
+
+         bodyField.val(calEvent.body);
+         $dialogContent.dialog({
+            modal: true,
+            description: "Edit - " + calEvent.description,
+            close: function() {
+               $dialogContent.dialog("destroy");
+               $dialogContent.hide();
+               $('#calendar').weekCalendar("removeUnsavedEvents");
+            },
+            buttons: {
+               save : function() {
+
+                  calEvent.start = new Date(startField.val());
+                  calEvent.end = new Date(endField.val());
+                  calEvent.description = descriptionField.val();
+                  calEvent.tipo = tipoField.val();
+                  calEvent.estado = estadoField.val();
+                  calEvent.paciente = pacienteField.val();
+                  calEvent.neuropsicologo = neuropsicologoField.val();
+                  calEvent.body = bodyField.val();
+
+                  $calendar.weekCalendar("updateEvent", calEvent);
+                  $dialogContent.dialog("close");
+               },
+               /*"delete" : function() {
+                  $calendar.weekCalendar("removeEvent", calEvent.id);
+                  $dialogContent.dialog("close");
+               },*/
+               cancel : function() {
+                  $dialogContent.dialog("close");
+               }
+            }
+         }).show();
+
+         var startField = $dialogContent.find("select[name='start']").val(calEvent.start);
+         var endField = $dialogContent.find("select[name='end']").val(calEvent.end);
+         $dialogContent.find(".date_holder").text($calendar.weekCalendar("formatDate", calEvent.start));
+         setupStartAndEndTimeFields(startField, endField, calEvent, $calendar.weekCalendar("getTimeslotTimes", calEvent.start));
+         $(window).resize().resize(); //fixes a bug in modal overlay size ??
+
+      },
+      eventMouseover : function(calEvent, $event) {
+      },
+      eventMouseout : function(calEvent, $event) {
+      },
+      noEvents : function() {
+
+      },
+      data : function(start, end, callback) {
+         callback(getEventData());
+      }
+   });
+
+   function resetForm($dialogContent) {
+      $dialogContent.find("input").val("");
+      $dialogContent.find("textarea").val("");
+   }
+
+   function getEventData() {
+      var year = new Date().getFullYear();
+      var month = new Date().getMonth();
+      var day = new Date().getDate();
+
+      return {
+         events : [
+            <% @appointments.each do |appointment| %>
+            <% @hora = appointment.appointment_day.strftime('%H').to_i + 2 %>
+            <% @mes = appointment.appointment_day.strftime('%m').to_i - 1 %>
+              <% if( appointment.appointment_status.id != 3 ) %>
+              {
+                  "id":<%= appointment.id %>,
+                  "start": new Date(<%= appointment.appointment_day.strftime('%Y, '+ @mes.to_s() +', %d, %H, %M, %S') %>),
+                  "end": new Date(<%= appointment.appointment_day.strftime('%Y, '+ @mes.to_s() +', %d, '+ @hora.to_s() +', %M, %S') %>),
+                  "description": "<%= appointment.description %>",
+                  "paciente": "<%= appointment.patient.name %>",
+                  "neuropsicologo": "<%= appointment.neuropsychologist.name %>",
+                  "tipo": "<%= appointment.appointment_type_id %>",
+                  "estado": "<%= appointment.appointment_status_id %>"
+              },
+              <% end %>
+            <% end %>
+            {
+               "id":0,
+               "start": new Date(2000, month, day, 10),
+               "end": new Date(2000, month, day, 11),
+               "description":"Consulta final",
+               "paciente": "nome do paciente",
+               "neuropsicologo": "nome do neuropsicologo",
+               readOnly : true
+            }
+         ]
+      };
+   }
+
+
+   /*
+    * Sets up the start and end time fields in the calendar event
+    * form for editing based on the calendar event being edited
+    */
+   function setupStartAndEndTimeFields($startTimeField, $endTimeField, calEvent, timeslotTimes) {
+
+      for (var i = 0; i < timeslotTimes.length; i++) {
+         var startTime = timeslotTimes[i].start;
+         var endTime = timeslotTimes[i].end;
+         var startSelected = "";
+         if (startTime.getTime() === calEvent.start.getTime()) {
+            startSelected = "selected=\"selected\"";
+         }
+         var endSelected = "";
+         if (endTime.getTime() === calEvent.end.getTime()) {
+            endSelected = "selected=\"selected\"";
+         }
+         $startTimeField.append("<option value=\"" + startTime + "\" " + startSelected + ">" + timeslotTimes[i].startFormatted + "</option>");
+         $endTimeField.append("<option value=\"" + endTime + "\" " + endSelected + ">" + timeslotTimes[i].endFormatted + "</option>");
+
+      }
+      $endTimeOptions = $endTimeField.find("option");
+      $startTimeField.trigger("change");
+   }
+
+   var $endTimeField = $("select[name='end']");
+   var $endTimeOptions = $endTimeField.find("option");
+
+   //reduces the end time options to be only after the start time options.
+   $("select[name='start']").change(function() {
+      var startTime = $(this).find(":selected").val();
+      var currentEndTime = $endTimeField.find("option:selected").val();
+      $endTimeField.html(
+            $endTimeOptions.filter(function() {
+               return startTime < $(this).val();
+            })
+            );
+
+      var endTimeSelected = false;
+      $endTimeField.find("option").each(function() {
+         if ($(this).val() === currentEndTime) {
+            $(this).attr("selected", "selected");
+            endTimeSelected = true;
+            return false;
+         }
+      });
+
+      if (!endTimeSelected) {
+         //automatically select an end date 2 slots away.
+         $endTimeField.find("option:eq(7)").attr("selected", "selected");
+      }
+
+      //tem ainda de atualizar o campo da data para ir para a base de dados
+      var dataAMudar = new Date(startTime);
+      document.getElementById("valor_data").value = dataAMudar.getFullYear() +'-'+ ( dataAMudar.getMonth() + 1) +'-'+ dataAMudar.getDate() +' '+ dataAMudar.getHours() +':'+ dataAMudar.getMinutes() +':'+ dataAMudar.getSeconds() ;
+   });
+
+
+   var $about = $("#about");
+
+   $("#about_button").click(function() {
+      $about.dialog({
+         title: "About this calendar demo",
+         width: 600,
+         close: function() {
+            $about.dialog("destroy");
+            $about.hide();
+         },
+         buttons: {
+            close : function() {
+               $about.dialog("close");
+            }
+         }
+      }).show();
+   });
+
+
+});
+</script>

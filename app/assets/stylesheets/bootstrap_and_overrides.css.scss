@@ -77,6 +77,11 @@ select {
   border-bottom-color: #fff !important; 
 }
 
+li.dropdown.open > .dropdown-toggle, .navbar .nav li.dropdown.active > .dropdown-toggle, .navbar .nav li.dropdown.open.active > .dropdown-toggle {
+  background-color: #F6F6F6;
+  color: #555;
+}
+
 footer{  
   position: fixed; 
   bottom: 0;
@@ -88,6 +93,10 @@ footer{
   border-top: solid 2px #29a9df;
   color: #DDD;
   font-size: 13px;
+}
+
+.btn-group > .btn.active {
+  z-index: 0;
 }
 
 // Responsive styles go here in case you want them

@@ -16,9 +16,6 @@
 <% end %>
 
 <div class="span12">
-	<% if @pageType == "edit" %>
-	<%= link_to "Mudar password", edit_login_registration_path %>
-	<% end %>
 	<div class="field">
 		<%= f.label :name, "Nome" %>
 		<%= f.text_field :name, :class => "span12", :placeholder => "Escreva o nome", :required => true %>

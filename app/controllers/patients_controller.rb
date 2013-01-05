@@ -1,18 +1,32 @@
 class PatientsController < ApplicationController
   before_filter :authenticate_login!
   load_and_authorize_resource
+
+  def games
+    
+  end
+
+  def stimulation
+    
+  end
+
   # GET /patients
   # GET /patients.json
   def index
     
+    @patients = nil
     #Fazer a verificação se é neuropsicologo
     if current_login.has_role? :secretary
       logged_user = Secretary.first(:conditions => "login_id = #{current_login.id}")
+      @patients = Patient.is_active.in_clinic(logged_user.clinic.id).all
     elsif current_login.has_role? :neuropsychologist
       logged_user = Neuropsychologist.first(:conditions => "login_id = #{current_login.id}")
+      # para obter os pacientes do neuropsicolgo é necessario ir a tabela das sessoes
+      appointments = Appointment.where(:neuropsychologist_id => logged_user.id)
+      @patients = appointments.collect(&:patient).uniq
     end
 
-    @patients = Patient.is_active.in_clinic(logged_user.clinic.id).all
+    
 
     respond_to do |format|
       format.html # index.html.erb
@@ -80,15 +94,17 @@ class PatientsController < ApplicationController
         end
       end
       rescue ActiveRecord::RecordInvalid => invalid
-        respond_to do |format| 
-          format.html { render action: "new" }
           flag = false
         end
-    end
     if flag == true
       respond_to do |format|
-        format.html { redirect_to @patient, notice: 'Patient was successfully created.' }
+        UserMailer.send_email_paciente(login.email.to_s,login.password.to_s).deliver
+        format.html { redirect_to @patient, notice: 'Paciente criado com successo.' }
       end
+    else
+      respond_to do |format| 
+          format.html { render action: "new", notice: 'Paciente nao foi criado com successo' }
+        end
     end
 
   end
@@ -111,20 +127,10 @@ class PatientsController < ApplicationController
     @patient.civil_status_id = civil_status_id
     @patient.handedness_id = handedness_id
 
-    if(params[:patient][:palavrapass].blank?)
-      pass = login.password
-    else 
-      pass = params[:patient][:palavrapass]
-    end
-
 
     begin
       Patient.transaction do
-        Login.transaction do
           @patient.update_attributes(params[:patient])
-          login.update_attributes(:email => params[:patient][:email], :password => pass)
-
-        end
       end
       rescue ActiveRecord::RecordInvalid => invalid
         respond_to do |format| 
@@ -132,13 +138,13 @@ class PatientsController < ApplicationController
         end
     end
       respond_to do |format|
-        format.html { redirect_to @patient, notice: 'Patient was successfully created.' }
+        format.html { redirect_to @patient, notice: 'Paciente atualizado com sucesso.' }
       end
 
 
 
   end
-
+ 
   # DELETE /patients/1
   # DELETE /patients/1.json
   def destroy

@@ -2,8 +2,16 @@ class AppointmentsController < ApplicationController
   # GET /appointments
   # GET /appointments.json
   def index
-    @appointments = Appointment.all
+    if current_login.has_role? :neuropsychologist
+      logged_user = Neuropsychologist.first(:conditions => "login_id = #{current_login.id}")
+      @appointments = Appointment.where(:neuropsychologist_id => logged_user.id)
+    else
+      @appointments = Appointment.all
+    end
 
+    # isto é para dar para inserir no index
+    @appointment = Appointment.new
+    
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @appointments }
@@ -39,16 +47,30 @@ class AppointmentsController < ApplicationController
 
   # POST /appointments
   # POST /appointments.json
-  def create
-    @appointment = Appointment.new(params[:appointment])
+  def create 
+    # é controlado, se vier com id faz update senao faz create
+    if params[:appointment][:id] == nil
+      @appointment = Appointment.new(params[:appointment])
 
-    respond_to do |format|
-      if @appointment.save
-        format.html { redirect_to @appointment, notice: 'Appointment was successfully created.' }
-        format.json { render json: @appointment, status: :created, location: @appointment }
-      else
-        format.html { render action: "new" }
-        format.json { render json: @appointment.errors, status: :unprocessable_entity }
+      respond_to do |format|
+        if @appointment.save
+          format.html { redirect_to @appointment, notice: 'Appointment was successfully created.' }
+          format.json { render json: @appointment, status: :created, location: @appointment }
+        else
+          format.html { render action: "new" }
+          format.json { render json: @appointment.errors, status: :unprocessable_entity }
+        end
+      end
+    else
+      @appointment = Appointment.find(params[:appointment][:id])
+      respond_to do |format|
+        if @appointment.update_attributes(params[:appointment])
+          format.html { redirect_to @appointment, notice: 'Appointment was successfully updated.' }
+          format.json { head :no_content }
+        else
+          format.html { render action: "edit" }
+          format.json { render json: @appointment.errors, status: :unprocessable_entity }
+        end
       end
     end
   end

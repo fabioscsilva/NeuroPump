@@ -1,0 +1,2 @@
+module WaisHelper
+end

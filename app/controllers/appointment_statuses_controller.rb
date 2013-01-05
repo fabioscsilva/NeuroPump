@@ -1,0 +1,2 @@
+class AppointmentStatusesController < ApplicationController
+end

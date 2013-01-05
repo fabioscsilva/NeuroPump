@@ -12,11 +12,9 @@ class Patient < ActiveRecord::Base
                   :name, :photo, :telephone, :education, :profession, :email, :palavrapass, :gender_id, :clinic_id, :civil_status_id, :handedness_id, :login_id
   attr_accessor :email, :palavrapass
 
-  validates_presence_of  :active, :address, :email,:date_of_birth, :identification_code, :name
-  validates :email,
-             :format => {
-              :with    => /^([^\s]+)((?:[-a-z0-9]\.)[a-z]{2,})$/i,
-              :message => "formato incorreto" }
+  accepts_nested_attributes_for :login
+
+  validates_presence_of  :active, :address,:date_of_birth, :identification_code, :name
 
   scope :is_active, where(:active => true)
   scope :in_clinic, lambda { |clinic_id| 

@@ -1,0 +1,173 @@
+<!-- Implemented by Fábio Silva - 29/11/2012 -->
+
+<script>
+	// EXAMPLE 2
+	var countdownTimer, countdownCurrent = 30000;
+	$(document).ready(function() {
+		countdownTimer = $.timer(function() {
+			var min = parseInt(countdownCurrent / 6000);
+			var sec = parseInt(countdownCurrent / 100) - (min * 60);
+			var micro = pad(countdownCurrent - (sec * 100) - (min * 6000), 2);
+			var output = "00";
+			if (min > 0) {
+				output = pad(min, 2);
+			}
+			$('.countdowntime').html(output + ":" + pad(sec, 2) + ":" + micro);
+			if (countdownCurrent == 0) {
+				countdownTimer.stop();
+				alert('Example 2: Countdown timer complete!');
+				countdownReset();
+			} else {
+				countdownCurrent -= 7;
+				if (countdownCurrent < 0) {
+					countdownCurrent = 0;
+				}
+			}
+		}, 70, true);
+		$('#example2submit').bind('keyup', function(e) {
+			if (e.keyCode == 13) {
+				countdownReset();
+			}
+		});
+	});
+	function countdownReset() {
+		var newCount = parseInt($('input[name=startTime]').val()) * 100;
+		if (newCount > 0) {
+			countdownCurrent = newCount;
+		}
+		countdownTimer.stop().once();
+	}
+
+	// Padding function
+	function pad(number, length) {
+		var str = '' + number;
+		while (str.length < length) {
+			str = '0' + str;
+		}
+		return str;
+	}
+
+</script>
+
+<div class="container">
+	<div class="row-fluid">
+		<div class="span12">
+
+			<div class="span3 pull-left">
+				<legend>
+					Sessão
+				</legend>
+				<div class="well">
+					<ul class="nav nav-list" style="float:none">
+						<li>
+							<a href="#"><i class="icon-chevron-right"></i> TMT</a>
+						</li>
+						<li>
+							<a href="#"><i class="icon-chevron-right"></i> FTT</a>
+						</li>
+						<li class="active">
+							<a href="#"><i class="icon-chevron-right"></i> Relógio</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="span9">
+				<legend>
+					Finger Tapper Test
+				</legend>
+				<div class="row-fluid">
+					<div class="span6">
+						<table class="table table-hover table-bordered table-striped">
+							<thead>
+								<tr>
+									<th>Ensaio</th>
+									<th>Mão Dominante</th>
+									<th>Mão Não Dominante</th>
+								</tr>
+							</thead>
+							<tbody
+							<tr>
+							<td>1</td>
+							<td></td>
+							<td></td>
+							</tr>
+							<tr>
+								<td>2</td>
+								<td></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>3</td>
+								<td></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>4</td>
+								<td></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>5</td>
+								<td></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>6</td>
+								<td></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>7</td>
+								<td></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>8</td>
+								<td></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>9</td>
+								<td></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>10</td>
+								<td></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>Total</td>
+								<td></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>Média</td>
+								<td></td>
+								<td></td>
+							</tr>
+							</tbody>
+						</table>
+					</div>
+					<div class="span4 offset1">
+						<center>
+							<h1>10</h1>
+							<p>
+								<button type="button" class="btn btn-success">
+									Iniciar
+								</button>
+								<button type="button" class="btn btn-danger">
+									Parar
+								</button>
+								<button type="button" class="btn btn-info">
+									Reiniciar
+								</button>
+							</p>
+						</center>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="span3"></div>
+</div>

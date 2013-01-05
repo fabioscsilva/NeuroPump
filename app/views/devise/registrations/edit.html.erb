@@ -1,12 +1,43 @@
-<h2>Edit <%= resource_name.to_s.humanize %></h2>
-<%= simple_form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put, :class => 'form-vertical' }) do |f| %>
-  <%= f.error_notification %>
-  <%= f.input :email, :required => true %>
-  <%= f.input :password, :autocomplete => "off", :hint => "leave it blank if you don't want to change it", :required => false %>
-  <%= f.input :password_confirmation, :required => false %>
-  <%= f.input :current_password, :hint => "we need your current password to confirm your changes", :required => true %>
-  <%= f.button :submit, 'Update', :class => 'btn-primary' %>
-<% end %>
-<h3>Cancel my account</h3>
-<p>Unhappy? <%= link_to "Cancel my account", registration_path(resource_name), :data => { :confirm => "Are you sure?" }, :method => :delete %>.</p>
-<%= link_to "Back", :back %>
+<div class="container">
+	<div class="row-fluid">
+		<div class="span8 offset2">
+
+			<h2>Alterar Password</h2>
+
+			<div class="span12">
+				<%= simple_form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
+				<div class="row-fluid">
+					<div class="span6">
+						<%= f.label :email, "Email"%>
+						<%= f.input_field :email, :required => true, :class => "span12", :readonly => true %>
+					</div>
+					<div class="span6">
+						<%= f.label :current_password, "Password Atual"%>
+						<%= f.input_field :current_password, :required => true, :class => "span12" %>
+					</div>
+				</div>
+				<div class="row-fluid">
+					<div class="span6">
+						<%= f.label :email, "Nova Password"%>
+						<%= f.input_field :password, :autocomplete => "off", :class => "span12", :required => true %>
+					</div>
+					<div class="span6">
+					
+						<%= f.label :email, "Confirmação de Password"%>
+						<%= f.input_field :password_confirmation, :required => true, :class => "span12" %>
+					</div>
+
+				</div>
+				<div class="row-fluid">
+					<div class="span12">
+						<%= f.button :submit, 'Atualizar', :class => 'btn btn-success pull-right' %>
+					</div>
+				</div>
+
+				<% end %>
+
+			</div>
+
+		</div>
+	</div>
+</div>
