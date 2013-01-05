@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  phase: 1
+  correct_items: 1
+  wrong_items: 1
+  observations: MyText
+
+two:
+  phase: 1
+  correct_items: 1
+  wrong_items: 1
+  observations: MyText

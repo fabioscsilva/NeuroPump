@@ -15,6 +15,7 @@ gem 'paperclip'
 gem 'devise'
 gem 'cancan'
 gem 'rolify'
+gem "swf_fu", "~> 2.0"
 
 # Gems used only for assets and not required
 # in production environments by default.

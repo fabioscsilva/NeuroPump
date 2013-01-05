@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Screen result:</b>
+  <%= @clock.screen_result %>
+</p>
+
+<p>
+  <b>Number seq result:</b>
+  <%= @clock.number_seq_result %>
+</p>
+
+<p>
+  <b>Pointers loc result:</b>
+  <%= @clock.pointers_loc_result %>
+</p>
+
+<p>
+  <b>Observations:</b>
+  <%= @clock.observations %>
+</p>
+
+
+<%= link_to 'Edit', edit_clock_result_path(@clock) %> |
+<%= link_to 'Back', clock_results_path %>

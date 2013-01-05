@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  phase: 1
+  time: 2012-12-29 11:03:44
+  observations: MyText
+
+two:
+  phase: 1
+  time: 2012-12-29 11:03:44
+  observations: MyText
