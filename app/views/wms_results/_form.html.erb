@@ -674,8 +674,21 @@
 
 </div>
 
-<div class="pull-right">
-	<%= f.submit :class=>"btn btn-success", :value => "Próximo"%>
-</div>
+<% if session["wms_phase"] == 1 %>
+	<div class="pull-right">
+		<%= f.submit :class=>"btn btn-success", :value => "Próximo"%>
+	</div>
+<% else %>
+	<%if session["test_sequence"].blank? %>
+		<div class="pull-right">
+			<%= f.submit :class=>"btn btn-success", :value => "Terminar"%>
+		</div>
+	<%else %>
+		<div class="pull-right">
+			<%= f.submit :class=>"btn btn-success", :value => "Próximo"%>
+		</div>
+	<%end%>
+<% end %>
+
 
 <% end %>
