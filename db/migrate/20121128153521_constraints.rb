@@ -66,11 +66,6 @@ class Constraints < ActiveRecord::Migration
       ALTER TABLE clinical_histories ADD CONSTRAINT fk_clinical_histories_genders FOREIGN KEY (patient_id) REFERENCES patients(id)
     SQL
     
-    ###logins
-   # execute <<-SQL
-   #   ALTER TABLE logins ADD CONSTRAINT fk_logins_types FOREIGN KEY (type_id) REFERENCES types(id)
-   # SQL
-    
     ##Admin
     execute <<-SQL
       ALTER TABLE administrators ADD CONSTRAINT fk_administrators_logins FOREIGN KEY (login_id) REFERENCES logins(id)

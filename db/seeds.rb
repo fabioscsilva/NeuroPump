@@ -19,7 +19,6 @@ Administrator.delete_all
 Gender.delete_all
 Role.delete_all
 Login.delete_all
-#Type.delete_all
 Handedness.delete_all
 CivilStatus.delete_all
 
@@ -30,14 +29,6 @@ st1 = statuses.first.id
 #Handedness
 hand = Handedness.create([{description: 'Destro'}, {description: 'Esquerdino'}])
 h1 = hand.first.id
-
-#Types
-#types = Type.create([{description:'Administrador'}, {description:'Gestor'}, {description:'Secretaria'}, {description:'Neuropsicologo'}, {description:'Paciente'}])
-#admin = types.first.id
-#manager = types.second.id
-#secretary = types.third.id
-#neuropsychologist = types.fourth.id
-#patient = types.fifth.id
 
 #Genders
 genders = Gender.create([{description:'Feminino'}, {description:'Masculino'}, {description: 'Outro'}])
@@ -116,9 +107,9 @@ appointment_statuses = AppointmentStatus.create([{name:'Marcada'},{name:'Realiza
 app_status1 = appointment_statuses.first.id
 app_status2 = appointment_statuses.second.id
 
-appointments = Appointment.create([{description:'Sessao que permite ao paciente desenvolver as suas capacidades visuais',appointment_day:'15-12-2012',patient_id:patient1,secretary_id:secretary1,neuropsychologist_id:neuro3,appointment_status_id:app_status2,appointment_type_id:app_type1},
-                                  {description:'Sessao que permite ao paciente desenvolver as suas capacidades sonoras',appointment_day:'12-12-2012',patient_id:patient1,secretary_id:secretary1,neuropsychologist_id:neuro3,appointment_status_id:app_status2,appointment_type_id:app_type1},
-                                  {description:'Sessao que permite ao paciente desenvolver as suas capacidades visuais',appointment_day:'11-02-2013',patient_id:patient2,secretary_id:secretary2,neuropsychologist_id:neuro3,appointment_status_id:app_status1,appointment_type_id:app_type1},
-                                  {description:'Sessao que permite ao paciente desenvolver as suas capacidades visuais',appointment_day:'15-02-2013',patient_id:patient2,secretary_id:secretary2,neuropsychologist_id:neuro3,appointment_status_id:app_status1,appointment_type_id:app_type1}])
+appointments = Appointment.create([{description:'Sessao que permite ao paciente desenvolver as suas capacidades visuais',appointment_day:'15-12-2012 09:00:00',patient_id:patient1,secretary_id:secretary1,neuropsychologist_id:neuro3,appointment_status_id:app_status2,appointment_type_id:app_type1},
+                                  {description:'Sessao que permite ao paciente desenvolver as suas capacidades sonoras',appointment_day:'12-12-2012 10:00:00',patient_id:patient1,secretary_id:secretary1,neuropsychologist_id:neuro3,appointment_status_id:app_status2,appointment_type_id:app_type1},
+                                  {description:'Sessao que permite ao paciente desenvolver as suas capacidades visuais',appointment_day:'11-02-2013 10:00:00',patient_id:patient2,secretary_id:secretary2,neuropsychologist_id:neuro3,appointment_status_id:app_status1,appointment_type_id:app_type1},
+                                  {description:'Sessao que permite ao paciente desenvolver as suas capacidades visuais',appointment_day:'15-02-2013 11:00:00',patient_id:patient2,secretary_id:secretary2,neuropsychologist_id:neuro3,appointment_status_id:app_status1,appointment_type_id:app_type1}])
 
 puts "Success: Data loaded"
