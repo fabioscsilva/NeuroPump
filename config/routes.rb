@@ -1,6 +1,8 @@
 NeuroPump::Application.routes.draw do
 
   resources :wms_results
+  
+  resources :evaluation_tests
 
   resources :wais_results
   match 'downloadWais' => 'wais_results#download'
@@ -13,6 +15,8 @@ NeuroPump::Application.routes.draw do
   match 'downloadClock' => 'clock_results#download'
 
   resources :appointments
+  
+  resources :appointment_plans
 
   authenticated :user do
     root :to => 'home#index'

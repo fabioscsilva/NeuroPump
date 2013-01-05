@@ -19,7 +19,7 @@ Administrator.delete_all
 Gender.delete_all
 Role.delete_all
 Login.delete_all
-Type.delete_all
+#Type.delete_all
 Handedness.delete_all
 CivilStatus.delete_all
 
@@ -32,12 +32,12 @@ hand = Handedness.create([{description: 'Destro'}, {description: 'Esquerdino'}])
 h1 = hand.first.id
 
 #Types
-types = Type.create([{description:'Administrador'}, {description:'Gestor'}, {description:'Secretaria'}, {description:'Neuropsicologo'}, {description:'Paciente'}])
-admin = types.first.id
-manager = types.second.id
-secretary = types.third.id
-neuropsychologist = types.fourth.id
-patient = types.fifth.id
+#types = Type.create([{description:'Administrador'}, {description:'Gestor'}, {description:'Secretaria'}, {description:'Neuropsicologo'}, {description:'Paciente'}])
+#admin = types.first.id
+#manager = types.second.id
+#secretary = types.third.id
+#neuropsychologist = types.fourth.id
+#patient = types.fifth.id
 
 #Genders
 genders = Gender.create([{description:'Feminino'}, {description:'Masculino'}, {description: 'Outro'}])
@@ -46,15 +46,15 @@ male = genders.second.id
 
 
 #Logins
-logins = Login.create([{email:'smr@fpce.uc.pt', password:'qwerty', type_id: neuropsychologist},
-                      {email:'sus.antunes@ipnp.pt', password:'qwerty', type_id: neuropsychologist},
-                      {email:'fabioscsilva@gmail.pt', password:'qwerty', type_id: neuropsychologist},
-                       {email:'srodrigues14@gmail.pt', password:'qwerty', type_id: secretary},
-                        {email:'brunomiguelas@gmail.pt', password:'qwerty', type_id: secretary},
-                        {email:'manager@gmail.com', password:'qwerty', type_id: manager},
-                        {email:'fabio@neuropump.com', password:'qwerty', type_id: admin},
-                        {email:'BLFPortela@gmail.com', password:'qwerty', type_id: patient},
-                        {email:'ruipereir@gmail.com', password:'qwerty', type_id: patient}])
+logins = Login.create([{email:'smr@fpce.uc.pt', password:'qwerty'},
+                      {email:'sus.antunes@ipnp.pt', password:'qwerty'},
+                      {email:'fabioscsilva@gmail.pt', password:'qwerty'},
+                       {email:'srodrigues14@gmail.pt', password:'qwerty'},
+                        {email:'brunomiguelas@gmail.pt', password:'qwerty'},
+                        {email:'manager@gmail.com', password:'qwerty'},
+                        {email:'fabio@neuropump.com', password:'qwerty'},
+                        {email:'BLFPortela@gmail.com', password:'qwerty'},
+                        {email:'ruipereir@gmail.com', password:'qwerty'}])
 login1 = logins.first.id
 login2 = logins.second.id
 login3 = logins.third.id

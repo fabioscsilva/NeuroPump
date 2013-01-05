@@ -5,10 +5,11 @@
   </div>
 </div>
   
-<div class="span10">
+<div class="span11">
 <div id='calendar' style="width: 100%; margin-left: 2%; margin-bottom: 10%;">
     
 </div>
+
 <div id="event_edit_container">
         <%= form_for(@appointment, :remote => true) do |f| %>
 
@@ -40,12 +41,6 @@
                   <!-- <%= f.label :date, "Data" %> -->
                   <%= f.text_field :appointment_day, :id => "valor_data", :class => "span3", :placeholder => "Introduza a data", :required => true, :type => "hidden" %>
 
-                  <!-- <%= f.label :date, "Data" %> 
-                  <div class="input-append date" data-date="01-01-2013" data-date-format="dd-mm-yyyy" >
-                    <%= f.text_field :appointment_day, :class => "span2", :value => @appointment.appointment_day, :readonly => true, :required => true, :id => 'dp', :style => "cursor:pointer"%> <!-- , :type => 'hidden' %> -->
-                    <!-- <span class="add-on"><i class="icon-calendar"></i></span> -->
-                  <!--</div>-->
-
                 </li>
                 <li style="list-style-type: none;">
                         <label for="end">Hora de Fim: </label>
@@ -53,12 +48,22 @@
                           <option value="">Escolha a hora de fim</option>
                         </select>
                 </li>
+                <li style="list-style-type: none;">
+                        <label for="Estado">Estado da consulta: </label>
+                        <% @status = AppointmentStatus.all %>
+                        <%= f.select :appointment_status_id, @status.map{ |c| [c.name, c.id] } %>    
+                </li>
                 </div>
                 <div style="float: left; width: 45%;font-size: 10px;">
                 <li style="list-style-type: none;">
                         <label for="paciente">Paciente: </label>
-                        <% logged_user = Secretary.first(:conditions => "login_id = #{current_login.id}")
-                        @patients = Patient.is_active.in_clinic(logged_user.clinic.id).all %>
+                        <% logged_user = nil %>
+                        <% if current_login.has_role? :neuropsychologist %>
+                        	<% logged_user = Neuropsychologist.first(:conditions => "login_id = #{current_login.id}") %>
+                       	<% else %>
+                       		<% logged_user = Secretary.first(:conditions => "login_id = #{current_login.id}") %>
+                       	<% end %>
+                        <% @patients = Patient.is_active.in_clinic(logged_user.clinic.id).all %>
                         <%= f.select :patient_id, @patients.map{ |c| [c.name, c.id] } %>
                         <!-- <input type="text" name="paciente" /> -->
                 </li>
@@ -72,38 +77,17 @@
                         <label for="Tipo">Tipo de consulta: </label>
                         <% @types = AppointmentType.all %>
                         <%= f.select :appointment_type_id, @types.map{ |c| [c.name, c.id] } %>
-                        <select id="tipoconsulta" name="tipo" style="display:none">
-                            <option value="1">Estimulação</option>
-                            <option value="2">Avaliação</option>
-                        </select>
-                        <!-- <input id="tipocons" type="text" name="tipo" /> -->
                 </li>
-                <li style="list-style-type: none;">
-                        <label for="Estado">Estado da consulta: </label>
-                        <% @status = AppointmentStatus.all %>
-                        <%= f.select :appointment_status_id, @status.map{ |c| [c.name, c.id] } %>    
-                        <select id="estadoconsulta" name="estado" style="display:none">
-                            <option value="1">Criada</option>
-                            <option value="2">Iniciada</option>
-                            <option value="3">Cancelada</option>
-                            <option value="4">Realizada</option>
-                        </select>
-                        <!-- <input id="estadocons" type="text" name="estado" /> -->
-                </li>
+                
                 </div>
 
-                <div style="margin-left: 5%; width: 88%;">
+                <div style="margin-left: 0%; width: 93%;">
                   <li style="list-style-type: none;">
                       <label for="description">Descrição: </label>
                       <%= f.text_field :description, :name2 => "description", :required => true %>
+                      <!--%= f.text_area :description, :name2 => "description", :rows => 2, :style => "resize:vertical;width:100%;", :required => true %-->
                   </li>
                 </div>
-
-                <!--
-                <% @appointments.each do |appointment| %>
-                  <%= link_to "Desativar", @appointment, :method => :delete, :confirm => "Tem a certeza?",  :class => "btn btn-danger pull-right span4", :id => "id#{appointment.id}" , :style => "display: none;" %> 
-                <% end %>
-                -->
 
                 <div class="actions">
                   <%= f.submit :id => "submeterDados", :style => "display:none" %>
@@ -112,41 +96,6 @@
         <% end %>
 </div>
 </div>
-
-<!--<div class="container">
-    <div class="row-fluid">  
-        <h2>Lista de Sessões</h2>
-
-        <table id="appointments" class="table table-striped table-hover">
-            <thead>
-                <tr>
-                    <th>Data</th>
-                    <th>Paciente</th>
-                    <th>Tipo</th>
-                    <th>Estado</th>
-                </tr>
-            </thead>
-            <tbody>
-            <% @appointments.each do |appointment| %>
-                <tr onMouseOver="this.style.cursor ='pointer'" onClick="window.location.href = '<%= url_for appointment  %>'">
-                    <td><%= appointment.appointment_day.strftime('%d-%m-%Y') %></td>
-                    <td><%= link_to appointment.patient.name, appointment.patient%></td>
-                    <td><%= appointment.appointment_type.name %></td>
-					<!--   MUDAR COR CONSOANTE ESTADO -->    <!--                                  
-                    <% if appointment.appointment_status.name == 'Marcada' %>
-                    	<td><p class="text-success"><%= appointment.appointment_status.name %></p></td>
-                   	<% else %>
-                   		<td><p class="text-error"><%= appointment.appointment_status.name %></p></td>
-                   	<% end %>
-                </tr>
-            <% end %>
-            </tbody>
-        </table>
-    </div>
-</div>-->
-
-<!-- <%= link_to 'Nova sessão manual', {:controller => "appointments", :action => "new" },:class => "btn btn-primary pull-right" %> -->
-
 <!-- isto tem de sair daqui , sao imports as bibliotecas -->
 <%= javascript_include_tag 'jquery-ui-1.8rc3.custom.min.js' %>
 <%= javascript_include_tag 'jquery.weekcalendar.js' %>

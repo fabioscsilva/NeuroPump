@@ -63,7 +63,7 @@ class WmsResultsController < ApplicationController
     #wrong answers
     wrong = total-correct
 
-    @wm = WmsResult.new(params[:wm])
+    @wm = WmsResult.new(params[:wms_result])
     @wm.correct_items = correct
     @wm.wrong_items = wrong
     @wm.phase = wmsPhase
@@ -73,8 +73,12 @@ class WmsResultsController < ApplicationController
         if wmsPhase == 1
           format.html { redirect_to new_wms_result_path, notice: 'WMS II - Sequencia Letra-Numero guardada com sucesso.' }
         else
-          format.html { redirect_to new_wms_result_path, notice: 'WMS II - Sequencia Espacial Direta guardada com sucesso.' }
           session["wms_phase"] = nil
+          if session["test_sequence"].blank?
+            format.html { redirect_to appointments_path, notice: 'WMS II - Sequencia Espacial Direta guardada com sucesso.' }
+          else
+            format.html { redirect_to appointment_plans_path, notice: 'WMS II - Sequencia Espacial Direta guardada com sucesso.' }
+          end
         end
         format.json { render json: @wm, status: :created, location: @wm }
       else
