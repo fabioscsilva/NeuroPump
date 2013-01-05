@@ -40,11 +40,15 @@ class ClockResultsController < ApplicationController
   # POST /clocks
   # POST /clocks.json
   def create
-    @clock = ClockResult.new(params[:clock])
+    @clock = ClockResult.new(params[:clock_result])
 
     respond_to do |format|
       if @clock.save
-        format.html { redirect_to @clock, notice: 'Clock was successfully created.' }
+         if session["test_sequence"].blank?
+            format.html { redirect_to appointments_path, notice: 'Teste do Relogio - Resultados gravados com sucesso.' }
+          else
+            format.html { redirect_to appointment_plans_path, notice: 'Teste do Relogio - Resultados gravados com sucesso.' }
+          end          
         format.json { render json: @clock, status: :created, location: @clock }
       else
         format.html { render action: "new" }

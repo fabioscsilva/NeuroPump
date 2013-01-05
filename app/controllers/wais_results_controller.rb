@@ -53,7 +53,7 @@ class WaisResultsController < ApplicationController
   # POST /wais
   # POST /wais.json
   def create
-     @wai = WaisResult.new(params[:wai])
+     @wai = WaisResult.new(params[:wais_result])
 
     @wai.phase = session["wais_phase"]
 
@@ -62,7 +62,11 @@ class WaisResultsController < ApplicationController
         format.html {
           if session["wais_phase"] == 2
              session["wais_phase"] = nil
-             redirect_to @wai, notice: 'WAIS III - Resultados Pesquisa de simbolos gravados com sucesso.'
+             if session["test_sequence"].blank?
+                redirect_to appointments_path, notice: 'WAIS III - Resultados Pesquisa de simbolos gravados com sucesso.'
+             else
+                redirect_to appointment_plans_path, notice: 'WAIS III - Resultados Pesquisa de simbolos gravados com sucesso.'
+             end        
           else
              redirect_to new_wais_result_path, notice: 'WAIS III - Resultados Codigo gravados com sucesso.'
           end
