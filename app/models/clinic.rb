@@ -5,7 +5,7 @@ class Clinic < ActiveRecord::Base
   has_many :neuropsychologists
   has_many :secretaries
   has_many :patients
-
+  has_many :logins
 
   attr_accessible :active, :address, :email, :fiscal_number, :name, :telephone, :administrator_id
   

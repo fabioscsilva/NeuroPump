@@ -5,7 +5,7 @@ class Login < ActiveRecord::Base
   has_many :neuropsychologists
   has_many :secretaries
   has_many :patients
-  belongs_to :type
+  belongs_to :clinic
   has_many :administrators
 
   # Include default devise modules. Others available are:

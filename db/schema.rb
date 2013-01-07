@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130102150129) do
+ActiveRecord::Schema.define(:version => 20130107095626) do
 
   create_table "administrators", :force => true do |t|
     t.string   "name",        :null => false
@@ -26,9 +26,9 @@ ActiveRecord::Schema.define(:version => 20130102150129) do
 
   create_table "appointment_plans", :force => true do |t|
     t.integer  "appointment_id"
-    t.integer  "test_id"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
+    t.integer  "evaluation_test_id"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
   end
 
   create_table "appointment_statuses", :force => true do |t|
@@ -46,7 +46,6 @@ ActiveRecord::Schema.define(:version => 20130102150129) do
   create_table "appointments", :force => true do |t|
     t.datetime "appointment_day",                       :null => false
     t.text     "description"
-    t.integer  "duration",              :default => 60
     t.integer  "patient_id"
     t.integer  "secretary_id"
     t.integer  "neuropsychologist_id"
@@ -54,6 +53,7 @@ ActiveRecord::Schema.define(:version => 20130102150129) do
     t.integer  "appointment_status_id"
     t.datetime "created_at",                            :null => false
     t.datetime "updated_at",                            :null => false
+    t.integer  "duration",              :default => 60
   end
 
   create_table "civil_statuses", :force => true do |t|
@@ -79,6 +79,7 @@ ActiveRecord::Schema.define(:version => 20130102150129) do
     t.integer  "administrator_id"
     t.datetime "created_at",                          :null => false
     t.datetime "updated_at",                          :null => false
+    t.datetime "deleted_at"
   end
 
   create_table "clock_results", :force => true do |t|
@@ -89,6 +90,14 @@ ActiveRecord::Schema.define(:version => 20130102150129) do
     t.integer  "appointment_plan_id"
     t.datetime "created_at",          :null => false
     t.datetime "updated_at",          :null => false
+  end
+
+  create_table "evaluation_tests", :force => true do |t|
+    t.string   "name"
+    t.text     "description"
+    t.integer  "test_area_id"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
   end
 
   create_table "ftt_results", :force => true do |t|
@@ -124,7 +133,6 @@ ActiveRecord::Schema.define(:version => 20130102150129) do
   create_table "logins", :force => true do |t|
     t.string   "email",                                 :null => false
     t.string   "encrypted_password",                    :null => false
-    t.datetime "deleted_at"
     t.datetime "created_at",                            :null => false
     t.datetime "updated_at",                            :null => false
     t.string   "reset_password_token"
@@ -135,6 +143,8 @@ ActiveRecord::Schema.define(:version => 20130102150129) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
+    t.datetime "deleted_at"
+    t.integer  "clinic_id"
   end
 
   add_index "logins", ["reset_password_token"], :name => "index_logins_on_reset_password_token", :unique => true
@@ -244,14 +254,6 @@ ActiveRecord::Schema.define(:version => 20130102150129) do
     t.string   "name"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
-  end
-
-  create_table "tests", :force => true do |t|
-    t.string   "name"
-    t.text     "description"
-    t.integer  "test_area_id"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
   end
 
   create_table "tmt_results", :force => true do |t|
