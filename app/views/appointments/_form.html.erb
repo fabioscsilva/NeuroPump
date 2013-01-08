@@ -11,6 +11,33 @@
     </div>
   <% end %>
 
+
+  <div>
+    <%= f.label :name, "Descrição" %>
+    <%= f.text_field :description,  :class => "span12", :placeholder => "Introduza a descricao da consulta", :required => true %>
+    
+    <%= f.label :date, "Data" %>
+    <%= f.text_field :appointment_day,  :class => "span12", :placeholder => "Introduza a data", :required => true %>
+
+    <% logged_user = Secretary.first(:conditions => "login_id = #{current_login.id}")
+      @patients = Patient.is_active.in_clinic(logged_user.clinic.id).all %>
+    <%= f.label :name, "Paciente" %>
+    <%= f.select :patient_id, @patients.map{ |c| [c.name, c.id] } %>
+    
+    <% @neuropsychologists = Neuropsychologist.is_active.in_clinic(logged_user.clinic.id).all %>
+    <%= f.label :name, "Neuropsicólogo" %>
+    <%= f.select :neuropsychologist_id, @neuropsychologists.map{ |c| [c.name, c.id] } %>
+
+    <% @types = AppointmentType.all %>
+    <%= f.label :name, "Tipo" %>
+    <%= f.select :appointment_type_id, @types.map{ |c| [c.name, c.id] } %>
+
+    <% @status = AppointmentStatus.all %>
+    <%= f.label :name, "Estado" %>
+    <%= f.select :appointment_status_id, @status.map{ |c| [c.name, c.id] } %>    
+
+  </div>
+    
   <div class="actions">
     <%= f.submit %>
   </div>
