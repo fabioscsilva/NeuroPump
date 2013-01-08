@@ -7,9 +7,9 @@ class Clinic < ActiveRecord::Base
   has_many :patients
   has_many :logins
 
-  attr_accessible :active, :address, :email, :fiscal_number, :name, :telephone, :administrator_id
+  attr_accessible :address, :email, :fiscal_number, :name, :telephone, :administrator_id
   
-  validates_presence_of :active, :address, :email, :fiscal_number, :name
+  validates_presence_of :address, :email, :fiscal_number, :name
   validates  :email,
              :format => {
               :with    => /^([^\s]+)((?:[-a-z0-9]\.)[a-z]{2,})$/i,

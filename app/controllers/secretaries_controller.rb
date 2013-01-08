@@ -87,7 +87,7 @@ class SecretariesController < ApplicationController
     # manager = Manager.first(:conditions => "login_id = #{current_login.id}")
     @secretary.clinic_id = params[:clinic_id]
     
-    @secretary.active = true
+    #@secretary.active = true <- Agora utiliza-se deleted_at para soft deletion
     
     
     respond_to do |format|
@@ -130,10 +130,10 @@ class SecretariesController < ApplicationController
   # DELETE /secretaries/1.json
   def destroy
     # @secretary.destroy
-    if @secretary.active == true
-      @secretary.update_attribute(:active ,false)
+    if @secretary.login.deleted_at == nil
+      @secretary.login.update_attribute(:deleted_at ,Time.now)
     else
-       @secretary.update_attribute(:active ,true)
+       @secretary.login.update_attribute(:deleted_at ,nil)
     end
     respond_to do |format|
       format.html { redirect_to secretaries_url }

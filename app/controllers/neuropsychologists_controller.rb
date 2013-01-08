@@ -81,7 +81,7 @@ class NeuropsychologistsController < ApplicationController
     @neuropsychologist.gender_id = gender_id
     # manager = Manager.first(:conditions => "login_id = #{current_login.id}")
     @neuropsychologist.clinic_id = params[:clinic_id]
-    @neuropsychologist.active = true
+    #@neuropsychologist.active = true <- Agora utiliza-se deleted_at para soft deletion
     respond_to do |format|
       if @neuropsychologist.save
 
@@ -123,10 +123,10 @@ class NeuropsychologistsController < ApplicationController
   def destroy
     @neuropsychologist = Neuropsychologist.find(params[:id])
     # @neuropsychologist.destroy
-    if @neuropsychologist.active == true
-      @neuropsychologist.update_attribute(:active ,false)
+    if @neuropsychologist.login.deleted_at == nil
+      @neuropsychologist.login.update_attribute(:deleted_at ,Time.now)
     else
-       @neuropsychologist.update_attribute(:active ,true)
+       @neuropsychologist.login.update_attribute(:deleted_at ,nil)
     end
 
     respond_to do |format|

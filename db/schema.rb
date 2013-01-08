@@ -11,14 +11,13 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130107095626) do
+ActiveRecord::Schema.define(:version => 20130108155741) do
 
   create_table "administrators", :force => true do |t|
     t.string   "name",        :null => false
     t.string   "address",     :null => false
     t.string   "telephone"
     t.string   "mobilephone"
-    t.boolean  "active",      :null => false
     t.integer  "login_id"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
@@ -70,15 +69,14 @@ ActiveRecord::Schema.define(:version => 20130107095626) do
   end
 
   create_table "clinics", :force => true do |t|
-    t.string   "name",                                :null => false
-    t.string   "address",                             :null => false
-    t.string   "fiscal_number",                       :null => false
-    t.string   "email",                               :null => false
+    t.string   "name",             :null => false
+    t.string   "address",          :null => false
+    t.string   "fiscal_number",    :null => false
+    t.string   "email",            :null => false
     t.string   "telephone"
-    t.boolean  "active",           :default => false
     t.integer  "administrator_id"
-    t.datetime "created_at",                          :null => false
-    t.datetime "updated_at",                          :null => false
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
     t.datetime "deleted_at"
   end
 
@@ -167,18 +165,17 @@ ActiveRecord::Schema.define(:version => 20130107095626) do
   end
 
   create_table "neuropsychologists", :force => true do |t|
-    t.string   "name",                                  :null => false
-    t.string   "address",                               :null => false
+    t.string   "name",                :null => false
+    t.string   "address",             :null => false
     t.string   "telephone"
     t.string   "mobilephone"
-    t.date     "date_of_birth",                         :null => false
-    t.string   "identification_code",                   :null => false
-    t.boolean  "active",              :default => true
+    t.date     "date_of_birth",       :null => false
+    t.string   "identification_code", :null => false
     t.integer  "gender_id"
     t.integer  "clinic_id"
     t.integer  "login_id"
-    t.datetime "created_at",                            :null => false
-    t.datetime "updated_at",                            :null => false
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
     t.string   "photo_file_name"
     t.string   "photo_content_type"
     t.integer  "photo_file_size"
@@ -186,22 +183,21 @@ ActiveRecord::Schema.define(:version => 20130107095626) do
   end
 
   create_table "patients", :force => true do |t|
-    t.string   "name",                                  :null => false
-    t.string   "address",                               :null => false
+    t.string   "name",                :null => false
+    t.string   "address",             :null => false
     t.string   "telephone"
     t.string   "mobilephone"
     t.string   "education"
     t.string   "profession"
-    t.date     "date_of_birth",                         :null => false
-    t.string   "identification_code",                   :null => false
-    t.boolean  "active",              :default => true
+    t.date     "date_of_birth",       :null => false
+    t.string   "identification_code", :null => false
     t.integer  "gender_id"
     t.integer  "clinic_id"
     t.integer  "civil_status_id"
     t.integer  "handedness_id"
     t.integer  "login_id"
-    t.datetime "created_at",                            :null => false
-    t.datetime "updated_at",                            :null => false
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
     t.string   "photo_file_name"
     t.string   "photo_content_type"
     t.integer  "photo_file_size"
@@ -232,18 +228,17 @@ ActiveRecord::Schema.define(:version => 20130107095626) do
   add_index "roles", ["name"], :name => "index_roles_on_name"
 
   create_table "secretaries", :force => true do |t|
-    t.string   "name",                                  :null => false
-    t.string   "address",                               :null => false
+    t.string   "name",                :null => false
+    t.string   "address",             :null => false
     t.string   "telephone"
     t.string   "mobilephone"
-    t.date     "date_of_birth",                         :null => false
-    t.string   "identification_code",                   :null => false
-    t.boolean  "active",              :default => true
+    t.date     "date_of_birth",       :null => false
+    t.string   "identification_code", :null => false
     t.integer  "gender_id"
     t.integer  "clinic_id"
     t.integer  "login_id"
-    t.datetime "created_at",                            :null => false
-    t.datetime "updated_at",                            :null => false
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
     t.string   "photo_file_name"
     t.string   "photo_content_type"
     t.integer  "photo_file_size"
