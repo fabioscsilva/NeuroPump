@@ -1,6 +1,15 @@
 class PatientsController < ApplicationController
   before_filter :authenticate_login!
   load_and_authorize_resource
+
+  def games
+    
+  end
+
+  def stimulation
+    
+  end
+
   # GET /patients
   # GET /patients.json
   def index
@@ -85,8 +94,8 @@ class PatientsController < ApplicationController
         end
       end
       rescue ActiveRecord::RecordInvalid => invalid
-        flag = false
-    end
+          flag = false
+        end
     if flag == true
       respond_to do |format|
         UserMailer.send_email_paciente(login.email.to_s,login.password.to_s).deliver
@@ -118,19 +127,10 @@ class PatientsController < ApplicationController
     @patient.civil_status_id = civil_status_id
     @patient.handedness_id = handedness_id
 
-    if(params[:patient][:palavrapass].blank?)
-      pass = login.password
-    else 
-      pass = params[:patient][:palavrapass]
-    end
-
 
     begin
       Patient.transaction do
-        Login.transaction do
           @patient.update_attributes(params[:patient])
-          login.update_attributes(:email => params[:patient][:email], :password => pass)
-        end
       end
       rescue ActiveRecord::RecordInvalid => invalid
         respond_to do |format| 

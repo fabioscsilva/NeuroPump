@@ -7,7 +7,7 @@
 				<button type="button" class="btn-danger" style="width:100%; margin-top:10px;">Remover Perfil</button> -->
 				<%= link_to "Editar", edit_secretary_path(@secretary), :method => "get", :class => "btn btn-warning pull-right span12", :style => "margin-top:10px;"%>
 
-				<% if @secretary.active == true %>
+				<% if @secretary.login.deleted_at == nil %>
 				<%= link_to "Desativar", @secretary, :method => :delete, :confirm => "Tem a certeza?",  :class => "btn btn-danger pull-right span12", :style => "margin-top:10px;" %>
 				<%else%>
 				<%= link_to "Ativar", @secretary, :method => :delete, :confirm => "Tem a certeza?",  :class => "btn btn-success pull-right span12", :style => "margin-top:10px;" %>
@@ -124,11 +124,6 @@
 <p>
 <b>Identification code:</b>
 <%= @secretary.identification_code %>
-</p>
-
-<p>
-<b>Active:</b>
-<%= @secretary.active %>
 </p>
 
 <p>

@@ -1,17 +1,18 @@
 <!-- Implemented by Fábio Silva - 29/11/2012 -->
+<!-- Updated by Fábio Silva - 24/12/2012 -->
 <div class="container">
 	<div class="row-fluid">
 		<div class="span8 offset2">
 			<div class="span4 pull-right" style = "margin-top: 20px;">
 				<%= image_tag @neuropsychologist.photo.url %>
-				<td><%= link_to 'Editar', edit_neuropsychologist_path(@neuropsychologist), :class => "btn btn-warning pull-right span12", :style => "margin-top:10px;" %></td>
-				<td>
-					<% if @neuropsychologist.active == true %>
-						<%= link_to 'Desativar', neuropsychologist_path(@neuropsychologist), :method => :delete, :confirm => "Tem a certeza?", :class => "btn btn-danger pull-right span12", :style => "margin-top:10px;" %>
-					<%else%>
-						<%= link_to 'Ativar', neuropsychologist_path(@neuropsychologist), :method => :delete, :confirm => "Tem a certeza?", :class => "btn btn-success pull-right span12", :style => "margin-top:10px;" %>
-					<%end%>									
-				</td>
+				<%= link_to 'Editar', edit_neuropsychologist_path(@neuropsychologist), :class => "btn btn-warning pull-right span12", :style => "margin-top:10px;" %>
+				<%if current_login.has_role? :manager %>
+				<% if @neuropsychologist.login.deleted_at == nil %>
+				<%= link_to 'Desativar', neuropsychologist_path(@neuropsychologist), :method => :delete, :confirm => "Tem a certeza?", :class => "btn btn-danger pull-right span12", :style => "margin-top:10px;" %>
+				<%else%>
+				<%= link_to 'Ativar', neuropsychologist_path(@neuropsychologist), :method => :delete, :confirm => "Tem a certeza?", :class => "btn btn-success pull-right span12", :style => "margin-top:10px;" %>
+				<%end%>
+				<%end%>
 			</div>
 			<div class="span8">
 				<h3 style="margin-bottom: 30px;"> <%= @neuropsychologist.name %> </h3>
@@ -54,10 +55,10 @@
 					</div>
 					<div class="span9">
 						<% if @neuropsychologist.telephone.to_str.blank?  %>
-							Sem contacto
+						Sem contacto
 						<% else %>
-							<%= @neuropsychologist.telephone %>
-						<% end %>	
+						<%= @neuropsychologist.telephone %>
+						<% end %>
 					</div>
 				</div>
 				<div class="row-fluid">
@@ -66,10 +67,10 @@
 					</div>
 					<div class="span9">
 						<% if @neuropsychologist.mobilephone.to_str.blank?  %>
-							Sem contacto
+						Sem contacto
 						<% else %>
-							<%= @neuropsychologist.mobilephone %>
-						<% end %>	
+						<%= @neuropsychologist.mobilephone %>
+						<% end %>
 					</div>
 				</div>
 				<div class="row-fluid">
@@ -121,11 +122,6 @@
 <p>
 <b>Identification code:</b>
 <%= @neuropsychologist.identification_code %>
-</p>
-
-<p>
-<b>Active:</b>
-<%= @neuropsychologist.active %>
 </p>
 
 <p>

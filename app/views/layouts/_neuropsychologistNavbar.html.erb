@@ -1,6 +1,9 @@
-<% secretary = Secretary.first(:conditions => "login_id = #{current_login.id}") %>
+<!-- Updated by Fábio Silva - 24/12/2012 -->
+
+<!-- <% secretary = Secretary.first(:conditions => "login_id = #{current_login.id}") %> -->
+<% @neuropsychologist = Neuropsychologist.first(:conditions => "login_id = #{current_login.id}") %>
 <li>
-	<%= link_to "Home", "#" %>
+	<%= link_to('Iniciar Avaliação (Teste)', appointment_plans_path) %>
 </li>
 <li>
 	<%= link_to('Sessões', appointments_path) %>
@@ -8,16 +11,17 @@
 <li>
 	<%= link_to('Pacientes', patients_path)  %>
 </li>
-
 <ul class="nav pull-right">
 	<li id="fat-menu" class="dropdown">
 		<a href="#" id="drop3" role="button" class="dropdown-toggle" data-toggle="dropdown"><b class="caret"></b></a>
 		<ul class="dropdown-menu" role="menu" aria-labelledby="drop3">
 			<li>
+				<%= link_to "Ver Perfil", neuropsychologist_path(@neuropsychologist) %>
+			</li>
+			<li>
 				<%= link_to "Alterar Password", edit_login_registration_path %>
 			</li>
 			<li class="divider"></li>
-
 			<li>
 				<%= link_to('Logout', destroy_login_session_path, :method=>'delete') %>
 			</li>

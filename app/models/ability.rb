@@ -12,7 +12,7 @@ class Ability
     login ||= Login.new 
     # O paciente só pode ver/editar a própria informação
     if login.has_role? :patient
-      can [:show, :edit, :update], Patient do |patient|
+      can [:show, :edit, :update, :games, :stimulation], Patient do |patient|
         patient.login.email == login.email
       end
     # O neuropsicólogo pode ver/editar os pacientes da clínica e ver/editar o seu perfil
@@ -25,8 +25,10 @@ class Ability
       end
     # A secretária pode fazer manage dos clientes da própria clínica, ver psicólogos da própria clínica e editar o seu perfil
     elsif login.has_role? :secretary
-    # BERNARDO TENS D CORRIGIR ESTA MERDA TRABALHA BOI
-      can :manage, :all
+      can [:new, :create], Patient
+      can [:index, :show, :edit, :update], Patient do |patient|
+        patient.clinic_id == login.secretaries.first.clinic_id
+      end
       can [:index, :show], Neuropsychologist do |neuropsychologist|
         neuropsychologist.clinic_id == login.secretaries.first.clinic_id
       end

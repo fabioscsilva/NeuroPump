@@ -1,11 +1,14 @@
 <% secretary = Secretary.first(:conditions => "login_id = #{current_login.id}") %>
 <li>
-	<%= link_to "Estimulação", "#" %>
+	<%= link_to "Estimulação", games_path(:id => @patient.id) %>
 </li>
 <ul class="nav pull-right">
 	<li id="fat-menu" class="dropdown">
 		<a href="#" id="drop3" role="button" class="dropdown-toggle" data-toggle="dropdown"><b class="caret"></b></a>
 		<ul class="dropdown-menu" role="menu" aria-labelledby="drop3">
+			<li>
+				<%= link_to "Ver Perfil", patient_path %>
+			</li>
 			<li>
 				<%= link_to "Alterar Password", edit_login_registration_path %>
 			</li>

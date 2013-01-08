@@ -1,0 +1,73 @@
+<!-- Implemented by Fábio Silva - 29/11/2012 -->
+<div class="container">
+	<div class="row-fluid">
+		<div class="span12">
+
+			<div class="span3 pull-left">
+				<legend>
+					Sessão
+				</legend>
+				<div class="well">
+					<ul class="nav nav-list" style="float:none">
+						<% appoint_plan = AppointmentPlan.where(:appointment_id => 1) %>
+						<% appoint_plan.each do |a|%>
+							<%if a.evaluation_test.name == "WMS"%>
+								<li class="active">
+									<a href="#"><i class="icon-chevron-right"></i> <%= a.evaluation_test.name %></a>
+								</li>
+							<%else%>
+								<li>
+									<a href="#"><i class="icon-chevron-right"></i> <%= a.evaluation_test.name %></a>
+								</li>
+							<%end%>
+
+						<%end%>
+					</ul>
+				</div>
+			</div>
+			<div class="span9">
+				<legend>
+					<% if session["wms_phase"] == 1 %>
+					WMS III - Sequência Letra-Número
+					<% else %>
+					WMS III - Sequência Espacial Direta
+					<%end %>
+					<div class="pull-right">
+						<a href="#myModal" role="button" class="btn btn-primary btn-small" data-toggle="modal"><i class="icon-white icon-info-sign"></i></a>
+
+						<!-- Modal -->
+						<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+									×
+								</button>
+								<h4 id="myModalLabel">Wechsler Memory Scale III</h4>
+							</div>
+							<div class="modal-body" style="font-size: 12px; line-height: 20px;">
+								<p align="justify">
+									Desta bateria foram escolhidos apenas dois testes (Sequência Letra-Número e Sequência Espacial Direta)
+									com o intuito de avaliar a memória de trabalho do paciente. <br><br>
+									
+									<b>Sequência Letra-Número</b> - É lida ao sujeito uma sequência de letras e números, que deve repeti-la,
+									colocando em primeiro lugar os número seguidos e ordenados crescentemente e em segundo lugar as letras por ordem alfabética.
+									O tamanho das sequências vai aumentando gradualmente. A pontuação para cada item correto é 1 e para cada item
+									errado é 0.<br><br>
+									
+									<b>Sequência Espacial Directa</b> - É solicitado ao sujeito que repita a sequência que o administrador faz,
+									tocando nos blocos númerados de um quadro tridimensional, pela mesma ordem que o administrador o fez. 
+									O tamanho das sequências vai aumentando gradualmente. A pontuação para cada item correto é 1 e para cada item
+									errado é 0.
+								</p>
+							</div>
+
+						</div>
+					</div>
+
+				</legend>
+				<%= render 'form' %>
+			</div>
+		</div>
+	</div>
+	<div class="span3"></div>
+</div>
+

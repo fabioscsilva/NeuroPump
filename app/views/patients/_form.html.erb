@@ -90,16 +90,6 @@
 							</div>
 						</div>
 						<% if (@pageType == "edit") && (current_login.has_role? :patient) %>
-						<div class="row-fluid">
-							<div class="span6">
-								<label>Password</label>
-								<%= f.text_field :palavrapass, { :class => "span12", :onfocus => "alertas()", :type => "password", :placeholder => "Nova Password" } %>
-							</div>
-							<div class="span6">
-								<label>Confirmar Password</label>
-								<input id="palavrapassrepete" onfocus="alertas()" class="span12" type="password" placeholder="Confirma Nova Password">
-							</div>
-						</div>
 						<div>
 							<label>Fotografia</label>
 							<%= f.file_field :photo %>

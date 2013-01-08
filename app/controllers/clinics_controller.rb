@@ -5,7 +5,7 @@ class ClinicsController < ApplicationController
   # GET /clinics.json
   def index
     if current_login.has_role? :manager
-      @clinics = Clinic.where(:active => true)
+      @clinics = Clinic.joins(:login).where("deleted_at IS NULL")
     elsif current_login.has_role? :administrator
       @clinics = Clinic.all
     end
@@ -46,7 +46,7 @@ class ClinicsController < ApplicationController
   def create
     admin_id = params[:clinic].delete(:administrator_id)
     @clinic = Clinic.new(params[:clinic])
-    @clinic.active = true;
+    #@clinic.active = true; <- Utiliza-se agora deleted_at para soft delete
     @clinic.administrator_id = admin_id
 
     respond_to do |format|
@@ -85,10 +85,10 @@ class ClinicsController < ApplicationController
   def destroy
     #authorize! :index, @login, :message => 'Nao autorizado!'
     @clinic = Clinic.find(params[:id])
-    if @clinic.active == true 
-      @clinic.update_attribute(:active ,false)
+    if @clinic.login.deleted_at == nil
+      @clinic.login.update_attribute(:deleted_at ,Time.now)
     else
-       @clinic.update_attribute(:active ,true)
+       @clinic.login.update_attribute(:deleted_at ,nil)
     end
 
     respond_to do |format|

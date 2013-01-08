@@ -97,7 +97,7 @@
 					<div class="span3">
 						<b>Estado</b>
 					</div>
-					<% if @clinic.active == true %>
+					<% if @clinic.deleted_at == nil %>
 					<div class="span9">
 						Ativa
 					</div>
@@ -140,7 +140,7 @@
 				<%= link_to "Editar" ,edit_clinic_path(@clinic),  :class => 'btn btn-warning span2', :style => 'margin-top:10px;' %>
 
 				<% if current_login.has_role? :administrator%>
-					<% if @clinic.active == true%>
+					<% if @clinic.deleted_at == nil%>
 						<%= link_to "Desativar" , clinic_path(@clinic), :method => :delete, :confirm => "Tem a certeza?", :class => 'btn btn-danger span2', :style => 'margin-top:10px;' %>
 					<% else %>
 						<%= link_to "Ativar" , clinic_path(@clinic), :method => :delete, :confirm => "Tem a certeza?", :class => 'btn btn-success span2', :style => 'margin-top:10px;' %>

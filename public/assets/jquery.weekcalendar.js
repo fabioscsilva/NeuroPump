@@ -410,9 +410,9 @@
 
          if (options.buttons) {
             calendarNavHtml = "<div class=\"wc-nav\">\
-                    <button class=\"wc-today btn\" style=\"font-size: 10px; background-color: #F2F2F2; float:right; text-transform: uppercase\">" + options.buttonText.today + "</button>\
-                    <button class=\"wc-next btn\" style=\"background-color: #F2F2F2; float: right; font-size: 12px;\">" + options.buttonText.nextWeek + "</button>\
-                    <button class=\"wc-prev btn\" style=\"background-color: #F2F2F2; float: right; font-size: 12px;\">" + options.buttonText.lastWeek + "</button>\
+                    <button class=\"wc-today btn\" style=\"font-size: 12px; border-radius: 40px;background-color: #F2F2F2; float:right; text-transform: uppercase\">" + options.buttonText.today + "</button>\
+                    <button class=\"wc-prev btn\" style=\"border-radius: 40px;background-color: #F2F2F2;\">" + options.buttonText.lastWeek + "</button>SEMANA\
+                    <button class=\"wc-next btn\" style=\"border-radius: 40px;background-color: #F2F2F2;\">" + options.buttonText.nextWeek + "</button>\
                     </div>";
 
             $(calendarNavHtml).appendTo($calendarContainer);
@@ -1096,14 +1096,13 @@
          var options = this.options;
          var one_hour = 3600000;
          var displayTitleWithTime = calEvent.end.getTime()-calEvent.start.getTime() <= (one_hour/options.timeslotsPerHour);
-         /*if (displayTitleWithTime){
+         if (displayTitleWithTime){
            $calEvent.find(".wc-time").html(self._formatDate(calEvent.start, options.timeFormat) + ": " + calEvent.title);
          }
          else {
            $calEvent.find(".wc-time").html(self._formatDate(calEvent.start, options.timeFormat) + options.timeSeparator + self._formatDate(calEvent.end, options.timeFormat));
-         }*/
-         $calEvent.find(".wc-time").html(calEvent.neuropsicologo);
-         $calEvent.find(".wc-title").html(calEvent.paciente);
+         }
+         $calEvent.find(".wc-title").html(calEvent.title);
          $calEvent.data("calEvent", calEvent);
       },
 
@@ -1136,12 +1135,11 @@
 
          var $target = this.element.find(".wc-grid-timeslot-header .wc-hour-header:eq(" + slot + ")");
 
-         // abaixo estava a dar erro
-         /* $scrollable.animate({scrollTop: 0}, 0, function() {
+         $scrollable.animate({scrollTop: 0}, 0, function() {
             var targetOffset = $target.offset().top;
             var scroll = targetOffset - $scrollable.offset().top - $target.outerHeight();
             $scrollable.animate({scrollTop: scroll}, options.scrollToHourMillis);
-         }); */
+         });
       },
 
       /*

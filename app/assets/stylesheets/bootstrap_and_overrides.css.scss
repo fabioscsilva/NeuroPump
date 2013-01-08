@@ -95,6 +95,10 @@ footer{
   font-size: 13px;
 }
 
+.btn-group > .btn.active {
+  z-index: 0;
+}
+
 // Responsive styles go here in case you want them
 @import "bootstrap-responsive";
 

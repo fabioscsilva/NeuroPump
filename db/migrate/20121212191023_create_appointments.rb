@@ -3,6 +3,7 @@ class CreateAppointments < ActiveRecord::Migration
     create_table :appointments do |t|
       t.datetime :appointment_day, :null => false
       t.text :description
+      t.integer :duration, :default => 60
       t.references :patient
       t.references :secretary
       t.references :neuropsychologist

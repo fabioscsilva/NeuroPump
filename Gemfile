@@ -7,7 +7,7 @@ gem 'rails', '3.2.8'
 
 # gem 'sqlite3'
 gem 'pg'
-gem 'activerecord-postgresql-adapter'
+#gem 'activerecord-postgresql-adapter'
 gem 'simple_form'
 gem 'paperclip'
 
@@ -15,6 +15,7 @@ gem 'paperclip'
 gem 'devise'
 gem 'cancan'
 gem 'rolify'
+gem "swf_fu", "~> 2.0"
 
 # Gems used only for assets and not required
 # in production environments by default.

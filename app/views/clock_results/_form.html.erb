@@ -1,0 +1,103 @@
+<%= form_for(@clock) do |f| %>
+<% if @clock.errors.any? %>
+<div id="error_explanation">
+	<h2><%= pluralize(@clock.errors.count, "error") %> prohibited this clock from being saved:</h2>
+
+	<ul>
+		<% @clock.errors.full_messages.each do |msg| %>
+		<li>
+			<%= msg %>
+		</li>
+		<% end %>
+	</ul>
+</div>
+<% end %>
+
+<b>Critérios de Pontuação do Teste do relógio (J. Cacho et al.):</b>
+<table id="" class="table table-bordered table-striped">
+	<tbody>
+		<tr>
+			<td class="span8">1. Mostrador do Relógio (máximo 2 pontos)</td>
+			<td> <%= f.hidden_field :screen_result, value: 0 %>
+			<center>
+				<div class="btn-group" data-toggle="buttons-radio">
+					<button type="button" onclick="changeScreenField('clock_result_screen_result',0)" class="btn btn-info active">
+						0
+					</button>
+					<button type="button" onclick="changeScreenField('clock_result_screen_result',1)" class="btn btn-info">
+						1
+					</button>
+					<button type="button" onclick="changeScreenField('clock_result_screen_result',2)" class="btn btn-info">
+						2
+					</button>
+				</div>
+			</center></td>
+		</tr>
+		<tr>
+			<td>2. Presença ou sequência dos números (máximo 4 pontos)</td>
+			<td> <%= f.hidden_field :number_seq_result, value: 0 %>
+			<center>
+				<div class="btn-group" data-toggle="buttons-radio">
+					<button type="button" onclick="changeScreenField('clock_result_number_seq_result',0)" class="btn btn-info active">
+						0
+					</button>
+					<button type="button" onclick="changeScreenField('clock_result_number_seq_result',1)" class="btn btn-info">
+						1
+					</button>
+					<button type="button" onclick="changeScreenField('clock_result_number_seq_result',2)" class="btn btn-info">
+						2
+					</button>
+					<button type="button" onclick="changeScreenField('clock_result_number_seq_result',3)" class="btn btn-info">
+						3
+					</button>
+					<button type="button" onclick="changeScreenField('clock_result_number_seq_result',3.5)" class="btn btn-info">
+						3,5
+					</button>
+					<button type="button" onclick="changeScreenField('clock_result_number_seq_result',4)" class="btn btn-info">
+						4
+					</button>
+				</div>
+			</center></td>
+		</tr>
+		<tr>
+			<td>3. Presença e localização dos ponteiros (máximo 4 pontos)</td>
+			<td> <%= f.hidden_field :pointers_loc_result, value: 0 %>
+			<center>
+				<div class="btn-group" data-toggle="buttons-radio">
+					<button type="button" onclick="changeScreenField('clock_result_pointers_loc_result',0)" class="btn btn-info active">
+						0
+					</button>
+					<button type="button" onclick="changeScreenField('clock_result_pointers_loc_result',1)" class="btn btn-info">
+						1
+					</button>
+					<button type="button" onclick="changeScreenField('clock_result_pointers_loc_result',2)" class="btn btn-info">
+						2
+					</button>
+					<button type="button" onclick="changeScreenField('clock_result_pointers_loc_result',3)" class="btn btn-info">
+						3
+					</button>
+					<button type="button" onclick="changeScreenField('clock_result_pointers_loc_result',3.5)" class="btn btn-info">
+						3,5
+					</button>
+					<button type="button" onclick="changeScreenField('clock_result_pointers_loc_result',4)" class="btn btn-info">
+						4
+					</button>
+				</div>
+			</center></td>
+		</tr>
+	</tbody>
+</table>
+<b>Observações:</b>
+<%= f.text_area :observations, :rows => 5, :class => "span12", :style => "resize:vertical;", :placeholder => "Insira aqui as observações necessárias"%>
+<!-- 				<label class="pull-right">Total:7</label> -->
+
+<%if session["test_sequence"].blank? %>
+	<div class="actions">
+		<%= f.submit :Terminar ,:class => "btn btn-success span2 pull-right", :value => "Terminar"%>
+	</div>
+<%else %>
+	<div class="actions">
+		<%= f.submit :Terminar ,:class => "btn btn-success span2 pull-right", :value => "Próximo"%>
+	</div>
+<%end%>
+<% end %>
