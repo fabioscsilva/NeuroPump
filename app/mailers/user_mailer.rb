@@ -23,4 +23,11 @@ class UserMailer < ActionMailer::Base
           :subject => "[NeuroPump] Bem-vindo ao NeuroPump",
     )
   end
+
+  def send_email_resetpw(email,pass)
+    @password = pass
+    mail ( :to => email,
+           :subject => "[NeuroPump] E-mail de recuperacao de password"
+    )
+  end
 end

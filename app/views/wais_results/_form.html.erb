@@ -55,8 +55,20 @@
 		<%= f.text_area :observations, :rows => 5, :class => "span12", :style => "resize:vertical;"%>
 	</div>
 </div>
-<div class="actions">
-	<%= f.submit :Terminar ,:class => "btn btn-success span2 pull-right"%>
-</div>
 
+<%if session["wais_phase"] == 1%>
+	<div class="actions">
+		<%= f.submit :Terminar ,:class => "btn btn-success span2 pull-right", :value => "Próximo"%>
+	</div>
+<%else%>
+	<%if session["test_sequence"].blank? %>
+		<div class="actions">
+			<%= f.submit :Terminar ,:class => "btn btn-success span2 pull-right", :value => "Terminar"%>
+		</div>
+	<%else %>
+		<div class="actions">
+			<%= f.submit :Terminar ,:class => "btn btn-success span2 pull-right", :value => "Próximo"%>
+		</div>
+	<%end%>
+<%end%>
 <% end %>

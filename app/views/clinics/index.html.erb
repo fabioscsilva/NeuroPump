@@ -34,7 +34,7 @@
 									10/10
 								</div>
 							</div></td>
-							<td> <% if clinic.active == true %>
+							<td> <% if clinic.deleted_at == nil %>
 							<p class="text-success">
 								Activa
 							</p> <%else%>
@@ -50,6 +50,7 @@
 			</div>
 			<br>
 			<%= link_to 'Adicionar Clínica',new_clinic_path, :class => "btn btn-primary pull-right" %>
+			<!-- <%= link_to "Label", :controller => :payments, :action => :check %>-->
 
 		</div>
 

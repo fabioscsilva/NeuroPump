@@ -22,7 +22,7 @@
 							<td><%= neuropsychologist.login.email %></td>
 							<td><%= neuropsychologist.mobilephone %></td>
 							<td>
-								<% if neuropsychologist.active == true  %>
+								<% if neuropsychologist.login.deleted_at == nil  %>
 									<p class="text-success">Ativo</p>
 								<%else%>
 									<p class="text-error">Inativo</p>
@@ -50,7 +50,6 @@
 <th>Photo</th>
 <th>Date of birth</th>
 <th>Identification code</th>
-<th>Active</th>
 <th>Gender ID</th>
 <th>Clinic ID</th>
 <th>Login ID</th>
@@ -68,7 +67,6 @@
 <td><%= neuropsychologist.photo %></td>
 <td><%= neuropsychologist.date_of_birth %></td>
 <td><%= neuropsychologist.identification_code %></td>
-<td><%= neuropsychologist.active %></td>
 <td><%= neuropsychologist.gender_id %></td>
 <td><%= neuropsychologist.clinic_id %></td>
 <td><%= neuropsychologist.login_id %></td>

@@ -7,7 +7,7 @@
 				<%= image_tag @neuropsychologist.photo.url %>
 				<%= link_to 'Editar', edit_neuropsychologist_path(@neuropsychologist), :class => "btn btn-warning pull-right span12", :style => "margin-top:10px;" %>
 				<%if current_login.has_role? :manager %>
-				<% if @neuropsychologist.active == true %>
+				<% if @neuropsychologist.login.deleted_at == nil %>
 				<%= link_to 'Desativar', neuropsychologist_path(@neuropsychologist), :method => :delete, :confirm => "Tem a certeza?", :class => "btn btn-danger pull-right span12", :style => "margin-top:10px;" %>
 				<%else%>
 				<%= link_to 'Ativar', neuropsychologist_path(@neuropsychologist), :method => :delete, :confirm => "Tem a certeza?", :class => "btn btn-success pull-right span12", :style => "margin-top:10px;" %>
@@ -122,11 +122,6 @@
 <p>
 <b>Identification code:</b>
 <%= @neuropsychologist.identification_code %>
-</p>
-
-<p>
-<b>Active:</b>
-<%= @neuropsychologist.active %>
 </p>
 
 <p>

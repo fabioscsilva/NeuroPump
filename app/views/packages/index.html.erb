@@ -1,0 +1,61 @@
+
+
+<style type="text/css" media="screen">
+ table { border: 0px solid black;float:left;width:100%;}
+ .table_container{width:200px;margin:0 auto;float:left;}
+</style>
+
+
+<div class="table_container">
+	<table border = "1">
+		<tr> <th>
+				Pacote 1
+			</th> 
+		</tr>
+		<tr> <td>
+				Sessões por Semana: 10
+			</td> 
+		</tr>
+		<tr> <td>
+				49.90€
+			</td> 
+		</tr>
+	</table>
+	<%= radio_button_tag(:package, "3") %>
+</div>
+<div class="table_container">
+	<table border = "1">
+		<tr> <th>
+				Pacote 2
+			</th> 
+		</tr>
+		<tr> <td>
+				Sessões por Semana: 20
+			</td> 
+		</tr>
+		<tr> <td>
+				89.90€
+			</td> 
+		</tr>
+	</table>
+	<%= radio_button_tag(:package, "2") %>
+	
+</div>
+<div class="table_container">
+	<table border = "1">
+		<tr> <th>
+				Pacote 3
+			</th> 
+		</tr>
+		<tr> <td>
+				Sessões por Semana: Ilimitado
+			</td> 
+		</tr>
+		<tr> <td>
+				109.90€
+			</td> 
+		</tr>
+	</table>
+
+	<%= radio_button_tag(:package, "3") %>
+</div>

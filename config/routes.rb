@@ -1,6 +1,8 @@
 NeuroPump::Application.routes.draw do
 
   resources :wms_results
+
+  resources :packages
   
   resources :evaluation_tests
 
@@ -50,6 +52,7 @@ NeuroPump::Application.routes.draw do
 
   resources :managers
 
+  match "payments/check" => 'payments#check'
   resources :payments
 
   resources :clinics
