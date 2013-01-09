@@ -67,7 +67,7 @@
                 <div style="float: left; width: 45%;font-size: 10px;">
                 <li style="list-style-type: none;">
                         <label for="paciente">Paciente: </label>
-                        <% logged_user = Secretary.first(:conditions => "login_id = #{current_login.id}")
+                        <% logged_user = Neuropsychologist.first(:conditions => "login_id = #{current_login.id}")
                         @patients = Patient.is_active.in_clinic(logged_user.clinic.id).all %>
                         <div style="width: 250px; position: relative;">
                         <%= f.select :patient_id, @patients.map{ |c| [c.name, c.id] } %>
