@@ -17,9 +17,9 @@
                     <td><%= payment.creation_date.strftime("%d-%m-%Y") %></td>
                     <td><%= payment.due_date.strftime("%d-%m-%Y") %></td>
                     <td><%= payment.payment_date.strftime("%d-%m-%Y") %></td>
-                    <td><% if payment.payed = true %>
+                    <td><% if payment.payed == true %>
                             <%= "Pago" %>
-                         <% elsif payment.payed = false %>
+                         <% elsif payment.payed == false %>
                             <%= "Nao Pago" %>
                         <%end%>   
                     </td>
