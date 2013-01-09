@@ -39,12 +39,14 @@ where p.clinic_id = s.clinic_id and p.due_date = s.d order by payed')
     payments.each do |p|
       if p.id.odd? 
         p.payed = true;
-        p.update;
+        p.save;
       end
     end
 
+    flash[:notice] = "Pagamentos atualizados e verificados com sucesso."
+
     respond_to do |format|
-      format.html { redirect_to clinics_url }
+      format.html { redirect_to payments_url }
       format.json { render json: @payment }
     end
   end
