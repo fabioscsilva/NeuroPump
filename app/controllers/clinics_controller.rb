@@ -85,10 +85,10 @@ class ClinicsController < ApplicationController
   def destroy
     #authorize! :index, @login, :message => 'Nao autorizado!'
     @clinic = Clinic.find(params[:id])
-    if @clinic.login.deleted_at == nil
-      @clinic.login.update_attribute(:deleted_at ,Time.now)
+    if @clinic.deleted_at == nil
+      @clinic.update_attribute(:deleted_at ,Time.now)
     else
-       @clinic.login.update_attribute(:deleted_at ,nil)
+       @clinic.update_attribute(:deleted_at ,nil)
     end
 
     respond_to do |format|

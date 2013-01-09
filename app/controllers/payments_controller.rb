@@ -21,6 +21,22 @@ class PaymentsController < ApplicationController
     end
   end
 
+  # Método que simula uma atualização do estado dos pagamentos gerados
+  def check
+    payments = Payment.where("payed" => false);
+    payments.each do |p|
+      if p.id.odd? 
+        p.payed = true;
+        p.update;
+      end
+    end
+
+    respond_to do |format|
+      format.html { redirect_to clinics_url }
+      format.json { render json: @payment }
+    end
+  end
+
   # GET /payments/new
   # GET /payments/new.json
   def new
