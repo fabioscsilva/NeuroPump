@@ -4,6 +4,18 @@ class PaymentsController < ApplicationController
   def index
     @payments = Payment.all
 
+    if current_login.has_role? :administrator
+      @payments = Payment.find_by_sql('select *
+from Payments p, (select clinic_id, max(due_date) as d from payments group by clinic_id) s
+where p.clinic_id = s.clinic_id and p.due_date = s.d order by payed')
+
+
+      
+    elsif current_login.has_role? :manager
+      logged_user = Manager.first(:conditions => "login_id = #{current_login.id}")
+      @payments = Payment.in_clinic(logged_user.clinic.id).all
+    end
+
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @payments }

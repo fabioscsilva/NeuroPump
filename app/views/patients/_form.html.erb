@@ -14,20 +14,20 @@
 <% end %>
 
 <%if @pageType == "edit"  %>
-<%if current_login.has_role? :neuropsychologist %>
-<div class="tabbable">
-	<ul class="nav nav-tabs" style="float: none;">
-		<li class="active">
-			<a href="#tab1" data-toggle="tab">Dados Pessoais</a>
-		</li>
-		<li>
-			<a href="#tab2" data-toggle="tab">Historial Clínico</a>
-		</li>
-	</ul>
-	<br>
-	<div class="tab-content">
-		<%end%>
-		<%end %>
+	<%if current_login.has_role? :neuropsychologist %>
+	<div class="tabbable">
+		<ul class="nav nav-tabs" style="float: none;">
+			<li class="active">
+				<a href="#tab1" data-toggle="tab">Dados Pessoais</a>
+			</li>
+			<li>
+				<a href="#tab2" data-toggle="tab">Historial Clínico</a>
+			</li>
+		</ul>
+		<br>
+		<div class="tab-content">
+	<%end%>
+<%end %>
 		<div id="tab1" class="tab-pane active">
 			<form>
 				<fieldset>
@@ -90,10 +90,10 @@
 							</div>
 						</div>
 						<% if (@pageType == "edit") && (current_login.has_role? :patient) %>
-						<div>
-							<label>Fotografia</label>
-							<%= f.file_field :photo %>
-						</div>
+							<div>
+								<label>Fotografia</label>
+								<%= f.file_field :photo %>
+							</div>
 						<% end %>
 						<div>
 							<%= button_tag "Reverter", :class => "btn btn-warning span2 pull-right", :type => "reset" %>

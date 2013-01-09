@@ -30,6 +30,11 @@
 <% end %>
 </table>
 
-<br />
+        <h2>Lista de Pagamentos</h2>
 
-<%= link_to 'New Payment', new_payment_path %>
+        <%if current_login.has_role? :administrator %>
+            <%= render 'indexAdministrator' %>
+        <%elsif current_login.has_role? :manager %>
+            <%= render 'indexManager' %>
+        <%end%>
+</div>
