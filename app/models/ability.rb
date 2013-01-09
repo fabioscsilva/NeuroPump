@@ -44,12 +44,14 @@ class Ability
         secretary.clinic_id == login.managers.first.clinic_id
       end
       can :manage, Manager
+      can :show, Payment
       cannot :create, Manager # Não pode 
       can [:show, :edit, :update], Clinic do |clinic|
         clinic.id == login.managers.first.clinic_id
       end
     # O administrador pode fazer manage de clínicas e managers
     elsif login.has_role? :administrator
+      can :manage, Payment
       can :manage, Clinic
       can :manage, Manager
     end
