@@ -17,7 +17,7 @@
                     <td>€<%= payment.value %></td>
                     <td><%= payment.creation_date.strftime("%d-%m-%Y") %></td>
                     <td><%= payment.due_date.strftime("%d-%m-%Y") %></td>
-                    <td><%= payment.payment_date.strftime("%d-%m-%Y") %></td>
+                    <td><%= payment.payment_date.strftime("%d-%m-%Y") if payment.payment_date %></td>
                     <td><% if payment.payed == true %>
                             <%= "Pago" %>
                          <% elsif payment.payed == false %>
@@ -28,4 +28,5 @@
             <% end %>
             </tbody>
 </table>
-<%= link_to "Verificar Estado de Pagamentos", {:controller => :payments, :action => :check}, :class => "btn btn-primary pull-right" %>
+<%= link_to "Verificar Estado de Pagamentos", {:controller => :payments, :action => :check}, :class => "btn btn-primary pull-right span1.5" %>
+<%= link_to "Gerar Referências de Pagamentos", {:controller => :payments, :action => :generate}, :class => "btn btn-primary pull-right" %>
