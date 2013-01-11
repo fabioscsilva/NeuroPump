@@ -52,6 +52,7 @@ NeuroPump::Application.routes.draw do
 
   resources :managers
 
+  match "payments/generate" => 'payments#generate'
   match "payments/check" => 'payments#check'
   resources :payments
 
