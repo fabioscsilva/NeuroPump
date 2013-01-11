@@ -7,6 +7,8 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 # Implemented by Fábio Silva - 06/12/2012
+EvaluationTest.delete_all
+TestArea.delete_all
 Appointment.delete_all
 AppointmentStatus.delete_all
 AppointmentType.delete_all
@@ -21,6 +23,8 @@ Role.delete_all
 Login.delete_all
 Handedness.delete_all
 CivilStatus.delete_all
+
+
 
 #Civil_Statuses
 statuses = CivilStatus.create([{description:'Solteiro'},{description: 'Casado'}, {description: 'Divorciado'}, {description: 'Viuvo'}])
@@ -111,5 +115,10 @@ appointments = Appointment.create([{description:'Sessao que permite ao paciente 
                                   {description:'Sessao que permite ao paciente desenvolver as suas capacidades sonoras',appointment_day:'12-12-2012 10:00:00',patient_id:patient1,secretary_id:secretary1,neuropsychologist_id:neuro3,appointment_status_id:app_status2,appointment_type_id:app_type1},
                                   {description:'Sessao que permite ao paciente desenvolver as suas capacidades visuais',appointment_day:'11-02-2013 10:00:00',patient_id:patient2,secretary_id:secretary2,neuropsychologist_id:neuro3,appointment_status_id:app_status1,appointment_type_id:app_type1},
                                   {description:'Sessao que permite ao paciente desenvolver as suas capacidades visuais',appointment_day:'15-02-2013 11:00:00',patient_id:patient2,secretary_id:secretary2,neuropsychologist_id:neuro3,appointment_status_id:app_status1,appointment_type_id:app_type1}])
+
+areas = TestArea.create([{name:'area1'},{name:'area2'}])
+
+testes = EvaluationTest.create([{name:'ftt',description:'descricao teste',test_area_id:areas.first},{name:'tmt',description:'descricao teste',test_area_id:areas.first},{name:'wais',description:'descricao teste',test_area_id:areas.first},{name:'wms',description:'descricao teste',test_area_id:areas.second},{name:'clock',description:'descricao teste',test_area_id:areas.second},])
+
 
 puts "Success: Data loaded"

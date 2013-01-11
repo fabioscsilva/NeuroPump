@@ -120,6 +120,7 @@
                   </li>
                 </div>
 
+				<%= link_to "Plano", { :controller => "appointment_plans", :action => "new" }, :id => "plan" %>
                 <!--
                 <% @appointments.each do |appointment| %>
                   <%= link_to "Desativar", @appointment, :method => :delete, :confirm => "Tem a certeza?",  :class => "btn btn-danger pull-right span4", :id => "id#{appointment.id}" , :style => "display: none;" %> 
@@ -400,6 +401,15 @@ $(document).ready(function() {
 
          //aqui vai fazer append do id para depois o controller saber que ele tem de fazer update e nao create
          $('#idtoappend').append('<input id="appointment_id" name="appointment[id]" size="30" type="text" value="'+calEvent.id+'"/>');
+
+
+		//	Adicionar botao de criar/editar o plano da sessão caso a sessao ja esteja criada
+		if (calEvent.id == undefined) {
+			$('#plan').hide();
+		}else{
+			$('#plan').attr("href", "appointment_plans/new?appID="+calEvent.id+"");
+			$('#plan').html("Criar/Editar Plano");
+		}
 
          //bodyField.val(calEvent.body);
          

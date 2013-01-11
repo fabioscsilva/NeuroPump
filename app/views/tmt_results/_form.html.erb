@@ -22,9 +22,9 @@
 	});
 	var x = null;
 	var myVar;
-	
+
 	var continue_button = document.getElementById('submit');
-  	continue_button.style.visibility = 'hidden';   
+	continue_button.style.visibility = 'hidden';
 
 	function updateDisplay() {
 		var value = parseInt($('#timer').find('.value').text(), 10);
@@ -36,25 +36,18 @@
 
 		var aux = document.getElementById("timer2");
 		aux.innerHTML = "0";
-
 		clearInterval(myVar);
-
 		myVar = setInterval(updateDisplay, 1000);
 		$('#btnIniciar').attr("disabled", "disabled");
-		// $('#btnParar').attr("disabled","");
 		$('#btnParar').attr("disabled", false);
 		$('#btnReiniciar').attr("disabled", false);
 	}
 
 	function pararRelogio() {
 		if (x == null) {
-			//$('#a').html(document.getElementById("timer2"));
 			var aux = document.getElementById("a");
-			
 			time = document.getElementById("timer2").innerHTML;
-			
 			aux.innerHTML = document.getElementById("timer2").innerHTML + " seg.";
-
 			x = 12;
 			clearInterval(myVar);
 			var aux = document.getElementById("timer2");
@@ -62,17 +55,11 @@
 			$('#btnIniciar').attr("disabled", false);
 			$('#btnParar').attr("disabled", true);
 			$('#btnReiniciar').attr("disabled", true);
-			$('#aaa').val(time);
+			$('#trailsA').val(time);
 		} else {
-			//$('#b').html('19.02');
 			var aux = document.getElementById("b");
-			
 			time = document.getElementById("timer2").innerHTML;
-			
-			aux.innerHTML = document.getElementById("timer2").innerHTML + " seg." ;
-			
-			
-			
+			aux.innerHTML = document.getElementById("timer2").innerHTML + " seg.";
 			$("#submit").show();
 			clearInterval(myVar);
 			var aux = document.getElementById("timer2");
@@ -80,8 +67,7 @@
 			$('#btnIniciar').attr("disabled", true);
 			$('#btnParar').attr("disabled", true);
 			$('#btnReiniciar').attr("disabled", true);
-
-			$('#bbb').val(time);
+			$('#trailsB').val(time);
 		}
 	};
 </script>
@@ -98,18 +84,16 @@
 			<tbody
 			<tr>
 
-			<td><label id="a">0 seg. </label>    <%=  hidden_field_tag 'aaa'  %></td>
-			<td><label id="b">0 seg. </label>	 <%=  hidden_field_tag 'bbb'  %></td> 
+			<td><label id="a">0 seg. </label>    <%= hidden_field_tag 'trailsA'  %></td>
+			<td><label id="b">0 seg. </label>	 <%= hidden_field_tag 'trailsB'  %></td>
 			</tr>
 			</tbody>
 			</table>
-			
-
 
 			<div class="field">
 			<%= f.label :observations, "Observações Trails A" %><br />
 			<!-- <%= f.text_area :observations, :style => "width: 100%; height : 50px;" %> -->
-			<%= text_area_tag  'observationsA' , nil , :style => "width: 100%; height : 50px;"   %>
+				<%= text_area_tag  'observationsA' , nil , :style => "width: 100%; height : 50px;"   %>
 	</div>
 
 	<div class="field">
@@ -126,7 +110,7 @@
 		<h1>
 		<div id="timer">
 			<span id="timer2" class="value">0</span> seg.
-		</div> ​</h1>
+		</div> ​ </h1>
 		<p>
 			<button id="btnIniciar" type="button" onclick="iniciaRelogio()" class="btn btn-success">
 				Iniciar
@@ -142,7 +126,6 @@
 		<button type="submit" id="submit" class="btn btn-success" >
 			Proximo
 		</button>
-
 
 	</center>
 </div>

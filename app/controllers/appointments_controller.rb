@@ -9,6 +9,8 @@ class AppointmentsController < ApplicationController
       @appointments = Appointment.all
     end
 
+   # @appointment_plan = AppointmentPlan.find()
+
     # isto é para dar para inserir no index
     @appointment = Appointment.new
     

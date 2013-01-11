@@ -15,18 +15,13 @@
 
 <script type="text/javascript">
 	$(document).ready(function() {
-		//$('#submit').attr("disabled", true);
 		$('#btnParar').hide();
 		$('#btnReiniciar').attr("disabled", true);
-
 	});
 	var x = null;
 	var myVar;
 	var cont = 0;
 	var aux = 0;
-
-	var continue_button = document.getElementById('submit');
-	continue_button.style.visibility = 'hidden';
 
 	function updateDisplay() {
 		var value = parseInt($('#timer').find('.value').text(), 10);
@@ -46,63 +41,44 @@
 	}
 
 	function mostra(lblNum) {
-
 		var val = $("#teste" + lblNum).html()
-
 		$("#teste" + lblNum).replaceWith(function() {
 			return "<input id=\"teste" + lblNum + "\"  name=\"teste" + lblNum + "\"  type=\"number\" onblur=\"hide(" + lblNum + ")\" style=\"width:60px;height:20px;\"  value=\"" + $(this).html() + "\" required></input>";
 		});
-
-		//	alert('asdads');
-
 		$("#teste" + lblNum).focus();
 		$('#btnIniciar').attr("disabled", true);
-
 		aux = val;
 	}
 
 	function hide(lblNum) {
 		var intRegex = /^\d+$/;
-
 		value = $("#teste" + lblNum).val();
-
-		//	alert(value);
 		if (!intRegex.test(value)) {
 			value = 0;
 		}
-
-
 		$("#teste" + lblNum).replaceWith(function() {
-				return "<label id=\"teste" + lblNum + "\" onclick=\"mostra(" + lblNum + ")\" >" + value + "</label>";
-			});
-			$('#btnIniciar').attr("disabled", false);
-		
-		$("#a"+ lblNum).val(value);
+			return "<label id=\"teste" + lblNum + "\" onclick=\"mostra(" + lblNum + ")\" >" + value + "</label>";
+		});
+		$('#btnIniciar').attr("disabled", false);
+
+		//$("#a" + lblNum).val(value);
 
 		if (parseInt(lblNum / 10) == 0) {
 			//Dominante
 			var value = parseInt(value);
-			var aux2 = parseInt(aux);
 			var total = parseInt($("#totalDominante").html());
-			total = total - aux2;
+			total = total - parseInt(aux);
 			var result = total + value;
 			$("#totalDominante").html(result);
-			//mediaDominante
 			$("#mediaDominante").html(result / 10);
 		} else {
-			//Não Dominante
 			var value = parseInt(value);
-			var aux2 = parseInt(aux);
 			var total = parseInt($("#totalNaoDominante").html());
-			total = total - aux2;
+			total = total - parseInt(aux);
 			var result = total + value;
-			//alert(result);
-
 			$("#totalNaoDominante").html(result);
 			$("#mediaNaoDominante").html(result / 10);
-
 		}
-
 	}
 
 	function iniciaRelogio() {
@@ -117,8 +93,8 @@
 	function mostratudo() {
 		for (var i = 0; i < 20; i++) {
 			$("#teste" + i).replaceWith(function() {
-			return "<input id=\"teste" + i + "\"  name=\"teste" + i + "\"   type=\"number\" style=\"width:60px;height:20px;\"  value=\"" + $(this).html() + "\" required></input>";
-		});
+				return "<input id=\"teste" + i + "\"  name=\"teste" + i + "\"   type=\"number\" style=\"width:60px;height:20px;\"  value=\"" + $(this).html() + "\" required></input>";
+			});
 		}
 	}
 </script>
@@ -136,7 +112,7 @@
 			<tbody
 			<tr>
 			<td>1</td>
-			<td><label id="teste0" onclick="mostra(0)">0</label></td> 
+			<td><label id="teste0" onclick="mostra(0)">0</label></td>
 			<td><label id="teste10" onclick="mostra(10)">0</label></td>
 			</tr>
 			<tr>
@@ -160,94 +136,92 @@
 			<td><label id="teste14" onclick="mostra(14)">0</label></td>
 			</tr>
 			<tr>
-				<td>6</td>
-				<td><label id="teste5" onclick="mostra(5)">0</label></td>
-				<td><label id="teste15" onclick="mostra(15)">0</label></td>
+			<td>6</td>
+			<td><label id="teste5" onclick="mostra(5)">0</label></td>
+			<td><label id="teste15" onclick="mostra(15)">0</label></td>
 			</tr>
 			<tr>
-				<td>7</td>
-				<td><label id="teste6" onclick="mostra(6)">0</label></td>
-				<td><label id="teste16" onclick="mostra(16)">0</label></td>
+			<td>7</td>
+			<td><label id="teste6" onclick="mostra(6)">0</label></td>
+			<td><label id="teste16" onclick="mostra(16)">0</label></td>
 			</tr>
 			<tr>
-				<td>8</td>
-				<td><label id="teste7" onclick="mostra(7)">0</label></td>
-				<td><label id="teste17" onclick="mostra(17)">0</label></td>
+			<td>8</td>
+			<td><label id="teste7" onclick="mostra(7)">0</label></td>
+			<td><label id="teste17" onclick="mostra(17)">0</label></td>
 			</tr>
 			<tr>
-				<td>9</td>
-				<td><label id="teste8" onclick="mostra(8)">0</label></td>
-				<td><label id="teste18" onclick="mostra(18)">0</label></td>
+			<td>9</td>
+			<td><label id="teste8" onclick="mostra(8)">0</label></td>
+			<td><label id="teste18" onclick="mostra(18)">0</label></td>
 			</tr>
 			<tr>
-				<td>10</td>
-				<td><label id="teste9" onclick="mostra(9)">0</label></td>
-				<td><label id="teste19" onclick="mostra(19)">0</label></td>
+			<td>10</td>
+			<td><label id="teste9" onclick="mostra(9)">0</label></td>
+			<td><label id="teste19" onclick="mostra(19)">0</label></td>
 			</tr>
 
 			</tbody>
-		</table>
-		
-		<div class="field">
+			</table>
+
+			<div class="field">
 			<%= f.label :observations, "Observações Mão Dominante" %><br />
-			<!-- <%= f.text_area :observations, :style => "width: 100%; height : 50px;" %> -->
 			<%= text_area_tag  'observationsA' , nil , :style => "width: 100%; height : 50px;"   %>
 	</div>
 
 	<div class="field">
 		<%= f.label :observations, "Observações Mão não dominante" %>
 		<br />
-		<!-- <%= f.text_area :observations, :style => "width: 100%; height : 50px;" %> -->
 		<%= text_area_tag 'observationsB' , nil , :style => "width: 100%; height : 50px;" %>
 
 	</div>
-	</div>
-	<div class="span4 offset1">
-		<center>
-			<h1>
-			<div id="timer">
-				<span id="timer2" class="value">10</span> seg.
-			</div> ​ </h1>
-			<p>
-				<button id="btnIniciar" type="button" onclick="iniciaRelogio()" class="btn btn-success">
-					Iniciar
-				</button>
-				<button id="btnParar" type="button" onclick="pararRelogio()"  class="btn btn-danger">
-					Parar
-				</button>
-				<button id="btnReiniciar" type="button" onclick="iniciaRelogio()"   class="btn btn-info">
-					Reiniciar
-				</button>
-			</p>
-			</br>
-			</br>
-			<table class="table table-hover table-bordered table-striped">
-				<thead>
-					<tr>
-						<th></th>
-						<th>Dominante</th>
-						<th>Não Dominante</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td>Total</td>
-						<td><label id="totalDominante">0</label></td>
-						<td><label id="totalNaoDominante">0</label></td>
-					</tr>
-					<tr>
-						<td>Média</td>
-						<td><label id="mediaDominante">0</label></td>
-						<td><label id="mediaNaoDominante">0</label></td>
-					</tr>
-				</tbody>
-			</table>
-
-			<button type="submit" id="submit" onclick="mostratudo();" class="btn btn-large btn-primary" >
-				Proximo
+</div>
+<div class="span4 offset1">
+	<center>
+		<h1>
+		<div id="timer">
+			<span id="timer2" class="value">10</span> seg.
+		</div> ​ </h1>
+		<p>
+			<button id="btnIniciar" type="button" onclick="iniciaRelogio()" class="btn btn-success">
+				Iniciar
 			</button>
+			<button id="btnParar" type="button" onclick="pararRelogio()"  class="btn btn-danger">
+				Parar
+			</button>
+			<button id="btnReiniciar" type="button" onclick="iniciaRelogio()"   class="btn btn-info">
+				Reiniciar
+			</button>
+		</p>
+		</br>
+		</br>
+		<table class="table table-hover table-bordered table-striped">
+			<thead>
+				<tr>
+					<th></th>
+					<th>Dominante</th>
+					<th>Não Dominante</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Total</td>
+					<td><label id="totalDominante">0</label></td>
+					<td><label id="totalNaoDominante">0</label></td>
+				</tr>
+				<tr>
+					<td>Média</td>
+					<td><label id="mediaDominante">0</label></td>
+					<td><label id="mediaNaoDominante">0</label></td>
+				</tr>
+			</tbody>
+		</table>
 
-		</center>
-	</div>
+		<button type="submit" id="submit" onclick="mostratudo();" class="btn btn-large btn-primary" >
+			Proximo
+		</button>
+
+	</center>
+</div>
 </div>
 <% end %>
