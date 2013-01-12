@@ -97,8 +97,21 @@
 		<%= f.text_area :observations, :rows => 5, :class => "span12", :style => "resize:vertical;"%>
 	</div>
 </div>
-<div class="actions">
-	<%= f.submit :Terminar ,:class => "btn btn-success span2 pull-right", :id => "submit"%>
-</div>
+
+<% if session["wms_phase"] == 1 %>
+	<div class="pull-right">
+		<%= f.submit :Terminar, :class=>"btn btn-success", :value => "Próximo", :id => "submit"%>
+	</div>
+<% else %>
+	<%if session["test_sequence"].blank? %>
+		<div class="pull-right">
+			<%= f.submit :Terminar, :class=>"btn btn-success", :value => "Terminar",  :id => "submit"%>
+		</div>
+	<%else %>
+		<div class="pull-right">
+			<%= f.submit :Terminar, :class=>"btn btn-success", :value => "Próximo",  :id => "submit"%>
+		</div>
+	<%end%>
+<% end %>
 
 <% end %>

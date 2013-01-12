@@ -7,14 +7,16 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 # Implemented by Fábio Silva - 06/12/2012
-EvaluationTest.delete_all
+AppointmentPlan.delete_all
 TestArea.delete_all
+EvaluationTest.delete_all
 Appointment.delete_all
 AppointmentStatus.delete_all
 AppointmentType.delete_all
 Neuropsychologist.delete_all
 Secretary.delete_all
 Manager.delete_all
+ClinicalHistory.delete_all
 Patient.delete_all
 Clinic.delete_all
 Administrator.delete_all
@@ -61,32 +63,32 @@ login8 = logins[7].id
 login9 = logins[8].id
 
 #Admin
-admins = Administrator.create([{name:'Admin1', login_id: login7, address:'Braga - UMinho', telephone:'222333444', mobilephone:'912333444', active:'true'}])
+admins = Administrator.create([{name:'Admin1', login_id: login7, address:'Braga - UMinho', telephone:'222333444', mobilephone:'912333444'}])
 admin = admins.first.id
 
 #Clinics
-clinics = Clinic.create([{name:'Instituto de psicologia e neuropsicologia do porto', address:'Porto',fiscal_number:'321456712', email:'geral@ipnp.pt', telephone:'232444111', active:'true', administrator_id: admin}])
+clinics = Clinic.create([{name:'Instituto de psicologia e neuropsicologia do porto', address:'Porto',fiscal_number:'321456712', email:'geral@ipnp.pt', telephone:'232444111', administrator_id: admin}])
 clinic1 = clinics.first.id
 
 #Neuropsychologists
-neuropsychologists = Neuropsychologist.create([{name:'Mario Rodrigues Simoes', address:'Rua das Fontainhas, Coimbra', telephone:'223421566', mobilephone:'923214007', date_of_birth:'09/12/1960', identification_code:'981324214', active:'true', gender_id: male, clinic_id: clinic1, login_id: login1},
-                                               {name:'Susana Amaral Antunes', address:'Rua das Flores, Porto', telephone:'223421566', mobilephone:'915226087', date_of_birth:'10/11/1987', identification_code:'981324214', active:'true', gender_id: female, clinic_id: clinic1, login_id: login2},
-                                               {name:'Fabio Samuel Coelho da Silva', address:'Rua Tomas Pimenta, Porto', telephone:'224224252', mobilephone:'913264006', date_of_birth:'04/07/1980', identification_code:'981324214', active:'true', gender_id: male, clinic_id: clinic1, login_id: login3}])
+neuropsychologists = Neuropsychologist.create([{name:'Mario Rodrigues Simoes', address:'Rua das Fontainhas, Coimbra', telephone:'223421566', mobilephone:'923214007', date_of_birth:'09/12/1960', identification_code:'981324214', gender_id: male, clinic_id: clinic1, login_id: login1},
+                                               {name:'Susana Amaral Antunes', address:'Rua das Flores, Porto', telephone:'223421566', mobilephone:'915226087', date_of_birth:'10/11/1987', identification_code:'981324214', gender_id: female, clinic_id: clinic1, login_id: login2},
+                                               {name:'Fabio Samuel Coelho da Silva', address:'Rua Tomas Pimenta, Porto', telephone:'224224252', mobilephone:'913264006', date_of_birth:'04/07/1980', identification_code:'981324214', gender_id: male, clinic_id: clinic1, login_id: login3}])
 
 neuro1 = neuropsychologists.first.id    
 neuro2 = neuropsychologists.second.id 
 neuro3 = neuropsychologists.third.id
 
-secretaries = Secretary.create([{name:'Nuno Costa', address:'Rua das Fontainhas, Coimbra', telephone:'223421566', mobilephone:'923214007', date_of_birth:'09/12/1960', identification_code:'981324214', active:'true', gender_id: male, clinic_id: clinic1, login_id: login4},
-                               {name:'Maria Amaral Antunes', address:'Rua das Flores, Porto', telephone:'223421566', mobilephone:'915226087', date_of_birth:'10/11/1987', identification_code:'981324214', active:'true', gender_id: female, clinic_id: clinic1, login_id: login5}])
+secretaries = Secretary.create([{name:'Nuno Costa', address:'Rua das Fontainhas, Coimbra', telephone:'223421566', mobilephone:'923214007', date_of_birth:'09/12/1960', identification_code:'981324214', gender_id: male, clinic_id: clinic1, login_id: login4},
+                               {name:'Maria Amaral Antunes', address:'Rua das Flores, Porto', telephone:'223421566', mobilephone:'915226087', date_of_birth:'10/11/1987', identification_code:'981324214', gender_id: female, clinic_id: clinic1, login_id: login5}])
 
 secretary1 =   secretaries.first.id       
 secretary2 =   secretaries.second.id          
                                
 manager = Manager.create([{telephone:'223421566', mobilephone:'923214007', gender_id: male, clinic_id: clinic1, login_id: login6}])
 
-patients = Patient.create([{name:'Rui Pereira',address:'Rua Cabral de Sousa', telephone:'223421566', mobilephone:'923214007', education:'Superior', profession:'Estudante', date_of_birth:'09/12/1960', identification_code:'981324214', active:'true', gender_id: male, clinic_id: clinic1, civil_status_id: st1, handedness_id: h1, login_id: login9}, 
-  {name:'Bernardo Portela',address:'Rua Cabral de Sousa', telephone:'223421566', mobilephone:'923214007', education:'Superior', profession:'Estudante', date_of_birth:'09/12/1960', identification_code:'981324214', active:'true', gender_id: male, clinic_id: clinic1, civil_status_id: st1, handedness_id: h1, login_id: login8}])
+patients = Patient.create([{name:'Rui Pereira',address:'Rua Cabral de Sousa', telephone:'223421566', mobilephone:'923214007', education:'Superior', profession:'Estudante', date_of_birth:'09/12/1960', identification_code:'981324214', gender_id: male, clinic_id: clinic1, civil_status_id: st1, handedness_id: h1, login_id: login9}, 
+  {name:'Bernardo Portela',address:'Rua Cabral de Sousa', telephone:'223421566', mobilephone:'923214007', education:'Superior', profession:'Estudante', date_of_birth:'09/12/1960', identification_code:'981324214', gender_id: male, clinic_id: clinic1, civil_status_id: st1, handedness_id: h1, login_id: login8}])
 
 patient1 = patients.first.id
 patient2 = patients.second.id

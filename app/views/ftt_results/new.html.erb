@@ -7,15 +7,20 @@
 				</legend>
 				<div class="well">
 					<ul class="nav nav-list" style="float:none">
-						<li>
-							<a href="#"><i class="icon-chevron-right"></i> TMT</a>
-						</li>
-						<li>
-							<a href="#"><i class="icon-chevron-right"></i> FTT</a>
-						</li>
-						<li class="active">
-							<a href="#"><i class="icon-chevron-right"></i> Relógio</a>
-						</li>
+						<% appoint_id = session["current_appointment"].to_f %> 
+						<% appoint_plan = AppointmentPlan.where(:appointment_id => appoint_id) %>
+						<% appoint_plan.each do |a|%>
+							<%if a.evaluation_test.name == "ftt"%>
+								<li class="active">
+									<a href="#"><i class="icon-chevron-right"></i> <%= a.evaluation_test.name %></a>
+								</li>
+							<%else%>
+								<li>
+									<a href="#"><i class="icon-chevron-right"></i> <%= a.evaluation_test.name %></a>
+								</li>
+							<%end%>
+
+						<%end%>
 					</ul>
 				</div>
 			</div>

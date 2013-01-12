@@ -1,8 +1,10 @@
 class AppointmentPlansController < ApplicationController
   def index
     #fazer o da sessão que queremos
-    appoint_id = 75
+    appoint_id = 10
     # 
+    
+    session["current_appointment"] = appoint_id
     
     test = nil
     appoint_plan = nil

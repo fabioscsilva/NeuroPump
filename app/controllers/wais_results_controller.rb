@@ -56,6 +56,12 @@ class WaisResultsController < ApplicationController
      @wai = WaisResult.new(params[:wais_result])
 
     @wai.phase = session["wais_phase"]
+    appoint_id = session["current_appointment"].to_f
+    if(!appoint_id.blank?)
+      ev_test = EvaluationTest.find_by_name("wais")
+      app = AppointmentPlan.where(:appointment_id => appoint_id, :evaluation_test_id => ev_test.id)
+      @wai.appointment_plan_id = app.first.id
+    end
 
      respond_to do |format|
       if @wai.save
@@ -63,6 +69,7 @@ class WaisResultsController < ApplicationController
           if session["wais_phase"] == 2
              session["wais_phase"] = nil
              if session["test_sequence"].blank?
+                session["current_appointment"] = nil
                 redirect_to appointments_path, notice: 'WAIS III - Resultados Pesquisa de simbolos gravados com sucesso.'
              else
                 redirect_to appointment_plans_path, notice: 'WAIS III - Resultados Pesquisa de simbolos gravados com sucesso.'

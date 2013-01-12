@@ -70,10 +70,22 @@ class FttResultsController < ApplicationController
     ftt2.ninth = params[:teste18]
     ftt2.tenth = params[:teste19]
     # ftt2.save
+    appoint_id = session["current_appointment"].to_f
+    if(!appoint_id.blank?)
+      ev_test = EvaluationTest.find_by_name("ftt")
+      app = AppointmentPlan.where(:appointment_id => appoint_id, :evaluation_test_id => ev_test.id)
+      ftt1.appointment_plan_id = app.first.id
+      ftt2.appointment_plan_id = app.first.id
+    end
 
     respond_to do |format|
       if ftt1.save &&  ftt2.save
-        format.html { redirect_to ftt1, notice: 'Ftt was successfully created.' }
+        if session["test_sequence"].blank?
+          session["current_appointment"] = nil
+          format.html { redirect_to appointments_path, notice: 'TMT - Resultados guardados com sucesso.' }
+        else
+          format.html { redirect_to appointment_plans_path, notice: 'TMT - Resultados guardados com sucesso.' }
+        end
       # format.json { render json: @ftt, status: :created, location: @ftt }
       else
         format.html { render action: "new" }

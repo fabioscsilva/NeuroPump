@@ -43,18 +43,31 @@ class TmtResultsController < ApplicationController
     #raise params.inspect
 
     tmt1 = TmtResult.new
-    tmt1.time = Time.at(params[:aaa].to_i).utc.strftime("%H:%M:%S")
+    tmt1.time = Time.at(params[:trailsA].to_i).utc.strftime("%H:%M:%S")
     tmt1.observations = params[:observationsA]
     tmt1.phase = 1
         
     tmt2 = TmtResult.new
-    tmt2.time =  Time.at(params[:bbb].to_i).utc.strftime("%H:%M:%S")
+    tmt2.time =  Time.at(params[:trailsB].to_i).utc.strftime("%H:%M:%S")
     tmt2.observations = params[:observationsB]
     tmt2.phase = 2
     
+    appoint_id = session["current_appointment"].to_f
+    if(!appoint_id.blank?)
+      ev_test = EvaluationTest.find_by_name("tmt")
+      app = AppointmentPlan.where(:appointment_id => appoint_id, :evaluation_test_id => ev_test.id)
+      tmt1.appointment_plan_id = app.first.id
+      tmt2.appointment_plan_id = app.first.id
+    end
 
    respond_to do |format|
       if tmt1.save &&  tmt2.save
+      if session["test_sequence"].blank?
+          session["current_appointment"] = nil
+          format.html { redirect_to appointments_path, notice: 'TMT - Resultados guardados com sucesso.' }
+        else
+          format.html { redirect_to appointment_plans_path, notice: 'TMT - Resultados guardados com sucesso.' }
+        end
         format.html { redirect_to tmt1, notice: 'Ftt was successfully created.' }
       # format.json { render json: @ftt, status: :created, location: @ftt }
       else

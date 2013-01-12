@@ -15,9 +15,10 @@
 				</legend>
 				<div class="well">
 					<ul class="nav nav-list" style="float:none">
-						<% appoint_plan = AppointmentPlan.where(:appointment_id => 1) %>
+						<% appoint_id = session["current_appointment"].to_f %> 
+						<% appoint_plan = AppointmentPlan.where(:appointment_id => appoint_id) %>
 						<% appoint_plan.each do |a|%>
-							<%if a.evaluation_test.name == "Relogio"%>
+							<%if a.evaluation_test.name == "clock"%>
 								<li class="active">
 									<a href="#"><i class="icon-chevron-right"></i> <%= a.evaluation_test.name %></a>
 								</li>
