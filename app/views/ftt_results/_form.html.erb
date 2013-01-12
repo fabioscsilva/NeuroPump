@@ -17,11 +17,21 @@
 	$(document).ready(function() {
 		$('#btnParar').hide();
 		$('#btnReiniciar').attr("disabled", true);
+		X();
 	});
+
+	$("#new_ftt_result").bind("keypress", function(e) {
+		if (e.keyCode == 13) {
+			hide(inputSelec);
+			return false;
+		}
+	});
+
 	var x = null;
 	var myVar;
 	var cont = 0;
 	var aux = 0;
+	var inputSelec = 0;
 
 	function updateDisplay() {
 		var value = parseInt($('#timer').find('.value').text(), 10);
@@ -48,6 +58,7 @@
 		$("#teste" + lblNum).focus();
 		$('#btnIniciar').attr("disabled", true);
 		aux = val;
+		inputSelec = lblNum;
 	}
 
 	function hide(lblNum) {
@@ -60,9 +71,6 @@
 			return "<label id=\"teste" + lblNum + "\" onclick=\"mostra(" + lblNum + ")\" >" + value + "</label>";
 		});
 		$('#btnIniciar').attr("disabled", false);
-
-		//$("#a" + lblNum).val(value);
-
 		if (parseInt(lblNum / 10) == 0) {
 			//Dominante
 			var value = parseInt(value);
@@ -79,6 +87,7 @@
 			$("#totalNaoDominante").html(result);
 			$("#mediaNaoDominante").html(result / 10);
 		}
+
 	}
 
 	function iniciaRelogio() {
