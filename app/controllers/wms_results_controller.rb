@@ -67,6 +67,12 @@ class WmsResultsController < ApplicationController
     @wm.correct_items = correct
     @wm.wrong_items = wrong
     @wm.phase = wmsPhase
+    appoint_id = session["current_appointment"].to_f
+    if(!appoint_id.blank?)
+      ev_test = EvaluationTest.find_by_name("wms")
+      app = AppointmentPlan.where(:appointment_id => appoint_id, :evaluation_test_id => ev_test.id)
+      @wm.appointment_plan_id = app.first.id  
+    end
 
     respond_to do |format|
       if @wm.save
@@ -75,7 +81,8 @@ class WmsResultsController < ApplicationController
         else
           session["wms_phase"] = nil
           if session["test_sequence"].blank?
-            format.html { redirect_to appointments_path, notice: 'WMS II - Sequencia Espacial Direta guardada com sucesso.' }
+            session["current_appointment"] = nil
+            format.html { redirect_to new_evaluation_result_path, notice: 'WMS II - Sequencia Espacial Direta guardada com sucesso.' }
           else
             format.html { redirect_to appointment_plans_path, notice: 'WMS II - Sequencia Espacial Direta guardada com sucesso.' }
           end

@@ -1,35 +1,9 @@
-<h1>Listing payments</h1>
 
-<table>
-  <tr>
-    <th>Payment date</th>
-    <th>Due date</th>
-    <th>Creation date</th>
-    <th>Reference</th>
-    <th>Value</th>
-    <th>Payed</th>
-    <th>Clinic ID</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
 
-<% @payments.each do |payment| %>
-  <tr>
-    <td><%= payment.payment_date %></td>
-    <td><%= payment.due_date %></td>
-    <td><%= payment.creation_date %></td>
-    <td><%= payment.reference %></td>
-    <td><%= payment.value %></td>
-    <td><%= payment.payed %></td>
-    <td><%= payment.clinic_id %></td>
-    <td><%= link_to 'Show', payment %></td>
-    <td><%= link_to 'Edit', edit_payment_path(payment) %></td>
-    <td><%= link_to 'Destroy', payment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-  </tr>
-<% end %>
-</table>
+        <h2>Lista de Pagamentos</h2>
 
-<br />
-
-<%= link_to 'New Payment', new_payment_path %>
+        <%if current_login.has_role? :administrator %>
+            <%= render 'indexAdministrator' %>
+        <%elsif current_login.has_role? :manager %>
+            <%= render 'indexManager' %>
+        <%end%>

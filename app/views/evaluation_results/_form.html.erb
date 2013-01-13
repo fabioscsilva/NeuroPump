@@ -1,0 +1,496 @@
+<%= form_for(@evaluation_result) do |f| %>
+<% if @evaluation_result.errors.any? %>
+<div id="error_explanation">
+	<h2><%= pluralize(@evaluation_result.errors.count, "error") %> prohibited this evaluation_result from being saved:</h2>
+
+	<ul>
+		<% @evaluation_result.errors.full_messages.each do |msg| %>
+		<li>
+			<%= msg %>
+		</li>
+		<% end %>
+	</ul>
+</div>
+<% end %>
+
+<%= hidden_field_tag 'appoint_id', @appoint_id %>
+<div class="row-fluid">
+	<div></div>
+	<div class="row-fluid span8">
+		<div class="span4">
+			<b>Paciente: </b>
+		</div>
+		<div class="span4">
+			<%= @patient.name%>
+		</div>
+	</div>
+	<div class="row-fluid span8">
+		<div class="span4">
+			<b>Data de Nascimento: </b>
+		</div>
+		<div class="span4">
+			<%= @patient.date_of_birth%>
+		</div>
+	</div>
+	<div class="row-fluid span8">
+		<div class="span4">
+			<b>Lateralidade: </b>
+		</div>
+		<div class="span4">
+			<%= @patient.handedness.description%>
+		</div>
+	</div>
+	<div class="row-fluid span8">
+		<div class="span4">
+			<b>Sexo: </b>
+		</div>
+		<div class="span4">
+			<%= @patient.gender.description%>
+		</div>
+	</div>
+	<div class="row-fluid span8">
+		<div class="span4">
+			<b>Profissão: </b>
+		</div>
+		<div class="span4">
+			<%= @patient.profession%>
+		</div>
+	</div>
+	<div class="row-fluid span8">
+		<div class="span4">
+			<b>Morada: </b>
+		</div>
+		<div class="span4">
+			<%= @patient.address%>
+		</div>
+	</div>
+</div>
+
+<div class="row-fluid">
+	<%= f.label :context, "Contexto da avaliação" %>
+	<%= f.text_area :context, :class => "span12", :rows => 7, :placeholder => "Refira o contexto da avaliação (introdução do relatório)" %>
+</div>
+
+<div class="row-fluid">
+	<%if @clock != nil %>
+	<legend>
+		Teste do Relógio
+	</legend>
+	<div class="row-fluid">
+		<div class="span7">
+			<table class="table table-bordered table-striped">
+				<thead>
+					<tr>
+						<% if @clockOld != nil %>
+						<th>
+						<center>
+							Resultado anterior
+						</center></th>
+						<%end%>
+						<th>
+						<center>
+							Resultado atual
+						</center></th>
+						<th>
+						<center>
+							Comparação
+						</center></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<% if @clockOld != nil %>
+						<td>
+						<center>
+							<%= @clockOld.first.screen_result + @clockOld.first.number_seq_result + @clockOld.first.pointers_loc_result %>
+						</td>
+						<%end%>
+						</center>
+						<td>
+						<center>
+							<%= @clock.first.screen_result + @clock.first.number_seq_result + @clock.first.pointers_loc_result %>
+						</center></td>
+						<td>
+						<center>
+							<% if @clockOld != nil %>
+							<%if (@clock.first.screen_result + @clock.first.number_seq_result + @clock.first.pointers_loc_result) >= (@clockOld.first.screen_result + @clockOld.first.number_seq_result + @clockOld.first.pointers_loc_result) %>
+							<a class="btn btn-success btn-small"><i class="icon icon-circle-arrow-up"></i></a>
+							<%else%>
+							<a class="btn btn-danger btn-small"><i class="icon icon-circle-arrow-down"></i></a>
+							<%end%>
+							<%end%>
+
+						</center></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="span5">
+			<div>
+				<strong>Observações</strong>
+			</div>
+			<br>
+			<div>
+				<p align="justify">
+					<%= @clock.first.observations %>
+				</p>
+			</div>
+		</div>
+	</div>
+	<%end%>
+
+	<%if @ftt != nil %>
+	<legend>
+		Finger Tapper Test
+	</legend>
+	<div class="row-fluid">
+		<div class="span7">
+			<table class="table table-bordered table-striped">
+				<thead>
+					<tr>
+						<th>
+						<center>
+							Fase
+						</center></th>
+						<% if @fttOld != nil %>
+						<th>
+						<center>
+							Resultado anterior (Média)
+						</center></th>
+						<%end%>
+						<th>
+						<center>
+							Resultado atual (Média)
+						</center></th>
+						<th>
+						<center>
+							Comparação
+						</th></center>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td><center>1.</center></td>
+						<% if @fttOld != nil %>
+						<td>
+						<center>
+							<%= ((@fttOld.first.first + @fttOld.first.second + @fttOld.first.third + @fttOld.first.fourth + @fttOld.first.fifth + @fttOld.first.sixth + @fttOld.first.seventh + @fttOld.first.eighth +
+              @fttOld.first.ninth + @fttOld.first.tenth)/10).to_f %>
+						</center></td>
+						<%end%>
+						<td>
+						<center>
+							<%= ((@ftt.first.first + @ftt.first.second + @ftt.first.third + @ftt.first.fourth + @ftt.first.fifth + @ftt.first.sixth + @ftt.first.seventh + @ftt.first.eighth +
+              @ftt.first.ninth + @ftt.first.tenth)/10).to_f %>
+						</center></td>
+						<td>
+						<center>
+							<% if @fttOld != nil %>
+							<%if (@ftt.first.first + @ftt.first.second + @ftt.first.third + @ftt.first.fourth + @ftt.first.fifth + @ftt.first.sixth + @ftt.first.seventh + @ftt.first.eighth +
+							@ftt.first.ninth + @ftt.first.tenth) >= (@fttOld.first.first + @fttOld.first.second + @fttOld.first.third + @fttOld.first.fourth + @fttOld.first.fifth + @fttOld.first.sixth + @fttOld.first.seventh + @fttOld.first.eighth +
+							@fttOld.first.ninth + @fttOld.first.tenth)%>
+							<a class="btn btn-success btn-small"><i class="icon icon-circle-arrow-up"></i></a>
+							<%else%>
+							<a class="btn btn-danger btn-small"><i class="icon icon-circle-arrow-down"></i></a>
+							<%end%>
+							<%end%>
+
+						</center></td>
+					</tr>
+					<tr>
+						<td><center>2.</center></td>
+						<% if @fttOld != nil %>
+						<td>
+						<center>
+							<%= ((@fttOld.second.first + @fttOld.second.second + @fttOld.second.third + @fttOld.second.fourth + @fttOld.second.fifth + @fttOld.second.sixth + @fttOld.second.seventh + @fttOld.second.eighth +
+              @fttOld.second.ninth + @fttOld.second.tenth)/10).to_f%>
+						</center></td>
+						<%end%>
+						<td>
+						<center>
+							<%= ((@ftt.second.first + @ftt.second.second + @ftt.second.third + @ftt.second.fourth + @ftt.second.fifth + @ftt.second.sixth + @ftt.second.seventh + @ftt.second.eighth +
+              @ftt.second.ninth + @ftt.second.tenth)/10).to_f %>
+						</center></td>
+						<td>
+						<center>
+							<% if @fttOld != nil %>
+							<%if (@ftt.second.first + @ftt.second.second + @ftt.second.third + @ftt.second.fourth + @ftt.second.fifth + @ftt.second.sixth + @ftt.second.seventh + @ftt.second.eighth +
+							@ftt.second.ninth + @ftt.second.tenth) >= (@fttOld.second.first + @fttOld.second.second + @fttOld.second.third + @fttOld.second.fourth + @fttOld.second.fifth + @fttOld.second.sixth + @fttOld.second.seventh + @fttOld.second.eighth +
+							@fttOld.second.ninth + @fttOld.second.tenth)%>
+							<a class="btn btn-success btn-small"><i class="icon icon-circle-arrow-up"></i></a>
+							<%else%>
+							<a class="btn btn-danger btn-small"><i class="icon icon-circle-arrow-down"></i></a>
+							<%end%>
+							<%end%>
+						</center></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="span5">
+			<div>
+				<strong>Observações </strong>
+			</div>
+			<br>
+			<div>
+				<p align="justify">
+					<%= @ftt.first.observations %>
+				</p>
+				<p align="justify">
+					<%= @ftt.second.observations %>
+				</p>
+			</div>
+		</div>
+	</div>
+	<%end%>
+
+	<%if @tmt != nil %>
+	<legend>
+		Trails Making Test
+	</legend>
+	<div class="row-fluid">
+		<div class="span7">
+			<table class="table table-bordered table-striped">
+				<thead>
+					<tr>
+						<th>
+						<center>
+							Fase
+						</center></th>
+						<% if @tmtOld != nil %>
+						<th>
+						<center>
+							Resultado anterior
+						</center></th>
+						<%end%>
+						<th>
+						<center>
+							Resultado atual
+						</center></th>
+						<th>
+						<center>
+							Comparação
+						</th></center>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td><center>1.</center></td>
+						<% if @tmtOld != nil %>
+						<td>
+						<center>
+							<%= @tmtOld.first.time.utc.strftime("%H:%M:%S") %>
+						</center></td>
+						<%end%>
+						<td>
+						<center>
+							<%= @tmt.first.time.utc.strftime("%H:%M:%S") %>
+						</center></td>
+						<td>
+						<center>
+							<% if @tmtOld != nil %>
+							<%if (@tmt.first.time ) >= (@tmtOld.first.time) %>
+							<a class="btn btn-success btn-small"><i class="icon icon-circle-arrow-up"></i></a>
+							<%else%>
+							<a class="btn btn-danger btn-small"><i class="icon icon-circle-arrow-down"></i></a>
+							<%end%>
+							<%end%>
+
+						</center></td>
+					</tr>
+					<tr>
+						<td><center>2.</center></td>
+						<% if @tmtOld != nil %>
+						<td>
+						<center>
+							<%= @tmtOld.second.time.utc.strftime("%H:%M:%S") %>
+						</center></td>
+						<%end%>
+						<td>
+						<center>
+							<%= @tmt.second.time.utc.strftime("%H:%M:%S") %>
+						</center></td>
+						<td>
+						<center>
+							<% if @tmtOld != nil %>
+							<%if (@tmt.second.time ) >= (@tmtOld.second.time) %>
+							<a class="btn btn-success btn-small"><i class="icon icon-circle-arrow-up"></i></a>
+							<%else%>
+							<a class="btn btn-danger btn-small"><i class="icon icon-circle-arrow-down"></i></a>
+							<%end%>
+							<%end%>
+						</center></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="span5">
+			<div>
+				<strong>Observações</strong>
+			</div>
+			<br>
+			<div>
+				<p align="justify">
+					<%= @tmt.first.observations %>
+				</p>
+				<p align="justify">
+					<%= @tmt.second.observations %>
+				</p>
+
+			</div>
+		</div>
+	</div>
+	<%end%>
+
+	<%if @wais != nil %>
+	<legend>
+		Wechsler Adult Inteligence Scale III
+	</legend>
+	<div class="row-fluid">
+		<div class="span7">
+			<table class="table table-bordered table-striped">
+				<thead>
+					<tr>
+						<% if @waisOld != nil %>
+						<th>
+						<center>
+							Resultado anterior
+						</center></th>
+						<%end%>
+						<th>
+						<center>
+							Resultado atual
+						</center></th>
+						<th>
+						<center>
+							Comparação
+						</th></center>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<% if @waisOld != nil %>
+						<td>
+						<center>
+							<%= @waisOld.first.correct_items + @waisOld.second.correct_items %>
+						</center></td>
+						<%end%>
+						<td>
+						<center>
+							<%= @wais.first.correct_items + @wais.second.correct_items %>
+						</center></td>
+						<td>
+						<center>
+							<% if @waisOld != nil %>
+							<% if (@wais.first.correct_items + @wais.second.correct_items) >= (@waisOld.first.correct_items + @waisOld.second.correct_items) %>
+							<a class="btn btn-success btn-small"><i class="icon icon-circle-arrow-up"></i></a>
+							<%else%>
+							<a class="btn btn-danger btn-small"><i class="icon icon-circle-arrow-down"></i></a>
+							<%end%>
+							<%end%>
+
+						</center></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="span5">
+			<div>
+				<strong>Observações</strong>
+			</div>
+			<br>
+			<div>
+				<p align="justify">
+					<%= @wais.first.observations %>
+				</p>
+			</div>
+			<div>
+				<p align="justify">
+					<%= @wais.second.observations %>
+				</p>
+			</div>
+		</div>
+	</div>
+	<%end%>
+
+	<%if @wms != nil %>
+	<legend>
+		Wechsler Memory Scale III
+	</legend>
+	<div class="row-fluid">
+		<div class="span7">
+			<table class="table table-bordered table-striped">
+				<thead>
+					<tr>
+						<% if @wmsOld != nil %>
+						<th>
+						<center>
+							Resultado anterior
+						</center></th>
+						<%end%>
+						<th>
+						<center>
+							Resultado atual
+						</center></th>
+						<th>
+						<center>
+							Comparação
+						</th></center>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<% if @waisOld != nil %>
+						<td>
+						<center>
+							<%= @waisOld.first.correct_items + @waisOld.second.correct_items %>
+						</center></td>
+						<%end%>
+						<td>
+						<center>
+							<%= @wms.first.correct_items + @wms.second.correct_items %>
+						</center></td>
+						<td>
+						<center>
+							<% if @wmsOld != nil %>
+							<% if (@wms.first.correct_items + @wms.second.correct_items) >= (@waisOld.first.correct_items + @waisOld.second.correct_items) %>
+							<a class="btn btn-success btn-small"><i class="icon icon-circle-arrow-up"></i></a>
+							<%else%>
+							<a class="btn btn-danger btn-small"><i class="icon icon-circle-arrow-down"></i></a>
+							<%end%>
+							<%end%>
+						</center></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="span5">
+			<div>
+				<strong>Observações</strong>
+			</div>
+			<br>
+			<div>
+				<p align="justify">
+					<%= @wms.first.observations %>
+				</p>
+				<p align="justify">
+					<%= @wms.second.observations %>
+				</p>
+			</div>
+		</div>
+	</div>
+	<%end%>
+</div>
+
+<div class="row-fluid">
+	<%= f.label :conclusion, "Conclusões" %>
+	<%= f.text_area :conclusion, :class => "span12", :rows => 7, :placeholder => "Escreva as conclusões finais da avaliação" %>
+</div>
+<div class="row-fluid">
+	<%= f.label :solution, "Proposta de Intervenção" %>
+	<%= f.text_area :solution, :class => "span12", :rows => 7, :placeholder => "Refira a proposta de intervenção futura" %>
+</div>
+<div class="row-fluid">
+	<%= f.submit :class => "btn btn-success pull-right", :value => "Gerar relatório da avaliação" %>
+</div>
+<% end %>

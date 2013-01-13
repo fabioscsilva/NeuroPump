@@ -41,11 +41,18 @@ class ClockResultsController < ApplicationController
   # POST /clocks.json
   def create
     @clock = ClockResult.new(params[:clock_result])
+    appoint_id = session["current_appointment"].to_f
+    if(!appoint_id.blank?)
+      ev_test = EvaluationTest.find_by_name("clock")
+      app = AppointmentPlan.where(:appointment_id => appoint_id, :evaluation_test_id => ev_test.id)
+      @clock.appointment_plan_id = app.first.id
+    end
 
     respond_to do |format|
       if @clock.save
          if session["test_sequence"].blank?
-            format.html { redirect_to appointments_path, notice: 'Teste do Relogio - Resultados gravados com sucesso.' }
+            session["current_appointment"] = nil
+            format.html { redirect_to new_evaluation_result_path, notice: 'Teste do Relogio - Resultados gravados com sucesso.' }
           else
             format.html { redirect_to appointment_plans_path, notice: 'Teste do Relogio - Resultados gravados com sucesso.' }
           end          

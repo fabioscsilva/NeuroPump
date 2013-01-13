@@ -182,6 +182,25 @@ ActiveRecord::Schema.define(:version => 20130108155741) do
     t.datetime "photo_updated_at"
   end
 
+  create_table "packages", :force => true do |t|
+    t.integer  "n_exercises"
+    t.integer  "n_evaluations"
+    t.integer  "n_appointments"
+    t.decimal  "price",          :null => false
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+  end
+
+  create_table "packages_clinics", :force => true do |t|
+    t.integer  "appointment_token", :null => false
+    t.datetime "start_date",        :null => false
+    t.integer  "week",              :null => false
+    t.integer  "package_id"
+    t.integer  "clinic_id"
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
+  end
+
   create_table "patients", :force => true do |t|
     t.string   "name",                :null => false
     t.string   "address",             :null => false

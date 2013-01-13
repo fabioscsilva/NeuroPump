@@ -1,0 +1,2 @@
+module PackagesClinicsHelper
+end

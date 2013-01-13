@@ -1,0 +1,27 @@
+<h1>Listing evaluation_results</h1>
+
+<table>
+  <tr>
+    <th>Context</th>
+    <th>Conclusion</th>
+    <th>Solution</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @evaluation_results.each do |evaluation_result| %>
+  <tr>
+    <td><%= evaluation_result.context %></td>
+    <td><%= evaluation_result.conclusion %></td>
+    <td><%= evaluation_result.solution %></td>
+    <td><%= link_to 'Show', evaluation_result %></td>
+    <td><%= link_to 'Edit', edit_evaluation_result_path(evaluation_result) %></td>
+    <td><%= link_to 'Destroy', evaluation_result, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Evaluation result', new_evaluation_result_path %>
