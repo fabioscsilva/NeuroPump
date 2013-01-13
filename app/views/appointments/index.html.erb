@@ -67,24 +67,30 @@
                 <div style="float: left; width: 45%;font-size: 10px;">
                 <li style="list-style-type: none;">
                         <label for="paciente">Paciente: </label>
-                        <% logged_user = Secretary.first(:conditions => "login_id = #{current_login.id}")
-                        @patients = Patient.is_active.in_clinic(logged_user.clinic.id).all %>
                         <div style="width: 250px; position: relative;">
                         <%= f.select :patient_id, @patients.map{ |c| [c.name, c.id] } %>
                       </div>
                         <!-- <input type="text" name="paciente" /> -->
                 </li>
+                <% if @neuropsychologists.nil? %>
+                <li style="list-style-type: none;">
+                        <div style="width: 250px; position: relative; display: none;">
+                        <%= f.input :neuropsychologist_id%>
+                        </div>
+                        <script type="text/javascript">$('#appointment_neuropsychologist_id').val(''+ <%= @idNeuro %> +'');</script>
+                        <!-- <input type="text" name="neuropsicologo" /> -->
+                </li>
+                <% else %>
                 <li style="list-style-type: none;">
                         <label for="neuropsicologo">Neuropsicologo: </label>
-                        <% @neuropsychologists = Neuropsychologist.is_active.in_clinic(logged_user.clinic.id).all %>
                         <div style="width: 250px; position: relative;">
                         <%= f.select :neuropsychologist_id, @neuropsychologists.map{ |c| [c.name, c.id] } %>
                         </div>
                         <!-- <input type="text" name="neuropsicologo" /> -->
                 </li>
+                <% end %>
                 <li style="list-style-type: none;">
                         <label for="Tipo">Tipo de consulta: </label>
-                        <% @types = AppointmentType.all %>
                         <div style="width: 250px; position: relative;">
                         <%= f.select :appointment_type_id, @types.map{ |c| [c.name, c.id] }, :class => "laal" %>
                         </div>
@@ -96,7 +102,6 @@
                 </li>
                 <li style="list-style-type: none;">
                         <label for="Estado">Estado da consulta: </label>
-                        <% @status = AppointmentStatus.all %>
                         
                         <div style="width: 250px; position: relative;">
                           <%= f.select(:appointment_status_id, @status.map{ |c| [c.name, c.id] }) %>
@@ -464,8 +469,10 @@ $(document).ready(function() {
          ChangeSelectByValue('appointment_patient_id', calEvent.paciente, true);
          ChangeSelectByValuePorID('appointment_appointment_status_id', calEvent.estado, true);
          ChangeSelectByValuePorID('appointment_appointment_type_id', calEvent.tipo, true);
+         <% if @neuropsychologists.nil? %>
+         <% else %>
          ChangeSelectByValue('appointment_neuropsychologist_id', calEvent.neuropsicologo, true);
-
+         <% end %>
          var timeMin = get_time_difference(calEvent.start, calEvent.end);
          $("#appointment_duration").val(timeMin);
 
@@ -657,6 +664,270 @@ $(document).ready(function() {
 });
 </script>
 
+<script type="text/javascript">
+  $(document).ready(
+    function() {
+    
+    $(".day-1").stop().hover(function(){
+      $( ".day-1 .wc-cal-event" ).stop().each(function() {        
+        var largura1 = parseInt($(this).css("width"));
+        $(this).css("max-width", largura1);
+        var larguraInt1 = parseInt( largura1 * 0.6 );
+        $(this).css("min-width", larguraInt1);
+        var esquerda1 = parseInt($(this).css("left"));
+        if(esquerda1 > 0)
+        {
+          var esquerdaInt1 = larguraInt1;
+        }
+        else
+        {
+          var esquerdaInt1 = 0;
+        }
+        $(this).stop().animate({
+          width: larguraInt1,
+          left: esquerdaInt1
+        }, 400, function() {
+        });
+      });
+    },function(){
+      $( ".day-1 .wc-cal-event" ).stop().each(function() {
+        var largura11 = parseInt($(this).css("width"));
+        var larguraInt11 = parseInt( largura11 / 0.6 ) + 1;
+        var esquerda11 = parseInt($(this).css("left"));
+        if(esquerda11 > 0)
+        {
+          var esquerdaInt11 = larguraInt11;
+        }
+        else
+        {
+          var esquerdaInt11 = 0;
+        }
+        $(this).stop().animate({
+          width: larguraInt11,
+          left: esquerdaInt11
+        }, 400, function() {
+        });
+      });
+    }
+    );
+
+    $(".day-2").stop().hover(function(){
+      $( ".day-2 .wc-cal-event" ).stop().each(function() {        
+        var largura2 = parseInt($(this).css("width"));
+        $(this).css("max-width", largura2);
+        var larguraInt2 = parseInt( largura2 * 0.6 );
+        $(this).css("min-width", larguraInt2);
+        var esquerda2 = parseInt($(this).css("left"));
+        if(esquerda2 > 0)
+        {
+          var esquerdaInt2 = larguraInt2;
+        }
+        else
+        {
+          var esquerdaInt2 = 0;
+        }
+        $(this).stop().animate({
+          width: larguraInt2,
+          left: esquerdaInt2
+        }, 400, function() {
+        });
+      });
+    },function(){
+      $( ".day-2 .wc-cal-event" ).stop().each(function() {
+        var largura22 = parseInt($(this).css("width"));
+        var larguraInt22 = parseInt( largura22 / 0.6 ) + 1;
+        var esquerda22 = parseInt($(this).css("left"));
+        if(esquerda22 > 0)
+        {
+          var esquerdaInt22 = larguraInt22;
+        }
+        else
+        {
+          var esquerdaInt22 = 0;
+        }
+        $(this).stop().animate({
+          width: larguraInt22,
+          left: esquerdaInt22
+        }, 400, function() {
+        });
+      });
+    }
+    );
+
+    $(".day-3").stop().hover(function(){
+      $( ".day-3 .wc-cal-event" ).stop().each(function() {        
+        var largura3 = parseInt($(this).css("width"));
+        $(this).css("max-width", largura3);
+        var larguraInt3 = parseInt( largura3 * 0.6 );
+        $(this).css("min-width", larguraInt3);
+        var esquerda3 = parseInt($(this).css("left"));
+        if(esquerda3 > 0)
+        {
+          var esquerdaInt3 = larguraInt3;
+        }
+        else
+        {
+          var esquerdaInt3 = 0;
+        }
+        $(this).stop().animate({
+          width: larguraInt3,
+          left: esquerdaInt3
+        }, 400, function() {
+        });
+      });
+    },function(){
+      $( ".day-3 .wc-cal-event" ).stop().each(function() {
+        var largura33 = parseInt($(this).css("width"));
+        var larguraInt33 = parseInt( largura33 / 0.6 ) + 1;
+        var esquerda33 = parseInt($(this).css("left"));
+        if(esquerda33 > 0)
+        {
+          var esquerdaInt33 = larguraInt33;
+        }
+        else
+        {
+          var esquerdaInt33 = 0;
+        }
+        $(this).stop().animate({
+          width: larguraInt33,
+          left: esquerdaInt33
+        }, 400, function() {
+        });
+      });
+    }
+    );
+
+    $(".day-4").stop().hover(function(){
+      $( ".day-4 .wc-cal-event" ).stop().each(function() {        
+        var largura4 = parseInt($(this).css("width"));
+        $(this).css("max-width", largura4);
+        var larguraInt4 = parseInt( largura4 * 0.6 );
+        $(this).css("min-width", larguraInt4);
+        var esquerda4 = parseInt($(this).css("left"));
+        if(esquerda4 > 0)
+        {
+          var esquerdaInt4 = larguraInt4;
+        }
+        else
+        {
+          var esquerdaInt4 = 0;
+        }
+        $(this).stop().animate({
+          width: larguraInt4,
+          left: esquerdaInt4
+        }, 400, function() {
+        });
+      });
+    },function(){
+      $( ".day-4 .wc-cal-event" ).stop().each(function() {
+        var largura44 = parseInt($(this).css("width"));
+        var larguraInt44 = parseInt( largura44 / 0.6 ) + 1;
+        var esquerda44 = parseInt($(this).css("left"));
+        if(esquerda44 > 0)
+        {
+          var esquerdaInt44 = larguraInt44;
+        }
+        else
+        {
+          var esquerdaInt44 = 0;
+        }
+        $(this).stop().animate({
+          width: larguraInt44,
+          left: esquerdaInt44
+        }, 400, function() {
+        });
+      });
+    }
+    );
+
+    $(".day-5").stop().hover(function(){
+      $( ".day-5 .wc-cal-event" ).stop().each(function() {        
+        var largura5 = parseInt($(this).css("width"));
+        $(this).css("max-width", largura5);
+        var larguraInt5 = parseInt( largura5 * 0.6 );
+        $(this).css("min-width", larguraInt5);
+        var esquerda5 = parseInt($(this).css("left"));
+        if(esquerda5 > 0)
+        {
+          var esquerdaInt5 = larguraInt5;
+        }
+        else
+        {
+          var esquerdaInt5 = 0;
+        }
+        $(this).stop().animate({
+          width: larguraInt5,
+          left: esquerdaInt5
+        }, 400, function() {
+        });
+      });
+    },function(){
+      $( ".day-5 .wc-cal-event" ).stop().each(function() {
+        var largura55 = parseInt($(this).css("width"));
+        var larguraInt55 = parseInt( largura55 / 0.6 ) + 1;
+        var esquerda55 = parseInt($(this).css("left"));
+        if(esquerda55 > 0)
+        {
+          var esquerdaInt55 = larguraInt55;
+        }
+        else
+        {
+          var esquerdaInt55 = 0;
+        }
+        $(this).stop().animate({
+          width: larguraInt55,
+          left: esquerdaInt55
+        }, 400, function() {
+        });
+      });
+    }
+    );
+
+    $(".day-6").stop().hover(function(){
+      $( ".day-6 .wc-cal-event" ).stop().each(function() {        
+        var largura6 = parseInt($(this).css("width"));
+        $(this).css("max-width", largura6);
+        var larguraInt6 = parseInt( largura6 * 0.6 );
+        $(this).css("min-width", larguraInt6);
+        var esquerda6 = parseInt($(this).css("left"));
+        if(esquerda6 > 0)
+        {
+          var esquerdaInt6 = larguraInt6;
+        }
+        else
+        {
+          var esquerdaInt6 = 0;
+        }
+        $(this).stop().animate({
+          width: larguraInt6,
+          left: esquerdaInt6
+        }, 400, function() {
+        });
+      });
+    },function(){
+      $( ".day-6 .wc-cal-event" ).stop().each(function() {
+        var largura66 = parseInt($(this).css("width"));
+        var larguraInt66 = parseInt( largura66 / 0.6 ) + 1;
+        var esquerda66 = parseInt($(this).css("left"));
+        if(esquerda66 > 0)
+        {
+          var esquerdaInt66 = larguraInt66;
+        }
+        else
+        {
+          var esquerdaInt66 = 0;
+        }
+        $(this).stop().animate({
+          width: larguraInt66,
+          left: esquerdaInt66
+        }, 400, function() {
+        });
+      });
+    }
+    );
+
+  });
+</script>
 
 <script type="text/javascript">
 function get_time_difference(earlierDate,laterDate)

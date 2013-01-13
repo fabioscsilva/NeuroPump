@@ -2,12 +2,21 @@ class AppointmentsController < ApplicationController
   # GET /appointments
   # GET /appointments.json
   def index
-    if current_login.has_role? :neuropsychologist
+    if current_login.has_role? :secretary
+      logged_user = Secretary.first(:conditions => "login_id = #{current_login.id}")
+      @neuropsychologists = Neuropsychologist.is_active.in_clinic(logged_user.clinic.id).all
+      @appointments = Appointment.joins(:neuropsychologist).where("neuropsychologists.clinic_id" => logged_user.clinic.id).all
+    elsif current_login.has_role? :neuropsychologist
       logged_user = Neuropsychologist.first(:conditions => "login_id = #{current_login.id}")
-      @appointments = Appointment.where(:neuropsychologist_id => logged_user.id)
+      @appointments = Appointment.joins(:neuropsychologist).where("neuropsychologists.clinic_id" => logged_user.clinic.id, "neuropsychologists.id" => logged_user.id).all
+      @idNeuro = logged_user.id
     else
-      @appointments = Appointment.all
+      
     end
+
+    @patients = Patient.is_active.in_clinic(logged_user.clinic_id).all
+    @types = AppointmentType.all
+    @status = AppointmentStatus.all
 
     # isto é para dar para inserir no index
     @appointment = Appointment.new
@@ -96,6 +105,7 @@ class AppointmentsController < ApplicationController
   def destroy
     @appointment = Appointment.find(params[:id])
     @appointment.destroy
+    hkijnkijn
 
     respond_to do |format|
       format.html { redirect_to appointments_url }

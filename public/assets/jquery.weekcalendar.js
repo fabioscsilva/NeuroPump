@@ -528,10 +528,12 @@
                var columnOffset = $target.offset().top;
                var clickY = event.pageY - columnOffset;
                var clickYRounded = (clickY - (clickY % options.timeslotHeight)) / options.timeslotHeight;
-               var topPosition = (clickYRounded * options.timeslotHeight) + 8;
+               //alert(clickYRounded);
+               var topPosition = clickYRounded * options.timeslotHeight;
                //alert("top->"+topPosition);
                $newEvent.css({top: topPosition});
-
+               // O que esta abaixo tem de se descomentar para dar para arrestar para escolher o horario pretendido
+               /*
                $target.bind("mousemove.newevent", function(event) {
                   $newEvent.show();
                   $newEvent.addClass("ui-resizable-resizing");
@@ -548,6 +550,7 @@
                   $target.unbind("mousemove.newevent");
                   $newEvent.addClass("ui-corner-all");
                });
+              */
             }
 
          }).mouseup(function(event) {
@@ -913,7 +916,7 @@
          var firstHourDisplayed = options.businessHours.limitDisplay ? options.businessHours.start : 0;
          var startMillis = calEvent.start.getTime() - new Date(calEvent.start.getFullYear(), calEvent.start.getMonth(), calEvent.start.getDate(), firstHourDisplayed).getTime();
          var eventMillis = calEvent.end.getTime() - calEvent.start.getTime();
-         var pxTop = (pxPerMillis * startMillis) + 8;
+         var pxTop = pxPerMillis * startMillis;
          var pxHeight = pxPerMillis * eventMillis;
          $calEvent.css({top: pxTop, height: pxHeight});
       },
