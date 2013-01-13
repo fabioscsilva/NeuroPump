@@ -44,19 +44,72 @@ class ClinicsController < ApplicationController
   # POST /clinics
   # POST /clinics.json
   def create
-    admin_id = params[:clinic].delete(:administrator_id)
-    @clinic = Clinic.new(params[:clinic])
-    #@clinic.active = true; <- Utiliza-se agora deleted_at para soft delete
-    @clinic.administrator_id = admin_id
 
-    respond_to do |format|
-      if @clinic.save
-        format.html { redirect_to @clinic, notice: 'Clinica criada com sucesso.' }
-        format.json { render json: @clinic, status: :created, location: @clinic }
-      else
-        format.html { render action: "new" }
-        format.json { render json: @clinic.errors, status: :unprocessable_entity }
+    ref = "referenciaGerada"
+
+    login = Login.new
+    login.email = params[:clinic][:email]
+    login.password = "passwordGerada"
+    login.add_role :manager
+
+    manager = Manager.new
+    manager.telephone = params[:clinic][:telephone]
+    manager.mobilephone = params[:clinic][:mobilephone]
+
+    packageType = params[:packageType]
+    case packageType
+      when "1" 
+        idP = 1
+        tokenNum = Package.find(1).n_appointments
+        price = Package.find(1).price
+      when "2"
+        idP = 2
+        tokenNum = Package.find(2).n_appointments
+        price = Package.find(2).price
+      when "3"
+        idP = 3
+        tokenNum = Package.find(3).n_appointments
+        price = Package.find(3).price
+    end
+
+    packages_clinic = PackagesClinic.new
+    packages_clinic.appointment_token = tokenNum
+    packages_clinic.start_date = DateTime.now.to_date
+    packages_clinic.week = 1
+    packages_clinic.package_id = idP
+
+    @clinic = Clinic.new(params[:clinic])
+
+    flag = true
+    begin
+      Manager.transaction do
+        PackagesClinic.transaction do
+          Clinic.transaction do
+            Login.transaction do
+              login.save
+              manager.login_id = login.id
+              @clinic.save
+              packages_clinic.clinic_id = @clinic.id
+              packages_clinic.save
+              manager.clinic_id = @clinic.id
+              manager.save
+            end
+          end
+        end
       end
+    rescue ActiveRecord::RecordInvalid => invalid
+      flag = false
+    end
+
+    if flag == true
+      respond_to do |format|
+        UserMailer.send_email_manager(login.email.to_s,login.password.to_s,@clinic.name.to_s,ref.to_s, price.to_s).deliver
+        format.html { redirect_to @clinic, notice: 'Clinica criado com successo.' }
+      end
+    else
+      respond_to do |format| 
+          format.html { render action: "new", notice: 'Clinica nao foi criado com successo' }
+        end
     end
   end
 
