@@ -70,12 +70,12 @@ class WaisResultsController < ApplicationController
              session["wais_phase"] = nil
              if session["test_sequence"].blank?
                 session["current_appointment"] = nil
-                redirect_to appointments_path, notice: 'WAIS III - Resultados Pesquisa de simbolos gravados com sucesso.'
+                redirect_to new_evaluation_result_path, notice: 'WAIS III - Resultados Codigo gravados com sucesso.'
              else
-                redirect_to appointment_plans_path, notice: 'WAIS III - Resultados Pesquisa de simbolos gravados com sucesso.'
+                redirect_to appointment_plans_path, notice: 'WAIS III - Resultados Codigo gravados com sucesso.'
              end        
           else
-             redirect_to new_wais_result_path, notice: 'WAIS III - Resultados Codigo gravados com sucesso.'
+             redirect_to new_wais_result_path, notice: 'WAIS III - Resultados Pesquisa de Simbolos gravados com sucesso.'
           end
         }
         format.json { render json: @wai, status: :created, location: @wai }

@@ -64,7 +64,7 @@ class TmtResultsController < ApplicationController
       if tmt1.save &&  tmt2.save
       if session["test_sequence"].blank?
           session["current_appointment"] = nil
-          format.html { redirect_to appointments_path, notice: 'TMT - Resultados guardados com sucesso.' }
+          format.html { redirect_to new_evaluation_result_path, notice: 'TMT - Resultados guardados com sucesso.' }
         else
           format.html { redirect_to appointment_plans_path, notice: 'TMT - Resultados guardados com sucesso.' }
         end

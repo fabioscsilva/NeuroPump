@@ -123,9 +123,15 @@
 			</button>
 		</p>
 
-		<button type="submit" id="submit" class="btn btn-success" >
+		<%if session["test_sequence"].blank? %>
+		<button type="submit" id="submit" class="btn btn-success pull-right" >
+			Terminar
+		</button>
+		<%else %>
+		<button type="submit" id="submit" class="btn btn-success pull-right" >
 			Proximo
 		</button>
+		<%end%>
 
 	</center>
 </div>
