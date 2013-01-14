@@ -5,10 +5,10 @@ class AppointmentsController < ApplicationController
     if current_login.has_role? :secretary
       logged_user = Secretary.first(:conditions => "login_id = #{current_login.id}")
       @neuropsychologists = Neuropsychologist.is_active.in_clinic(logged_user.clinic.id).all
-      @appointments = Appointment.joins(:neuropsychologist).where("neuropsychologists.clinic_id" => logged_user.clinic.id).all
+      @appointments = Appointment.joins(:neuropsychologist).where("neuropsychologists.clinic_id" => logged_user.clinic.id).order("appointment_day ASC").all
     elsif current_login.has_role? :neuropsychologist
       logged_user = Neuropsychologist.first(:conditions => "login_id = #{current_login.id}")
-      @appointments = Appointment.joins(:neuropsychologist).where("neuropsychologists.clinic_id" => logged_user.clinic.id, "neuropsychologists.id" => logged_user.id).all
+      @appointments = Appointment.joins(:neuropsychologist).where("neuropsychologists.clinic_id" => logged_user.clinic.id, "neuropsychologists.id" => logged_user.id).order("appointment_day ASC").all
       @idNeuro = logged_user.id
     else
       
