@@ -1,3 +1,8 @@
+<div id="change_view" style="z-index: 999999999999; padding: 10px; padding-top: 2px; padding-bottom: 2px; height: auto; width: 24px; cursor: pointer; background-color: #f00; position: fixed;" onclick="mudaViews()">
+< >
+</div>
+
+<div id="calendario_view">
 <div class="span2">
   <div style="margin-left: 9%; margin-right: 9%" class="input-append date" id="dpYears" data-date="05-12-2012" data-date-format="dd-mm-yyyy" data-date-viewmode="years">
       <input style="width:80%" class="span11" size="16" type="text" value="05-12-2012" readonly>
@@ -139,6 +144,151 @@
 </div>
 </div>
 
+</div>
+
+
+
+  <div id="capa" style="position: fixed; display:none; left: 0%; top: 8.3%;"><img style="width: 1200px;margin-left: 51px;height: 600px;" src="../assets/img/book.png" /></div>
+    <div id="magazine" style="display: none; margin-top:40px; position: fixed; left: 1%; top: 0%;">
+      <div style="background-color: #efefef"></div>
+      
+      <% @dataInicio = @appointments[0].appointment_day %>
+      <% @dataFim = @appointments[@appointments.size - 1].appointment_day %>
+      <% @horas = ["08-00","08-30","09-00","09-30","10-00","10-30","11-00","11-30","12-00","12-30","13-00","13-30","14-00","14-30","15-00","15-30","16-00","16-30","17-00","17-30","18-00","18-30","19-00","19-30","20-00"] %>
+
+      <% @jInicial = 0 %>
+      <% @jFinal = 0 %>
+      <% @j = 0 %>
+      <% @k = 0 %>
+      <% @chegouAoFim = 0 %>
+
+      <% while @chegouAoFim == 0 %>
+        <% if @dataInicio.strftime('%d/%m/%Y') == @dataFim.strftime('%d/%m/%Y') %>
+          <% @chegouAoFim = 1 %>
+        <% end %>
+        <% @k = @k + 1 %>
+        <% @jInicial = @j %>
+
+        <div style="background-image: -webkit-linear-gradient(left, #e9e9e9 95%, #DDD 100%);background-image: -moz-linear-gradient(left, #e9e9e9 95%, #DDD 100%);background-image: -o-linear-gradient(left, #e9e9e9 95%, #DDD 100%);background-image: -ms-linear-gradient(left, #e9e9e9 95%, #DDD 100%);">
+          <h1 style="margin-left: 20%;
+            margin-right: 20%;
+            margin-top: 30px;
+            font: 16px/5px 'Avenir', sans-serif;
+            text-align: center;
+            padding-bottom: 15px;"> <%= @dataInicio.strftime('%d/%m/%Y') %> </h1>
+          <input id="pesqinput<%= @dataInicio.strftime('%d-%m-%Y') %>" onclick="this.value = ''" style="width: 90%" type="text" value="Pesquisar..." />
+          <div id="botao<%= @dataInicio.strftime('%d-%m-%Y') %>" style="background-image: url(http://static.ak.fbcdn.net/rsrc.php/v2/yj/x/Hd1Px2ph_sW.png);background-repeat: no-repeat;background-size: auto;background-position: -230px -631px;cursor: pointer;float: right;width: 20px;height: 16px;margin-right: 30px;margin-top: -30px;text-align: right;"></div>
+        
+
+      <div id="conteudo<%= @dataInicio.strftime('%d-%m-%Y') %>">
+      <% @horas.each do |hora| %>
+        <% @j = @j + 1 %>
+
+        <h1 style="margin-left: 10%;font: 12px/5px 'Avenir', sans-serif;padding-bottom: 10px;width: 90%;float: left;">
+          <b id="<%= hora %>h"><%= hora %>h</b>
+        </h1>
+
+        <div class="cons">
+          <div class="h<%= hora %>">
+          </div>
+      </div>
+    <% end %>
+    
+    </div>
+
+    <% @jFinal = @j %>
+
+    <!-- abaixo é para efetuar a pesquisa -->
+    <script type="text/javascript">
+    $(document).ready(function(){
+      $("#botao<%= @dataInicio.strftime('%d-%m-%Y') %>").click(function() {
+        var x = document.getElementById("pesqinput<%= @dataInicio.strftime('%d-%m-%Y') %>").value;
+        $("#conteudo<%= @dataInicio.strftime('%d-%m-%Y') %> .cons").stop().each(function() {        
+          var matchPos1 = $(this).html().search(x);
+          if(matchPos1 != -1)
+          {
+              $(this).css("opacity","1") 
+          }
+          else
+          {
+              $(this).css("opacity","0.2") 
+          }
+        });
+      });
+    });
+    </script>
+
+    </div>
+    
+    <!-- incrementa 1 dia -->
+    <% @dataInicio = @dataInicio + (3600*24) %>
+
+  <% end %>
+
+  </div>
+</div>
+
+
+
+
+
+<% @appointments.each do |appointment| %>
+  
+  <% @hora = appointment.appointment_day.strftime('%H').to_i + appointment.duration / 60 %>
+  <% if appointment.duration / 60 > 0 && appointment.appointment_day.strftime('%M').to_i == 0 %>
+    <% @minuto = 30 %>
+  <% elsif appointment.duration / 60 > 0 && appointment.appointment_day.strftime('%M').to_i == 30 %>
+    <% @minuto = 0 %>
+    <% @hora = @hora + 1 %>
+  <% else %>
+    <% @minuto = appointment.appointment_day.strftime('%M').to_i %>
+  <% end %>
+
+  <!-- isto é para nao por os appointments cancelados nem datas repetidas -->
+  <% if appointment.appointment_status.id != 3 %>
+    <% @data = appointment.appointment_day %>
+    
+    <script type="text/javascript">
+      
+      var conteudo = '<h1 style="margin-left: 10%;padding-left: 55px;width: 20%;float: left;margin-right: 5%;margin-top: 1px;font: 12px/5px Avenir, sans-serif;text-align: left;padding-bottom: 15px;"><b>Neuropsicólogo:</b> <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" id="neuro"><%= appointment.neuropsychologist.name %></a><ul class="dropdown-menu"><li><a href="#" id="neuro_vpp">Ver página pessoal</a></li><li class="divider"></li><li><a href="#" id="neuro_ee">Enviar email</a></li></ul></li> </h1><h1 style="width: 20%;float: left;margin-right: 0%;margin-top: 1px;font: 12px/5px Avenir, sans-serif;text-align: left;padding-bottom: 15px;"><b>Paciente:</b> <li class="dropdown"><a style="cursor: pointer" href="#" class="dropdown-toggle" data-toggle="dropdown" id="paciente"><%= appointment.patient.name %></a><ul class="dropdown-menu"><li><a href="#" id="paciente_vpp">Ver página paciente</a></li><li class="divider"></li><li><a href="#" id="paciente_ee">Enviar email</a></li></ul></li> </h1><h1 style="width: 20%;float: left;margin-top: 1px;font: 12px/5px Avenir, sans-serif;text-align: left;padding-bottom: 15px;border-bottom: solid 1px #E2E2E2;"><li class="dropdown"><a style="cursor: pointer" href="#" class="dropdown-toggle" data-toggle="dropdown" id="consulta"><%= appointment.appointment_type.name %></a><ul class="dropdown-menu"><li><a href="#" id="consulta_ve">Ver exame</a></li><li><a href="#" id="consulta_ae">Apagar exame</a></li></ul></li> </h1>';
+
+      $("#conteudo<%= appointment.appointment_day.strftime('%d-%m-%Y') %> .cons .h<%= appointment.appointment_day.strftime('%H-%M') %>").html(conteudo);
+    
+    </script>
+
+  <% end %>
+<% end %>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <script type="text/javascript">
   document.getElementById("appointment_appointment_status_id").className = "select2";
   document.getElementById("appointment_appointment_type_id").className = "select2";
@@ -186,8 +336,34 @@
 <%= javascript_include_tag 'jquery-ui-1.8rc3.custom.min.js' %>
 <%= javascript_include_tag 'jquery.weekcalendar.js' %>
 <%= javascript_include_tag 'demo.js' %>
-
+<%= javascript_include_tag 'turn.min.js' %>
 <%= javascript_include_tag 'bootstrap-datepicker.js' %>
+
+<script type="text/javascript">
+  $(window).ready(function() {
+    $('#magazine').turn({
+      display: 'double',
+      acceleration: true,
+      gradients: !$.isTouch,
+      elevation:50,
+      when: {
+        turned: function(e, page) {
+                /*console.log('Current view: ', $(this).turn('view'));*/
+        }
+      }
+    });
+  });
+
+
+  $(window).bind('keydown', function(e){
+    if (e.keyCode==37)
+      $('#magazine').turn('previous');
+    else if (e.keyCode==39)
+      $('#magazine').turn('next');
+  });
+</script>
+
+
 <script type="text/javascript">
 $(function(){
         window.prettyPrint && prettyPrint();
@@ -677,7 +853,18 @@ $(document).ready(function() {
         var esquerda1 = parseInt($(this).css("left"));
         if(esquerda1 > 0)
         {
-          var esquerdaInt1 = larguraInt1;
+          if( esquerda1 >= 3 * (largura1-1) )
+          {
+            var esquerdaInt1 = larguraInt1 * 3;
+          }
+          else if(esquerda1 >= 2 * (largura1-1))
+          {
+            var esquerdaInt1 = larguraInt1 * 2;
+          }
+          else
+          {
+            var esquerdaInt1 = larguraInt1;
+          }
         }
         else
         {
@@ -686,7 +873,7 @@ $(document).ready(function() {
         $(this).stop().animate({
           width: larguraInt1,
           left: esquerdaInt1
-        }, 250, function() {
+        }, 350, function() {
         });
       });
     },function(){
@@ -696,7 +883,18 @@ $(document).ready(function() {
         var esquerda11 = parseInt($(this).css("left"));
         if(esquerda11 > 0)
         {
-          var esquerdaInt11 = larguraInt11;
+          if( esquerda11 >= 3 * largura11 )
+          {
+            var esquerdaInt11 = parseInt(($(this).css("max-width"))) * 3 ;
+          }
+          else if( esquerda11 >= (2 * largura11) )
+          {
+            var esquerdaInt11 = parseInt(($(this).css("max-width"))) * 2 ;
+          }
+          else
+          {
+            var esquerdaInt11 = parseInt($(this).css("max-width"));
+          }
         }
         else
         {
@@ -705,12 +903,13 @@ $(document).ready(function() {
         $(this).stop().animate({
           width: larguraInt11,
           left: esquerdaInt11
-        }, 250, function() {
+        }, 350, function() {
         });
       });
     }
     );
 
+    
     $(".day-2").stop().hover(function(){
       $( ".day-2 .wc-cal-event" ).stop().each(function() {        
         var largura2 = parseInt($(this).css("width"));
@@ -720,7 +919,18 @@ $(document).ready(function() {
         var esquerda2 = parseInt($(this).css("left"));
         if(esquerda2 > 0)
         {
-          var esquerdaInt2 = larguraInt2;
+          if( esquerda2 >= 3 * (largura2-1) )
+          {
+            var esquerdaInt2 = larguraInt2 * 3;
+          }
+          else if(esquerda2 >= 2 * (largura2-1))
+          {
+            var esquerdaInt2 = larguraInt2 * 2;
+          }
+          else
+          {
+            var esquerdaInt2 = larguraInt2;
+          }
         }
         else
         {
@@ -729,7 +939,7 @@ $(document).ready(function() {
         $(this).stop().animate({
           width: larguraInt2,
           left: esquerdaInt2
-        }, 250, function() {
+        }, 350, function() {
         });
       });
     },function(){
@@ -739,7 +949,18 @@ $(document).ready(function() {
         var esquerda22 = parseInt($(this).css("left"));
         if(esquerda22 > 0)
         {
-          var esquerdaInt22 = larguraInt22;
+          if( esquerda22 >= 3 * largura22 )
+          {
+            var esquerdaInt22 = parseInt(($(this).css("max-width"))) * 3 ;
+          }
+          else if( esquerda22 >= (2 * largura22) )
+          {
+            var esquerdaInt22 = parseInt(($(this).css("max-width"))) * 2 ;
+          }
+          else
+          {
+            var esquerdaInt22 = parseInt($(this).css("max-width"));
+          }
         }
         else
         {
@@ -748,7 +969,7 @@ $(document).ready(function() {
         $(this).stop().animate({
           width: larguraInt22,
           left: esquerdaInt22
-        }, 250, function() {
+        }, 350, function() {
         });
       });
     }
@@ -763,7 +984,18 @@ $(document).ready(function() {
         var esquerda3 = parseInt($(this).css("left"));
         if(esquerda3 > 0)
         {
-          var esquerdaInt3 = larguraInt3;
+          if( esquerda3 >= 3 * (largura3-1) )
+          {
+            var esquerdaInt3 = larguraInt3 * 3;
+          }
+          else if(esquerda3 >= 2 * (largura3-1))
+          {
+            var esquerdaInt3 = larguraInt3 * 2;
+          }
+          else
+          {
+            var esquerdaInt3 = larguraInt3;
+          }
         }
         else
         {
@@ -772,7 +1004,7 @@ $(document).ready(function() {
         $(this).stop().animate({
           width: larguraInt3,
           left: esquerdaInt3
-        }, 250, function() {
+        }, 350, function() {
         });
       });
     },function(){
@@ -782,7 +1014,18 @@ $(document).ready(function() {
         var esquerda33 = parseInt($(this).css("left"));
         if(esquerda33 > 0)
         {
-          var esquerdaInt33 = larguraInt33;
+          if( esquerda33 >= 3 * largura33 )
+          {
+            var esquerdaInt33 = parseInt(($(this).css("max-width"))) * 3 ;
+          }
+          else if( esquerda33 >= (2 * largura33) )
+          {
+            var esquerdaInt33 = parseInt(($(this).css("max-width"))) * 2 ;
+          }
+          else
+          {
+            var esquerdaInt33 = parseInt($(this).css("max-width"));
+          }
         }
         else
         {
@@ -791,7 +1034,7 @@ $(document).ready(function() {
         $(this).stop().animate({
           width: larguraInt33,
           left: esquerdaInt33
-        }, 250, function() {
+        }, 350, function() {
         });
       });
     }
@@ -806,7 +1049,18 @@ $(document).ready(function() {
         var esquerda4 = parseInt($(this).css("left"));
         if(esquerda4 > 0)
         {
-          var esquerdaInt4 = larguraInt4;
+          if( esquerda4 >= 3 * (largura4-1) )
+          {
+            var esquerdaInt4 = larguraInt4 * 3;
+          }
+          else if(esquerda4 >= 2 * (largura4-1))
+          {
+            var esquerdaInt4 = larguraInt4 * 2;
+          }
+          else
+          {
+            var esquerdaInt4 = larguraInt4;
+          }
         }
         else
         {
@@ -815,7 +1069,7 @@ $(document).ready(function() {
         $(this).stop().animate({
           width: larguraInt4,
           left: esquerdaInt4
-        }, 250, function() {
+        }, 350, function() {
         });
       });
     },function(){
@@ -825,7 +1079,18 @@ $(document).ready(function() {
         var esquerda44 = parseInt($(this).css("left"));
         if(esquerda44 > 0)
         {
-          var esquerdaInt44 = larguraInt44;
+          if( esquerda44 >= 3 * largura44 )
+          {
+            var esquerdaInt44 = parseInt(($(this).css("max-width"))) * 3 ;
+          }
+          else if( esquerda44 >= (2 * largura44) )
+          {
+            var esquerdaInt44 = parseInt(($(this).css("max-width"))) * 2 ;
+          }
+          else
+          {
+            var esquerdaInt44 = parseInt($(this).css("max-width"));
+          }
         }
         else
         {
@@ -834,7 +1099,7 @@ $(document).ready(function() {
         $(this).stop().animate({
           width: larguraInt44,
           left: esquerdaInt44
-        }, 250, function() {
+        }, 350, function() {
         });
       });
     }
@@ -849,7 +1114,18 @@ $(document).ready(function() {
         var esquerda5 = parseInt($(this).css("left"));
         if(esquerda5 > 0)
         {
-          var esquerdaInt5 = larguraInt5;
+          if( esquerda5 >= 3 * (largura5-1) )
+          {
+            var esquerdaInt5 = larguraInt5 * 3;
+          }
+          else if(esquerda5 >= 2 * (largura5-1))
+          {
+            var esquerdaInt5 = larguraInt5 * 2;
+          }
+          else
+          {
+            var esquerdaInt5 = larguraInt5;
+          }
         }
         else
         {
@@ -858,7 +1134,7 @@ $(document).ready(function() {
         $(this).stop().animate({
           width: larguraInt5,
           left: esquerdaInt5
-        }, 250, function() {
+        }, 350, function() {
         });
       });
     },function(){
@@ -868,7 +1144,18 @@ $(document).ready(function() {
         var esquerda55 = parseInt($(this).css("left"));
         if(esquerda55 > 0)
         {
-          var esquerdaInt55 = larguraInt55;
+          if( esquerda55 >= 3 * largura55 )
+          {
+            var esquerdaInt55 = parseInt(($(this).css("max-width"))) * 3 ;
+          }
+          else if( esquerda55 >= (2 * largura55) )
+          {
+            var esquerdaInt55 = parseInt(($(this).css("max-width"))) * 2 ;
+          }
+          else
+          {
+            var esquerdaInt55 = parseInt($(this).css("max-width"));
+          }
         }
         else
         {
@@ -877,7 +1164,7 @@ $(document).ready(function() {
         $(this).stop().animate({
           width: larguraInt55,
           left: esquerdaInt55
-        }, 250, function() {
+        }, 350, function() {
         });
       });
     }
@@ -892,7 +1179,18 @@ $(document).ready(function() {
         var esquerda6 = parseInt($(this).css("left"));
         if(esquerda6 > 0)
         {
-          var esquerdaInt6 = larguraInt6;
+          if( esquerda6 >= 3 * (largura6-1) )
+          {
+            var esquerdaInt6 = larguraInt6 * 3;
+          }
+          else if(esquerda6 >= 2 * (largura6-1))
+          {
+            var esquerdaInt6 = larguraInt6 * 2;
+          }
+          else
+          {
+            var esquerdaInt6 = larguraInt6;
+          }
         }
         else
         {
@@ -901,7 +1199,7 @@ $(document).ready(function() {
         $(this).stop().animate({
           width: larguraInt6,
           left: esquerdaInt6
-        }, 250, function() {
+        }, 350, function() {
         });
       });
     },function(){
@@ -911,7 +1209,18 @@ $(document).ready(function() {
         var esquerda66 = parseInt($(this).css("left"));
         if(esquerda66 > 0)
         {
-          var esquerdaInt66 = larguraInt66;
+          if( esquerda66 >= 3 * largura66 )
+          {
+            var esquerdaInt66 = parseInt(($(this).css("max-width"))) * 3 ;
+          }
+          else if( esquerda66 >= (2 * largura66) )
+          {
+            var esquerdaInt66 = parseInt(($(this).css("max-width"))) * 2 ;
+          }
+          else
+          {
+            var esquerdaInt66 = parseInt($(this).css("max-width"));
+          }
         }
         else
         {
@@ -920,7 +1229,7 @@ $(document).ready(function() {
         $(this).stop().animate({
           width: larguraInt66,
           left: esquerdaInt66
-        }, 250, function() {
+        }, 350, function() {
         });
       });
     }
@@ -964,6 +1273,22 @@ function atualizaDuracaoMinutos()
 
   var timeMin = get_time_difference(dataInicio, dataFim);
   $("#appointment_duration").val(timeMin);
+}
+
+function mudaViews()
+{
+  if($('#calendario_view').css('display') == 'none')
+  {
+    $('#calendario_view').css('display', 'block');
+    $('#magazine').css('display', 'none');
+    $('#capa').css('display', 'none');
+  }
+  else
+  {
+    $('#calendario_view').css('display', 'none');
+    $('#magazine').css('display', 'block'); 
+    $('#capa').css('display', 'block'); 
+  }
 }
 </script>
 
