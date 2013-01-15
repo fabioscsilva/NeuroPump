@@ -2,9 +2,7 @@
 
 <!-- <% secretary = Secretary.first(:conditions => "login_id = #{current_login.id}") %> -->
 <% @neuropsychologist = Neuropsychologist.first(:conditions => "login_id = #{current_login.id}") %>
-<li>
-	<%= link_to('Iniciar Avaliação (Teste)', appointment_plans_path) %>
-</li>
+
 <li>
 	<%= link_to('Sessões', appointments_path) %>
 </li>
