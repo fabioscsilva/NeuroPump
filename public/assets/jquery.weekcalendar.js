@@ -105,6 +105,7 @@
             self._resizeCalendar();
          });
 
+         dataAtual = new Date(this.element.data("startDate").getTime());
       },
 
 
@@ -131,6 +132,7 @@
       today : function() {
          this._clearCalendar();
          this._loadCalEvents(new Date());
+         dataAtual = new Date(this.element.data("startDate").getTime());
       },
 
       /*
@@ -141,6 +143,7 @@
          var newDate = new Date(this.element.data("startDate").getTime() - (MILLIS_IN_WEEK / 6));
          this._clearCalendar();
          this._loadCalEvents(newDate);
+         dataAtual = new Date(this.element.data("startDate").getTime());
       },
 
       /*
@@ -151,6 +154,7 @@
          var newDate = new Date(this.element.data("startDate").getTime() + MILLIS_IN_WEEK + (MILLIS_IN_WEEK / 7));
          this._clearCalendar();
          this._loadCalEvents(newDate);
+         dataAtual = new Date(this.element.data("startDate").getTime());
       },
 
       /*
@@ -161,6 +165,7 @@
          var newDate = new Date(this.element.data("startDate").getTime() + MILLIS_IN_YEAR + (MILLIS_IN_YEAR / 365));
          this._clearCalendar();
          this._loadCalEvents(newDate);
+         dataAtual = new Date(this.element.data("startDate").getTime());
       },
       
       goToDate : function() {
@@ -187,6 +192,7 @@
          
          this._clearCalendar();
          this._loadCalEvents(newDate);
+         dataAtual = new Date(this.element.data("startDate").getTime());
       },
 
       /*
@@ -195,6 +201,7 @@
       gotoWeek : function(date) {
          this._clearCalendar();
          this._loadCalEvents(date);
+         dataAtual = new Date(this.element.data("startDate").getTime());
       },
 
       /*
