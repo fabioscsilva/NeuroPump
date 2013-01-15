@@ -1,3 +1,7 @@
+<script type="text/javascript">
+dataAtual = 0;
+</script>
+
 <div id="change_view" style="z-index: 999999999999;padding: 2px 3px 4px;height: auto;width: 22px;cursor: pointer;background-color: rgb(209, 209, 209);position: fixed;right: 0%;" onclick="mudaViews()" onmouseout="diminuiuLargura()" onmouseover="aumentaLargura()">
 < >
 </div>
@@ -275,32 +279,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <script type="text/javascript">
   document.getElementById("appointment_appointment_status_id").className = "select2";
   document.getElementById("appointment_appointment_type_id").className = "select2";
@@ -378,32 +356,37 @@
 
 <script type="text/javascript">
 $(function(){
-        window.prettyPrint && prettyPrint();
-        var startDate = new Date(2012,1,20);
-        var endDate = new Date(2012,1,25);
-        var contador = 0;
-        
-        var $calendar = $('#calendar');
-        
-        $('#dpYears').datepicker()
-        .on('changeDate', function(ev){
-            
-            globalev = ev;
-            
-            contador ++;
-            if(contador == 3)
-            {
-                $calendar.weekCalendar("goToDate");
-                contador = 0;
-                document.getElementById("datapickerid").style.display="none";
-                
-            }
-            
-          if (ev.date.valueOf() > startDate.valueOf()){
-          }
-          if (ev.date.valueOf() > startDate.valueOf()){
-          }
-        });        
+  window.prettyPrint && prettyPrint();
+  var startDate = new Date(2012,1,20);
+  var endDate = new Date(2012,1,25);
+  var contador = 0;
+  
+  var $calendar = $('#calendar');
+  
+  $('#dpYears').datepicker()
+  .on('changeDate', function(ev){
+      
+      globalev = ev;
+      
+      contador ++;
+      if(contador == 3)
+      {
+        $calendar.weekCalendar("goToDate");
+        contador = 0;
+        document.getElementById("datapickerid").style.display="none";
+      }
+      
+    if (ev.date.valueOf() > startDate.valueOf()){
+    }
+    if (ev.date.valueOf() > startDate.valueOf()){
+    }
+  });
+
+  //para fazer reset senao podia sair e da proxima vez bastava clicar no ano e ele saltava para outra data
+  $(".add-on").click(function() {
+    contador = 0;
+  });
+
 });
 </script>
 
@@ -525,7 +508,7 @@ $(document).ready(function() {
                     tipoC = "Estimulação";
                   }
 
-                  var conteudo = '<h1 style="margin-left: 10%;padding-left: 55px;width: 20%;float: left;margin-right: 5%;margin-top: 1px;font: 12px/5px Avenir, sans-serif;text-align: left;padding-bottom: 15px;"><b>Neuropsicólogo:</b> <li style="display: block;" class="dropdown"><a style="color: #000;" href="#" class="dropdown-toggle" data-toggle="dropdown">'+ neunome +'</a><ul class="dropdown-menu"><li><a href="#">Ver página pessoal</a></li><li class="divider"></li><li style="display: block;"><a href="#">Enviar email</a></li></ul></li> </h1><h1 style="width: 20%;float: left;margin-right: 0%;margin-top: 1px;font: 12px/5px Avenir, sans-serif;text-align: left;padding-bottom: 15px;"><b>Paciente:</b> <li style="display: block;" class="dropdown"><a style="cursor: pointer; color: #000;" href="#" class="dropdown-toggle" data-toggle="dropdown">'+ pacnome +'</a><ul class="dropdown-menu"><li><a href="#">Ver página paciente</a></li><li class="divider"></li><li><a href="#">Enviar email</a></li></ul></li> </h1><h1 style="width: 20%;float: left;margin-top: 1px;font: 12px/5px Avenir, sans-serif;text-align: left;padding-bottom: 15px;border-bottom: solid 1px #E2E2E2;"><li style="display: block; margin-top: -10px;" class="dropdown"><a style="cursor: pointer; color: #000;" href="#" class="dropdown-toggle" data-toggle="dropdown">'+ tipoC +'</a><ul class="dropdown-menu"><li><a href="#">Ver exame</a></li><li><a href="#">Apagar exame</a></li></ul></li> <li style="display: block;" class="dropdown"><a style="cursor: pointer; color: #000;" href="#" class="dropdown-toggle" data-toggle="dropdown">'+ 120 +' min.</a></li> </h1>';
+                  var conteudo = '<h1 style="margin-left: 10%;padding-left: 55px;width: 20%;float: left;margin-right: 5%;margin-top: 1px;font: 12px/5px Avenir, sans-serif;text-align: left;padding-bottom: 15px;"><b>Neuropsicólogo:</b> <li style="display: block;" class="dropdown"><a style="color: #000;" href="#" class="dropdown-toggle" data-toggle="dropdown">'+ neunome +'</a><ul class="dropdown-menu"><li><a href="#">Ver página pessoal</a></li><li class="divider"></li><li style="display: block;"><a href="#">Enviar email</a></li></ul></li> </h1><h1 style="width: 20%;float: left;margin-right: 0%;margin-top: 1px;font: 12px/5px Avenir, sans-serif;text-align: left;padding-bottom: 15px;"><b>Paciente:</b> <li style="display: block;" class="dropdown"><a style="cursor: pointer; color: #000;" href="#" class="dropdown-toggle" data-toggle="dropdown">'+ pacnome +'</a><ul class="dropdown-menu"><li><a href="#">Ver página paciente</a></li><li class="divider"></li><li><a href="#">Enviar email</a></li></ul></li> </h1><h1 style="width: 20%;float: left;margin-top: 1px;font: 12px/5px Avenir, sans-serif;text-align: left;padding-bottom: 15px;border-bottom: solid 1px #E2E2E2;"><li style="display: block; margin-top: -10px;" class="dropdown"><a style="cursor: pointer; color: #000;" href="#" class="dropdown-toggle" data-toggle="dropdown">'+ tipoC +'</a><ul class="dropdown-menu"><li><a href="#">Ver exame</a></li><li><a href="#">Apagar exame</a></li></ul></li> <li style="display: block;" class="dropdown"><a style="cursor: pointer; color: #000;" href="#" class="dropdown-toggle" data-toggle="dropdown">'+ $("#appointment_duration").val() +' min.</a></li> </h1>';
 
                     var dataI = calEvent.start;
 
@@ -1300,7 +1283,6 @@ $(document).ready(function() {
 function get_time_difference(earlierDate,laterDate)
 {
        var nTotalDiff = laterDate.getTime() - earlierDate.getTime();
-       var oDiff = new Object();
  
        return (nTotalDiff / 1000 / 60);
 
@@ -1317,6 +1299,13 @@ function get_time_difference(earlierDate,laterDate)
  
        return oDiff;*/
  
+}
+
+function get_time_differenceTotalDias(earlierDate,laterDate)
+{
+       var nTotalDiff = laterDate.getTime() - earlierDate.getTime();
+ 
+       return parseInt((nTotalDiff) / (24 * 60 * 60 * 1000)) + 1;
 }
 
 function atualizaDuracaoMinutos()
@@ -1357,6 +1346,26 @@ function mudaViews()
   }
   else
   {
+    // aqui tem de calcular quantas paginas vai andar para a frente para ficar com a mesma data que o calendario
+    var primeiraData = new Date('<%= @appointments[0].appointment_day %>');
+    var ultimaData = new Date('<%= @appointments[@appointments.size - 1].appointment_day %>');
+    // mais 4 para assumir a data do meio do calendario
+    var dif = get_time_differenceTotalDias(primeiraData, dataAtual) + 4;
+    var difMax = get_time_differenceTotalDias(primeiraData, ultimaData);
+    if(dif > 0 && dif <= difMax)
+    {
+      $("#magazine").turn("page", dif); 
+    }
+    else if(dif > difMax)
+    {
+      alert('A data escolhida não tem consultas marcadas e, portanto, não poderá ser apresentada. Lembre-se que o primeiro dia da agenda apresenta a 1ª consulta agendada e o último apresenta a consulta mais recente agendada. Se por algum motivo pensa que a página não está a mostrar os resultados corretos por favor faça refresh da mesma.');
+      $("#magazine").turn("page", 2);
+    }
+    else
+    {
+      $("#magazine").turn("page", 2);
+    }
+
     $('#calendario_view').animate({
         opacity: 0
       }, 850, function() {
