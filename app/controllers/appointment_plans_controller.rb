@@ -1,9 +1,6 @@
 class AppointmentPlansController < ApplicationController
   def index
     #fazer o da sessão que queremos
-    #appoint_id = 10
-    appoint_id = 0
-    #
     
     logged_user = Patient.first(:conditions => "login_id = #{current_login.id}")
     appointments =  Appointment.where(:patient_id =>   logged_user.id)

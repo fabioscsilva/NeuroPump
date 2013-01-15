@@ -1,10 +1,14 @@
 NeuroPump::Application.routes.draw do
 
+  resources :evaluation_results
+
   resources :wms_results
 
   resources :packages
   
   resources :evaluation_tests
+  
+  resources :evaluation_results
 
   resources :wais_results
   match 'downloadWais' => 'wais_results#download'

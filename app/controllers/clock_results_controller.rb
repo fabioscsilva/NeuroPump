@@ -52,7 +52,7 @@ class ClockResultsController < ApplicationController
       if @clock.save
          if session["test_sequence"].blank?
             session["current_appointment"] = nil
-            format.html { redirect_to appointments_path, notice: 'Teste do Relogio - Resultados gravados com sucesso.' }
+            format.html { redirect_to new_evaluation_result_path, notice: 'Teste do Relogio - Resultados gravados com sucesso.' }
           else
             format.html { redirect_to appointment_plans_path, notice: 'Teste do Relogio - Resultados gravados com sucesso.' }
           end          
