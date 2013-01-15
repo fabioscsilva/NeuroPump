@@ -1,4 +1,6 @@
 class PackagesController < ApplicationController
+  before_filter :authenticate_login!
+  load_and_authorize_resource
   # GET /packages
   # GET /packages.json
   def index
