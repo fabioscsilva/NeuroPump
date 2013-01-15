@@ -1,4 +1,4 @@
-<div id="change_view" style="z-index: 999999999999; padding: 10px; padding-top: 2px; padding-bottom: 2px; height: auto; width: 24px; cursor: pointer; background-color: #f00; position: fixed;" onclick="mudaViews()">
+<div id="change_view" style="z-index: 999999999999;padding: 2px 3px 4px;height: auto;width: 22px;cursor: pointer;background-color: rgb(209, 209, 209);position: fixed;right: 0%;" onclick="mudaViews()" onmouseout="diminuiuLargura()" onmouseover="aumentaLargura()">
 < >
 </div>
 
@@ -148,8 +148,8 @@
 
 
 
-  <div id="capa" style="position: fixed; display:none; left: 0%; top: 8.3%;"><img style="width: 1200px;margin-left: 51px;height: 600px;" src="../assets/img/book.png" /></div>
-    <div id="magazine" style="display: none; margin-top:40px; position: fixed; left: 1%; top: 0%;">
+  <div id="capa" style="display: none; position: fixed; opacity: 0; left: 0%; top: 10.3%;"><img style="width: 1200px;margin-left: 51px;height: 600px;" src="../assets/img/book.png" /></div>
+    <div id="magazine" style="display: none; opacity: 0; margin-top:40px; position: fixed; left: 1%; top: 2%;">
       <div style="background-color: #efefef"></div>
       
       <% @dataInicio = @appointments[0].appointment_day %>
@@ -169,23 +169,27 @@
         <% @k = @k + 1 %>
         <% @jInicial = @j %>
 
-        <div style="background-image: -webkit-linear-gradient(left, #e9e9e9 95%, #DDD 100%);background-image: -moz-linear-gradient(left, #e9e9e9 95%, #DDD 100%);background-image: -o-linear-gradient(left, #e9e9e9 95%, #DDD 100%);background-image: -ms-linear-gradient(left, #e9e9e9 95%, #DDD 100%);">
-          <h1 style="margin-left: 20%;
-            margin-right: 20%;
-            margin-top: 30px;
-            font: 16px/5px 'Avenir', sans-serif;
-            text-align: center;
-            padding-bottom: 15px;"> <%= @dataInicio.strftime('%d/%m/%Y') %> </h1>
-          <input id="pesqinput<%= @dataInicio.strftime('%d-%m-%Y') %>" onclick="this.value = ''" style="width: 90%" type="text" value="Pesquisar..." />
-          <div id="botao<%= @dataInicio.strftime('%d-%m-%Y') %>" style="background-image: url(http://static.ak.fbcdn.net/rsrc.php/v2/yj/x/Hd1Px2ph_sW.png);background-repeat: no-repeat;background-size: auto;background-position: -230px -631px;cursor: pointer;float: right;width: 20px;height: 16px;margin-right: 30px;margin-top: -30px;text-align: right;"></div>
+        <% if @k.even? %>
+          <div style="background-image: -webkit-linear-gradient(right, #e9e9e9 95%, #DDD 100%);background-image: -moz-linear-gradient(right, #e9e9e9 95%, #DDD 100%);background-image: -o-linear-gradient(right, #e9e9e9 95%, #DDD 100%);background-image: -ms-linear-gradient(right, #e9e9e9 95%, #DDD 100%); padding-left: 20px; border-left: solid 1px rgb(218, 218, 218);">
+        <% else %>
+          <div style="background-image: -webkit-linear-gradient(left, #e9e9e9 95%, #DDD 100%);background-image: -moz-linear-gradient(left, #e9e9e9 95%, #DDD 100%);background-image: -o-linear-gradient(left, #e9e9e9 95%, #DDD 100%);background-image: -ms-linear-gradient(left, #e9e9e9 95%, #DDD 100%);">
+        <% end %>
+
+        <h1 style="margin-left: 20%;
+          margin-right: 20%;
+          margin-top: 30px;
+          font: 16px/5px 'Avenir', sans-serif;
+          text-align: center;
+          padding-bottom: 15px;"> <%= @dataInicio.strftime('%d/%m/%Y') %> </h1>
+        <input id="pesqinput<%= @dataInicio.strftime('%d-%m-%Y') %>" onclick="this.value = ''" style="width: 76%;margin-left: 9%;background-color: rgba(0,0,0,0);border: none;border-bottom: dotted 1px #999;box-shadow: none;" type="text" value="Pesquisar..." />
         
 
-      <div id="conteudo<%= @dataInicio.strftime('%d-%m-%Y') %>">
+      <div id="conteudo<%= @dataInicio.strftime('%d-%m-%Y') %>" style="height: 80%; overflow-y: scroll;">
       <% @horas.each do |hora| %>
         <% @j = @j + 1 %>
 
         <h1 style="margin-left: 10%;font: 12px/5px 'Avenir', sans-serif;padding-bottom: 10px;width: 90%;float: left;">
-          <b id="<%= hora %>h"><%= hora %>h</b>
+          <p id="<%= hora %>h"><%= hora %>h</p>
         </h1>
 
         <div class="cons">
@@ -201,17 +205,25 @@
     <!-- abaixo é para efetuar a pesquisa -->
     <script type="text/javascript">
     $(document).ready(function(){
-      $("#botao<%= @dataInicio.strftime('%d-%m-%Y') %>").click(function() {
-        var x = document.getElementById("pesqinput<%= @dataInicio.strftime('%d-%m-%Y') %>").value;
+      $("#pesqinput<%= @dataInicio.strftime('%d-%m-%Y') %>").keyup(function() {
+        var x = this.value;
         $("#conteudo<%= @dataInicio.strftime('%d-%m-%Y') %> .cons").stop().each(function() {        
           var matchPos1 = $(this).html().search(x);
           if(matchPos1 != -1)
           {
-              $(this).css("opacity","1") 
+            $(this).stop().animate({
+              opacity: 1
+            }, 500, function() {
+              // Animation complete.
+            });
           }
           else
           {
-              $(this).css("opacity","0.2") 
+            $(this).stop().animate({
+              opacity: 0.2
+            }, 500, function() {
+              // Animation complete.
+            });
           }
         });
       });
@@ -246,11 +258,11 @@
 
   <!-- isto é para nao por os appointments cancelados nem datas repetidas -->
   <% if appointment.appointment_status.id != 3 %>
-    <% @data = appointment.appointment_day %>
+    <% @nomeNeuro = appointment.neuropsychologist.name.split(" ") %>
     
     <script type="text/javascript">
       
-      var conteudo = '<h1 style="margin-left: 10%;padding-left: 55px;width: 20%;float: left;margin-right: 5%;margin-top: 1px;font: 12px/5px Avenir, sans-serif;text-align: left;padding-bottom: 15px;"><b>Neuropsicólogo:</b> <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" id="neuro"><%= appointment.neuropsychologist.name %></a><ul class="dropdown-menu"><li><a href="#" id="neuro_vpp">Ver página pessoal</a></li><li class="divider"></li><li><a href="#" id="neuro_ee">Enviar email</a></li></ul></li> </h1><h1 style="width: 20%;float: left;margin-right: 0%;margin-top: 1px;font: 12px/5px Avenir, sans-serif;text-align: left;padding-bottom: 15px;"><b>Paciente:</b> <li class="dropdown"><a style="cursor: pointer" href="#" class="dropdown-toggle" data-toggle="dropdown" id="paciente"><%= appointment.patient.name %></a><ul class="dropdown-menu"><li><a href="#" id="paciente_vpp">Ver página paciente</a></li><li class="divider"></li><li><a href="#" id="paciente_ee">Enviar email</a></li></ul></li> </h1><h1 style="width: 20%;float: left;margin-top: 1px;font: 12px/5px Avenir, sans-serif;text-align: left;padding-bottom: 15px;border-bottom: solid 1px #E2E2E2;"><li class="dropdown"><a style="cursor: pointer" href="#" class="dropdown-toggle" data-toggle="dropdown" id="consulta"><%= appointment.appointment_type.name %></a><ul class="dropdown-menu"><li><a href="#" id="consulta_ve">Ver exame</a></li><li><a href="#" id="consulta_ae">Apagar exame</a></li></ul></li> </h1>';
+      var conteudo = '<h1 style="margin-left: 10%;padding-left: 55px;width: 20%;float: left;margin-right: 5%;margin-top: 1px;font: 12px/5px Avenir, sans-serif;text-align: left;padding-bottom: 15px;"><b>Neuropsicólogo:</b> <li style="display: block;" class="dropdown"><a style="color: #000;" href="#" class="dropdown-toggle" data-toggle="dropdown"><%= @nomeNeuro[0] %> <%= @nomeNeuro[1] %></a><ul class="dropdown-menu"><li><a href="#">Ver página pessoal</a></li><li class="divider"></li><li style="display: block;"><a href="#">Enviar email</a></li></ul></li> </h1><h1 style="width: 20%;float: left;margin-right: 0%;margin-top: 1px;font: 12px/5px Avenir, sans-serif;text-align: left;padding-bottom: 15px;"><b>Paciente:</b> <li style="display: block;" class="dropdown"><a style="cursor: pointer; color: #000;" href="#" class="dropdown-toggle" data-toggle="dropdown"><%= appointment.patient.name %></a><ul class="dropdown-menu"><li><a href="#">Ver página paciente</a></li><li class="divider"></li><li><a href="#">Enviar email</a></li></ul></li> </h1><h1 style="width: 20%;float: left;margin-top: 1px;font: 12px/5px Avenir, sans-serif;text-align: left;padding-bottom: 15px;border-bottom: solid 1px #E2E2E2;"><li style="display: block; margin-top: -10px;" class="dropdown"><a style="cursor: pointer; color: #000;" href="#" class="dropdown-toggle" data-toggle="dropdown"><%= appointment.appointment_type.name %></a><ul class="dropdown-menu"><li><a href="#">Ver exame</a></li><li><a href="#">Apagar exame</a></li></ul></li> <li style="display: block;" class="dropdown"><a style="cursor: pointer; color: #000;" href="#" class="dropdown-toggle" data-toggle="dropdown"><%= appointment.duration %> min.</a></li> </h1>';
 
       $("#conteudo<%= appointment.appointment_day.strftime('%d-%m-%Y') %> .cons .h<%= appointment.appointment_day.strftime('%H-%M') %>").html(conteudo);
     
@@ -469,7 +481,6 @@ $(document).ready(function() {
          
          //var bodyField = $dialogContent.find("textarea[name='body']");
 
-
          $dialogContent.dialog({
             modal: true,
             description: "Descrição da sessão",
@@ -503,6 +514,53 @@ $(document).ready(function() {
                   $('span.select2').each(function(){
                     $(this).remove();
                   });
+
+                  var tipoC = "";
+                  if(calEvent.tipo == "3")
+                  {
+                    tipoC = "Avaliação";
+                  }
+                  else
+                  {
+                    tipoC = "Estimulação";
+                  }
+
+                  var conteudo = '<h1 style="margin-left: 10%;padding-left: 55px;width: 20%;float: left;margin-right: 5%;margin-top: 1px;font: 12px/5px Avenir, sans-serif;text-align: left;padding-bottom: 15px;"><b>Neuropsicólogo:</b> <li style="display: block;" class="dropdown"><a style="color: #000;" href="#" class="dropdown-toggle" data-toggle="dropdown">'+ neunome +'</a><ul class="dropdown-menu"><li><a href="#">Ver página pessoal</a></li><li class="divider"></li><li style="display: block;"><a href="#">Enviar email</a></li></ul></li> </h1><h1 style="width: 20%;float: left;margin-right: 0%;margin-top: 1px;font: 12px/5px Avenir, sans-serif;text-align: left;padding-bottom: 15px;"><b>Paciente:</b> <li style="display: block;" class="dropdown"><a style="cursor: pointer; color: #000;" href="#" class="dropdown-toggle" data-toggle="dropdown">'+ pacnome +'</a><ul class="dropdown-menu"><li><a href="#">Ver página paciente</a></li><li class="divider"></li><li><a href="#">Enviar email</a></li></ul></li> </h1><h1 style="width: 20%;float: left;margin-top: 1px;font: 12px/5px Avenir, sans-serif;text-align: left;padding-bottom: 15px;border-bottom: solid 1px #E2E2E2;"><li style="display: block; margin-top: -10px;" class="dropdown"><a style="cursor: pointer; color: #000;" href="#" class="dropdown-toggle" data-toggle="dropdown">'+ tipoC +'</a><ul class="dropdown-menu"><li><a href="#">Ver exame</a></li><li><a href="#">Apagar exame</a></li></ul></li> <li style="display: block;" class="dropdown"><a style="cursor: pointer; color: #000;" href="#" class="dropdown-toggle" data-toggle="dropdown">'+ 120 +' min.</a></li> </h1>';
+
+                    var dataI = calEvent.start;
+
+                    var horas = dataI.getHours();
+                    var bI = "";
+                    if( horas < 10)
+                    {
+                      bI += '0';
+                    }
+                    bI += horas.toString();
+                    if( dataI.getMinutes() == 0 )
+                    {
+                      bI += "-0" + dataI.getMinutes();
+                    }
+                    else
+                    {
+                      bI += "-" + dataI.getMinutes() + "";
+                    }
+                     
+                    var aI = "";
+                    var mes = dataI.getMonth() + 1;
+                    var dia = dataI.getDate();
+                    if( dia < 10 )
+                    {
+                      aI += "0";
+                    }
+                    aI += dia.toString() + "-";
+                    if( mes < 10 )
+                    {
+                      aI += "0";
+                    }
+                    aI += mes.toString() + "-" + dataI.getFullYear();
+
+
+                    $("#conteudo" + aI + " .cons .h" + bI +"").html(conteudo);
 
                   $calendar.weekCalendar("removeUnsavedEvents");
                   $calendar.weekCalendar("updateEvent", calEvent);
@@ -1277,19 +1335,64 @@ function atualizaDuracaoMinutos()
 
 function mudaViews()
 {
-  if($('#calendario_view').css('display') == 'none')
+  if($('#calendario_view').css('opacity') == '0')
   {
     $('#calendario_view').css('display', 'block');
-    $('#magazine').css('display', 'none');
-    $('#capa').css('display', 'none');
+    $('#calendario_view').animate({
+        opacity: 1
+      }, 850, function() {
+    });
+
+    $('#magazine').animate({
+        opacity: 0
+      }, 850, function() {
+        $(this).css('display', 'none');
+    });
+
+    $('#capa').animate({
+        opacity: 0
+      }, 850, function() {
+        $(this).css('display', 'none');
+    });
   }
   else
   {
-    $('#calendario_view').css('display', 'none');
-    $('#magazine').css('display', 'block'); 
-    $('#capa').css('display', 'block'); 
+    $('#calendario_view').animate({
+        opacity: 0
+      }, 850, function() {
+        $(this).css('display', 'none');
+    });
+
+    $('#magazine').css('display', 'block');
+    $('#magazine').animate({
+        opacity: 1
+      }, 850, function() {
+    });
+
+    $('#capa').css('display', 'block');
+    $('#capa').animate({
+        opacity: 1
+      }, 850, function() {
+    });
   }
 }
+
+function aumentaLargura()
+{
+  $('#change_view').animate({
+      width: 60
+    }, 850, function() {
+  });
+}
+
+function diminuiuLargura()
+{
+  $('#change_view').animate({
+      width: 22
+    }, 850, function() {
+  });
+}
+
 </script>
 
 <style>

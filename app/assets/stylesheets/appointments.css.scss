@@ -1331,7 +1331,7 @@ border: 1px solid #999999/*{borderColorHover}*/; color: #777/*{fcHover}*/;
 #magazine .turn-page{
 	background-color:#ccc;
 	background-size:100% 100%;
-        overflow-y: scroll;
+	overflow-y: hidden;
 }
 
 body{
