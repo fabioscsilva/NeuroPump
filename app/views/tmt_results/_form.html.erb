@@ -1,29 +1,153 @@
 <%= form_for(@tmt) do |f| %>
-  <% if @tmt.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@tmt.errors.count, "error") %> prohibited this tmt from being saved:</h2>
+<% if @tmt.errors.any? %>
+<div id="error_explanation">
+	<h2><%= pluralize(@tmt.errors.count, "error") %> prohibited this tmt from being saved:</h2>
 
-      <ul>
-      <% @tmt.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+	<ul>
+		<% @tmt.errors.full_messages.each do |msg| %>
+		<li>
+			<%= msg %>
+		</li>
+		<% end %>
+	</ul>
+</div>
+<% end %>
 
-  <div class="field">
-    <%= f.label :phase %><br />
-    <%= f.number_field :phase %>
-  </div>
-  <div class="field">
-    <%= f.label :time %><br />
-    <%= f.time_select :time %>
-  </div>
-  <div class="field">
-    <%= f.label :observations %><br />
-    <%= f.text_area :observations %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$("#submit").attr("disabled", true);
+		$('#btnParar').attr("disabled", true);
+		$('#btnReiniciar').attr("disabled", true);
+
+	});
+	var x = null;
+	var myVar;
+
+	var continue_button = document.getElementById('submit');
+	continue_button.style.visibility = 'hidden';
+
+	function updateDisplay() {
+		var value = parseInt($('#timer').find('.value').text(), 10);
+		value++;
+		$('#timer').find('.value').text(value);
+	}
+
+	function iniciaRelogio() {
+
+		var aux = document.getElementById("timer2");
+		aux.innerHTML = "0";
+		clearInterval(myVar);
+		myVar = setInterval(updateDisplay, 1000);
+		$('#btnIniciar').attr("disabled", "disabled");
+		$('#btnParar').attr("disabled", false);
+		$('#btnReiniciar').attr("disabled", false);
+	}
+
+	function pararRelogio() {
+		if (x == null) {
+			var aux = document.getElementById("a");
+			time = document.getElementById("timer2").innerHTML;
+			aux.innerHTML = document.getElementById("timer2").innerHTML + " seg.";
+			x = 12;
+			clearInterval(myVar);
+			var aux = document.getElementById("timer2");
+			aux.innerHTML = "0";
+			$('#btnIniciar').attr("disabled", false);
+			$('#btnParar').attr("disabled", true);
+			$('#btnReiniciar').attr("disabled", true);
+			$('#trailsA').val(time);
+		} else {
+			var aux = document.getElementById("b");
+			time = document.getElementById("timer2").innerHTML;
+			aux.innerHTML = document.getElementById("timer2").innerHTML + " seg.";
+			$("#submit").attr("disabled", false);
+			clearInterval(myVar);
+			var aux = document.getElementById("timer2");
+			aux.innerHTML = "0";
+			$('#btnIniciar').attr("disabled", true);
+			$('#btnParar').attr("disabled", true);
+			$('#btnReiniciar').attr("disabled", true);
+			$('#trailsB').val(time);
+		}
+	};
+</script>
+
+<style>
+	
+	
+label.lblTable
+{
+text-align:center;
+}
+
+	
+</style>
+
+<div class="row-fluid">
+	<div class="span6">
+		<table class="table table-hover table-bordered table-striped">
+			<thead>
+				<tr>
+					<th>Trails A</th>
+					<th>Trails B</th>
+				</tr>
+			</thead>
+			<tbody
+			<tr>
+
+			<td><label class="lblTable" id="a">0 seg. </label>    <%= hidden_field_tag 'trailsA'  %></td>
+			<td><label  class="lblTable" id="b">0 seg. </label>	 <%= hidden_field_tag 'trailsB'  %></td>
+			</tr>
+			</tbody>
+			</table>
+
+			<div class="field">
+			<%= f.label :observations, "Observações Trails A" %><br />
+			<!-- <%= f.text_area :observations, :style => "width: 100%; height : 50px;" %> -->
+				<%= text_area_tag  'observationsA' , nil , :style => "width: 100%; height : 50px;"   %>
+	</div>
+
+	<div class="field">
+		<%= f.label :observations, "Observações Trails B" %>
+		<br />
+		<!-- <%= f.text_area :observations, :style => "width: 100%; height : 50px;" %> -->
+		<%= text_area_tag 'observationsB' , nil , :style => "width: 100%; height : 50px;" %>
+
+	</div>
+
+</div>
+<div class="span4 offset1">
+	<center>	
+		<div id="timer">
+			<h1><span id="timer2" class="value">0</span> <label>SEGUNDOS</label></h1>
+		</div> 	
+		<p>
+			<button id="btnIniciar" type="button" onclick="iniciaRelogio()" class="btn btn-success">
+				Iniciar
+			</button>
+			<button id="btnParar" type="button" onclick="pararRelogio()"  class="btn btn-danger">
+				Parar
+			</button>
+			<button id="btnReiniciar" type="button" onclick="iniciaRelogio()"   class="btn btn-info">
+				Reiniciar
+			</button>
+		</p>
+
+		<%if session["test_sequence"].blank? %>
+		<button type="submit" id="submit" class="btn btn-success pull-right" >
+			Terminar
+		</button>
+		<%else %>
+		<button type="submit" id="submit" class="btn btn-success pull-right" >
+			Proximo
+		</button>
+		<%end%>
+
+	</center>
+</div>
+</div>
+</div>
+</div>
+<div class="span3"></div>
+</div>
 <% end %>

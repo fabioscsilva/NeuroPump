@@ -1,65 +1,270 @@
 <%= form_for(@ftt) do |f| %>
-  <% if @ftt.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@ftt.errors.count, "error") %> prohibited this ftt from being saved:</h2>
+<% if @ftt.errors.any? %>
+<div id="error_explanation">
+	<h2><%= pluralize(@ftt.errors.count, "error") %> prohibited this ftt from being saved:</h2>
 
-      <ul>
-      <% @ftt.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+	<ul>
+		<% @ftt.errors.full_messages.each do |msg| %>
+		<li>
+			<%= msg %>
+		</li>
+		<% end %>
+	</ul>
+</div>
+<% end %>
 
-  <div class="field">
-    <%= f.label :test_phase %><br />
-    <%= f.number_field :test_phase %>
-  </div>
-  <div class="field">
-    <%= f.label :first %><br />
-    <%= f.number_field :first %>
-  </div>
-  <div class="field">
-    <%= f.label :second %><br />
-    <%= f.number_field :second %>
-  </div>
-  <div class="field">
-    <%= f.label :third %><br />
-    <%= f.number_field :third %>
-  </div>
-  <div class="field">
-    <%= f.label :fourth %><br />
-    <%= f.number_field :fourth %>
-  </div>
-  <div class="field">
-    <%= f.label :fifth %><br />
-    <%= f.number_field :fifth %>
-  </div>
-  <div class="field">
-    <%= f.label :sixth %><br />
-    <%= f.number_field :sixth %>
-  </div>
-  <div class="field">
-    <%= f.label :seventh %><br />
-    <%= f.number_field :seventh %>
-  </div>
-  <div class="field">
-    <%= f.label :eighth %><br />
-    <%= f.number_field :eighth %>
-  </div>
-  <div class="field">
-    <%= f.label :ninth %><br />
-    <%= f.number_field :ninth %>
-  </div>
-  <div class="field">
-    <%= f.label :tenth %><br />
-    <%= f.number_field :tenth %>
-  </div>
-  <div class="field">
-    <%= f.label :observations %><br />
-    <%= f.text_area :observations %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('#btnReiniciar').attr("disabled", true);
+	});
+
+	$("#new_ftt_result").bind("keypress", function(e) {
+		if (e.keyCode == 13) {
+			hide(inputSelec);
+			return false;
+		}
+	});
+
+	var x = null;
+	var myVar;
+	var cont = 0;
+	var aux = 0;
+	var inputSelec = 0;
+
+	function updateDisplay() {
+		var value = parseInt($('#timer').find('.value').text(), 10);
+		value--;
+		$('#timer').find('.value').text(value);
+
+		if (value == '0') {
+			clearInterval(myVar);
+			if (cont != 20) {
+				$('#btnIniciar').attr("disabled", false);
+				$('#submit').attr("disabled", false);
+			}
+			$('#btnReiniciar').attr("disabled", true);
+			mostra(cont);
+			cont++;
+		}
+	}
+
+	function mostra(lblNum) {
+		var val = $("#teste" + lblNum).html()
+		$("#teste" + lblNum).replaceWith(function() {
+			return "<input id=\"teste" + lblNum + "\"  name=\"teste" + lblNum + "\"  type=\"number\" onblur=\"hide(" + lblNum + ")\" style=\"width:60px;height:20px;\"  value=\"" + $(this).html() + "\" required></input>";
+		});
+		$("#teste" + lblNum).focus();
+		$('#btnIniciar').attr("disabled", true);
+		aux = val;
+		inputSelec = lblNum;
+	}
+
+	function hide(lblNum) {
+		var intRegex = /^\d+$/;
+		value = $("#teste" + lblNum).val();
+		if (!intRegex.test(value)) {
+			value = 0;
+		}
+		$("#teste" + lblNum).replaceWith(function() {
+			return "<label id=\"teste" + lblNum + "\" onclick=\"mostra(" + lblNum + ")\" >" + value + "</label>";
+		});
+		$('#btnIniciar').attr("disabled", false);
+		if (parseInt(lblNum / 10) == 0) {
+			//Dominante
+			var value = parseInt(value);
+			var total = parseInt($("#totalDominante").html());
+			total = total - parseInt(aux);
+			var result = total + value;
+			$("#totalDominante").html(result);
+			$("#mediaDominante").html(result / 10);
+		} else {
+			var value = parseInt(value);
+			var total = parseInt($("#totalNaoDominante").html());
+			total = total - parseInt(aux);
+			var result = total + value;
+			$("#totalNaoDominante").html(result);
+			$("#mediaNaoDominante").html(result / 10);
+		}
+
+	}
+
+	function iniciaRelogio() {
+		var aux = document.getElementById("timer2");
+		aux.innerHTML = "10";
+		clearInterval(myVar);
+		myVar = setInterval(updateDisplay, 1000);
+		$('#btnIniciar').attr("disabled", "disabled");
+		$('#btnReiniciar').attr("disabled", false);
+	}
+
+	function mostratudo() {
+		for (var i = 0; i < 20; i++) {
+			$("#teste" + i).replaceWith(function() {
+				return "<input id=\"teste" + i + "\"  name=\"teste" + i + "\" class=\"inpTable\"  type=\"number\" value=\"" + $(this).html() + "\" required></input>";
+			});
+		}
+	}
+</script>
+
+<style>
+
+
+td {
+    text-align: center; vertical-align: middle; /* center checkbox vertically */
+}
+
+/*td
+{
+text-align: center; 
+vertical-align: middle;
+}*/
+label.lblTable
+{
+text-align:center;
+}
+
+td.tdTable
+{
+	text-align: center; 
+	vertical-align: middle; 
+}
+
+td.inpTable
+{
+	text-align:center;
+}
+
+</style>
+
+<div class="row-fluid">
+	<div class="span6">
+		<table class="table table-hover table-bordered table-striped">
+			<thead>
+				<tr>
+					<th>Ensaio</th>
+					<th>Mão Dominante</th>
+					<th>Mão Não Dominante</th>
+				</tr>
+			</thead>
+			<tbody
+			<tr>
+			<td><label class="lblTable" >1</label></td>
+			<td class="tdTable"><label id="teste0" class="lblTable" onclick="mostra(0)">0</label></td>
+			<td><label id="teste10" class="lblTable" onclick="mostra(10)">0</label></td>
+			</tr>
+			<tr>
+			<td>2</td>
+			<td><label id="teste1" class="lblTable"  onclick="mostra(1)">0</label></td>
+			<td><label id="teste11"  class="lblTable" onclick="mostra(11)">0</label></td>
+			</tr>
+			<tr>
+			<td>3</td>
+			<td><label id="teste2"  class="lblTable" onclick="mostra(2)">0</label></td>
+			<td><label id="teste12"  class="lblTable" onclick="mostra(12)">0</label></td>
+			</tr>
+			<tr>
+			<td>4</td>
+			<td><label id="teste3"  class="lblTable" onclick="mostra(3)">0</label></td>
+			<td><label id="teste13" class="lblTable"  onclick="mostra(13)">0</label></td>
+			</tr>
+			<tr>
+			<td>5</td>
+			<td><label id="teste4"  class="lblTable" onclick="mostra(4)">0</label></td>
+			<td><label id="teste14"  class="lblTable" onclick="mostra(14)">0</label></td>
+			</tr>
+			<tr>
+			<td>6</td>
+			<td><label id="teste5"  class="lblTable" onclick="mostra(5)">0</label></td>
+			<td><label id="teste15" class="lblTable"  onclick="mostra(15)">0</label></td>
+			</tr>
+			<tr>
+			<td>7</td>
+			<td><label id="teste6"  class="lblTable" onclick="mostra(6)">0</label></td>
+			<td><label id="teste16"  class="lblTable" onclick="mostra(16)">0</label></td>
+			</tr>
+			<tr>
+			<td>8</td>
+			<td><label id="teste7"  class="lblTable" onclick="mostra(7)">0</label></td>
+			<td><label id="teste17" class="lblTable"  onclick="mostra(17)">0</label></td>
+			</tr>
+			<tr>
+			<td>9</td>
+			<td><label id="teste8"  class="lblTable" onclick="mostra(8)">0</label></td>
+			<td><label id="teste18"  class="lblTable" onclick="mostra(18)">0</label></td>
+			</tr>
+			<tr>
+			<td>10</td>
+			<td><label id="teste9"  class="lblTable" onclick="mostra(9)">0</label></td>
+			<td><label id="teste19"  class="lblTable" onclick="mostra(19)">0</label></td>
+			</tr>
+
+			</tbody>
+			</table>
+
+			<div class="field">
+			<%= f.label :observations, "Observações Mão Dominante" , :classs => 'xps'%><br />
+			<%= text_area_tag  'observationsA' , nil , :style => "width: 100%; height : 50px;"   %>
+	</div>
+
+	<div class="field">
+		<%= f.label :observations, "Observações Mão não dominante" %>
+		<br />
+		<%= text_area_tag 'observationsB' , nil , :style => "width: 100%; height : 50px;" %>
+
+	</div>
+</div>
+<div class="span4 offset1">
+	<center>
+		
+		<div id="timer">
+			
+			<h1><span id="timer2" class="value">10</span> <label>SEGUNDOS</label></h1>
+		</div> ​
+		<p>
+			<button id="btnIniciar" type="button" onclick="iniciaRelogio()" class="btn btn-success">
+				Iniciar
+			</button>
+			<button id="btnReiniciar" type="button" onclick="iniciaRelogio()"   class="btn btn-info">
+				Reiniciar
+			</button>
+		</p>
+		</br>
+		</br>
+		<table class="table table-hover table-bordered table-striped">
+			<thead>
+				<tr>
+					<th></th>
+					<th>Dominante</th>
+					<th>Não Dominante</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Total</td>
+					<td><label id="totalDominante">0</label></td>
+					<td><label id="totalNaoDominante">0</label></td>
+				</tr>
+				<tr>
+					<td>Média</td>
+					<td><label id="mediaDominante">0</label></td>
+					<td><label id="mediaNaoDominante">0</label></td>
+				</tr>
+			</tbody>
+		</table>
+
+		<%if session["test_sequence"].blank? %>
+		<button type="submit" id="submit" onclick="mostratudo();" class="btn btn-success pull-right" >
+			Terminar
+		</button>
+		<%else %>
+		<button type="submit" id="submit" onclick="mostratudo();" class="btn btn-success pull-right" >
+			Proximo
+		</button>
+		<%end%>
+
+
+
+	</center>
+</div>
+</div>
 <% end %>

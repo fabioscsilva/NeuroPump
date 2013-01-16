@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Context:</b>
+  <%= @evaluation_result.context %>
+</p>
+
+<p>
+  <b>Conclusion:</b>
+  <%= @evaluation_result.conclusion %>
+</p>
+
+<p>
+  <b>Solution:</b>
+  <%= @evaluation_result.solution %>
+</p>
+
+
+<%= link_to 'Edit', edit_evaluation_result_path(@evaluation_result) %> |
+<%= link_to 'Back', evaluation_results_path %>

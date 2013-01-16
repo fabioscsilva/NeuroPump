@@ -15,9 +15,10 @@
 				</legend>
 				<div class="well">
 					<ul class="nav nav-list" style="float:none">
-						<% appoint_plan = AppointmentPlan.where(:appointment_id => 1) %>
+						<% appoint_id = session["current_appointment"].to_f %> 
+						<% appoint_plan = AppointmentPlan.where(:appointment_id => appoint_id) %>
 						<% appoint_plan.each do |a|%>
-							<%if a.evaluation_test.name == "Relogio"%>
+							<%if a.evaluation_test.name == "clock"%>
 								<li class="active">
 									<a href="#"><i class="icon-chevron-right"></i> <%= a.evaluation_test.name %></a>
 								</li>
@@ -35,8 +36,8 @@
 				<legend>
 					Teste do Relógio
 					<div class="pull-right">
-						<a id="downloadClock" href="/downloadClock" role="button" class="btn btn-info" data-toggle="modal" rel="tooltip" data-placement="bottom" data-original-title="Descarregar Template"><i class="icon-white icon-print"></i></a>
-						<a id="descriptionTeste" href="#myModal" role="button" class="btn btn-info" data-toggle="modal" rel="tooltip" data-placement="bottom" data-original-title="Descrição Teste"><i class="icon-white icon-info-sign"></i></a>
+						<a id="downloadClock" href="/downloadClock" role="button" class="btn btn-small btn-info" data-toggle="modal" rel="tooltip" data-placement="bottom" data-original-title="Descarregar Template"><i class="icon-white icon-print"></i></a>
+						<a id="descriptionTeste" href="#myModal" role="button" class="btn btn-small btn-info" data-toggle="modal" rel="tooltip" data-placement="bottom" data-original-title="Descrição Teste"><i class="icon-white icon-info-sign"></i></a>
 
 						<!-- Modal -->
 						<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

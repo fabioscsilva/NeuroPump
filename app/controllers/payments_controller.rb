@@ -1,8 +1,23 @@
+#!/bin/env ruby
+# encoding: utf-8
+
 class PaymentsController < ApplicationController
   # GET /payments
   # GET /payments.json
   def index
     @payments = Payment.all
+
+    if current_login.has_role? :administrator
+      @payments = Payment.find_by_sql('select *
+from Payments p, (select clinic_id, max(due_date) as d from payments group by clinic_id) s
+where p.clinic_id = s.clinic_id and p.due_date = s.d order by payed')
+
+
+      
+    elsif current_login.has_role? :manager
+      logged_user = Manager.first(:conditions => "login_id = #{current_login.id}")
+      @payments = Payment.in_clinic(logged_user.clinic.id).all
+    end
 
     respond_to do |format|
       format.html # index.html.erb
@@ -20,6 +35,61 @@ class PaymentsController < ApplicationController
       format.json { render json: @payment }
     end
   end
+
+  # Método que simula uma atualização do estado dos pagamentos gerados
+  def check
+    payments = Payment.where("payed" => false);
+    payments.each do |p|
+      if p.id.odd? 
+        p.payed = true;
+        p.save;
+      end
+    end
+
+    flash[:notice] = "Pagamentos atualizados e verificados com sucesso."
+
+    respond_to do |format|
+      format.html { redirect_to payments_url }
+      format.json { render json: @payment }
+    end
+  end
+
+  # Método gera pagamentos mensais para cada clínica
+  def generate
+    # select das clinicas ativas e com todos os pagamentos pagos
+    clinics = Clinic.find_by_sql('SELECT c.id 
+                                    FROM clinics c
+                                    WHERE c.id NOT IN
+                                      (SELECT p.clinic_id FROM payments p
+                                        WHERE p.payed = false)
+                                          AND c.deleted_at is null');
+
+    clinics.each do |c|
+      p = Payment.new;
+      timeNow = Time.new;
+      p.creation_date = timeNow;
+      p.due_date = Time.new.advance(:months => 1);
+      p.payed = false;
+      p.reference = rand(999999999).to_s.center(9, rand(9).to_s);
+      p.entity = "27035";
+      p.clinic_id = c.id;
+      p.value = PackagesClinic.where("clinic_id" => c.id).first.package.price;
+
+      p.save;
+    end
+
+    if clinics.count == 1
+      flash[:notice] = "1 referência gerada.";
+    else
+      flash[:notice] = clinics.count.to_s + " referências geradas.";
+    end
+
+    respond_to do |format|
+      format.html { redirect_to payments_url }
+      format.json { render json: @payment }
+    end
+  end
+
 
   # GET /payments/new
   # GET /payments/new.json

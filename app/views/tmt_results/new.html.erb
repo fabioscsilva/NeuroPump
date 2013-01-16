@@ -1,5 +1,65 @@
-<h1>New tmt</h1>
+<!-- Implemented by Fábio Silva - 29/11/2012 -->
+<div class="container">
+	<div class="row-fluid">
+		<div class="span12">
+			<div class="span3 pull-left">
+				<legend>
+					Sessão
+				</legend>
+				<div class="well">
+					<ul class="nav nav-list" style="float:none">
+						<% appoint_id = session["current_appointment"].to_f %> 
+						<% appoint_plan = AppointmentPlan.where(:appointment_id => appoint_id) %>
+						<% appoint_plan.each do |a|%>
+							<%if a.evaluation_test.name == "tmt"%>
+								<li class="active">
+									<a href="#"><i class="icon-chevron-right"></i> <%= a.evaluation_test.name %></a>
+								</li>
+							<%else%>
+								<li>
+									<a href="#"><i class="icon-chevron-right"></i> <%= a.evaluation_test.name %></a>
+								</li>
+							<%end%>
 
-<%= render 'form' %>
+						<%end%>
+					</ul>
+				</div>
+			</div>
+			<div class="span9">
+				<legend>
+					TMT - trails making test
+					<div class="pull-right">
+						<a id="downloadClock" href="#" role="button" class="btn btn-small btn-info" data-toggle="modal" rel="tooltip" data-placement="bottom" data-original-title="Descarregar Template"><i class="icon-white icon-print"></i></a>
+						<a id="descriptionTeste" href="#myModal" role="button" class="btn btn-small btn-info" data-toggle="modal" rel="tooltip" data-placement="bottom" data-original-title="Descrição Teste"><i class="icon-white icon-info-sign"></i></a>
 
-<%= link_to 'Back', tmt_results_path %>
+						<!-- Modal -->
+						<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+									×
+								</button>
+								<h4 id="myModalLabel">Trails Making Test</h4>
+							</div>
+							<div class="modal-body" style="font-size: 12px; line-height: 20px;">
+								<p align="justify">
+									Este teste mede a atenção, a fexibilidade mental, a procura visual e a função motora.
+									É constituido por duas partes, em que a primeira consiste na tarefa de ligar com linhas feitas a lápis, 25 circulos numerados de 1 a 25 e a segunda
+									consiste em unir circulos numerados de 1 a 12 aleternados com as as letras de A a K.<br><br>
+									A cotação consta apenas da contabilização em segundos do tempo de cada umas das partes do teste. Os erros não são contabilizados uma vez que é necessário recomeçar a tarefa a partir do ponto de erro, implicando, por consequência,
+									o aumento do tempo de execução. 
+								</p>
+							</div>
+
+						</div>
+					</div>
+				</legend>
+
+				<%= render 'form' %>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+	$('#downloadClock').tooltip();
+	$('#descriptionTeste').tooltip(); 
+</script>

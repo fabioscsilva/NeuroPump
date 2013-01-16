@@ -105,6 +105,7 @@
             self._resizeCalendar();
          });
 
+         dataAtual = new Date(this.element.data("startDate").getTime());
       },
 
 
@@ -131,6 +132,7 @@
       today : function() {
          this._clearCalendar();
          this._loadCalEvents(new Date());
+         dataAtual = new Date(this.element.data("startDate").getTime());
       },
 
       /*
@@ -141,6 +143,7 @@
          var newDate = new Date(this.element.data("startDate").getTime() - (MILLIS_IN_WEEK / 6));
          this._clearCalendar();
          this._loadCalEvents(newDate);
+         dataAtual = new Date(this.element.data("startDate").getTime());
       },
 
       /*
@@ -151,6 +154,7 @@
          var newDate = new Date(this.element.data("startDate").getTime() + MILLIS_IN_WEEK + (MILLIS_IN_WEEK / 7));
          this._clearCalendar();
          this._loadCalEvents(newDate);
+         dataAtual = new Date(this.element.data("startDate").getTime());
       },
 
       /*
@@ -161,6 +165,7 @@
          var newDate = new Date(this.element.data("startDate").getTime() + MILLIS_IN_YEAR + (MILLIS_IN_YEAR / 365));
          this._clearCalendar();
          this._loadCalEvents(newDate);
+         dataAtual = new Date(this.element.data("startDate").getTime());
       },
       
       goToDate : function() {
@@ -187,6 +192,7 @@
          
          this._clearCalendar();
          this._loadCalEvents(newDate);
+         dataAtual = new Date(this.element.data("startDate").getTime());
       },
 
       /*
@@ -195,6 +201,7 @@
       gotoWeek : function(date) {
          this._clearCalendar();
          this._loadCalEvents(date);
+         dataAtual = new Date(this.element.data("startDate").getTime());
       },
 
       /*
@@ -317,7 +324,7 @@
             self._renderEvents({events:currentEvents, options: newOptions}, self.element.find(".wc-day-column-inner"))
         }
 
-	   },
+     },
       
 
       // compute dynamic options based on other config values
@@ -410,9 +417,9 @@
 
          if (options.buttons) {
             calendarNavHtml = "<div class=\"wc-nav\">\
-                    <button class=\"wc-today btn\" style=\"font-size: 12px; border-radius: 40px;background-color: #F2F2F2; float:right; text-transform: uppercase\">" + options.buttonText.today + "</button>\
-                    <button class=\"wc-prev btn\" style=\"border-radius: 40px;background-color: #F2F2F2;\">" + options.buttonText.lastWeek + "</button>SEMANA\
-                    <button class=\"wc-next btn\" style=\"border-radius: 40px;background-color: #F2F2F2;\">" + options.buttonText.nextWeek + "</button>\
+                    <button class=\"wc-today btn\" style=\"font-size: 10px; background-color: #F2F2F2; float:right; text-transform: uppercase\">" + options.buttonText.today + "</button>\
+                    <button class=\"wc-next btn\" style=\"background-color: #F2F2F2; float: right; font-size: 12px;\">" + options.buttonText.nextWeek + "</button>\
+                    <button class=\"wc-prev btn\" style=\"background-color: #F2F2F2; float: right; font-size: 12px;\">" + options.buttonText.lastWeek + "</button>\
                     </div>";
 
             $(calendarNavHtml).appendTo($calendarContainer);
@@ -528,10 +535,12 @@
                var columnOffset = $target.offset().top;
                var clickY = event.pageY - columnOffset;
                var clickYRounded = (clickY - (clickY % options.timeslotHeight)) / options.timeslotHeight;
-               var topPosition = (clickYRounded * options.timeslotHeight) + 8;
+               //alert(clickYRounded);
+               var topPosition = clickYRounded * options.timeslotHeight;
                //alert("top->"+topPosition);
                $newEvent.css({top: topPosition});
-
+               // O que esta abaixo tem de se descomentar para dar para arrestar para escolher o horario pretendido
+               /*
                $target.bind("mousemove.newevent", function(event) {
                   $newEvent.show();
                   $newEvent.addClass("ui-resizable-resizing");
@@ -548,6 +557,7 @@
                   $target.unbind("mousemove.newevent");
                   $newEvent.addClass("ui-corner-all");
                });
+              */
             }
 
          }).mouseup(function(event) {
@@ -913,7 +923,7 @@
          var firstHourDisplayed = options.businessHours.limitDisplay ? options.businessHours.start : 0;
          var startMillis = calEvent.start.getTime() - new Date(calEvent.start.getFullYear(), calEvent.start.getMonth(), calEvent.start.getDate(), firstHourDisplayed).getTime();
          var eventMillis = calEvent.end.getTime() - calEvent.start.getTime();
-         var pxTop = (pxPerMillis * startMillis) + 8;
+         var pxTop = pxPerMillis * startMillis;
          var pxHeight = pxPerMillis * eventMillis;
          $calEvent.css({top: pxTop, height: pxHeight});
       },
@@ -1096,13 +1106,14 @@
          var options = this.options;
          var one_hour = 3600000;
          var displayTitleWithTime = calEvent.end.getTime()-calEvent.start.getTime() <= (one_hour/options.timeslotsPerHour);
-         if (displayTitleWithTime){
+         /*if (displayTitleWithTime){
            $calEvent.find(".wc-time").html(self._formatDate(calEvent.start, options.timeFormat) + ": " + calEvent.title);
          }
          else {
            $calEvent.find(".wc-time").html(self._formatDate(calEvent.start, options.timeFormat) + options.timeSeparator + self._formatDate(calEvent.end, options.timeFormat));
-         }
-         $calEvent.find(".wc-title").html(calEvent.title);
+         }*/
+         $calEvent.find(".wc-time").html(calEvent.neuropsicologo);
+         $calEvent.find(".wc-title").html(calEvent.paciente);
          $calEvent.data("calEvent", calEvent);
       },
 
@@ -1135,11 +1146,12 @@
 
          var $target = this.element.find(".wc-grid-timeslot-header .wc-hour-header:eq(" + slot + ")");
 
-         $scrollable.animate({scrollTop: 0}, 0, function() {
+         // abaixo estava a dar erro
+         /* $scrollable.animate({scrollTop: 0}, 0, function() {
             var targetOffset = $target.offset().top;
             var scroll = targetOffset - $scrollable.offset().top - $target.outerHeight();
             $scrollable.animate({scrollTop: scroll}, options.scrollToHourMillis);
-         });
+         }); */
       },
 
       /*
@@ -1331,15 +1343,15 @@
          for (var i = 0; i < format.length; i++) {
             var curChar = format.charAt(i);
             if ($.isFunction(this._replaceChars[curChar])) {
-	           var res = this._replaceChars[curChar](date, options);
+             var res = this._replaceChars[curChar](date, options);
 
-	           if (res === '00' && options.alwaysDisplayTimeMinutes === false) {
-		          //remove previous character
-		          returnStr = returnStr.slice(0, -1);
-		        } else {
+             if (res === '00' && options.alwaysDisplayTimeMinutes === false) {
+              //remove previous character
+              returnStr = returnStr.slice(0, -1);
+            } else {
                  
-	               returnStr += res;
-	           }
+                 returnStr += res;
+             }
             } else {
                returnStr += curChar;
             }

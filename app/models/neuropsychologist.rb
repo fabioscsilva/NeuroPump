@@ -16,4 +16,8 @@ class Neuropsychologist < ActiveRecord::Base
     where(:clinic_id => clinic_id)
   }  
 
+  scope :in_clinic, lambda { |clinic_id| 
+    where(:clinic_id => clinic_id)
+  }  
+
 end
