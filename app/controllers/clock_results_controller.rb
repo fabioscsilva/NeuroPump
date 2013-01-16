@@ -51,8 +51,9 @@ class ClockResultsController < ApplicationController
     respond_to do |format|
       if @clock.save
          if session["test_sequence"].blank?
+            appID = session["current_appointment"]
             session["current_appointment"] = nil
-            format.html { redirect_to new_evaluation_result_path, notice: 'Teste do Relogio - Resultados gravados com sucesso.' }
+            format.html { redirect_to :controller => "evaluation_results", :action => "new" , :appID => appID}
           else
             format.html { redirect_to appointment_plans_path, notice: 'Teste do Relogio - Resultados gravados com sucesso.' }
           end          

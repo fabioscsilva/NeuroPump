@@ -81,8 +81,9 @@ class WmsResultsController < ApplicationController
         else
           session["wms_phase"] = nil
           if session["test_sequence"].blank?
+            appID = session["current_appointment"]
             session["current_appointment"] = nil
-            format.html { redirect_to new_evaluation_result_path, notice: 'WMS II - Sequencia Espacial Direta guardada com sucesso.' }
+            format.html { redirect_to :controller => "evaluation_results", :action => "new" , :appID => appID}
           else
             format.html { redirect_to appointment_plans_path, notice: 'WMS II - Sequencia Espacial Direta guardada com sucesso.' }
           end

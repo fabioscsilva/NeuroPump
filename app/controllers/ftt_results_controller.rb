@@ -81,8 +81,9 @@ class FttResultsController < ApplicationController
     respond_to do |format|
       if ftt1.save &&  ftt2.save
         if session["test_sequence"].blank?
-          session["current_appointment"] = nil
-          format.html { redirect_to new_evaluation_result_path, notice: 'TMT - Resultados guardados com sucesso.' }
+           appID = session["current_appointment"]
+            session["current_appointment"] = nil
+            format.html { redirect_to :controller => "evaluation_results", :action => "new" , :appID => appID}
         else
           format.html { redirect_to appointment_plans_path, notice: 'TMT - Resultados guardados com sucesso.' }
         end

@@ -1,18 +1,10 @@
 class AppointmentPlansController < ApplicationController
   def index
     #fazer o da sessão que queremos
-    
-    logged_user = Patient.first(:conditions => "login_id = #{current_login.id}")
-    appointments =  Appointment.where(:patient_id =>   logged_user.id)
-    appointments.each do |appointment|
-      if appointment.appointment_day < DateTime.now &&  (appointment.appointment_day + appointment.duration*60)  > DateTime.now && appointment.appointment_type.name == "Avaliacao" 
-      appoint_id =  appointment.id
-      else
-        # retorna erro
-      end
+    if(!params[:appID].blank?)
+        appoint_id =  params[:appID].to_i
+        session["current_appointment"] = appoint_id
     end
-
-    session["current_appointment"] = appoint_id
 
     test = nil
     appoint_plan = nil
@@ -103,6 +95,7 @@ class AppointmentPlansController < ApplicationController
   end
 
   def create
+    #raise params.inspect
     appointmentID = params[:appoitmentID]
     listaTestes =  params[:testList]
 
@@ -126,7 +119,7 @@ class AppointmentPlansController < ApplicationController
     AppointmentPlan.destroy_all(:appointment_id => appointmentID)
 
     for i in 0..listaTestes.length-1
-      app_plan = AppointmentPlan.new
+      app_plan = AppointmentPlan.new()
       app_plan.appointment_id = params[:appoitmentID]
       app_plan.evaluation_test_id = EvaluationTest.where(:name => listaTestes[i]).first.id
       app_plan.save
@@ -141,7 +134,7 @@ class AppointmentPlansController < ApplicationController
   #redirect_to :action => "show",  :id =>  params[:appoitmentID], :method => :get
   #redirect_to :controller => 'appointment_plans', :action => 'show', :id => params[:appoitmentID], :method => :get
   #redirect_to :back
-  #redirect_to { :controller => "appointment_plans", :action => "show",  :id =>  params[:appoitmentID] }, :method => :get
+  #redirect_to  :controller => "appointment_plans", :action => "show",  :id =>  params[:appoitmentID]
   end
 
   # DELETE /appointment_plans/1
@@ -149,14 +142,17 @@ class AppointmentPlansController < ApplicationController
   def destroy
     @appoitment_plan = AppointmentPlan.where(:appointment_id => params[:id] )
 
+#    patient = @appointment_plan[0].appointment.patient
+    patient = nil
     @appoitment_plan.each do |app_test|
       app_test.destroy
+      patient = app_test.appointment.patient
     end
 
     #@appointment_plan.destroy
 
     respond_to do |format|
-      format.html { redirect_to appointment_plans_url }
+      format.html { redirect_to patient_path(patient) }
       format.json { head :no_content }
     end
   end
