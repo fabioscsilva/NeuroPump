@@ -2,6 +2,7 @@
             <thead>
                 <tr>
                     <th>Referência</th>
+                    <th>Entidade</th>
                     <th>Valor</th>
                     <th>Data de Emissão</th>
                     <th>Data de Limite</th>
@@ -13,6 +14,7 @@
             <tbody>
             <% @payments.each do |payment| %>
                     <td><%= payment.reference %></td>
+                    <td><%= payment.entity %></td>
                     <td>€<%= payment.value %></td>
                     <td><%= payment.creation_date.strftime("%d-%m-%Y") %></td>
                     <td><%= payment.due_date.strftime("%d-%m-%Y") %></td>

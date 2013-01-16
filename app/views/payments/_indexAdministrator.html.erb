@@ -13,7 +13,7 @@
             </thead>
             <tbody>
             <% @payments.each do |payment| %>
-                    <td><%= link_to payment.clinic.name, payment%></td>
+                    <td><%= link_to payment.clinic.name, payment.clinic%></td>
                     <td>€<%= payment.value %></td>
                     <td><%= payment.creation_date.strftime("%d-%m-%Y") %></td>
                     <td><%= payment.due_date.strftime("%d-%m-%Y") %></td>

@@ -70,7 +70,8 @@ where p.clinic_id = s.clinic_id and p.due_date = s.d order by payed')
       p.creation_date = timeNow;
       p.due_date = Time.new.advance(:months => 1);
       p.payed = false;
-      p.reference = SecureRandom.hex(16);
+      p.reference = rand(999999999).to_s.center(9, rand(9).to_s);
+      p.entity = "27035";
       p.clinic_id = c.id;
       p.value = PackagesClinic.where("clinic_id" => c.id).first.package.price;
 
