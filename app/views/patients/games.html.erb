@@ -1,7 +1,7 @@
 
 <div class="row-fluid">
 
-<div class="span3">
+<div class="span3" style="position:fixed; left:50px;">
 	<div class="well">
 		<ul class="nav nav-list" style="float:none">
 			<% Dir['app/assets/images/swfs_images/*'].map { |filename| filename %>
@@ -16,7 +16,7 @@
 	</div>
 </div>
 
-<div class="span9" style="top:-20px; position:relative;">
+<div class="span9" style="top:-20px; position:relative; left: 300px;">
 	<% Dir['app/assets/images/swfs_images/*'].map { |xfilename| %>
 		<a class="anchor" name="<%=File.basename(xfilename)%>">
 			<h1 style="padding-top: 80px; margin-top: -80px;"></h1>
