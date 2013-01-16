@@ -15,13 +15,21 @@
 
 <script type="text/javascript">
 	$(document).ready(function() {
-		$('#btnParar').hide();
 		$('#btnReiniciar').attr("disabled", true);
 	});
+
+	$("#new_ftt_result").bind("keypress", function(e) {
+		if (e.keyCode == 13) {
+			hide(inputSelec);
+			return false;
+		}
+	});
+
 	var x = null;
 	var myVar;
 	var cont = 0;
 	var aux = 0;
+	var inputSelec = 0;
 
 	function updateDisplay() {
 		var value = parseInt($('#timer').find('.value').text(), 10);
@@ -48,6 +56,7 @@
 		$("#teste" + lblNum).focus();
 		$('#btnIniciar').attr("disabled", true);
 		aux = val;
+		inputSelec = lblNum;
 	}
 
 	function hide(lblNum) {
@@ -60,9 +69,6 @@
 			return "<label id=\"teste" + lblNum + "\" onclick=\"mostra(" + lblNum + ")\" >" + value + "</label>";
 		});
 		$('#btnIniciar').attr("disabled", false);
-
-		//$("#a" + lblNum).val(value);
-
 		if (parseInt(lblNum / 10) == 0) {
 			//Dominante
 			var value = parseInt(value);
@@ -79,6 +85,7 @@
 			$("#totalNaoDominante").html(result);
 			$("#mediaNaoDominante").html(result / 10);
 		}
+
 	}
 
 	function iniciaRelogio() {
@@ -93,11 +100,41 @@
 	function mostratudo() {
 		for (var i = 0; i < 20; i++) {
 			$("#teste" + i).replaceWith(function() {
-				return "<input id=\"teste" + i + "\"  name=\"teste" + i + "\"   type=\"number\" style=\"width:60px;height:20px;\"  value=\"" + $(this).html() + "\" required></input>";
+				return "<input id=\"teste" + i + "\"  name=\"teste" + i + "\" class=\"inpTable\"  type=\"number\" value=\"" + $(this).html() + "\" required></input>";
 			});
 		}
 	}
 </script>
+
+<style>
+
+
+td {
+    text-align: center; vertical-align: middle; /* center checkbox vertically */
+}
+
+/*td
+{
+text-align: center; 
+vertical-align: middle;
+}*/
+label.lblTable
+{
+text-align:center;
+}
+
+td.tdTable
+{
+	text-align: center; 
+	vertical-align: middle; 
+}
+
+td.inpTable
+{
+	text-align:center;
+}
+
+</style>
 
 <div class="row-fluid">
 	<div class="span6">
@@ -111,61 +148,61 @@
 			</thead>
 			<tbody
 			<tr>
-			<td>1</td>
-			<td><label id="teste0" onclick="mostra(0)">0</label></td>
-			<td><label id="teste10" onclick="mostra(10)">0</label></td>
+			<td><label class="lblTable" >1</label></td>
+			<td class="tdTable"><label id="teste0" class="lblTable" onclick="mostra(0)">0</label></td>
+			<td><label id="teste10" class="lblTable" onclick="mostra(10)">0</label></td>
 			</tr>
 			<tr>
 			<td>2</td>
-			<td><label id="teste1" onclick="mostra(1)">0</label></td>
-			<td><label id="teste11" onclick="mostra(11)">0</label></td>
+			<td><label id="teste1" class="lblTable"  onclick="mostra(1)">0</label></td>
+			<td><label id="teste11"  class="lblTable" onclick="mostra(11)">0</label></td>
 			</tr>
 			<tr>
 			<td>3</td>
-			<td><label id="teste2" onclick="mostra(2)">0</label></td>
-			<td><label id="teste12" onclick="mostra(12)">0</label></td>
+			<td><label id="teste2"  class="lblTable" onclick="mostra(2)">0</label></td>
+			<td><label id="teste12"  class="lblTable" onclick="mostra(12)">0</label></td>
 			</tr>
 			<tr>
 			<td>4</td>
-			<td><label id="teste3" onclick="mostra(3)">0</label></td>
-			<td><label id="teste13" onclick="mostra(13)">0</label></td>
+			<td><label id="teste3"  class="lblTable" onclick="mostra(3)">0</label></td>
+			<td><label id="teste13" class="lblTable"  onclick="mostra(13)">0</label></td>
 			</tr>
 			<tr>
 			<td>5</td>
-			<td><label id="teste4" onclick="mostra(4)">0</label></td>
-			<td><label id="teste14" onclick="mostra(14)">0</label></td>
+			<td><label id="teste4"  class="lblTable" onclick="mostra(4)">0</label></td>
+			<td><label id="teste14"  class="lblTable" onclick="mostra(14)">0</label></td>
 			</tr>
 			<tr>
 			<td>6</td>
-			<td><label id="teste5" onclick="mostra(5)">0</label></td>
-			<td><label id="teste15" onclick="mostra(15)">0</label></td>
+			<td><label id="teste5"  class="lblTable" onclick="mostra(5)">0</label></td>
+			<td><label id="teste15" class="lblTable"  onclick="mostra(15)">0</label></td>
 			</tr>
 			<tr>
 			<td>7</td>
-			<td><label id="teste6" onclick="mostra(6)">0</label></td>
-			<td><label id="teste16" onclick="mostra(16)">0</label></td>
+			<td><label id="teste6"  class="lblTable" onclick="mostra(6)">0</label></td>
+			<td><label id="teste16"  class="lblTable" onclick="mostra(16)">0</label></td>
 			</tr>
 			<tr>
 			<td>8</td>
-			<td><label id="teste7" onclick="mostra(7)">0</label></td>
-			<td><label id="teste17" onclick="mostra(17)">0</label></td>
+			<td><label id="teste7"  class="lblTable" onclick="mostra(7)">0</label></td>
+			<td><label id="teste17" class="lblTable"  onclick="mostra(17)">0</label></td>
 			</tr>
 			<tr>
 			<td>9</td>
-			<td><label id="teste8" onclick="mostra(8)">0</label></td>
-			<td><label id="teste18" onclick="mostra(18)">0</label></td>
+			<td><label id="teste8"  class="lblTable" onclick="mostra(8)">0</label></td>
+			<td><label id="teste18"  class="lblTable" onclick="mostra(18)">0</label></td>
 			</tr>
 			<tr>
 			<td>10</td>
-			<td><label id="teste9" onclick="mostra(9)">0</label></td>
-			<td><label id="teste19" onclick="mostra(19)">0</label></td>
+			<td><label id="teste9"  class="lblTable" onclick="mostra(9)">0</label></td>
+			<td><label id="teste19"  class="lblTable" onclick="mostra(19)">0</label></td>
 			</tr>
 
 			</tbody>
 			</table>
 
 			<div class="field">
-			<%= f.label :observations, "Observações Mão Dominante" %><br />
+			<%= f.label :observations, "Observações Mão Dominante" , :classs => 'xps'%><br />
 			<%= text_area_tag  'observationsA' , nil , :style => "width: 100%; height : 50px;"   %>
 	</div>
 
@@ -178,16 +215,14 @@
 </div>
 <div class="span4 offset1">
 	<center>
-		<h1>
+		
 		<div id="timer">
-			<span id="timer2" class="value">10</span> seg.
-		</div> ​ </h1>
+			
+			<h1><span id="timer2" class="value">10</span> <label>SEGUNDOS</label></h1>
+		</div> ​
 		<p>
 			<button id="btnIniciar" type="button" onclick="iniciaRelogio()" class="btn btn-success">
 				Iniciar
-			</button>
-			<button id="btnParar" type="button" onclick="pararRelogio()"  class="btn btn-danger">
-				Parar
 			</button>
 			<button id="btnReiniciar" type="button" onclick="iniciaRelogio()"   class="btn btn-info">
 				Reiniciar

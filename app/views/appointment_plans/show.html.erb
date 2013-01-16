@@ -1,5 +1,49 @@
-<p id="notice"><%= notice %></p>
+<p id="notice">
+	<%= notice %>
+</p>
 
+<div class="container">
 
-<%= link_to 'Edit', edit_appointment_plan_path(@appointment_plan) %> |
-<%= link_to 'Back', appointment_plans_path %>
+	<div class="row-fluid">
+		<div class="span8 offset2">
+
+			<b>Paciente: </b><%= @appointment.patient.name %> </br> </br> 
+			
+			<b>Neuropsicólogo: </b> <%= @appointment.neuropsychologist.name %>  </br> </br> 
+
+			<b>Historial Clínico do paciente:</b>
+			<p>
+			<% if  @appointment.patient.clinical_histories.first.nil? %>
+			Historial Clínico Inexistente
+			<% else %>
+			<%= @appointment.patient.clinical_histories.first.description %>
+			<% end %>
+			</p>
+	
+			<legend>
+				Lista de testes do Plano
+			</legend>
+			<table id="appointment_plan" class="table table-hover table-condensed">
+				<thead>
+					<tr>
+						<th>Nome</th>
+						<th>Descrição</th>
+					</tr>
+				</thead>
+				<tbody>
+					<% @appointment_plans.each do |app_test| %>
+					<tr onmouseover="this.style.cursor ='normal'">
+						<td><%= app_test.evaluation_test.name %></td>
+						<td><%= app_test.evaluation_test.description %></td>
+					</tr>
+					<% end %>
+				</tbody>
+			</table>
+
+			<%= link_to 'Apagar Plano', appointment_plan_path(@appointment), :method => :delete, :confirm => "Tem a certeza?", :class => "btn btn-danger pull-right", :style => "margin-top:10px;  margin-left:10px;" %>
+
+			<%= link_to "Editar Plano", {:controller => "appointment_plans", :action => "new" , :appID => @appointment.id} , :class => "btn btn-primary pull-right", :style => "margin-top:10px; margin-left:10px;"%>
+
+		</div>
+	</div>
+</div>

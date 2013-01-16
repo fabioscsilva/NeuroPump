@@ -15,17 +15,19 @@
 
 <style type="text/css">
 	#div1 {
-		width: 600px;
-		height: 100px;
+		width: 320px;
+		height: 200px;
 		padding: 10px;
 		border: 1px solid #aaaaaa;
+		float: left;
 	}
 
 	#div2 {
-		width: 600px;
-		height: 100px;
+		width: 320px;
+		height: 200px;
 		padding: 10px;
-		border: 1px solid #FF0000;
+		border: 2px dashed black;
+		float: left;
 	}
 </style>
 
@@ -54,6 +56,9 @@
 	}
 
 	function final(val) {
+		
+		alert(val);
+		
 		var elms = document.getElementById("div2").childNodes;
 		var input = [];
 		for (var i = 0; i < elms.length; i++) {
@@ -85,16 +90,17 @@
 	}
 </script>
 
-<p>
-	Arraste a imagem para o retangulo:
-</p>
+
+
+<legend>
+	Arraste os testes desejado para a area destinada:
+</legend>
 
 <div id="div1" ondrop="drop(event)" ondragover="allowDrop(event)">
 	<%= @testes.html_safe %>
 </div>
-</br>
-</br>
-</br>
+<img id="switch" src="/assets/switch.png" style="float: left;" width="50" height="50" >
+
 
 <div id="div2" ondrop="drop(event)" ondragover="allowDrop(event)">
 	<% @appoitment_plan.each do |app_test| %>
@@ -103,18 +109,17 @@
 </div>
 
 <input id="appID" type="hidden" value="<%= params[:appID] %>" />
+</br>
+</br>
 
 <% if @appoitment_plan.empty? %>
-<button type="button" onclick="final(1)">
+<button type="button" onclick="final(1)" class="btn btn-primary" >
 	Criar
 </button>
 <% else %>
-<button type="button" onclick="final(2)">
-	Editar
+<button type="button" onclick="final(2)" class="btn btn-primary" style="float: right;">
+	Gravar
 </button>
 <% end %>
-<!--
-<div class="actions">
-<%= f.submit %>
-</div> -->
+
 <% end %>

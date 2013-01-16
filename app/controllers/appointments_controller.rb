@@ -1,4 +1,6 @@
 class AppointmentsController < ApplicationController
+  before_filter :authenticate_login!
+  load_and_authorize_resource
   # GET /appointments
   # GET /appointments.json
   def index

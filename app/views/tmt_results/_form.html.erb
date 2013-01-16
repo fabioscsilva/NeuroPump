@@ -15,7 +15,7 @@
 
 <script type="text/javascript">
 	$(document).ready(function() {
-		$("#submit").hide();
+		$("#submit").attr("disabled", true);
 		$('#btnParar').attr("disabled", true);
 		$('#btnReiniciar').attr("disabled", true);
 
@@ -60,7 +60,7 @@
 			var aux = document.getElementById("b");
 			time = document.getElementById("timer2").innerHTML;
 			aux.innerHTML = document.getElementById("timer2").innerHTML + " seg.";
-			$("#submit").show();
+			$("#submit").attr("disabled", false);
 			clearInterval(myVar);
 			var aux = document.getElementById("timer2");
 			aux.innerHTML = "0";
@@ -71,6 +71,17 @@
 		}
 	};
 </script>
+
+<style>
+	
+	
+label.lblTable
+{
+text-align:center;
+}
+
+	
+</style>
 
 <div class="row-fluid">
 	<div class="span6">
@@ -84,8 +95,8 @@
 			<tbody
 			<tr>
 
-			<td><label id="a">0 seg. </label>    <%= hidden_field_tag 'trailsA'  %></td>
-			<td><label id="b">0 seg. </label>	 <%= hidden_field_tag 'trailsB'  %></td>
+			<td><label class="lblTable" id="a">0 seg. </label>    <%= hidden_field_tag 'trailsA'  %></td>
+			<td><label  class="lblTable" id="b">0 seg. </label>	 <%= hidden_field_tag 'trailsB'  %></td>
 			</tr>
 			</tbody>
 			</table>
@@ -106,11 +117,10 @@
 
 </div>
 <div class="span4 offset1">
-	<center>
-		<h1>
+	<center>	
 		<div id="timer">
-			<span id="timer2" class="value">0</span> seg.
-		</div> ​ </h1>
+			<h1><span id="timer2" class="value">0</span> <label>SEGUNDOS</label></h1>
+		</div> 	
 		<p>
 			<button id="btnIniciar" type="button" onclick="iniciaRelogio()" class="btn btn-success">
 				Iniciar

@@ -128,7 +128,11 @@
 				</legend>
 				<div>
 					<p align="justify">
-					<%= @patient.clinical_histories.first.description %>
+						<% if  @patient.clinical_histories.first.nil? %>
+						Historial Clínico Inexistente
+						<% else %>
+						<%= @patient.clinical_histories.first.description %>
+						<% end %>
 					</p>
 				</div>
 			</div>
@@ -164,14 +168,19 @@
 								<td><%= appointment.neuropsychologist.name%></td>
 								<%end%>
 								<td><%= appointment.appointment_type.name %></td>
-								<td>
-									<%if current_login.has_role? :secretary %>
-									<%= image_tag 'edit.png' %>
-									<%= image_tag 'delete.png' %>
-									<%elsif current_login.has_role? :neuropsychologist %>
-									<%= image_tag 'delete.png' %>
-									<%end%>
-								</td>
+								<td> <%if current_login.has_role? :neuropsychologist %>
+
+								<% if appointment.appointment_type.name == 'Avaliacao' %>
+								<% appoitment_plan = AppointmentPlan.where(:appointment_id => appointment.id )  %>
+								<% if appoitment_plan.first.nil? %>
+								<%= link_to "Criar Plano", :controller => "appointment_plans", :action => "new" , :appID => appointment.id %>
+								<% else %>
+								<%= link_to "Visualizar Plano", :controller => "appointment_plans", :action => "show", :id => appointment.id %>
+								<% end %>
+								<% else %>
+								--
+								<% end  %>
+								<%end%> </td>
 							</tr>
 							<% end %>
 						</tbody>
