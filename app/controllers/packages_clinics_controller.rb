@@ -56,16 +56,19 @@ class PackagesClinicsController < ApplicationController
   # PUT /packages_clinics/1
   # PUT /packages_clinics/1.json
   def update
-    @packages_clinic = PackagesClinic.find(params[:id])
+    consumptions = PackagesClinic.all;
+
+    consumptions.each do |c|
+      c.week += 1;
+      c.appointment_token = c.package.n_evaluations;
+      c.save;
+    end
+
+    flash[:notice] = "Consumos semanais atualizados.";
 
     respond_to do |format|
-      if @packages_clinic.update_attributes(params[:packages_clinic])
-        format.html { redirect_to @packages_clinic, notice: 'Packages clinic was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @packages_clinic.errors, status: :unprocessable_entity }
-      end
+      format.html { redirect_to payments_url }
+      format.json { render json: @payment }
     end
   end
 

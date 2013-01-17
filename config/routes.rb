@@ -5,6 +5,9 @@ NeuroPump::Application.routes.draw do
   resources :wms_results
 
   resources :packages
+
+  match "packages_clinics/update" => 'packages_clinics#update'
+  resources :packages_clinics
   
   resources :evaluation_tests
   
