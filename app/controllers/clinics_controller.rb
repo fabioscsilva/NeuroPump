@@ -19,6 +19,7 @@ class ClinicsController < ApplicationController
   # GET /clinics/1
   # GET /clinics/1.json
   def show
+    @payments = Payment.in_clinic(@clinic.id).order('creation_date DESC').all
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @clinic }

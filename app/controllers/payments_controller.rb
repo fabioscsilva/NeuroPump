@@ -5,7 +5,7 @@ class PaymentsController < ApplicationController
   # GET /payments
   # GET /payments.json
   def index
-    @payments = Payment.all
+    @payments = Payment.order('creation_date DESC').all
 
     if current_login.has_role? :administrator
       @payments = Payment.find_by_sql('select *
@@ -41,6 +41,7 @@ where p.clinic_id = s.clinic_id and p.due_date = s.d order by payed')
     payments = Payment.where("payed" => false);
     payments.each do |p|
       if p.id.odd? 
+        p.payment_date = Time.now;
         p.payed = true;
         p.save;
       end

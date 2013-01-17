@@ -1,8 +1,8 @@
-
-<table id="payments" class="table table-striped table-hover">
+<table id="clinic-payments" class="table table-striped table-hover">
             <thead>
                 <tr>
-                    <th>Clínica</th>
+                    <th>Referência</th>
+                    <th>Entidade</th>
                     <th>Valor</th>
                     <th>Data de Emissão</th>
                     <th>Data de Limite</th>
@@ -13,7 +13,8 @@
             </thead>
             <tbody>
             <% @payments.each do |payment| %>
-                    <td><%= link_to payment.clinic.name, payment.clinic%></td>
+                    <td><%= payment.reference %></td>
+                    <td><%= payment.entity %></td>
                     <td>€<%= payment.value %></td>
                     <td><%= payment.creation_date.strftime("%d-%m-%Y") %></td>
                     <td><%= payment.due_date.strftime("%d-%m-%Y") %></td>
@@ -22,7 +23,7 @@
                          <% else %>
                             <%= "-" %>
                         <%end%>   
-                    </td></td>
+                    </td>
                     <td><% if payment.payed == true %>
                             <%= "Pago" %>
                          <% elsif payment.payed == false %>
@@ -33,6 +34,3 @@
             <% end %>
             </tbody>
 </table>
-<%= link_to "Atualizar Consumos Semanais", {:controller => :packages_clinics, :action => :update}, :class => "btn btn-primary pull-right span1.5" %>
-<%= link_to "Verificar Estado de Pagamentos", {:controller => :payments, :action => :check}, :class => "btn btn-primary pull-right span1.5" %>
-<%= link_to "Gerar Referências de Pagamentos", {:controller => :payments, :action => :generate}, :class => "btn btn-primary pull-right" %>
