@@ -18,6 +18,4 @@ jQuery ->
                         }          
             "sPaginationType": "bootstrap"
             "iDisplayLength": 5
-            "aoColumnDefs": [
-                        { "bSortable"  : false, "aTargets": [ 0 ] }
-            ]
+            "aaSorting": []

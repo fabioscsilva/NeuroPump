@@ -15,7 +15,7 @@
 
 <style type="text/css">
 	#div1 {
-		width: 387px;
+		width: 40%;
 		height: 225px;
 		padding: 10px;
 		border: 1px solid #aaaaaa;
@@ -23,7 +23,7 @@
 	}
 
 	#div2 {
-		width: 382px;
+		width: 40%;
 		height: 225px;
 		padding: 10px;
 		border: 2px dashed black;
@@ -63,27 +63,36 @@
 				input.push(elms[i].id);
 		}
 
-		if (val == 1) {
-			$.post('/appointment_plans', {
-				'testList' : input,
-				'appoitmentID' : $('#appID').val()
-			}, function(data, statusText) {
-				window.location.href = "/appointment_plans/"+$('#appID').val();
-			});
+		if (input.length == 0) {
 
-		} else if (val == 2) {
-			$.ajax({
-				type : 'PUT',
-				url : '/appointment_plans/' + $('#appID').val(),
-				data : {
+			alert('Tem que existir pelo menos um teste para criar o plano');
+
+		} else {
+
+			if (val == 1) {
+				$.post('/appointment_plans', {
 					'testList' : input,
 					'appoitmentID' : $('#appID').val()
-				},
-				success : function(data) {
-					window.location.href = "/appointment_plans/"+$('#appID').val();
-				}
-			});
+				}, function(data, statusText) {
+					window.location.href = "/appointment_plans/" + $('#appID').val();
+				});
+
+			} else if (val == 2) {
+				$.ajax({
+					type : 'PUT',
+					url : '/appointment_plans/' + $('#appID').val(),
+					data : {
+						'testList' : input,
+						'appoitmentID' : $('#appID').val()
+					},
+					success : function(data) {
+						window.location.href = "/appointment_plans/" + $('#appID').val();
+					}
+				});
+			}
+
 		}
+
 	}
 </script>
 
@@ -98,7 +107,7 @@
 		<%= @testes.html_safe %>
 	</div>
 	<div class="span1" style="margin-top: 88px;">
-		<button id="btImg" class="btn btn-primary">
+		<button id="btImg" class="btn btn-primary" onclick="return false;">
 			<i class="icon icon-backward icon-white"></i>
 			<br>
 			<i class="icon icon-forward icon-white"></i>
@@ -110,21 +119,20 @@
 		<% end %>
 	</div>
 
-	
 </div>
 
 <input id="appID" type="hidden" value="<%= params[:appID] %>" />
 
-	<div class="span12 pull-right" style="margin-top: 20px;">
-		<% if @appoitment_plan.empty? %>
-		<button type="button" onclick="final(1)" class="btn btn-primary pull-right">
-			Criar
-		</button>
-		<% else %>
-		<button type="button" onclick="final(2)" class="btn btn-primary pull-right">
-			Gravar
-		</button>
-		<% end %>
-	</div>
+<div class="span12 pull-right" style="margin-top: 20px;">
+	<% if @appoitment_plan.empty? %>
+	<button type="button" onclick="final(1)" class="btn btn-primary pull-right">
+		Criar
+	</button>
+	<% else %>
+	<button type="button" onclick="final(2)" class="btn btn-primary pull-right">
+		Gravar
+	</button>
+	<% end %>
+</div>
 
 <% end %>

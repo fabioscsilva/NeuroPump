@@ -41,18 +41,17 @@
 			</table>
 
 			<div class="span12 row-fluid" style="margin-top:10px;">
-
-				<%= link_to 'Apagar Plano', appointment_plan_path(@appointment), :method => :delete, :confirm => "Tem a certeza?", :class => "btn btn-danger pull-right" , :style =>"margin-left: 10px;"%>
-				
-				<%if @appointment.appointment_plans.count == 0%>
-					<%= link_to "Criar Plano", {:controller => "appointment_plans", :action => "new" , :appID => @appointment.id} , :class => "btn btn-primary pull-right", :style =>"margin-left: 10px;"%>
-				<%else%>
-					<%= link_to "Editar Plano", {:controller => "appointment_plans", :action => "new" , :appID => @appointment.id} , :class => "btn btn-primary pull-right", :style =>"margin-left: 10px;"%>
-				<%end%>
-				
-				<% if @appointment.appointment_day < DateTime.now &&  (@appointment.appointment_day + @appointment.duration*60)  > DateTime.now && @appointment.appointment_type.name == "Avaliacao"  %>
-					<%= link_to 'Iniciar Avaliação',  {:controller => "appointment_plans", :action => "index" , :appID => @appointment.id}  , :class => "btn btn-success pull-right" %>
-				<% end %>
+				<% if current_login.has_role? :neuropsychologist %>
+				<% if  @appointment.appointment_status.name == 'Marcada'  %>			
+					<%= link_to 'Apagar Plano', appointment_plan_path(@appointment), :method => :delete, :confirm => "Tem a certeza?", :class => "btn btn-danger pull-right" , :style =>"margin-left: 10px;"%>
+					<%if @appointment.appointment_plans.count == 0 %>
+						<%= link_to "Criar Plano", {:controller => "appointment_plans", :action => "new" , :appID => @appointment.id} , :class => "btn btn-primary pull-right", :style =>"margin-left: 10px;"%>
+					<%else%>
+						<%= link_to "Editar Plano", {:controller => "appointment_plans", :action => "new" , :appID => @appointment.id} , :class => "btn btn-primary pull-right", :style =>"margin-left: 10px;"%>
+						<%= link_to 'Iniciar Avaliação',  {:controller => "appointment_plans", :action => "index" , :appID => @appointment.id}  , :class => "btn btn-success pull-right" %>
+					<%end%>
+				<% end %>	
+				<% end %>		
 			</div>
 		</div>
 	</div>
