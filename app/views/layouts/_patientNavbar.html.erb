@@ -1,12 +1,5 @@
 <% @patient = Patient.first(:conditions => "login_id = #{current_login.id}") %>
-<% @appointments =  Appointment.where(:patient_id => @patient.id) %>
-<% @appointments.each do |appointment| %>
-<% if appointment.appointment_day < DateTime.now &&  (appointment.appointment_day + appointment.duration*60)  > DateTime.now && appointment.appointment_type.name == "Avaliacao"  %>
-<li>
-	<%= link_to('Iniciar Avaliação', appointment_plans_path) %>
-</li>
-<% end %>
-<% end %>
+
 <li>
 	<%= link_to "Estimulação", games_path(:id => @patient.id) %>
 </li>

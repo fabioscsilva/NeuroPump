@@ -5,21 +5,21 @@
 <div class="container">
 
 	<div class="row-fluid">
-		<div class="span8 offset2">
+		<div class="span10 offset1">
 
-			<b>Paciente: </b><%= @appointment.patient.name %> </br> </br> 
-			
-			<b>Neuropsicólogo: </b> <%= @appointment.neuropsychologist.name %>  </br> </br> 
+			<b>Paciente: </b><%= @appointment.patient.name %> </br> </br>
 
-			<b>Historial Clínico do paciente:</b>
+			<b>Neuropsicólogo: </b> <%= @appointment.neuropsychologist.name %>  </br> </br>
+
+			<!-- <b>Historial Clínico do paciente:</b>
 			<p>
 			<% if  @appointment.patient.clinical_histories.first.nil? %>
 			Historial Clínico Inexistente
 			<% else %>
 			<%= @appointment.patient.clinical_histories.first.description %>
 			<% end %>
-			</p>
-	
+			</p> -->
+
 			<legend>
 				Lista de testes do Plano
 			</legend>
@@ -33,17 +33,26 @@
 				<tbody>
 					<% @appointment_plans.each do |app_test| %>
 					<tr onmouseover="this.style.cursor ='normal'">
-						<td><%= app_test.evaluation_test.name %></td>
+						<td><%= app_test.evaluation_test.name%></td>
 						<td><%= app_test.evaluation_test.description %></td>
 					</tr>
 					<% end %>
 				</tbody>
 			</table>
 
-			<%= link_to 'Apagar Plano', appointment_plan_path(@appointment), :method => :delete, :confirm => "Tem a certeza?", :class => "btn btn-danger pull-right", :style => "margin-top:10px;  margin-left:10px;" %>
-
-			<%= link_to "Editar Plano", {:controller => "appointment_plans", :action => "new" , :appID => @appointment.id} , :class => "btn btn-primary pull-right", :style => "margin-top:10px; margin-left:10px;"%>
-
+			<div class="span12 row-fluid" style="margin-top:10px;">
+				<% if current_login.has_role? :neuropsychologist %>
+				<% if  @appointment.appointment_status.name == 'Marcada'  %>			
+					<%= link_to 'Apagar Plano', appointment_plan_path(@appointment), :method => :delete, :confirm => "Tem a certeza?", :class => "btn btn-danger pull-right" , :style =>"margin-left: 10px;"%>
+					<%if @appointment.appointment_plans.count == 0 %>
+						<%= link_to "Criar Plano", {:controller => "appointment_plans", :action => "new" , :appID => @appointment.id} , :class => "btn btn-primary pull-right", :style =>"margin-left: 10px;"%>
+					<%else%>
+						<%= link_to "Editar Plano", {:controller => "appointment_plans", :action => "new" , :appID => @appointment.id} , :class => "btn btn-primary pull-right", :style =>"margin-left: 10px;"%>
+						<%= link_to 'Iniciar Avaliação',  {:controller => "appointment_plans", :action => "index" , :appID => @appointment.id}  , :class => "btn btn-success pull-right" %>
+					<%end%>
+				<% end %>	
+				<% end %>		
+			</div>
 		</div>
 	</div>
 </div>

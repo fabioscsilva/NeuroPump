@@ -72,6 +72,15 @@ dataAtual = 0;
                         </select>
                         </div>
                 </li>
+
+                <li style="list-style-type: none;">
+                  <div style="width: 250px; position: relative;">
+                    <div id="ver_consulta" style="display: none; background-color: #fefefe;text-align: center;padding-top: 4px;padding-bottom: 4px;margin-top: 50px;border: solid 1px #999; cursor: pointer;">
+                      Plano da Sessão
+                    </div>
+                  </div>
+                </li>
+
                 </div>
                 <div style="float: left; width: 45%;font-size: 10px;">
                 <li style="list-style-type: none;">
@@ -445,6 +454,9 @@ $(document).ready(function() {
          return calEvent.readOnly != true;
       },
       eventNew : function(calEvent, $event) {
+
+        $("#ver_consulta").css("display", "none");
+
          var $dialogContent = $("#event_edit_container");
          resetForm($dialogContent);
          var startField = $dialogContent.find("select[name='start']").val(calEvent.start);
@@ -588,6 +600,13 @@ $(document).ready(function() {
          if (calEvent.readOnly) {
             return;
          }
+
+         $("#ver_consulta").css("display", "block");
+
+         $("#ver_consulta").click(function(){
+          window.location = 'appointment_plans/'+calEvent.id+'' ;
+        });
+
          var $dialogContent = $("#event_edit_container");
          resetForm($dialogContent);
          var startField = $dialogContent.find("select[name='start']").val(calEvent.start);

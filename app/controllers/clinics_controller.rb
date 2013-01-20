@@ -10,6 +10,12 @@ class ClinicsController < ApplicationController
       @clinics = Clinic.all
     end
 
+    @packagesClinicsHash = Hash.new;
+
+    @clinics.each do |c|
+      @packagesClinicsHash[c.id] = PackagesClinic.where('clinic_id' => c.id).first;
+    end
+
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @clinics }
@@ -19,6 +25,7 @@ class ClinicsController < ApplicationController
   # GET /clinics/1
   # GET /clinics/1.json
   def show
+    @payments = Payment.in_clinic(@clinic.id).order('creation_date DESC').all
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @clinic }

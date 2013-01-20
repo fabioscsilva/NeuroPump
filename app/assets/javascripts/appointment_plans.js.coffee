@@ -18,3 +18,4 @@ jQuery ->
                         }          
             "sPaginationType": "bootstrap"
             "iDisplayLength": 5
+            "aaSorting": []

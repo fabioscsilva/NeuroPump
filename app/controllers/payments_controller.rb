@@ -5,7 +5,7 @@ class PaymentsController < ApplicationController
   # GET /payments
   # GET /payments.json
   def index
-    @payments = Payment.all
+    @payments = Payment.order('creation_date DESC').all
 
     if current_login.has_role? :administrator
       @payments = Payment.find_by_sql('select *
@@ -41,6 +41,7 @@ where p.clinic_id = s.clinic_id and p.due_date = s.d order by payed')
     payments = Payment.where("payed" => false);
     payments.each do |p|
       if p.id.odd? 
+        p.payment_date = Time.now;
         p.payed = true;
         p.save;
       end
@@ -70,7 +71,8 @@ where p.clinic_id = s.clinic_id and p.due_date = s.d order by payed')
       p.creation_date = timeNow;
       p.due_date = Time.new.advance(:months => 1);
       p.payed = false;
-      p.reference = SecureRandom.hex(16);
+      p.reference = rand(999999999).to_s.center(9, rand(9).to_s);
+      p.entity = "27035";
       p.clinic_id = c.id;
       p.value = PackagesClinic.where("clinic_id" => c.id).first.package.price;
 

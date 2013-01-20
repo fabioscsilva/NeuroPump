@@ -27,15 +27,22 @@ class EvaluationResultsController < ApplicationController
     @evaluation_result = EvaluationResult.new
 
     #Carregar a apointment dinamicamente
-    @appoint_id = 11
+    @appoint_id = 0
+    if !params[:appID].blank?
+      @appoint_id = params[:appID].to_i
+    end
 
     @wais = nil
     @wms = nil
     @tmt = nil
     @ftt = nil
     @clock = nil
-
-    
+   
+    app = Appointment.find(@appoint_id)
+    s = AppointmentStatus.find_by_name("Realizada")
+    app.appointment_status = s
+    app.save
+   
     #atual (a que acabou de se realizada)
     appoint_plan = AppointmentPlan.where(:appointment_id => @appoint_id)
     @patient = appoint_plan.first.appointment.patient
@@ -64,8 +71,9 @@ class EvaluationResultsController < ApplicationController
     @fttOld = nil
     @clockOld = nil
         
-    old_appoint =  Appointment.where("patient_id = #{@patient.id} AND id != #{@appoint_id}").order("appointment_day DESC")
-    if !old_appoint.first.blank?
+    old_appoint =  Appointment.joins(:appointment_status).where("appointments.patient_id = #{@patient.id} AND appointments.id != #{@appoint_id} AND appointment_statuses.name = 'Realizada'").order("appointments.appointment_day DESC")
+    
+    if old_appoint.count > 0
       appoint_old_plan = AppointmentPlan.where(:appointment_id => old_appoint.first.id)
       
       appoint_old_plan.each do |a|

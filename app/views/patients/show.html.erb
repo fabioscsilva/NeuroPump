@@ -161,7 +161,8 @@
 						</thead>
 						<tbody>
 							<% @patient.appointments.each do |appointment| %>
-							<tr onmouseover="this.style.cursor ='pointer'">
+							<%if appointment.appointment_status.name == "Marcada"%>
+							<tr>
 								<td><%= appointment.appointment_day.strftime('%a,%d de %b de %Y') %></td>
 								<td><%= appointment.appointment_day.strftime('%H:%M') %></td>
 								<%if current_login.has_role? :secretary or current_login.has_role? :patient %>
@@ -182,6 +183,7 @@
 								<% end  %>
 								<%end%> </td>
 							</tr>
+							<%end%>
 							<% end %>
 						</tbody>
 					</table>

@@ -1,7 +1,7 @@
 <div class="container">
 	<div class="row">
 		<div class="logo span3">
-			<i class="ico-charts circle"></i><a class="" href="#"><img src="/assets/logo-website-01.png" alt="Neuropump" style="height:60px;"> </a>
+			<a class="" href="#"><img src="/assets/logo-website-01.png" alt="Neuropump" style="height:60px;"> </a>
 		</div>
 		<div class="span9">
 			<div class="navbar">
@@ -33,7 +33,10 @@
 							<% else %>
 							<%= render :file => "/layouts/_visitorNavbar.html.erb" %>
 							<li>
-								<%= link_to('Login', new_login_session_path)  %>
+								<!--<%= link_to('Login', new_login_session_path)  %>-->
+								<a href="#myModal" role="button" data-toggle="modal" rel="tooltip" data-placement="bottom">
+									Login
+								</a>
 							</li>
 
 							<% end %>
