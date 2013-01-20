@@ -48,60 +48,50 @@
 </style>
 
 
+<% @packages.each do |p| %>
 <div class="table_container">
   <table border = "1">
     <tr> <th>
-        Pacote 1
+        <%= p.name %>
       </th> 
     </tr>
     <tr> <td>
-        Sessões por Semana: 10
+        Preço: <%= p.price %>
       </td> 
     </tr>
     <tr> <td>
-        49.90€
-      </td> 
-    </tr>
-  </table>
-  <%= radio_button_tag(:packageType, "1") %>
-</div>
+        Sessões por Semana:
+        <%if p.n_appointments == -1 %>
+        <%= "Illimitado" %>
+        <%elsif%>
+        <%= p.n_appointments %>
+        <%end%>
 
-<div class="table_container">
-  <table border = "1">
-    <tr> <th>
-        Pacote 2
-      </th> 
-    </tr>
-    <tr> <td>
-        Sessões por Semana: 20
       </td> 
     </tr>
     <tr> <td>
-        89.90€
+        Exercícios:
+        <%if p.n_exercises == -1 %>
+        <%= "Illimitado" %>
+        <%elsif%>
+        <%= p.n_exercises %>
+        <%end%>
+      </td> 
+    </tr>
+    <tr> <td>
+        Avaliações:
+        <%if p.n_evaluations == -1 %>
+        <%= "Illimitado" %>
+        <%elsif%>
+        <%= p.n_evaluations %>
+        <%end%>
       </td> 
     </tr>
   </table>
-  <%= radio_button_tag(:packageType, "2") %>
-  
+  <%= radio_button_tag(:packageType, p.id) %>
 </div>
-<div class="table_container">
-  <table border = "1">
-    <tr> <th>
-        Pacote 3
-      </th> 
-    </tr>
-    <tr> <td>
-        Sessões por Semana: Ilimitado
-      </td> 
-    </tr>
-    <tr> <td>
-        109.90€
-      </td> 
-    </tr>
-  </table>
+<%end%>
 
-  <%= radio_button_tag(:packageType, "3") %>
-</div>
 <br/>
     <div>
       <%= submit_tag "Submeter", :class => "btn btn-success span2 offset05 pull-right", :style => "margin-left: 10px;" %>
