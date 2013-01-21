@@ -11,14 +11,13 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130102150129) do
+ActiveRecord::Schema.define(:version => 20130116160432) do
 
   create_table "administrators", :force => true do |t|
     t.string   "name",        :null => false
     t.string   "address",     :null => false
     t.string   "telephone"
     t.string   "mobilephone"
-    t.boolean  "active",      :null => false
     t.integer  "login_id"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
@@ -26,9 +25,9 @@ ActiveRecord::Schema.define(:version => 20130102150129) do
 
   create_table "appointment_plans", :force => true do |t|
     t.integer  "appointment_id"
-    t.integer  "test_id"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
+    t.integer  "evaluation_test_id"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
   end
 
   create_table "appointment_statuses", :force => true do |t|
@@ -46,7 +45,6 @@ ActiveRecord::Schema.define(:version => 20130102150129) do
   create_table "appointments", :force => true do |t|
     t.datetime "appointment_day",                       :null => false
     t.text     "description"
-    t.integer  "duration",              :default => 60
     t.integer  "patient_id"
     t.integer  "secretary_id"
     t.integer  "neuropsychologist_id"
@@ -54,6 +52,7 @@ ActiveRecord::Schema.define(:version => 20130102150129) do
     t.integer  "appointment_status_id"
     t.datetime "created_at",                            :null => false
     t.datetime "updated_at",                            :null => false
+    t.integer  "duration",              :default => 60
   end
 
   create_table "civil_statuses", :force => true do |t|
@@ -70,15 +69,15 @@ ActiveRecord::Schema.define(:version => 20130102150129) do
   end
 
   create_table "clinics", :force => true do |t|
-    t.string   "name",                                :null => false
-    t.string   "address",                             :null => false
-    t.string   "fiscal_number",                       :null => false
-    t.string   "email",                               :null => false
+    t.string   "name",             :null => false
+    t.string   "address",          :null => false
+    t.string   "fiscal_number",    :null => false
+    t.string   "email",            :null => false
     t.string   "telephone"
-    t.boolean  "active",           :default => false
     t.integer  "administrator_id"
-    t.datetime "created_at",                          :null => false
-    t.datetime "updated_at",                          :null => false
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
+    t.datetime "deleted_at"
   end
 
   create_table "clock_results", :force => true do |t|
@@ -89,6 +88,23 @@ ActiveRecord::Schema.define(:version => 20130102150129) do
     t.integer  "appointment_plan_id"
     t.datetime "created_at",          :null => false
     t.datetime "updated_at",          :null => false
+  end
+
+  create_table "evaluation_results", :force => true do |t|
+    t.text     "context"
+    t.text     "conclusion"
+    t.text     "solution"
+    t.integer  "appointment_id"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+  end
+
+  create_table "evaluation_tests", :force => true do |t|
+    t.string   "name"
+    t.text     "description"
+    t.integer  "test_area_id"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
   end
 
   create_table "ftt_results", :force => true do |t|
@@ -124,7 +140,6 @@ ActiveRecord::Schema.define(:version => 20130102150129) do
   create_table "logins", :force => true do |t|
     t.string   "email",                                 :null => false
     t.string   "encrypted_password",                    :null => false
-    t.datetime "deleted_at"
     t.datetime "created_at",                            :null => false
     t.datetime "updated_at",                            :null => false
     t.string   "reset_password_token"
@@ -135,6 +150,8 @@ ActiveRecord::Schema.define(:version => 20130102150129) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
+    t.datetime "deleted_at"
+    t.integer  "clinic_id"
   end
 
   add_index "logins", ["reset_password_token"], :name => "index_logins_on_reset_password_token", :unique => true
@@ -157,41 +174,59 @@ ActiveRecord::Schema.define(:version => 20130102150129) do
   end
 
   create_table "neuropsychologists", :force => true do |t|
-    t.string   "name",                                  :null => false
-    t.string   "address",                               :null => false
+    t.string   "name",                :null => false
+    t.string   "address",             :null => false
     t.string   "telephone"
     t.string   "mobilephone"
-    t.date     "date_of_birth",                         :null => false
-    t.string   "identification_code",                   :null => false
-    t.boolean  "active",              :default => true
+    t.date     "date_of_birth",       :null => false
+    t.string   "identification_code", :null => false
     t.integer  "gender_id"
     t.integer  "clinic_id"
     t.integer  "login_id"
-    t.datetime "created_at",                            :null => false
-    t.datetime "updated_at",                            :null => false
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
     t.string   "photo_file_name"
     t.string   "photo_content_type"
     t.integer  "photo_file_size"
     t.datetime "photo_updated_at"
   end
 
+  create_table "packages", :force => true do |t|
+    t.integer  "n_exercises"
+    t.integer  "n_evaluations"
+    t.integer  "n_appointments"
+    t.decimal  "price",          :null => false
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+    t.string   "name"
+  end
+
+  create_table "packages_clinics", :force => true do |t|
+    t.integer  "appointment_token", :null => false
+    t.datetime "start_date",        :null => false
+    t.integer  "week",              :null => false
+    t.integer  "package_id"
+    t.integer  "clinic_id"
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
+  end
+
   create_table "patients", :force => true do |t|
-    t.string   "name",                                  :null => false
-    t.string   "address",                               :null => false
+    t.string   "name",                :null => false
+    t.string   "address",             :null => false
     t.string   "telephone"
     t.string   "mobilephone"
     t.string   "education"
     t.string   "profession"
-    t.date     "date_of_birth",                         :null => false
-    t.string   "identification_code",                   :null => false
-    t.boolean  "active",              :default => true
+    t.date     "date_of_birth",       :null => false
+    t.string   "identification_code", :null => false
     t.integer  "gender_id"
     t.integer  "clinic_id"
     t.integer  "civil_status_id"
     t.integer  "handedness_id"
     t.integer  "login_id"
-    t.datetime "created_at",                            :null => false
-    t.datetime "updated_at",                            :null => false
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
     t.string   "photo_file_name"
     t.string   "photo_content_type"
     t.integer  "photo_file_size"
@@ -208,6 +243,7 @@ ActiveRecord::Schema.define(:version => 20130102150129) do
     t.integer  "clinic_id"
     t.datetime "created_at",                       :null => false
     t.datetime "updated_at",                       :null => false
+    t.string   "entity"
   end
 
   create_table "roles", :force => true do |t|
@@ -222,18 +258,17 @@ ActiveRecord::Schema.define(:version => 20130102150129) do
   add_index "roles", ["name"], :name => "index_roles_on_name"
 
   create_table "secretaries", :force => true do |t|
-    t.string   "name",                                  :null => false
-    t.string   "address",                               :null => false
+    t.string   "name",                :null => false
+    t.string   "address",             :null => false
     t.string   "telephone"
     t.string   "mobilephone"
-    t.date     "date_of_birth",                         :null => false
-    t.string   "identification_code",                   :null => false
-    t.boolean  "active",              :default => true
+    t.date     "date_of_birth",       :null => false
+    t.string   "identification_code", :null => false
     t.integer  "gender_id"
     t.integer  "clinic_id"
     t.integer  "login_id"
-    t.datetime "created_at",                            :null => false
-    t.datetime "updated_at",                            :null => false
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
     t.string   "photo_file_name"
     t.string   "photo_content_type"
     t.integer  "photo_file_size"
@@ -244,14 +279,6 @@ ActiveRecord::Schema.define(:version => 20130102150129) do
     t.string   "name"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
-  end
-
-  create_table "tests", :force => true do |t|
-    t.string   "name"
-    t.text     "description"
-    t.integer  "test_area_id"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
   end
 
   create_table "tmt_results", :force => true do |t|
