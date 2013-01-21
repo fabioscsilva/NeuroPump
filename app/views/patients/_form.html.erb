@@ -120,8 +120,8 @@
 			<div class="row-fluid">
 				<div class="span12">
 					<%= h.hidden_field :patient_id, :value => "#{@patient.id}" %>
-					<label>Historial Clínico</label>
-					<%= h.text_area :description, :rows =>"15" ,  :class => "span12", :placeholder => "Historial Clinico do paciente", :value => "#{clinical_history.description}" %>
+					<label style="font-weight: bold;">Historial Clínico</label>
+					<%= h.text_area :description, :rows =>"15" ,  :class => "span12", :placeholder => "Historial Clinico do paciente", :value => "#{clinical_history.description}", :style => "resize: vertical;"%>
 				</div>
 				<div>
 					<button type="submit" class="btn btn-success span2 pull-right">

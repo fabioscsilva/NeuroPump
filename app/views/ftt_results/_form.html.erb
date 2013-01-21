@@ -100,7 +100,7 @@
 	function mostratudo() {
 		for (var i = 0; i < 20; i++) {
 			$("#teste" + i).replaceWith(function() {
-				return "<input id=\"teste" + i + "\"  name=\"teste" + i + "\" class=\"inpTable\"  type=\"number\" value=\"" + $(this).html() + "\" required></input>";
+				return "<input id=\"teste" + i + "\"   name=\"teste" + i + "\" class=\"inpTable\"  type=\"number\" value=\"" + $(this).html() + "\" required></input>";
 			});
 		}
 	}
@@ -273,11 +273,11 @@ td.inpTable
 <div class="span11">
 <%if session["test_sequence"].blank? %>
 		<button type="submit" id="submit" onclick="mostratudo();" class="btn btn-success pull-right" >
-			Terminar
+			Terminar Avaliação
 		</button>
 		<%else %>
 		<button type="submit" id="submit" onclick="mostratudo();" class="btn btn-success pull-right" >
-			Proximo
+			Próximo teste
 		</button>
 		<%end%>
 </div>	

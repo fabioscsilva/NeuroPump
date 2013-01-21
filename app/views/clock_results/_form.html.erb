@@ -92,11 +92,11 @@
 
 <%if session["test_sequence"].blank? %>
 	<div class="actions">
-		<%= f.submit :Terminar ,:class => "btn btn-success span2 pull-right", :value => "Terminar"%>
+		<%= f.submit :Terminar ,:class => "btn btn-success span2 pull-right", :value => "Terminar Avaliação"%>
 	</div>
 <%else %>
 	<div class="actions">
-		<%= f.submit :Terminar ,:class => "btn btn-success span2 pull-right", :value => "Próximo"%>
+		<%= f.submit :Terminar ,:class => "btn btn-success span2 pull-right", :value => "Próximo teste"%>
 	</div>
 <%end%>
 <% end %>
