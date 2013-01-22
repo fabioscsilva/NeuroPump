@@ -7,10 +7,39 @@
 	<div class="row-fluid">
 		<div class="span10 offset1">
 
-			<b>Paciente: </b><%= @appointment.patient.name %> </br> </br>
+			<div class="span3">
+				<%= image_tag  @appointment.patient.photo.url, :style => "width:200px;height: 200px;"  %>
+			</div>
 
-			<b>Neuropsicólogo: </b> <%= @appointment.neuropsychologist.name %>  </br> </br>
+			<div class="span8 row-fluid" style="margin-bottom: 5px;">
+				<div class="span4">
+					<b>Paciente: </b><%= link_to @appointment.patient.name, @appointment.patient %>
+				</div>
 
+				<div class="span4">
+					<b>Idade: </b><%= ((DateTime.now - @appointment.patient.date_of_birth).to_int) / 365 %>
+				</div>
+			</div>
+			<div class="span8 row-fluid" style="margin-bottom: 5px;">
+				<div class="span4">
+					<b>Sexo: </b><%= @appointment.patient.gender.description %>
+				</div>
+				<div class="span4">
+					<b>Lateralidade: </b><%= @appointment.patient.handedness.description %>
+				</div>
+			</div>
+			<div class="span8 row-fluid" style="margin-bottom: 5px;">
+				<div class="span4">
+					<b>Estado Civil: </b><%= @appointment.patient.civil_status.description %>
+				</div>
+				<div class="span4">
+					<b>Escolaridade: </b><%= @appointment.patient.education %>
+				</div>
+			</div>
+
+			<div class="span8">
+				<b>Neuropsicólogo: </b><%= link_to @appointment.neuropsychologist.name, @appointment.neuropsychologist %>  </br> </br>
+			</div>
 			<!-- <b>Historial Clínico do paciente:</b>
 			<p>
 			<% if  @appointment.patient.clinical_histories.first.nil? %>
@@ -42,16 +71,16 @@
 
 			<div class="span12 row-fluid" style="margin-top:10px;">
 				<% if current_login.has_role? :neuropsychologist %>
-				<% if  @appointment.appointment_status.name == 'Marcada'  %>			
-					<%= link_to 'Apagar Plano', appointment_plan_path(@appointment), :method => :delete, :confirm => "Tem a certeza?", :class => "btn btn-danger pull-right" , :style =>"margin-left: 10px;"%>
-					<%if @appointment.appointment_plans.count == 0 %>
-						<%= link_to "Criar Plano", {:controller => "appointment_plans", :action => "new" , :appID => @appointment.id} , :class => "btn btn-primary pull-right", :style =>"margin-left: 10px;"%>
-					<%else%>
-						<%= link_to "Editar Plano", {:controller => "appointment_plans", :action => "new" , :appID => @appointment.id} , :class => "btn btn-primary pull-right", :style =>"margin-left: 10px;"%>
-						<%= link_to 'Iniciar Avaliação',  {:controller => "appointment_plans", :action => "index" , :appID => @appointment.id}  , :class => "btn btn-success pull-right" %>
-					<%end%>
-				<% end %>	
-				<% end %>		
+				<% if  @appointment.appointment_status.name == 'Marcada'  %>
+				<%= link_to 'Apagar Plano', appointment_plan_path(@appointment), :method => :delete, :confirm => "Tem a certeza?", :class => "btn btn-danger pull-right" , :style =>"margin-left: 10px;"%>
+				<%if @appointment.appointment_plans.count == 0 %>
+				<%= link_to "Criar Plano", {:controller => "appointment_plans", :action => "new" , :appID => @appointment.id} , :class => "btn btn-primary pull-right", :style =>"margin-left: 10px;"%>
+				<%else%>
+				<%= link_to "Editar Plano", {:controller => "appointment_plans", :action => "new" , :appID => @appointment.id} , :class => "btn btn-primary pull-right", :style =>"margin-left: 10px;"%>
+				<%= link_to 'Iniciar Avaliação',  {:controller => "appointment_plans", :action => "index" , :appID => @appointment.id}  , :class => "btn btn-success pull-right" %>
+				<%end%>
+				<% end %>
+				<% end %>
 			</div>
 		</div>
 	</div>
