@@ -51,8 +51,11 @@
 	function mostra(lblNum) {
 		var val = $("#teste" + lblNum).html()
 		$("#teste" + lblNum).replaceWith(function() {
-			return "<input id=\"teste" + lblNum + "\"  name=\"teste" + lblNum + "\"  type=\"number\" onblur=\"hide(" + lblNum + ")\" style=\"width:60px;height:20px;\"  value=\"" + $(this).html() + "\" required></input>";
+			return "<input id=\"teste" + lblNum + "\"  style=\"text-align: center !important;width: 90px; height:20px;margin-bottom:0px;\"  name=\"teste" + lblNum + "\"  type=\"number\" onblur=\"hide(" + lblNum + ")\" style=\"width:60px;height:20px;\"  value=\"" + $(this).html() + "\" required></input>";
 		});
+
+		//
+
 		$("#teste" + lblNum).focus();
 		$('#btnIniciar').attr("disabled", true);
 		aux = val;
@@ -66,7 +69,7 @@
 			value = 0;
 		}
 		$("#teste" + lblNum).replaceWith(function() {
-			return "<label id=\"teste" + lblNum + "\" onclick=\"mostra(" + lblNum + ")\" >" + value + "</label>";
+			return "<label id=\"teste" + lblNum + "\"   class=\"lblTable\"  onclick=\"mostra(" + lblNum + ")\" >" + value + "</label>";
 		});
 		$('#btnIniciar').attr("disabled", false);
 		if (parseInt(lblNum / 10) == 0) {
@@ -107,37 +110,37 @@
 </script>
 
 <style>
+	/*table{
+	 table-layout: fixed;
+	 /*width: 200px;
+	 }
 
-/*table{
-    table-layout: fixed;
-    /*width: 200px;*/
-}
+	 th, td {
+	 width: 150px;
+	 }
 
-th, td {
-    width: 150px;
-}*/
+	 *
+	 *
+	 * */
 
-td {
-    text-align: center; vertical-align: middle; /* center checkbox vertically */
-}
+	td {
+		text-align: center;
+		vertical-align: middle; /* center checkbox vertically */
+	}
 
-label.lblTable
-{
-text-align:center;
- 
-}
+	label.lblTable {
+		text-align: center;
+		margin-top: 7px;
+	}
 
-td.tdTable
-{
-	text-align: center; 
-	vertical-align: middle; 
-}
+	td.tdTable {
+		text-align: center;
+		vertical-align: middle;
+	}
 
-
-td.inpTable
-{
-	text-align:center;
-}
+	td.inpTable {
+		text-align: center;
+	}
 
 </style>
 
@@ -151,72 +154,21 @@ td.inpTable
 					<th>Mão Não Dominante</th>
 				</tr>
 			</thead>
-			<tbody
-			<tr>
-			<td><label class="lblTable" >1</label></td>
-			<td class="tdTable"><label id="teste0" class="lblTable" onclick="mostra(0)">0</label></td>
-			<td class="tdTable"><label id="teste10" class="lblTable" onclick="mostra(10)">0</label></td>
-			</tr>
-			<tr>
-			<td><label class="lblTable" >2</label></td></td>
-			<td class="tdTable"><label id="teste1" class="lblTable"  onclick="mostra(1)">0</label></td>
-			<td class="tdTable"><label id="teste11"  class="lblTable" onclick="mostra(11)">0</label></td>
-			</tr>
-			<tr>
-			<td><label class="lblTable" >3</label></td></td>
-			<td class="tdTable"><label id="teste2"  class="lblTable" onclick="mostra(2)">0</label></td>
-			<td class="tdTable"><label id="teste12"  class="lblTable" onclick="mostra(12)">0</label></td>
-			</tr>
-			<tr>
-			<td><label class="lblTable" >4</label></td></td>
-			<td class="tdTable"><label id="teste3"  class="lblTable" onclick="mostra(3)">0</label></td>
-			<td class="tdTable"><label id="teste13" class="lblTable"  onclick="mostra(13)">0</label></td>
-			</tr>
-			<tr>
-			<td><label class="lblTable" >5</label></td></td>
-			<td class="tdTable"><label id="teste4"  class="lblTable" onclick="mostra(4)">0</label></td>
-			<td class="tdTable"><label id="teste14"  class="lblTable" onclick="mostra(14)">0</label></td>
-			</tr>
-			<tr>
-			<td><label class="lblTable" >6</label></td></td>
-			<td class="tdTable"><label id="teste5"  class="lblTable" onclick="mostra(5)">0</label></td>
-			<td class="tdTable"><label id="teste15" class="lblTable"  onclick="mostra(15)">0</label></td>
-			</tr>
-			<tr>
-			<td><label class="lblTable" >7</label></td></td>
-			<td class="tdTable"><label id="teste6"  class="lblTable" onclick="mostra(6)">0</label></td>
-			<td class="tdTable"><label id="teste16"  class="lblTable" onclick="mostra(16)">0</label></td>
-			</tr>
-			<tr>
-			<td><label class="lblTable" >8</label></td></td>
-			<td class="tdTable"><label id="teste7"  class="lblTable" onclick="mostra(7)">0</label></td>
-			<td class="tdTable"><label id="teste17" class="lblTable"  onclick="mostra(17)">0</label></td>
-			</tr>
-			<tr>
-			<td><label class="lblTable" >9</label></td></td>
-			<td class="tdTable"><label id="teste8"  class="lblTable" onclick="mostra(8)">0</label></td>
-			<td class="tdTable"><label id="teste18"  class="lblTable" onclick="mostra(18)">0</label></td>
-			</tr>
-			<tr>
-			<td><label class="lblTable" >10</label></td></td>
-			<td class="tdTable"><label id="teste9"  class="lblTable" onclick="mostra(9)">0</label></td>
-			<td class="tdTable"><label id="teste19"  class="lblTable" onclick="mostra(19)">0</label></td>
-			</tr>
-
+			<tbody>
+				<% for i in 0..9 %>
+				<tr>
+					<td><label class="lblTable" style="font-weight: bold;" ><%= i+1 %></label></td>
+					<td class="tdTable"><label id="teste<%= i %>" class="lblTable" onclick="mostra(<%= i %>)">0</label></td>
+					<td class="tdTable"><label id="teste<%= i+10 %>" class="lblTable" onclick="mostra(<%= i+10 %>)">0</label></td>
+				</tr>
+				<% end %>
 			</tbody>
-			</table>
-
-		
-</div>
-
-
-
+		</table>
+	</div>
 
 <div class="span4 offset1">
 	<center>
-		
-		<div id="timer">
-			
+		<div id="timer">	
 			<h1><span id="timer2" class="value">10</span> <label>SEGUNDOS</label></h1>
 		</div> ​
 		<p>
@@ -250,16 +202,12 @@ td.inpTable
 				</tr>
 			</tbody>
 		</table>
-
-		
-
-
 	</center>
 </div>
-
 <div class="span11">
-			<%= f.label :observations, "Observações Mão Dominante" , :classs => 'xps'%><br />
-			<%= text_area_tag  'observationsA' , nil , :style => "width: 98%;max-width: 98%;",  :rows=> "5" , :placeholder => "Insira as suas observações"  %>
+		<%= f.label :observations, "Observações Mão Dominante" , :classs => 'xps'%>
+		<br />
+		<%= text_area_tag  'observationsA' , nil , :style => "width: 98%;max-width: 98%;",  :rows=> "5" , :placeholder => "Insira as suas observações"  %>
 	</div>
 
 	<div class="span11">
@@ -267,11 +215,9 @@ td.inpTable
 		<br />
 		<%= text_area_tag 'observationsB' , nil , :style => "width: 98%; max-width: 98%;",  :rows=> "5" , :placeholder => "Insira as suas observações"%>
 
-	</div>	
-
-
+	</div>
 <div class="span11">
-<%if session["test_sequence"].blank? %>
+		<%if session["test_sequence"].blank? %>
 		<button type="submit" id="submit" onclick="mostratudo();" class="btn btn-success pull-right" >
 			Terminar Avaliação
 		</button>
@@ -280,6 +226,7 @@ td.inpTable
 			Próximo teste
 		</button>
 		<%end%>
-</div>	
+	</div>
+
 </div>
 <% end %>
