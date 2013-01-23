@@ -71,6 +71,7 @@ class Ability
       can :manage, Clinic
       can :manage, Manager
       can :manage, Package
+      can :index, Administrator
     end
 
   end
