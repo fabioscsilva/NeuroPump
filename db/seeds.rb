@@ -7,7 +7,16 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 # Implemented by Fábio Silva - 06/12/2012
+PackagesClinic.delete_all
+Package.delete_all
+Payment.delete_all
+WmsResult.delete_all
+WaisResult.delete_all
+FttResult.delete_all
+ClockResult.delete_all
+TmtResult.delete_all
 AppointmentPlan.delete_all
+EvaluationTest.delete_all
 TestArea.delete_all
 EvaluationTest.delete_all
 Appointment.delete_all
@@ -24,9 +33,7 @@ Gender.delete_all
 Role.delete_all
 Login.delete_all
 Handedness.delete_all
-CivilStatus.delete_all
-
-
+CivilStatus.delete_all
 
 #Civil_Statuses
 statuses = CivilStatus.create([{description:'Solteiro'},{description: 'Casado'}, {description: 'Divorciado'}, {description: 'Viuvo'}])
@@ -74,6 +81,12 @@ admin = admins.first.id
 #Clinics
 clinics = Clinic.create([{name:'Instituto de psicologia e neuropsicologia do porto', address:'Porto',fiscal_number:'321456712', email:'geral@ipnp.pt', telephone:'232444111', administrator_id: admin}])
 clinic1 = clinics.first.id
+
+#PackageClinics
+PackagesClinic.create([
+                      {package_id: packages.second.id, appointment_token: packages.second.n_appointments, start_date: '23/01/2013', week: '1', clinic_id: clinic1}
+                    ])
+
 
 #Neuropsychologists
 neuropsychologists = Neuropsychologist.create([{name:'Mario Rodrigues Simoes', address:'Rua das Fontainhas, Coimbra', telephone:'223421566', mobilephone:'923214007', date_of_birth:'09/12/1960', identification_code:'981324214', gender_id: male, clinic_id: clinic1, login_id: login1},
@@ -125,7 +138,6 @@ appointments = Appointment.create([{description:'Sessao que permite ao paciente 
 
 areas = TestArea.create([{name:'area1'},{name:'area2'}])
 
-testes = EvaluationTest.create([{name:'ftt',description:'descricao teste',test_area_id:areas.first},{name:'tmt',description:'descricao teste',test_area_id:areas.first},{name:'wais',description:'descricao teste',test_area_id:areas.first},{name:'wms',description:'descricao teste',test_area_id:areas.second},{name:'clock',description:'descricao teste',test_area_id:areas.second},])
+testes = EvaluationTest.create([{name:'ftt',description:'descricao teste',test_area_id: areas.first.id},{name:'tmt',description:'descricao teste',test_area_id: areas.first.id},{name:'wais',description:'descricao teste',test_area_id:areas.first.id},{name:'wms',description:'descricao teste',test_area_id:areas.second.id},{name:'clock',description:'descricao teste',test_area_id:areas.second.id},])
 
-
-puts "Success: Data loaded"
+puts "Data Load Succeded"
