@@ -37,6 +37,7 @@ class ClinicsController < ApplicationController
   def new
     @clinic = Clinic.new
     @packages = Package.all
+    @pageType = "new"
 
     respond_to do |format|
       format.html # new.html.erb
@@ -44,9 +45,65 @@ class ClinicsController < ApplicationController
     end
   end
 
+  def changePackage
+    @packages = Package.all
+
+    manager = Manager.first(:conditions => "login_id = #{current_login.id}")
+    @cID = manager.clinic_id
+
+    p = Payment.where(:clinic_id => @cID).where(:payed => false).count
+    if p > 0
+      @payments = false
+    else
+      @payments = true
+    end
+
+    packageClinic = PackagesClinic.where(:clinic_id => @cID).first
+    @packageID = packageClinic.package_id
+    @bestPackageID = Package.order("id DESC").first.id
+
+    respond_to do |format|
+      format.html # new.html.erb
+      format.json { render json: @clinic }
+    end
+  end
+
+  def changePackageSubmit
+    packageType = params[:packageType]
+    p = Package.find(packageType.to_i)
+    idP = p.id
+    tokenNum = p.n_appointments
+    price = p.price
+
+
+    manager = Manager.first(:conditions => "login_id = #{current_login.id}")
+    cID = manager.clinic_id
+    packages_clinic = PackagesClinic.where(:clinic_id => @cID).first
+    packages_clinic.appointment_token = tokenNum
+    packages_clinic.start_date = DateTime.now.to_date
+    packages_clinic.week = 1
+    packages_clinic.package_id = idP
+
+    ref = SecureRandom.hex(16)
+    ent = 27035
+
+    @clinic = Clinic.find(cID)
+    email = Login.find(manager.login_id)
+
+     respond_to do |format|
+      if packages_clinic.save
+        UserMailer.send_email_managerUpdate(email.to_s,@clinic.name.to_s,ref.to_s, ent.to_s, price.to_s).deliver
+        format.html { redirect_to @clinic, notice: 'Pacote da clinica mudado com successo.' }
+      else
+        format.html { redirect_to @clinic, notice: 'Pacote da clinica nao foi mudado com successo' }
+      end
+    end
+
+  end
   # GET /clinics/1/edit
   def edit
-
+    @pageType = "edit"
+    @clinic.mobilephone = Manager.where(:clinic_id => @clinic.id).first.mobilephone
   end
 
   # POST /clinics

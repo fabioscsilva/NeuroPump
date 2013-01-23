@@ -42,4 +42,15 @@ class UserMailer < ActionMailer::Base
           :subject => "[NeuroPump] Bem-vindo ao NeuroPump",
       )
   end
+
+    def send_email_managerUpdate(email,clinicName,ref,ent,price)
+    @cName = clinicName
+    @reference = ref
+    @price = price
+    @entity = ent
+    @emailM = email
+    mail( :to => email,
+          :subject => "[NeuroPump] Pacote mudado no NeuroPump",
+      )
+  end
 end

@@ -63,6 +63,8 @@ NeuroPump::Application.routes.draw do
   match "payments/check" => 'payments#check'
   resources :payments
 
+  match "clinics/changePackage" => 'clinics#changePackage'
+  match "clinics/changePackageSubmit" => 'clinics#changePackageSubmit'
   resources :clinics
 
   resources :genders

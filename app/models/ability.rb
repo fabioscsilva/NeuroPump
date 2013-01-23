@@ -61,7 +61,7 @@ class Ability
       can :manage, Manager
       can :show, Payment
       cannot :create, Manager # Não pode 
-      can [:show, :edit, :update], Clinic do |clinic|
+      can [:show, :edit, :update, :changePackage], Clinic do |clinic|
         clinic.id == login.managers.first.clinic_id
       end
 

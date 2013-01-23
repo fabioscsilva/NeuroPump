@@ -41,64 +41,70 @@
     </div>
     
 
+  <% if @pageType == "new" %>
+  <style type="text/css" media="screen">
+   table { border: 0px solid black;float:left;width:100%;}
+   .table_container{width:200px;margin:0 auto;float:left;}
+  </style>
 
-<style type="text/css" media="screen">
- table { border: 0px solid black;float:left;width:100%;}
- .table_container{width:200px;margin:0 auto;float:left;}
-</style>
+  
+  <% @packages.each do |p| %>
+  <div class="table_container">
+    <table border = "1">
+      <tr> <th>
+          <%= p.name %>
+        </th> 
+      </tr>
+      <tr> <td>
+          Preço: <%= p.price %>
+        </td> 
+      </tr>
+      <tr> <td>
+          Sessões por Semana:
+          <%if p.n_appointments == -1 %>
+          <%= "Illimitado" %>
+          <%elsif%>
+          <%= p.n_appointments %>
+          <%end%>
 
-
-<% @packages.each do |p| %>
-<div class="table_container">
-  <table border = "1">
-    <tr> <th>
-        <%= p.name %>
-      </th> 
-    </tr>
-    <tr> <td>
-        Preço: <%= p.price %>
-      </td> 
-    </tr>
-    <tr> <td>
-        Sessões por Semana:
-        <%if p.n_appointments == -1 %>
-        <%= "Illimitado" %>
-        <%elsif%>
-        <%= p.n_appointments %>
-        <%end%>
-
-      </td> 
-    </tr>
-    <tr> <td>
-        Exercícios:
-        <%if p.n_exercises == -1 %>
-        <%= "Illimitado" %>
-        <%elsif%>
-        <%= p.n_exercises %>
-        <%end%>
-      </td> 
-    </tr>
-    <tr> <td>
-        Avaliações:
-        <%if p.n_evaluations == -1 %>
-        <%= "Illimitado" %>
-        <%elsif%>
-        <%= p.n_evaluations %>
-        <%end%>
-      </td> 
-    </tr>
-  </table>
-  <%= radio_button_tag(:packageType, p.id) %>
-</div>
-<%end%>
-
-<br/>
-    <div>
-      <%= submit_tag "Submeter", :class => "btn btn-success span2 offset05 pull-right", :style => "margin-left: 10px;" %>
-    </div>
-    <div>
-      <%= button_tag "Reverter", :class => "btn btn-warning span2 pull-right", :type => "reset" %>
-    </div>
-
-
+        </td> 
+      </tr>
+      <tr> <td>
+          Exercícios:
+          <%if p.n_exercises == -1 %>
+          <%= "Illimitado" %>
+          <%elsif%>
+          <%= p.n_exercises %>
+          <%end%>
+        </td> 
+      </tr>
+      <tr> <td>
+          Avaliações:
+          <%if p.n_evaluations == -1 %>
+          <%= "Illimitado" %>
+          <%elsif%>
+          <%= p.n_evaluations %>
+          <%end%>
+        </td> 
+      </tr>
+    </table>
+    <%= radio_button_tag(:packageType, p.id) %>
+  </div>
+  <%end%>
+<% elsif current_login.has_role? :manager %>
+  <div>
+    <%= link_to 'Alterar Pacote',{:controller => "clinics", :action => "changePackage" }, :class => "btn btn-primary span3 offset05 pull-left" %>
+  </div>
 <% end %>
+
+  <br/>
+      <div>
+        <%= submit_tag "Submeter", :class => "btn btn-success span2 offset05 pull-right", :style => "margin-left: 10px;" %>
+      </div>
+      <div>
+        <%= button_tag "Reverter", :class => "btn btn-warning span2 pull-right", :type => "reset" %>
+      </div>
+
+
+  <% end %>
+
