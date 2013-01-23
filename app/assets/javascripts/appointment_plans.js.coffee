@@ -3,7 +3,7 @@
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 jQuery ->
         $('#appointment_plan').dataTable
-            "sDom": "<'row-fluid'<'form-actions'>rtp>"
+            "sDom": "<'row-fluid'>rtp>"
             "bInfo": false
             "bLengthChange": false
             "oLanguage":
@@ -18,6 +18,4 @@ jQuery ->
                         }          
             "sPaginationType": "bootstrap"
             "iDisplayLength": 5
-            "aoColumnDefs": [
-                        { "bSortable"  : false, "aTargets": [ 0 ] }
-            ]
+            "aaSorting": []

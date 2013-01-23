@@ -69,7 +69,13 @@ class AppointmentPlansController < ApplicationController
 
   def new
 
-    @appoitment_plan = AppointmentPlan.where(:appointment_id => params[:appID] )
+    appID = params[:appID]
+
+    if appID == '' || appID.nil? || Appointment.where(:id => appID ).first.nil?
+      raise "id invalido"
+    end 
+      
+    @appoitment_plan = AppointmentPlan.where(:appointment_id => appID )
 
     @testes2 = EvaluationTest.all
     @testes = ""

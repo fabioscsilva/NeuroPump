@@ -46,7 +46,7 @@
 
 <% if session["wms_phase"] == 1 %>
 
-<table id="" class="table table-bordered table-striped">
+<table id="" class="table table-bordered">
 	<thead>
 		<tr>
 			<th>Item</th>
@@ -681,11 +681,11 @@
 <% else %>
 	<%if session["test_sequence"].blank? %>
 		<div class="pull-right">
-			<%= f.submit :class=>"btn btn-success", :value => "Terminar"%>
+			<%= f.submit :class=>"btn btn-success", :value => "Terminar Avaliação"%>
 		</div>
 	<%else %>
 		<div class="pull-right">
-			<%= f.submit :class=>"btn btn-success", :value => "Próximo"%>
+			<%= f.submit :class=>"btn btn-success", :value => "Próximo teste"%>
 		</div>
 	<%end%>
 <% end %>

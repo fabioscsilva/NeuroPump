@@ -31,13 +31,26 @@ class UserMailer < ActionMailer::Base
     )
   end
 
-  def send_email_manager(email,pass,clinicName,ref,price)
+  def send_email_manager(email,pass,clinicName,ref,ent,price)
     @password = pass
     @cName = clinicName
     @reference = ref
     @price = price
+    @entity = ent
+    @emailM = email
     mail( :to => email,
           :subject => "[NeuroPump] Bem-vindo ao NeuroPump",
+      )
+  end
+
+    def send_email_managerUpdate(email,clinicName,ref,ent,price)
+    @cName = clinicName
+    @reference = ref
+    @price = price
+    @entity = ent
+    @emailM = email
+    mail( :to => email,
+          :subject => "[NeuroPump] Pacote mudado no NeuroPump",
       )
   end
 end

@@ -10,6 +10,12 @@ class ClinicsController < ApplicationController
       @clinics = Clinic.all
     end
 
+    @packagesClinicsHash = Hash.new;
+
+    @clinics.each do |c|
+      @packagesClinicsHash[c.id] = PackagesClinic.where('clinic_id' => c.id).first;
+    end
+
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @clinics }
@@ -19,6 +25,7 @@ class ClinicsController < ApplicationController
   # GET /clinics/1
   # GET /clinics/1.json
   def show
+    @payments = Payment.in_clinic(@clinic.id).order('creation_date DESC').all
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @clinic }
@@ -29,6 +36,8 @@ class ClinicsController < ApplicationController
   # GET /clinics/new.json
   def new
     @clinic = Clinic.new
+    @packages = Package.all
+    @pageType = "new"
 
     respond_to do |format|
       format.html # new.html.erb
@@ -36,16 +45,73 @@ class ClinicsController < ApplicationController
     end
   end
 
+  def changePackage
+    @packages = Package.all
+
+    manager = Manager.first(:conditions => "login_id = #{current_login.id}")
+    @cID = manager.clinic_id
+
+    p = Payment.where(:clinic_id => @cID).where(:payed => false).count
+    if p > 0
+      @payments = false
+    else
+      @payments = true
+    end
+
+    packageClinic = PackagesClinic.where(:clinic_id => @cID).first
+    @packageID = packageClinic.package_id
+    @bestPackageID = Package.order("id DESC").first.id
+
+    respond_to do |format|
+      format.html # new.html.erb
+      format.json { render json: @clinic }
+    end
+  end
+
+  def changePackageSubmit
+    packageType = params[:packageType]
+    p = Package.find(packageType.to_i)
+    idP = p.id
+    tokenNum = p.n_appointments
+    price = p.price
+
+
+    manager = Manager.first(:conditions => "login_id = #{current_login.id}")
+    cID = manager.clinic_id
+    packages_clinic = PackagesClinic.where(:clinic_id => @cID).first
+    packages_clinic.appointment_token = tokenNum
+    packages_clinic.start_date = DateTime.now.to_date
+    packages_clinic.week = 1
+    packages_clinic.package_id = idP
+
+    ref = SecureRandom.hex(16)
+    ent = 27035
+
+    @clinic = Clinic.find(cID)
+    email = Login.find(manager.login_id)
+
+     respond_to do |format|
+      if packages_clinic.save
+        UserMailer.send_email_managerUpdate(email.to_s,@clinic.name.to_s,ref.to_s, ent.to_s, price.to_s).deliver
+        format.html { redirect_to @clinic, notice: 'Pacote da clinica mudado com successo.' }
+      else
+        format.html { redirect_to @clinic, notice: 'Pacote da clinica nao foi mudado com successo' }
+      end
+    end
+
+  end
   # GET /clinics/1/edit
   def edit
-
+    @pageType = "edit"
+    @clinic.mobilephone = Manager.where(:clinic_id => @clinic.id).first.mobilephone
   end
 
   # POST /clinics
   # POST /clinics.json
   def create
 
-    ref = "referenciaGerada"
+    ref = SecureRandom.hex(16)
+    ent = 27035
 
     login = Login.new
     login.email = params[:clinic][:email]
@@ -57,20 +123,11 @@ class ClinicsController < ApplicationController
     manager.mobilephone = params[:clinic][:mobilephone]
 
     packageType = params[:packageType]
-    case packageType
-      when "1" 
-        idP = 1
-        tokenNum = Package.find(1).n_appointments
-        price = Package.find(1).price
-      when "2"
-        idP = 2
-        tokenNum = Package.find(2).n_appointments
-        price = Package.find(2).price
-      when "3"
-        idP = 3
-        tokenNum = Package.find(3).n_appointments
-        price = Package.find(3).price
-    end
+    p = Package.find(packageType.to_i)
+    idP = p.id
+    tokenNum = p.n_appointments
+    price = p.price
+ 
 
     packages_clinic = PackagesClinic.new
     packages_clinic.appointment_token = tokenNum
@@ -103,7 +160,7 @@ class ClinicsController < ApplicationController
 
     if flag == true
       respond_to do |format|
-        UserMailer.send_email_manager(login.email.to_s,login.password.to_s,@clinic.name.to_s,ref.to_s, price.to_s).deliver
+        UserMailer.send_email_manager(login.email.to_s,login.password.to_s,@clinic.name.to_s,ref.to_s, ent.to_s, price.to_s).deliver
         format.html { redirect_to @clinic, notice: 'Clinica criado com successo.' }
       end
     else

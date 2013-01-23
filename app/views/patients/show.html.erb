@@ -181,7 +181,16 @@
 								<% else %>
 								--
 								<% end  %>
-								<%end%> </td>
+								<%end%> 
+								
+								<%if current_login.has_role? :secretary %>
+
+								<%= link_to "Apagar", appointment, :method=>:delete, :class=>:destroy %>
+
+
+								<%end%>
+								
+								</td>
 							</tr>
 							<%end%>
 							<% end %>

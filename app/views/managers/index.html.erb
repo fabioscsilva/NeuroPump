@@ -73,6 +73,17 @@
      
     </script>
 
+    <%
+    count = 0 
+    @clinic.neuropsychologists.each do |neuro|
+      neuro.appointments.each do |app|
+        if app.appointment_status.name == "Marcada"
+          count += 1
+        end
+      end
+    end
+    %>
+
 <div class="container row-fluid">
 
 	<div class="span12">
@@ -81,7 +92,7 @@
 			<a class="span2 stat-column" href="#"> <span class="number"><%= @clinic.patients.count %></span> <span>Pacientes</span> </a>
 			<a class="span2 stat-column" href="#"> <span class="number"><%= @clinic.secretaries.count %></span> <span>Secretários</span> </a>
 			<a class="span2 stat-column" href="#"> <span class="number"><%= @clinic.neuropsychologists.count %></span> <span>Neuropsicólogos</span> </a>
-			<a class="span2 stat-column" href="#"> <span class="number"> !! </span> <span>Consultas agendadas</span> </a>
+			<a class="span2 stat-column" href="#"> <span class="number"> <%= count %> </span> <span>Consultas agendadas</span> </a>
 		</div>
 	</div>
 
@@ -118,7 +129,7 @@
 								<br/>
 								Data de Nascimento: <%= secretary.date_of_birth %>
 								<br/>
-								Nº de consultas marcadas: !!
+								Nº de consultas marcadas: <%= count %>
 							</div>
 						</div>
 					</div>
@@ -143,7 +154,7 @@
 								<br/>
 								Data de Nascimento: <%= neuropsychologist.date_of_birth %>
 								<br/>
-								Nº de consultas marcadas: !!
+								Nº de consultas marcadas: <%= count %>
 							</div>
 						</div>
 					</div>
