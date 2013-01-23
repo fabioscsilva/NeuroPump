@@ -84,7 +84,7 @@ class ClinicsController < ApplicationController
     packages_clinic.week = 1
     packages_clinic.package_id = idP
 
-    ref = SecureRandom.hex(16)
+    ref = rand(999999999).to_s.center(9, rand(9).to_s);
     ent = 27035
 
     @clinic = Clinic.find(cID)
@@ -110,7 +110,8 @@ class ClinicsController < ApplicationController
   # POST /clinics.json
   def create
 
-    ref = SecureRandom.hex(16)
+   
+    ref = rand(999999999).to_s.center(9, rand(9).to_s);
     ent = 27035
 
     login = Login.new

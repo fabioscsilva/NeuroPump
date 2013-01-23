@@ -46,7 +46,7 @@
           </td> 
         </tr>
       </table>
-      <%= radio_button_tag(:packageType, p.id) %>
+      <input type="radio" value = "<%= p.id %>" id = "<%= p.id %>" name= "packageType" required />
     </div>
     <% end %>
     <%end%>
@@ -58,7 +58,7 @@
       <%= button_to "Submeter", {:controller => :clinics, :action => :changePackageSubmit}, :class => "btn btn-success span2" %>
     </div>
   <% else %>
-   <p>Não existe melhor pacote do que a sua clínica já têm</p>
+   <p>Não existe melhor pacote do que a sua clínica já tem</p>
   <% end %>
 <% else %>
   <p> Não pode mudar o seu pacote até efetuar todos os pagamentos em atraso!</p>

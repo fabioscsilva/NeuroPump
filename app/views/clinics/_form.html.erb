@@ -88,16 +88,16 @@
         </td> 
       </tr>
     </table>
-    <%= radio_button_tag(:packageType, p.id) %>
+    <input type="radio" value = "<%= p.id %>" id = "<%= p.id %>" name= "packageType" required />
   </div>
   <%end%>
+
 <% elsif current_login.has_role? :manager %>
   <div>
     <%= link_to 'Alterar Pacote',{:controller => "clinics", :action => "changePackage" }, :class => "btn btn-primary span3 offset05 pull-left" %>
   </div>
 <% end %>
 
-  <br/>
       <div>
         <%= submit_tag "Submeter", :class => "btn btn-success span2 offset05 pull-right", :style => "margin-left: 10px;" %>
       </div>
@@ -107,4 +107,5 @@
 
 
   <% end %>
+
 
