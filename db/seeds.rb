@@ -41,6 +41,11 @@ genders = Gender.create([{description:'Feminino'}, {description:'Masculino'}, {d
 female = genders.first.id
 male = genders.second.id
 
+#Packages
+packages = Package.create([{n_exercises:'20',n_evaluations: '10', n_appointments: '10', price: '49.90', name: 'Standard'},
+                          {n_exercises:'100',n_evaluations: '30', n_appointments: '20', price: '89.90', name: 'Premium'},
+                          {n_exercises:'-1',n_evaluations: '-1', n_appointments: '-1', price: '109.90', name: 'Professional'}])
+
 
 #Logins
 logins = Login.create([{email:'smr@fpce.uc.pt', password:'qwerty'},
