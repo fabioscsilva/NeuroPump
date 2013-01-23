@@ -5,7 +5,39 @@ class AdministratorsController < ApplicationController
   # GET /administrators.json
   def index
     @administrators = Administrator.all
-
+    
+    
+    # Packages Chart
+    packages= Package.joins(:packages_clinics).select("COUNT(*) as count, name").group("name").all
+    
+    @packagesArray = Array.new
+    
+    packagesNames = Array.new
+    packagesNames.push("")
+    packagesCount = Array.new
+    packagesCount.push("")
+    
+    packages.each do |package|
+      packagesNames.push(package.name)
+      packagesCount.push(Integer(package.count))
+    end
+    
+    @packagesArray.push(packagesNames)
+    @packagesArray.push(packagesCount)
+    
+    
+    # Montlhy Revenue Graph
+    truncateClause = "DATE_TRUNC('month', payment_date)"
+    selectClause = "TO_CHAR(" + truncateClause + ", 'YYYY/MM') as date, SUM(value) as sum"
+    revenue = Payment.select(selectClause).where("payment_date IS NOT NULL").group(truncateClause).order(truncateClause)
+    
+    @revenueArray = Array.new
+    @revenueArray.push(["Data", "Valor (euros)"])    
+    revenue.each do |value|
+      @revenueArray.push([value.date, Float(value.sum)])
+    end
+    
+    
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @administrators }

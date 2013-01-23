@@ -11,7 +11,8 @@
         );
         
         var appointmentsOptions = {
-          title: 'Visão Mensal das Consultas do Ano Atual'
+          title: 'Visão Mensal das Consultas do Ano Atual',
+          vAxis: {minValue: 0}
         };
 
         var appointmentsChart = new google.visualization.BarChart(document.getElementById('chart_div_appointments'));
@@ -20,14 +21,14 @@
         
        /****/
        var resourcesData = google.visualization.arrayToDataTable([
-          ['Termo', 'Total'],
-          ['Pacientes',  <%= @clinic.patients.count %>],
-          ['Secretários', <%= @clinic.secretaries.count %>],
-          ['Neuropsicólogos', <%= @clinic.neuropsychologists.count %>]
+         ['', 'Pacientes', 'Neuropsicólogos', 'Secretários'],
+         ['', <%= @clinic.patients.count %>, <%= @clinic.neuropsychologists.count %>, <%= @clinic.secretaries.count %>]
         ]);
 
         var resourcesOptions = {
-          title: 'Número de Recursos Humanos/Pacientes da Clínica'
+          title: 'Número de Recursos Humanos/Pacientes',
+          'chartArea':{width:"50%"},
+          vAxis: {minValue: 0}
         };
        
        var resourcesChart = new google.visualization.ColumnChart(document.getElementById('chart_div_resources'));
@@ -43,7 +44,7 @@
         
         var agesOptions = {
           title: 'Idades dos Pacientes',
-          hAxis: {title: 'Quantidade'},
+          hAxis: {title: 'Quantidade', minValue: 0},
           vAxis: {title: 'Intervalo de Idades (anos)'},
           'chartArea':{width:"60%"}
         };
@@ -62,7 +63,7 @@
         var gendersOptions = {
           title: 'Sexo dos Pacientes',
           hAxis: {title: 'Sexo'},
-          vAxis: {title: 'Quantidade'},
+          vAxis: {title: 'Quantidade', minValue: 0},
           'chartArea':{width:"60%"}
         };
 
@@ -161,9 +162,5 @@
 				</div>
 			</div>
 		</div>
-
-		<h2>Historial de Pagamentos</h2>
-
-		<!--div class="span12" id="chart_div3" style="height: 300px; margin-bottom: 60px;"></div-->
 	</div>
 
