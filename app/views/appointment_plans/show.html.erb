@@ -6,13 +6,13 @@
 
 	<div class="row-fluid">
 		<div class="span10 offset1">
-
+		<div class="span12">
 			<div class="span3">
 				<%= image_tag  @appointment.patient.photo.url, :style => "width:200px;height: 200px;"  %>
 			</div>
 
 			<div class="span8 row-fluid" style="margin-bottom: 5px;">
-				<div class="span4">
+				<div class="span6">
 					<b>Paciente: </b><%= link_to @appointment.patient.name, @appointment.patient %>
 				</div>
 
@@ -21,7 +21,7 @@
 				</div>
 			</div>
 			<div class="span8 row-fluid" style="margin-bottom: 5px;">
-				<div class="span4">
+				<div class="span6">
 					<b>Sexo: </b><%= @appointment.patient.gender.description %>
 				</div>
 				<div class="span4">
@@ -29,7 +29,7 @@
 				</div>
 			</div>
 			<div class="span8 row-fluid" style="margin-bottom: 5px;">
-				<div class="span4">
+				<div class="span6">
 					<b>Estado Civil: </b><%= @appointment.patient.civil_status.description %>
 				</div>
 				<div class="span4">
@@ -37,19 +37,14 @@
 				</div>
 			</div>
 
-			<div class="span8">
-				<b>Neuropsicólogo: </b><%= link_to @appointment.neuropsychologist.name, @appointment.neuropsychologist %>  </br> </br>
+			<div class="span6">
+				<b>Neuropsicólogo: </b><%= @appointment.neuropsychologist.name %>  </br> </br>
 			</div>
-			<!-- <b>Historial Clínico do paciente:</b>
-			<p>
-			<% if  @appointment.patient.clinical_histories.first.nil? %>
-			Historial Clínico Inexistente
-			<% else %>
-			<%= @appointment.patient.clinical_histories.first.description %>
-			<% end %>
-			</p> -->
+			</div>
 
-			<legend>
+		<div class="span12 pull-right">
+			<br/><br/>
+			<legend >
 				Lista de testes do Plano
 			</legend>
 			<table id="appointment_plan" class="table table-hover table-condensed">
@@ -68,8 +63,8 @@
 					<% end %>
 				</tbody>
 			</table>
-
-			<div class="span12 row-fluid" style="margin-top:10px;">
+		</div>
+			<div class="span12 row-fluid" style="margin-top:20px;">
 				<% if current_login.has_role? :neuropsychologist %>
 				<% if  @appointment.appointment_status.name == 'Marcada'  %>
 				<%= link_to 'Apagar Plano', appointment_plan_path(@appointment), :method => :delete, :confirm => "Tem a certeza?", :class => "btn btn-danger pull-right" , :style =>"margin-left: 10px;"%>
