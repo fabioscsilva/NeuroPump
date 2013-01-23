@@ -45,8 +45,8 @@ NeuroPump::Application.routes.draw do
 
   resources :clinical_histories
 
-  match "patients/:id/games/:xid", :as => "stimulation", :controller => 'patients', :id => /[1-9]+/, :action => 'stimulation'
-  match "patients/:id/games", :as => "games", :controller => 'patients', :id => /[1-9]+/, :action => 'games'
+  match "patients/:id/games/:xid", :as => "stimulation", :controller => 'patients', :id => /[0-9]+/, :action => 'stimulation'
+  match "patients/:id/games", :as => "games", :controller => 'patients', :id => /[0-9]+/, :action => 'games'
   resources :patients 
 
   resources :secretaries
