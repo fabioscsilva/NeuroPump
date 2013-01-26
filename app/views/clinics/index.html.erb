@@ -12,8 +12,8 @@
 							<th>Nome</th>
 							<th>Telefone</th>
 							<th>Email</th>
-							<th>Pacote</th>
-							<th>Capacidade</th>
+							<th>Subscrição</th>
+							<th>Sessões</th>
 							<th>Estado</th>
 						</tr>
 					</thead>
@@ -21,7 +21,7 @@
 					<tbody>
 						<% @clinics.each do |clinic| %>
 						<tr onmouseover="this.style.cursor = 'pointer'" onclick="location.href='<%= clinic_path(clinic) %>'">
-							<td><%= clinic.name %></td>
+							<td style="color: #0088CC"><%= clinic.name %></td>
 							<td><%= clinic.telephone %></td>
 							<td><%= clinic.email %></td>
 							<td><%= @packagesClinicsHash[clinic.id].package.name %></td>

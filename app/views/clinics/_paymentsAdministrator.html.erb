@@ -12,7 +12,7 @@
             </thead>
             <tbody>
             <% @payments.each do |payment| %>
-                    <td>€<%= payment.value %></td>
+                    <td>€<%= "%0.2f" % payment.value %></td>
                     <td><%= payment.creation_date.strftime("%d-%m-%Y") %></td>
                     <td><%= payment.due_date.strftime("%d-%m-%Y") %></td></td>
                     <td><% if payment.payment_date %>
@@ -22,9 +22,9 @@
                         <%end%>   
                     </td>
                     <td><% if payment.payed == true %>
-                            <%= "Pago" %>
+                            <p class="text-success"><%= "Pago" %></p>
                          <% elsif payment.payed == false %>
-                            <%= "Nao Pago" %>
+                            <p class="text-error"><%= "Nao Pago" %></p>
                         <%end%>   
                     </td>
                 </tr>
