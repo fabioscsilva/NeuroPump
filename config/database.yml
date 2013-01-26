@@ -23,18 +23,10 @@ production:
   port: 5432
 
 test:
-  adapter: postgresql
-  encoding: utf8
-  reconnect: false
-  database: neuropump_test
+  adapter: sqlite3
+  database: db/test.sqlite3
   pool: 5
-  username: developer
-  password: d45Zmo
-  #timeout: 5000
-  host: teste93.di.uminho.pt
-  port: 5432
-
-
+  timeout: 5000
 
 
 
