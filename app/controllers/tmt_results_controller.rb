@@ -1,4 +1,6 @@
 class TmtResultsController < ApplicationController
+  before_filter :authenticate_login!
+  load_and_authorize_resource
   # GET /tmts
   # GET /tmts.json
   def index

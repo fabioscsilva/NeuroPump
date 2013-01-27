@@ -1,4 +1,6 @@
 class EvaluationResultsController < ApplicationController
+  before_filter :authenticate_login!
+  load_and_authorize_resource
   # GET /evaluation_results
   # GET /evaluation_results.json
   def index

@@ -1,4 +1,6 @@
 class FttResultsController < ApplicationController
+  before_filter :authenticate_login!
+  load_and_authorize_resource
   # GET /ftts
   # GET /ftts.json
   def index
