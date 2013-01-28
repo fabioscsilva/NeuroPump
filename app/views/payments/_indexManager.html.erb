@@ -15,14 +15,14 @@
             <% @payments.each do |payment| %>
                     <td><%= payment.reference %></td>
                     <td><%= payment.entity %></td>
-                    <td>€<%= payment.value %></td>
+                    <td>€<%= "%0.2f" % payment.value %></td>
                     <td><%= payment.creation_date.strftime("%d-%m-%Y") %></td>
                     <td><%= payment.due_date.strftime("%d-%m-%Y") %></td>
                     <td><%= payment.payment_date.strftime("%d-%m-%Y") if payment.payment_date %></td>
                     <td><% if payment.payed == true %>
-                            <%= "Pago" %>
+                            <p class="text-success"><%= "Pago" %></p>
                          <% elsif payment.payed == false %>
-                            <%= "Nao Pago" %>
+                            <p class="text-error"><%= "Nao Pago" %></p>
                         <%end%>   
                     </td>
                 </tr>

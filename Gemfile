@@ -5,7 +5,6 @@ gem 'rails', '3.2.8'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-# gem 'sqlite3'
 gem 'pg'
 #gem 'activerecord-postgresql-adapter'
 gem 'simple_form'
@@ -28,6 +27,19 @@ group :assets do
 group :production do  
   gem 'therubyracer', :platforms => :ruby
 end
+
+# gem 'sqlite3'
+# group :development, :test do
+  # gem 'rspec-rails'
+  # gem 'factory_girl_rails'
+# end
+# group :test do
+  # gem 'faker'
+  # gem 'capybara'
+  # gem 'guard-rspec'
+  # gem 'launchy'
+# end
+
 
   gem 'uglifier', '>= 1.0.3'
   

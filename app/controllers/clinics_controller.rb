@@ -1,9 +1,10 @@
 class ClinicsController < ApplicationController
-  before_filter :authenticate_login!
-  load_and_authorize_resource
+  before_filter :authenticate_login!, :except => :new
+  #load_and_authorize_resource
   # GET /clinics
   # GET /clinics.json
   def index
+    authorize! :index
     if current_login.has_role? :manager
       @clinics = Clinic.joins(:login).where("deleted_at IS NULL")
     elsif current_login.has_role? :administrator
@@ -25,6 +26,8 @@ class ClinicsController < ApplicationController
   # GET /clinics/1
   # GET /clinics/1.json
   def show
+    @clinic = Clinic.find(params[:id])
+    authorize! :show, @clinic
     @payments = Payment.in_clinic(@clinic.id).order('creation_date DESC').all
     respond_to do |format|
       format.html # show.html.erb
@@ -107,6 +110,8 @@ class ClinicsController < ApplicationController
   end
   # GET /clinics/1/edit
   def edit
+    @clinic = Clinic.find(params[:id])
+    authorize! :edit, @clinic
     @pageType = "edit"
     @clinic.mobilephone = Manager.where(:clinic_id => @clinic.id).first.mobilephone
   end
@@ -114,7 +119,7 @@ class ClinicsController < ApplicationController
   # POST /clinics
   # POST /clinics.json
   def create
-
+  
    
     ref = rand(999999999).to_s.center(9, rand(9).to_s);
     ent = 27035
@@ -179,6 +184,8 @@ class ClinicsController < ApplicationController
   # PUT /clinics/1
   # PUT /clinics/1.json
   def update
+    @clinic = Clinic.find(params[:id])
+    authorize! :update, @clinic
     #raise params.inspect
     #admin_id = params[:clinic].delete(:administrator_id)
     
@@ -199,8 +206,9 @@ class ClinicsController < ApplicationController
   # DELETE /clinics/1
   # DELETE /clinics/1.json
   def destroy
-    #authorize! :index, @login, :message => 'Nao autorizado!'
     @clinic = Clinic.find(params[:id])
+    authorize! :destroy, @clinic
+    #authorize! :index, @login, :message => 'Nao autorizado!'
     if @clinic.deleted_at == nil
       @clinic.update_attribute(:deleted_at ,Time.now)
     else

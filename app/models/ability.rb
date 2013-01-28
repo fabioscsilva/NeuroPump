@@ -24,6 +24,28 @@ class Ability
       can :manage, Appointment do |appointment|
         appointment.neuropsychologist_id == login.neuropsychologists.first.id
       end
+      can :new, AppointmentPlan
+      can [:edit,:update,:destroy], AppointmentPlan do |appointment_plans|
+        appointment_plans.appointment.neuropsychologist_id == login.neuropsychologists.first.id
+      end
+      can :manage, ClockResult do |clock_results|
+        clock_results.appointment_plan.appointment.neuropsychologist_id == login.neuropsychologists.first.id
+      end
+      can :manage, FttResult do |ftt_results|
+        ftt_results.appointment_plan.appointment.neuropsychologist_id == login.neuropsychologists.first.id
+      end
+      can :manage, TmtResult do |tnt_results|
+        tmt_results.appointment_plan.appointment.neuropsychologist_id == login.neuropsychologists.first.id
+      end
+      can :manage, WaisResult do |wais_results|
+        wais_results.appointment_plan.appointment.neuropsychologist_id == login.neuropsychologists.first.id
+      end
+      can :manage, WmsResult do |wms_results|
+        wms_results.appointment_plan.appointment.neuropsychologist_id == login.neuropsychologists.first.id
+      end
+      can :manage, EvaluationResult do |eva_results|
+        eva_results.appointment.neuropsychologist_id == login.neuropsychologists.first.id
+      end
       can [:show, :edit, :update], Neuropsychologist do |neuropsychologist|
         neuropsychologist.login.email == login.email
       end
@@ -49,9 +71,9 @@ class Ability
       can :manage, Appointment
       can :manage, Package
       cannot :create, Package
-      #can :manage, Appointment do |appointment|
-      #  appointment.??? == login.managers.first.clinic_id
-      #end
+      can :manage, PackagesClinic do |packages_clinic|
+        packages_clinic.clinic_id == login.clinic_id
+      end
       can :manage, Neuropsychologist do |neuropsychologist|
         neuropsychologist.clinic_id == login.managers.first.clinic_id
       end
@@ -71,6 +93,8 @@ class Ability
       can :manage, Clinic
       can :manage, Manager
       can :manage, Package
+      can :manage, PackagesClinic
+      can :manage, Payment
       can :index, Administrator
     end
 

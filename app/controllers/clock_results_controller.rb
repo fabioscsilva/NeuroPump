@@ -1,4 +1,6 @@
 class ClockResultsController < ApplicationController
+  before_filter :authenticate_login!
+  load_and_authorize_resource
   # GET /clocks
   # GET /clocks.json
   def index

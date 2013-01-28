@@ -1,4 +1,7 @@
 class AppointmentPlansController < ApplicationController
+  before_filter :authenticate_login!
+  load_and_authorize_resource
+
   def index
     #fazer o da sessão que queremos
     if(!params[:appID].blank?)
