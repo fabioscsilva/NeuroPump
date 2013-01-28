@@ -50,22 +50,27 @@ class ClinicsController < ApplicationController
 
     manager = Manager.first(:conditions => "login_id = #{current_login.id}")
     @cID = manager.clinic_id
+    clinic = Clinic.find(@cID)
 
     p = Payment.where(:clinic_id => @cID).where(:payed => false).count
     if p > 0
-      @payments = false
+      flash[:error] = "Não pode mudar a sua subscrição até efetuar todos os pagamentos em atraso!"
+      respond_to do |format| 
+          format.html {redirect_to edit_clinic_path(clinic)}
+        end
     else
-      @payments = true
-    end
+      packageClinic = PackagesClinic.where(:clinic_id => @cID).first
+      @packageID = packageClinic.package_id
+      @bestPackageID = Package.order("id DESC").first.id
 
-    packageClinic = PackagesClinic.where(:clinic_id => @cID).first
-    @packageID = packageClinic.package_id
-    @bestPackageID = Package.order("id DESC").first.id
 
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @clinic }
-    end
+
+      respond_to do |format|
+        format.html # new.html.erb
+        format.json { render json: @clinic }
+        end
+      end
+
   end
 
   def changePackageSubmit
