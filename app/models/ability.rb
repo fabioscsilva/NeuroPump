@@ -87,15 +87,27 @@ class Ability
         clinic.id == login.managers.first.clinic_id
       end
 
-    # O administrador pode fazer manage de clínicas e managers
+    # O administrador pode fazer manage de clínicas e managers - Por problemas tive que fazer isto pela negação
     elsif login.has_role? :administrator
-      can :manage, Payment
-      can :manage, Clinic
-      can :manage, Manager
-      can :manage, Package
-      can :manage, PackagesClinic
-      can :manage, Payment
-      can :index, Administrator
+      can :manage, :all
+      cannot :manage, Neuropsychologist
+      cannot :manage, Patient
+      cannot :manage, Secretary
+      cannot :manage, Appointment
+      cannot :manage, AppointmentPlan
+      cannot :manage, ClockResult
+      cannot :manage, FttResult
+      cannot :manage, TmtResult
+      cannot :manage, WaisResult
+      cannot :manage, WmsResult
+      cannot :manage, EvaluationResult
+      #can :manage, Payment
+      #can :manage, Clinic
+      #can :manage, Manager
+      #can :manage, Package
+      #can :manage, PackagesClinic
+      #can :manage, Payment
+      #can :index, Administrator
     end
 
   end

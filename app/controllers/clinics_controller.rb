@@ -4,7 +4,7 @@ class ClinicsController < ApplicationController
   # GET /clinics
   # GET /clinics.json
   def index
-    authorize! :index
+    authorize! :index, @clinic
     if current_login.has_role? :manager
       @clinics = Clinic.joins(:login).where("deleted_at IS NULL")
     elsif current_login.has_role? :administrator
