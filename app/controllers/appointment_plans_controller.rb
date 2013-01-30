@@ -1,8 +1,9 @@
 class AppointmentPlansController < ApplicationController
   before_filter :authenticate_login!
-  #load_and_authorize_resource
+  load_and_authorize_resource :except => [:show,:update,:destroy]
 
   def index
+    #authorize! :index, @appointment_plan
     #fazer o da sessão que queremos
     if(!params[:appID].blank?)
         appoint_id =  params[:appID].to_i
@@ -59,8 +60,8 @@ class AppointmentPlansController < ApplicationController
   def show
     # @appointment_plan = TmtResult.find(params[:id])
     @appointment_plans  = AppointmentPlan.where(:appointment_id => params[:id] )
-
     @appointment = Appointment.where(:id => params[:id] ).first
+    authorize! :show, @appointment
 
     respond_to do |format|
       format.html # show.html.erb
@@ -69,14 +70,15 @@ class AppointmentPlansController < ApplicationController
   end
 
   def new
+    #@appointment_plan = AppointmentPlan.find(params[:id])
+    #authorize! :new#, @appointment_plan
 
     appID = params[:appID]
-
     if appID == '' || appID.nil? || Appointment.where(:id => appID ).first.nil?
       raise "id invalido"
     end 
-      
     @appoitment_plan = AppointmentPlan.where(:appointment_id => appID )
+    #authorize! :index
 
     @testes2 = EvaluationTest.all
     @testes = ""
@@ -102,6 +104,7 @@ class AppointmentPlansController < ApplicationController
   end
 
   def create
+    #authorize! :create
     #raise params.inspect
     appointmentID = params[:appoitmentID]
     listaTestes =  params[:testList]
@@ -121,6 +124,9 @@ class AppointmentPlansController < ApplicationController
   # PUT /appointment_plans/1
   # PUT /appointment_plans/1.json
   def update
+    @appointment = Appointment.find(params[:id])
+    authorize! :update, @appointment
+
     appointmentID = params[:appoitmentID]
     listaTestes =  params[:testList]
     AppointmentPlan.destroy_all(:appointment_id => appointmentID)
@@ -147,6 +153,9 @@ class AppointmentPlansController < ApplicationController
   # DELETE /appointment_plans/1
   # DELETE /appointment_plans/1.json
   def destroy
+    @appointment = Appointment.find(params[:id])
+    authorize! :destroy, @appointment
+
     @appoitment_plan = AppointmentPlan.where(:appointment_id => params[:id] )
 
 #    patient = @appointment_plan[0].appointment.patient

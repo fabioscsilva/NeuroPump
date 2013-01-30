@@ -18,32 +18,41 @@ class Ability
 
     # O neuropsicólogo pode ver/editar os pacientes da clínica e ver/editar o seu perfil
     elsif login.has_role? :neuropsychologist
+      #can :manage, AppointmentPlan
+      #can :manage, Appointment
       can [:index, :show, :edit, :update], Patient do |patient|
         patient.clinic_id == login.neuropsychologists.first.clinic_id
       end
-      can :manage, Appointment do |appointment|
+      can [:index,:new,:create], Appointment
+      can [:show,:update,:destroy], Appointment do |appointment|
         appointment.neuropsychologist_id == login.neuropsychologists.first.id
       end
-      can :new, AppointmentPlan
-      can [:edit,:update,:destroy], AppointmentPlan do |appointment_plans|
-        appointment_plans.appointment.neuropsychologist_id == login.neuropsychologists.first.id
+      can [:index,:new,:create], AppointmentPlan
+      can [:show,:update,:destroy], AppointmentPlan do |appointment|
+        appointment.neuropsychologist_id == login.neuropsychologists.first.id
       end
-      can :manage, ClockResult do |clock_results|
+      can [:new,:create], ClockResult
+      can [:edit,:update,:destroy], ClockResult do |clock_results|
         clock_results.appointment_plan.appointment.neuropsychologist_id == login.neuropsychologists.first.id
       end
-      can :manage, FttResult do |ftt_results|
+      can [:new,:create], FttResult
+      can [:edit,:update,:destroy], FttResult do |ftt_results|
         ftt_results.appointment_plan.appointment.neuropsychologist_id == login.neuropsychologists.first.id
       end
-      can :manage, TmtResult do |tnt_results|
+      can [:new,:create], TmtResult
+      can [:edit,:update,:destroy], TmtResult do |tnt_results|
         tmt_results.appointment_plan.appointment.neuropsychologist_id == login.neuropsychologists.first.id
       end
-      can :manage, WaisResult do |wais_results|
+      can [:new,:create], WaisResult
+      can [:edit,:update,:destroy], WaisResult do |wais_results|
         wais_results.appointment_plan.appointment.neuropsychologist_id == login.neuropsychologists.first.id
       end
-      can :manage, WmsResult do |wms_results|
+      can [:new,:create], WmsResult
+      can [:edit,:update,:destroy], WmsResult do |wms_results|
         wms_results.appointment_plan.appointment.neuropsychologist_id == login.neuropsychologists.first.id
       end
-      can :manage, EvaluationResult do |eva_results|
+      can [:new,:create], EvaluationResult
+      can [:edit,:update,:destroy], EvaluationResult do |eva_results|
         eva_results.appointment.neuropsychologist_id == login.neuropsychologists.first.id
       end
       can [:show, :edit, :update], Neuropsychologist do |neuropsychologist|
