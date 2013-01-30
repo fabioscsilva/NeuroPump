@@ -71,7 +71,7 @@
 						</div>
 						<div class="row-fluid">
 							<div class="span6">
-								<%= f.association :gender, label_method: :description, :prompt => "Selecione o sexo", :label => "Sexo", :input_html => { :class => 'span12'}  %>
+								<%= f.association :gender, label_method: :description, :prompt => "Selecione o sexo", :label => "Sexo", :input_html => { :class => 'span12', :style => 'width: 100%!important;'}  %>
 							</div>
 							<div class="field span6">
 								<label>Data de Nascimento</label>
@@ -83,10 +83,10 @@
 						</div>
 						<div class="row-fluid">
 							<div class="span6">
-								<%= f.association :civil_status, label_method: :description, :prompt => "Selecione o estado civil", :include_blank => false, :label => "Estado Civil", :input_html => { :class => 'span12'} %>
+								<%= f.association :civil_status, label_method: :description, :prompt => "Selecione o estado civil", :include_blank => false, :label => "Estado Civil", :input_html => { :class => 'span12', :style => 'width: 100%!important;'} %>
 							</div>
 							<div class="span6">
-								<%= f.association :handedness, label_method: :description, :prompt => "Selecione a lateralidade", :include_blank => false, :label => "Lateralidade", :input_html => { :class => 'span12'}  %>
+								<%= f.association :handedness, label_method: :description, :prompt => "Selecione a lateralidade", :include_blank => false, :label => "Lateralidade", :input_html => { :class => 'span12', :style => 'width: 100%!important;'}  %>
 							</div>
 						</div>
 						<% if (@pageType == "edit") && (current_login.has_role? :patient) %>
@@ -99,7 +99,7 @@
 							<%= button_tag "Reverter", :class => "btn btn-warning span2 pull-right", :type => "reset" %>
 						</div>
 						<div>
-							<button type="submit" class="btn btn-success span2 pull-right">
+							<button type="submit" class="btn btn-success span2 pull-right" style="margin-right: 10px;">
 								Submeter
 							</button>
 						</div>

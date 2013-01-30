@@ -3,10 +3,10 @@
 		<div class="span10 offset1">
 			<div>
 				<legend>
-					Secretários da Clínica
+					<h2 class="h2-title">Secretários da Clínica</h2>
 				</legend>
 				<% unless @secretaries.blank? %>
-				<table id="secretaries" class="table table-hover table-bordered table-striped">
+				<table id="secretaries" class="table table-hover table-condensed table-striped">
 					<thead>
 						<tr>
 							<th>Nome</th>
@@ -18,7 +18,7 @@
 					<tbody>
 						<%  @secretaries.each do |secretary|  %>
 						<tr onmouseover="this.style.cursor ='pointer'" onclick="location.href='<%= secretary_url(secretary) %>'">
-							<td><%= secretary.name %></td>
+							<td style="color: #0088CC"><%= secretary.name %></td>
 							<td><%= secretary.login.email %></td>
 							<td><%= secretary.mobilephone %></td>
 							<td> <% if secretary.login.deleted_at == nil  %>

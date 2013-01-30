@@ -4,9 +4,9 @@
 		<div class="span10 offset1">
 			<div>
 				<legend>
-					Neuropsicólogos da Clínica
+					<h2 class="h2-title">Neuropsicólogos da Clínica</h2>
 				</legend>
-				<table id="neuropsychologists" class="table table-hover table-bordered table-striped">
+				<table id="neuropsychologists" class="table table-hover table-condensed table-striped">
 					<thead>
 						<tr>
 							<th>Nome</th>
@@ -18,7 +18,7 @@
 					<tbody>
 						<% @neuropsychologists.each do |neuropsychologist| %>
 						<tr onmouseover="this.style.cursor ='pointer'" onclick="location.href='<%= neuropsychologist_url(neuropsychologist) %>'">
-							<td><%= neuropsychologist.name %></td>
+							<td style="color: #0088CC"><%= neuropsychologist.name %></td>
 							<td><%= neuropsychologist.login.email %></td>
 							<td><%= neuropsychologist.mobilephone %></td>
 							<td>
