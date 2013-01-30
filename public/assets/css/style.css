@@ -299,7 +299,7 @@ header {
 =================================================================== */
 .picture {
 	position: relative;
-
+	height: 140px;
 	}
 	
 .picture .item-description {
@@ -331,7 +331,7 @@ header {
 }
 
 	
-.picture img {width: 100%; height: auto; }
+.picture img {width: 100%; height: 140px; }
 
 .image-overlay-link,
 .image-overlay-zoom {
