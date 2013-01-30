@@ -155,7 +155,7 @@ class ManagersController < ApplicationController
     
     agesIndex = 0
     agesRanges.each do |range|
-      agesValues = Patient.select("COUNT(*)").where("EXTRACT(year from AGE(NOW(), date_of_birth)) >= " + range[0].to_s + " AND EXTRACT(year from AGE(NOW(), date_of_birth)) <= " + range[1].to_s)
+      agesValues = Patient.select("COUNT(*)").where("EXTRACT(year from AGE(NOW(), date_of_birth)) >= " + range[0].to_s + " AND EXTRACT(year from AGE(NOW(), date_of_birth)) <= " + range[1].to_s).where("patients.clinic_id = " + @clinic.id.to_s)
       
       @agesArray[agesIndex][1] = Integer(agesValues[0].count)
       agesIndex += 1
