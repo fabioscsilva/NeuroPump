@@ -1,4 +1,6 @@
 class WmsResultsController < ApplicationController
+  before_filter :authenticate_login!
+  load_and_authorize_resource
   # GET /wms
   # GET /wms.json
   def index

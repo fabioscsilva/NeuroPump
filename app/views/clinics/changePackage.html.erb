@@ -1,12 +1,10 @@
 
-<h2>Mudar Pacote</h2>
-<% if @payments %>
-  <% if @packageID < @bestPackageID %>
+<h2>Mudar Subscrição</h2>
 
     <% @packages.each do |p| %>
     <% if p.id > @packageID%>
 
-    <p>Atenção, so pode alterar o seu pacote para um superior</p>
+    <p>Atenção, so pode alterar o seu subscrição para um superior</p>
     <div class="table_container">
       <table border = "1">
         <tr> <th>
@@ -46,7 +44,7 @@
           </td> 
         </tr>
       </table>
-      <%= radio_button_tag(:packageType, p.id) %>
+      <input type="radio" value = "<%= p.id %>" id = "<%= p.id %>" name= "packageType" required />
     </div>
     <% end %>
     <%end%>
@@ -55,11 +53,5 @@
       <%= button_to "Cancelar", clinic_path( Manager.first(:conditions => "login_id = #{current_login.id}").clinic), :method => "get", :class => "btn btn-warning span2" %>
     </div>
     <div>
-      <%= button_to "Submeter", {:controller => :clinics, :action => :changePackageSubmit}, :class => "btn btn-success span2" %>
+      <%= button_to "Submeter", {:controller => :clinics, :action => :changePackageSubmit}, :class => "btn btn-success span2", :onclick => "return getCheckedRadio();" %>
     </div>
-  <% else %>
-   <p>Não existe melhor pacote do que a sua clínica já têm</p>
-  <% end %>
-<% else %>
-  <p> Não pode mudar o seu pacote até efetuar todos os pagamentos em atraso!</p>
-<% end %>

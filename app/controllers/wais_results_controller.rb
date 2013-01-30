@@ -1,4 +1,6 @@
 class WaisResultsController < ApplicationController
+  before_filter :authenticate_login!
+  load_and_authorize_resource
   # GET /wais
   # GET /wais.json
   def index
