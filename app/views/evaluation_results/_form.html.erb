@@ -112,17 +112,19 @@
 						<center>
 							<%= @clock.first.screen_result + @clock.first.number_seq_result + @clock.first.pointers_loc_result %>
 						</center></td>
+						<% if @clockOld != nil %>
 						<td>
 						<center>
-							<% if @clockOld != nil %>
-							<%if (@clock.first.screen_result + @clock.first.number_seq_result + @clock.first.pointers_loc_result) >= (@clockOld.first.screen_result + @clockOld.first.number_seq_result + @clockOld.first.pointers_loc_result) %>
-							<a class="btn btn-success btn-small"><i class="icon icon-circle-arrow-up"></i></a>
+
+							<%if (@clock.first.screen_result + @clock.first.number_seq_result + @clock.first.pointers_loc_result) > (@clockOld.first.screen_result + @clockOld.first.number_seq_result + @clockOld.first.pointers_loc_result) %>
+							<%= image_tag 'green icon.png', :size => "24x24" %>
+							<%elsif (@clock.first.screen_result + @clock.first.number_seq_result + @clock.first.pointers_loc_result) == (@clockOld.first.screen_result + @clockOld.first.number_seq_result + @clockOld.first.pointers_loc_result) %>
+							<%= image_tag 'blue icon.png', :size => "24x24" %>
 							<%else%>
-							<a class="btn btn-danger btn-small"><i class="icon icon-circle-arrow-down"></i></a>
-							<%end%>
+							<%= image_tag 'red icon.png', :size => "24x24" %>
 							<%end%>
 
-						</center></td>
+						</center></td><%end%>
 					</tr>
 				</tbody>
 			</table>
@@ -164,7 +166,7 @@
 						<center>
 							Resultado atual (Média)
 						</center></th>
-						<% if @clockOld != nil %>
+						<% if @fttOld != nil %>
 						<th>
 						<center>
 							Comparação
@@ -190,19 +192,23 @@
 							<%= ((@ftt.first.first + @ftt.first.second + @ftt.first.third + @ftt.first.fourth + @ftt.first.fifth + @ftt.first.sixth + @ftt.first.seventh + @ftt.first.eighth +
               @ftt.first.ninth + @ftt.first.tenth)/10).to_f %>
 						</center></td>
+						<% if @fttOld != nil %>
 						<td>
 						<center>
-							<% if @fttOld != nil %>
+
 							<%if (@ftt.first.first + @ftt.first.second + @ftt.first.third + @ftt.first.fourth + @ftt.first.fifth + @ftt.first.sixth + @ftt.first.seventh + @ftt.first.eighth +
-							@ftt.first.ninth + @ftt.first.tenth) >= (@fttOld.first.first + @fttOld.first.second + @fttOld.first.third + @fttOld.first.fourth + @fttOld.first.fifth + @fttOld.first.sixth + @fttOld.first.seventh + @fttOld.first.eighth +
+							@ftt.first.ninth + @ftt.first.tenth) > (@fttOld.first.first + @fttOld.first.second + @fttOld.first.third + @fttOld.first.fourth + @fttOld.first.fifth + @fttOld.first.sixth + @fttOld.first.seventh + @fttOld.first.eighth +
 							@fttOld.first.ninth + @fttOld.first.tenth)%>
-							<a class="btn btn-success btn-small"><i class="icon icon-circle-arrow-up"></i></a>
+							<%= image_tag 'green icon.png', :size => "24x24" %>
+							<%elsif (@ftt.first.first + @ftt.first.second + @ftt.first.third + @ftt.first.fourth + @ftt.first.fifth + @ftt.first.sixth + @ftt.first.seventh + @ftt.first.eighth +
+							@ftt.first.ninth + @ftt.first.tenth) == (@fttOld.first.first + @fttOld.first.second + @fttOld.first.third + @fttOld.first.fourth + @fttOld.first.fifth + @fttOld.first.sixth + @fttOld.first.seventh + @fttOld.first.eighth +
+							@fttOld.first.ninth + @fttOld.first.tenth)%>
+							<%= image_tag 'blue icon.png', :size => "24x24" %>
 							<%else%>
-							<a class="btn btn-danger btn-small"><i class="icon icon-circle-arrow-down"></i></a>
-							<%end%>
+							<%= image_tag 'red icon.png', :size => "24x24" %>
 							<%end%>
 
-						</center></td>
+						</center></td> <%end%>
 					</tr>
 					<tr>
 						<td>
@@ -221,18 +227,23 @@
 							<%= ((@ftt.second.first + @ftt.second.second + @ftt.second.third + @ftt.second.fourth + @ftt.second.fifth + @ftt.second.sixth + @ftt.second.seventh + @ftt.second.eighth +
               @ftt.second.ninth + @ftt.second.tenth)/10).to_f %>
 						</center></td>
+						<% if @fttOld != nil %>
 						<td>
 						<center>
-							<% if @fttOld != nil %>
+
 							<%if (@ftt.second.first + @ftt.second.second + @ftt.second.third + @ftt.second.fourth + @ftt.second.fifth + @ftt.second.sixth + @ftt.second.seventh + @ftt.second.eighth +
-							@ftt.second.ninth + @ftt.second.tenth) >= (@fttOld.second.first + @fttOld.second.second + @fttOld.second.third + @fttOld.second.fourth + @fttOld.second.fifth + @fttOld.second.sixth + @fttOld.second.seventh + @fttOld.second.eighth +
+							@ftt.second.ninth + @ftt.second.tenth) > (@fttOld.second.first + @fttOld.second.second + @fttOld.second.third + @fttOld.second.fourth + @fttOld.second.fifth + @fttOld.second.sixth + @fttOld.second.seventh + @fttOld.second.eighth +
 							@fttOld.second.ninth + @fttOld.second.tenth)%>
-							<a class="btn btn-success btn-small"><i class="icon icon-circle-arrow-up"></i></a>
+							<%= image_tag 'green icon.png', :size => "24x24" %>
+							<%elsif (@ftt.second.first + @ftt.second.second + @ftt.second.third + @ftt.second.fourth + @ftt.second.fifth + @ftt.second.sixth + @ftt.second.seventh + @ftt.second.eighth +
+							@ftt.second.ninth + @ftt.second.tenth) == (@fttOld.second.first + @fttOld.second.second + @fttOld.second.third + @fttOld.second.fourth + @fttOld.second.fifth + @fttOld.second.sixth + @fttOld.second.seventh + @fttOld.second.eighth +
+							@fttOld.second.ninth + @fttOld.second.tenth)%>
+							<%= image_tag 'blue icon.png', :size => "24x24" %>
 							<%else%>
-							<a class="btn btn-danger btn-small"><i class="icon icon-circle-arrow-down"></i></a>
+							<%= image_tag 'red icon.png', :size => "24x24" %>
 							<%end%>
-							<%end%>
-						</center></td>
+
+						</center></td><%end%>
 					</tr>
 				</tbody>
 			</table>
@@ -277,7 +288,7 @@
 						<center>
 							Resultado atual
 						</center></th>
-						<% if @clockOld != nil %>
+						<% if @tmtOld != nil %>
 						<th>
 						<center>
 							Comparação
@@ -301,17 +312,19 @@
 						<center>
 							<%= @tmt.first.time.utc.strftime("%H:%M:%S") %>
 						</center></td>
+						<% if @tmtOld != nil %>
 						<td>
 						<center>
-							<% if @tmtOld != nil %>
-							<%if (@tmt.first.time ) >= (@tmtOld.first.time) %>
-							<a class="btn btn-success btn-small"><i class="icon icon-circle-arrow-up"></i></a>
+
+							<%if (@tmt.first.time ) > (@tmtOld.first.time) %>
+							<%= image_tag 'green icon.png', :size => "24x24" %>
+							<%elsif (@tmt.first.time ) == (@tmtOld.first.time) %>
+							<%= image_tag 'blue icon.png', :size => "24x24" %>
 							<%else%>
-							<a class="btn btn-danger btn-small"><i class="icon icon-circle-arrow-down"></i></a>
-							<%end%>
+							<%= image_tag 'red icon.png', :size => "24x24" %>
 							<%end%>
 
-						</center></td>
+						</center></td><%end%>
 					</tr>
 					<tr>
 						<td>
@@ -328,16 +341,19 @@
 						<center>
 							<%= @tmt.second.time.utc.strftime("%H:%M:%S") %>
 						</center></td>
+						<% if @tmtOld != nil %>
 						<td>
 						<center>
-							<% if @tmtOld != nil %>
-							<%if (@tmt.second.time ) >= (@tmtOld.second.time) %>
-							<a class="btn btn-success btn-small"><i class="icon icon-circle-arrow-up"></i></a>
+
+							<%if (@tmt.second.time ) > (@tmtOld.second.time) %>
+							<%= image_tag 'green icon.png', :size => "24x24" %>
+							<%elsif (@tmt.second.time ) == (@tmtOld.second.time) %>
+							<%= image_tag 'blue icon.png', :size => "24x24" %>
 							<%else%>
-							<a class="btn btn-danger btn-small"><i class="icon icon-circle-arrow-down"></i></a>
+							<%= image_tag 'red icon.png', :size => "24x24" %>
 							<%end%>
-							<%end%>
-						</center></td>
+
+						</center></td> <%end%>
 					</tr>
 				</tbody>
 			</table>
@@ -379,7 +395,7 @@
 						<center>
 							Resultado atual
 						</center></th>
-						<% if @clockOld != nil %>
+						<% if @waisOld != nil %>
 						<th>
 						<center>
 							Comparação
@@ -399,17 +415,19 @@
 						<center>
 							<%= @wais.first.correct_items + @wais.second.correct_items %>
 						</center></td>
+						<% if @waisOld != nil %>
 						<td>
 						<center>
-							<% if @waisOld != nil %>
-							<% if (@wais.first.correct_items + @wais.second.correct_items) >= (@waisOld.first.correct_items + @waisOld.second.correct_items) %>
-							<a class="btn btn-success btn-small"><i class="icon icon-circle-arrow-up"></i></a>
+
+							<% if (@wais.first.correct_items + @wais.second.correct_items) > (@waisOld.first.correct_items + @waisOld.second.correct_items) %>
+							<%= image_tag 'green icon.png', :size => "24x24" %>
+							<% elsif (@wais.first.correct_items + @wais.second.correct_items) == (@waisOld.first.correct_items + @waisOld.second.correct_items) %>
+							<%= image_tag 'blue icon.png', :size => "24x24" %>
 							<%else%>
-							<a class="btn btn-danger btn-small"><i class="icon icon-circle-arrow-down"></i></a>
-							<%end%>
+							<%= image_tag 'red icon.png', :size => "24x24" %>
 							<%end%>
 
-						</center></td>
+						</center></td> <%end%>
 					</tr>
 				</tbody>
 			</table>
@@ -452,7 +470,7 @@
 						<center>
 							Resultado atual
 						</center></th>
-						<% if @clockOld != nil %>
+						<% if @wmsOld != nil %>
 						<th>
 						<center>
 							Comparação
@@ -472,16 +490,19 @@
 						<center>
 							<%= @wms.first.correct_items + @wms.second.correct_items %>
 						</center></td>
+						<% if @wmsOld != nil %>
 						<td>
 						<center>
-							<% if @wmsOld != nil %>
-							<% if (@wms.first.correct_items + @wms.second.correct_items) >= (@waisOld.first.correct_items + @waisOld.second.correct_items) %>
-							<a class="btn btn-success btn-small"><i class="icon icon-circle-arrow-up"></i></a>
+
+							<% if (@wms.first.correct_items + @wms.second.correct_items) > (@waisOld.first.correct_items + @waisOld.second.correct_items) %>
+							<%= image_tag 'green icon.png', :size => "24x24" %>
+							<% elsif (@wms.first.correct_items + @wms.second.correct_items) == (@waisOld.first.correct_items + @waisOld.second.correct_items) %>
+							<%= image_tag 'blue icon.png', :size => "24x24" %>
 							<%else%>
-							<a class="btn btn-danger btn-small"><i class="icon icon-circle-arrow-down"></i></a>
+							<%= image_tag 'red icon.png', :size => "24x24" %>
 							<%end%>
-							<%end%>
-						</center></td>
+
+						</center></td> <%end%>
 					</tr>
 				</tbody>
 			</table>
