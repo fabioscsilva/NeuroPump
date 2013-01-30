@@ -1,6 +1,6 @@
 class AppointmentPlansController < ApplicationController
   before_filter :authenticate_login!
-  load_and_authorize_resource
+  #load_and_authorize_resource
 
   def index
     #fazer o da sessão que queremos
@@ -56,8 +56,6 @@ class AppointmentPlansController < ApplicationController
 
   end
 
-  # GET /tmts/1
-  # GET /tmts/1.json
   def show
     # @appointment_plan = TmtResult.find(params[:id])
     @appointment_plans  = AppointmentPlan.where(:appointment_id => params[:id] )
