@@ -9,9 +9,9 @@
         <% session[:emailsSentNeuro] = false %>
     <% end %>
 
-    <div class="span8 offset2">
-      <legend>Adicionar Neuropsicólogo </legend>
-      <div class="span12">
+    <div class="span10 offset1">
+      <legend><h2 class="h2-title">Adicionar Neuropsicólogo</h2></legend>
+      <div class="row-fluid">
         <p align="justify">Para adicionar um Neuropsicólogo  é necessário que indique o seu email na caixa abaixo
           representada.
           De seguida o Neuropsicólogo  será notificado  e redirecionado  um formulário de preenchimento de dados
@@ -24,11 +24,12 @@
               <%= text_field :email, nil, :class => "span12", :placeholder => "example@neuropump.com;example2@neuropump.com" %>
             </div>
             <div class="span12" style="height: 30px;"></div>
-            <div>
-              <%= submit_tag "Enviar", :class => "btn btn-success span2 offset05 pull-right", :style => "margin-left: 10px;" %>
-            </div>
+
             <div>
               <%= button_tag "Limpar", :class => "btn btn-warning span2 pull-right", :type => "reset" %>
+            </div>
+            <div>
+              <%= submit_tag "Enviar", :class => "btn btn-success span2 offset05 pull-right", :style => "margin-right: 10px;" %>
             </div>
         <% end %>
       </div>

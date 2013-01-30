@@ -1,12 +1,12 @@
 </div><!-- /.container -->
 <div class="container">
 	<div class="row-fluid">
-		<div class="span10 offset1">
+		<div class="span12">
 			<div>
 				<legend>
-					Clínicas
+					<h2 class="h2-title">Clínicas</h2>
 				</legend>
-				<table id="clinics" class="table table-hover table-bordered table-striped" id="clinics">
+				<table id="clinics" class="table table-condensed table-hover table-striped" id="clinics">
 					<thead>
 						<tr>
 							<th>Nome</th>
@@ -60,12 +60,12 @@
 								</div>
 							</div></td>
 							<td> <% if clinic.deleted_at == nil %>
-							<p class="text-success">
+							<span class="text-success">
 								Activa
-							</p> <%else%>
-							<p class="text-error">
+							</span> <%else%>
+							<span class="text-error">
 								Inativa
-							</p> <%end%> </td>
+							</span> <%end%> </td>
 						</tr>
 						<% end %>
 					</tbody>
