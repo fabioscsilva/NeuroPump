@@ -44,8 +44,8 @@ end
   gem 'uglifier', '>= 1.0.3'
   
   gem 'jquery-datatables-rails'
-  gem 'bootstrap-sass'
-  gem 'bootswatch-rails'
+  # gem 'bootstrap-sass'
+  # gem 'bootswatch-rails'
   
   # gem 'twitter-bootstrap-rails'
   # gem 'less-rails-bootstrap'
