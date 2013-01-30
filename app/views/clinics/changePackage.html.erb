@@ -1,10 +1,11 @@
 
 <h2>Mudar Subscrição</h2>
 
+<p>Atenção, so pode alterar o seu subscrição para um superior</p>
     <% @packages.each do |p| %>
-    <% if p.id > @packageID%>
+    <% if p.price > @packagePrice %>
 
-    <p>Atenção, so pode alterar o seu subscrição para um superior</p>
+    
     <div class="table_container">
       <table border = "1">
         <tr> <th>

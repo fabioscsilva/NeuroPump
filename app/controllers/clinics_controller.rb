@@ -59,29 +59,28 @@ class ClinicsController < ApplicationController
     p = Payment.where(:clinic_id => @cID).where(:payed => false).count
     if p > 0
       flash[:error] = "Nao pode mudar a sua subscricap o ate efetuar todos os pagamentos em atraso!"
-      respond_to do |format| 
-          format.html {redirect_to edit_clinic_path(clinic)}
+      respond_to do |format|
+        format.html {redirect_to edit_clinic_path(clinic)}
         end
     else
       packageClinic = PackagesClinic.where(:clinic_id => @cID).first
       packageID = packageClinic.package_id
       @bestPackageID = Package.order("id DESC").first.id
       bestPackagePrice = Package.order("price DESC").first.price
-      @packagePrice = 5
+      @packagePrice = packageClinic.package.price
 
       if @packagePrice >= bestPackagePrice
-      flash[:error] = "Nao existe melhor subscricao do que a sua clinica ja tem"
-      respond_to do |format| 
-          format.html {redirect_to edit_clinic_path(clinic)}
+        flash[:error] = "Nao existe melhor subscricao do que a sua clinica ja tem"
+        respond_to do |format|
+        format.html {redirect_to edit_clinic_path(clinic)}
         end
       end
 
+      
+    
+    end
 
-      respond_to do |format|
-        format.html # new.html.erb
-        format.json { render json: @clinic }
-        end
-      end
+      
 
   end
 
