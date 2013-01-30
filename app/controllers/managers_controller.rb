@@ -167,7 +167,7 @@ class ManagersController < ApplicationController
     
     
     # Sex Graph
-    gendersValues = Patient.joins(:gender).select("COUNT(*) as count, genders.description as description").group("genders.description")
+    gendersValues = Patient.joins(:gender).select("COUNT(*) as count, genders.description as description").where("patients.clinic_id = " + @clinic.id.to_s).group("genders.description")
     
     @gendersArray = Array.new
     gendersDescriptions = Array.new

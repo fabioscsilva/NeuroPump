@@ -26,6 +26,37 @@ class ClinicsController < ApplicationController
   # GET /clinics/1.json
   def show
     @payments = Payment.in_clinic(@clinic.id).order('creation_date DESC').all
+    
+    @package = Package.joins(:packages_clinics).where("packages_clinics.clinic_id = " + @clinic.id.to_s).first
+    @packageClinic = PackagesClinic.joins(:clinic).where("packages_clinics.clinic_id = " + @clinic.id.to_s).first
+    
+    @nAppointments = @package.n_appointments
+    @appointmentsLeft = @packageClinic.appointment_token    
+    
+    if @nAppointments > 0
+      @appointmentsRatio = (@nAppointments-@appointmentsLeft)/@nAppointments*100
+    else
+      @appointmentsRatio = 100
+      @nAppointments = 0x221E.chr
+      @appointmentsLeft = @appointmentsLeft * -1 - 1
+    end
+    
+    @progressBarClass = "progress-success"
+    
+    if @nAppointments != 0x221E.chr
+      if (60..79).member?(@appointmentsRatio)  
+        @progressBarClass = "progress-warning"
+      elsif (80..100).member?(@appointmentsRatio)
+        @progressBarClass = "progress-danger"
+      end
+    end
+    
+    
+    
+    print "\n\n\n\n\n\n\n\ ################## \n" + @nAppointments.to_s + "\n"
+    print @appointmentsLeft.to_s + "\n"
+    print @appointmentsRatio.to_s + "\n\n\n\n\n\n\n\n\n\n"
+    
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @clinic }
