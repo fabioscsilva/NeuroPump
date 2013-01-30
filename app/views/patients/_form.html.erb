@@ -123,13 +123,14 @@
 					<label style="font-weight: bold;">Historial Clínico</label>
 					<%= h.text_area :description, :rows =>"15" ,  :class => "span12", :placeholder => "Historial Clinico do paciente", :value => "#{clinical_history.description}", :style => "resize: vertical;"%>
 				</div>
+				
+				<div>
+					<%= button_tag "Reverter", :rows => "10" ,:class => "btn btn-warning span2 pull-right", :type => "reset", :style => "margin-left: 10px;" %>
+				</div>
 				<div>
 					<button type="submit" class="btn btn-success span2 pull-right">
 						Gravar
 					</button>
-				</div>
-				<div>
-					<%= button_tag "Reverter", :rows => "10" ,:class => "btn btn-warning span2 pull-right", :type => "reset", :style => "margin-left: 10px;" %>
 				</div>
 			</div>
 			<%end%>

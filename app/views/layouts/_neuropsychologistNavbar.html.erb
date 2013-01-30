@@ -10,7 +10,7 @@
 	<%= link_to('Pacientes', patients_path)  %>
 </li>
 <ul class="nav pull-right">
-	<li id="fat-menu" class="dropdown">
+	<li id="fat-menu" class="dropdown <%= highlight(edit_neuropsychologist_path(:id => @neuropsychologist.id)) %> <%= highlight(edit_login_registration_path) %> <%= highlight(neuropsychologist_path(:id => @neuropsychologist.id)) %>">
 		<a href="#" id="drop3" role="button" class="dropdown-toggle" data-toggle="dropdown"><%= image_tag @neuropsychologist.photo.url, :size => "21x21" %> <%= @neuropsychologist.name %> <b class="caret"></b></a>
 		<ul class="dropdown-menu" role="menu" aria-labelledby="drop3">
 			<li>
