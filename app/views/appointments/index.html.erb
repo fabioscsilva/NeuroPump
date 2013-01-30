@@ -1,16 +1,25 @@
+<script type="text/javascript">
+dataAtual = 0;
+</script>
+
+<div id="change_view" style="z-index: 999999999999;padding: 2px 3px 4px;height: auto;width: 22px;cursor: pointer;background-color: rgb(209, 209, 209);position: fixed;right: 0%;" onclick="mudaViews()" onmouseout="diminuiuLargura()" onmouseover="aumentaLargura()">
+< >
+</div>
+
+<div id="calendario_view">
 <div class="span2">
   <div style="margin-left: 9%; margin-right: 9%" class="input-append date" id="dpYears" data-date="05-12-2012" data-date-format="dd-mm-yyyy" data-date-viewmode="years">
-      <input style="width:80%" onfocus="alertas()" class="span11" size="16" type="text" value="05-12-2012" readonly>
+      <input style="width:80%" class="span11" size="16" type="text" value="05-12-2012" readonly>
       <span class="add-on"><i class="icon-calendar"></i></span>
   </div>
 </div>
   
-<div class="span10">
-<div id='calendar' style="width: 100%; margin-left: 2%; margin-bottom: 10%;">
+<div class="span11">
+<div id='calendar' style="width: 100%; margin-left: 1%; margin-bottom: 1%;">
     
 </div>
 <div id="event_edit_container">
-        <%= form_for(@appointment, :remote => true) do |f| %>
+        <%= simple_form_for(@appointment, :remote => true) do |f| %>
 
             <% if @appointment.errors.any? %>
               <div id="error_explanation">
@@ -31,9 +40,12 @@
                 <div style="float: left; width: 40%; margin-right: 10%;font-size: 10px;">
                 <li style="list-style-type: none;">
                         <label for="start">Hora de Início: </label>
-                        <select name="start">
+
+                        <div style="width: 250px; position: relative;">
+                        <select name="start" id="start" onchange="atualizaDuracaoMinutos()">
                           <option value="">Escolha a hora de início</option>
                         </select>
+                        </div>
                 </li>
                 <li style="list-style-type: none;">
 
@@ -46,32 +58,60 @@
                     <!-- <span class="add-on"><i class="icon-calendar"></i></span> -->
                   <!--</div>-->
 
+                  <li style="list-style-type: none;">
+                      <%= f.input :duration, :required => true, :input_html => {:style => 'display: none;'} %>
+                  </li>
+
                 </li>
                 <li style="list-style-type: none;">
                         <label for="end">Hora de Fim: </label>
-                        <select name="end">
+
+                        <div style="width: 250px; position: relative;">
+                        <select name="end" id="end" onchange="atualizaDuracaoMinutos()">
                           <option value="">Escolha a hora de fim</option>
                         </select>
+                        </div>
                 </li>
+
+                <li style="list-style-type: none;">
+                  <div style="width: 250px; position: relative;">
+                    <div id="ver_consulta" style="display: none; background-color: #fefefe;text-align: center;padding-top: 4px;padding-bottom: 4px;margin-top: 50px;border: solid 1px #999; cursor: pointer;">
+                      Plano da Sessão
+                    </div>
+                  </div>
+                </li>
+
                 </div>
                 <div style="float: left; width: 45%;font-size: 10px;">
                 <li style="list-style-type: none;">
                         <label for="paciente">Paciente: </label>
-                        <% logged_user = Secretary.first(:conditions => "login_id = #{current_login.id}")
-                        @patients = Patient.is_active.in_clinic(logged_user.clinic.id).all %>
+                        <div style="width: 250px; position: relative;">
                         <%= f.select :patient_id, @patients.map{ |c| [c.name, c.id] } %>
+                      </div>
                         <!-- <input type="text" name="paciente" /> -->
                 </li>
+                <% if @neuropsychologists.nil? %>
                 <li style="list-style-type: none;">
-                        <label for="neuropsicologo">Neuropsicologo: </label>
-                        <% @neuropsychologists = Neuropsychologist.is_active.in_clinic(logged_user.clinic.id).all %>
-                        <%= f.select :neuropsychologist_id, @neuropsychologists.map{ |c| [c.name, c.id] } %>
+                        <div style="width: 250px; position: relative; display: none;">
+                        <%= f.input :neuropsychologist_id%>
+                        </div>
+                        <script type="text/javascript">$('#appointment_neuropsychologist_id').val(''+ <%= @idNeuro %> +'');</script>
                         <!-- <input type="text" name="neuropsicologo" /> -->
                 </li>
+                <% else %>
+                <li style="list-style-type: none;">
+                        <label for="neuropsicologo">Neuropsicologo: </label>
+                        <div style="width: 250px; position: relative;">
+                        <%= f.select :neuropsychologist_id, @neuropsychologists.map{ |c| [c.name, c.id] } %>
+                        </div>
+                        <!-- <input type="text" name="neuropsicologo" /> -->
+                </li>
+                <% end %>
                 <li style="list-style-type: none;">
                         <label for="Tipo">Tipo de consulta: </label>
-                        <% @types = AppointmentType.all %>
-                        <%= f.select :appointment_type_id, @types.map{ |c| [c.name, c.id] } %>
+                        <div style="width: 250px; position: relative;">
+                        <%= f.select :appointment_type_id, @types.map{ |c| [c.name, c.id] }, :class => "laal" %>
+                        </div>
                         <select id="tipoconsulta" name="tipo" style="display:none">
                             <option value="1">Estimulação</option>
                             <option value="2">Avaliação</option>
@@ -80,8 +120,12 @@
                 </li>
                 <li style="list-style-type: none;">
                         <label for="Estado">Estado da consulta: </label>
-                        <% @status = AppointmentStatus.all %>
-                        <%= f.select :appointment_status_id, @status.map{ |c| [c.name, c.id] } %>    
+                        
+                        <div style="width: 250px; position: relative;">
+                          <%= f.select(:appointment_status_id, @status.map{ |c| [c.name, c.id] }) %>
+                          <!-- <%= f.association :appointment_status %> -->
+                        </div>
+
                         <select id="estadoconsulta" name="estado" style="display:none">
                             <option value="1">Criada</option>
                             <option value="2">Iniciada</option>
@@ -91,11 +135,11 @@
                         <!-- <input id="estadocons" type="text" name="estado" /> -->
                 </li>
                 </div>
-
-                <div style="margin-left: 5%; width: 88%;">
+ 
+                <div style="margin-left: 5%; width: 88%; margin-top: 53%;">
                   <li style="list-style-type: none;">
                       <label for="description">Descrição: </label>
-                      <%= f.text_field :description, :name2 => "description", :required => true %>
+                      <%= f.text_area :description, :name2 => "description", :required => true %>
                   </li>
                 </div>
 
@@ -106,12 +150,152 @@
                 -->
 
                 <div class="actions">
-                  <%= f.submit :id => "submeterDados", :style => "display:none" %>
+                  <%= f.submit :id => "submeterDados", :style => "display: none;" %>
                 </div>
             </ul>
         <% end %>
 </div>
 </div>
+
+</div>
+
+
+
+  <div id="capa" style="display: none; position: fixed; opacity: 0; left: 0%; top: 10.3%;"><img style="width: 1200px;margin-left: 51px;height: 600px;" src="../assets/img/book.png" /></div>
+    <div id="magazine" style="display: none; opacity: 0; margin-top:40px; position: fixed; left: 1%; top: 2%;">
+      <div style="background-color: #efefef"></div>
+      
+      <% @dataInicio = @appointments[0].appointment_day %>
+      <% @dataFim = @appointments[@appointments.size - 1].appointment_day %>
+      <% @horas = ["08-00","08-30","09-00","09-30","10-00","10-30","11-00","11-30","12-00","12-30","13-00","13-30","14-00","14-30","15-00","15-30","16-00","16-30","17-00","17-30","18-00","18-30","19-00","19-30","20-00"] %>
+
+      <% @jInicial = 0 %>
+      <% @jFinal = 0 %>
+      <% @j = 0 %>
+      <% @k = 0 %>
+      <% @chegouAoFim = 0 %>
+
+      <% while @chegouAoFim == 0 %>
+        <% if @dataInicio.strftime('%d/%m/%Y') == @dataFim.strftime('%d/%m/%Y') %>
+          <% @chegouAoFim = 1 %>
+        <% end %>
+        <% @k = @k + 1 %>
+        <% @jInicial = @j %>
+
+        <% if @k.even? %>
+          <div style="background-image: -webkit-linear-gradient(right, #e9e9e9 95%, #DDD 100%);background-image: -moz-linear-gradient(right, #e9e9e9 95%, #DDD 100%);background-image: -o-linear-gradient(right, #e9e9e9 95%, #DDD 100%);background-image: -ms-linear-gradient(right, #e9e9e9 95%, #DDD 100%); padding-left: 20px; border-left: solid 1px rgb(218, 218, 218);">
+        <% else %>
+          <div style="background-image: -webkit-linear-gradient(left, #e9e9e9 95%, #DDD 100%);background-image: -moz-linear-gradient(left, #e9e9e9 95%, #DDD 100%);background-image: -o-linear-gradient(left, #e9e9e9 95%, #DDD 100%);background-image: -ms-linear-gradient(left, #e9e9e9 95%, #DDD 100%);">
+        <% end %>
+
+        <h1 style="margin-left: 20%;
+          margin-right: 20%;
+          margin-top: 30px;
+          font: 16px/5px 'Avenir', sans-serif;
+          text-align: center;
+          padding-bottom: 15px;"> <%= @dataInicio.strftime('%d/%m/%Y') %> </h1>
+        <input id="pesqinput<%= @dataInicio.strftime('%d-%m-%Y') %>" onclick="this.value = ''" style="width: 76%;margin-left: 9%;background-color: rgba(0,0,0,0);border: none;border-bottom: dotted 1px #999;box-shadow: none;" type="text" value="Pesquisar..." />
+        
+
+      <div id="conteudo<%= @dataInicio.strftime('%d-%m-%Y') %>" style="height: 80%; overflow-y: scroll;">
+      <% @horas.each do |hora| %>
+        <% @j = @j + 1 %>
+
+        <h1 style="margin-left: 10%;font: 12px/5px 'Avenir', sans-serif;padding-bottom: 10px;width: 90%;float: left;">
+          <p id="<%= hora %>h"><%= hora %>h</p>
+        </h1>
+
+        <div class="cons">
+          <div class="h<%= hora %>">
+          </div>
+      </div>
+    <% end %>
+    
+    </div>
+
+    <% @jFinal = @j %>
+
+    <!-- abaixo é para efetuar a pesquisa -->
+    <script type="text/javascript">
+    $(document).ready(function(){
+      $("#pesqinput<%= @dataInicio.strftime('%d-%m-%Y') %>").keyup(function() {
+        var x = this.value;
+        $("#conteudo<%= @dataInicio.strftime('%d-%m-%Y') %> .cons").stop().each(function() {        
+          var matchPos1 = $(this).html().search(x);
+          if(matchPos1 != -1)
+          {
+            $(this).stop().animate({
+              opacity: 1
+            }, 500, function() {
+              // Animation complete.
+            });
+          }
+          else
+          {
+            $(this).stop().animate({
+              opacity: 0.2
+            }, 500, function() {
+              // Animation complete.
+            });
+          }
+        });
+      });
+    });
+    </script>
+
+    </div>
+    
+    <!-- incrementa 1 dia -->
+    <% @dataInicio = @dataInicio + (3600*24) %>
+
+  <% end %>
+
+  </div>
+</div>
+
+
+
+
+
+<% @appointments.each do |appointment| %>
+  
+  <% @hora = appointment.appointment_day.strftime('%H').to_i + appointment.duration / 60 %>
+  <% if appointment.duration / 60 > 0 && appointment.appointment_day.strftime('%M').to_i == 0 %>
+    <% @minuto = 30 %>
+  <% elsif appointment.duration / 60 > 0 && appointment.appointment_day.strftime('%M').to_i == 30 %>
+    <% @minuto = 0 %>
+    <% @hora = @hora + 1 %>
+  <% else %>
+    <% @minuto = appointment.appointment_day.strftime('%M').to_i %>
+  <% end %>
+
+  <!-- isto é para nao por os appointments cancelados nem datas repetidas -->
+  <% if appointment.appointment_status.id != 3 %>
+    <% @nomeNeuro = appointment.neuropsychologist.name.split(" ") %>
+    
+    <script type="text/javascript">
+      
+      var conteudo = '<h1 style="margin-left: 10%;padding-left: 55px;width: 20%;float: left;margin-right: 5%;margin-top: 1px;font: 12px/5px Avenir, sans-serif;text-align: left;padding-bottom: 15px;"><b>Neuropsicólogo:</b> <li style="display: block;" class="dropdown"><a style="color: #000;" href="#" class="dropdown-toggle" data-toggle="dropdown"><%= @nomeNeuro[0] %> <%= @nomeNeuro[1] %></a><ul class="dropdown-menu"><li><a href="#">Ver página pessoal</a></li><li class="divider"></li><li style="display: block;"><a href="#">Enviar email</a></li></ul></li> </h1><h1 style="width: 20%;float: left;margin-right: 0%;margin-top: 1px;font: 12px/5px Avenir, sans-serif;text-align: left;padding-bottom: 15px;"><b>Paciente:</b> <li style="display: block;" class="dropdown"><a style="cursor: pointer; color: #000;" href="#" class="dropdown-toggle" data-toggle="dropdown"><%= appointment.patient.name %></a><ul class="dropdown-menu"><li><a href="#">Ver página paciente</a></li><li class="divider"></li><li><a href="#">Enviar email</a></li></ul></li> </h1><h1 style="width: 20%;float: left;margin-top: 1px;font: 12px/5px Avenir, sans-serif;text-align: left;padding-bottom: 15px;border-bottom: solid 1px #E2E2E2;"><li style="display: block; margin-top: -10px;" class="dropdown"><a style="cursor: pointer; color: #000;" href="#" class="dropdown-toggle" data-toggle="dropdown"><%= appointment.appointment_type.name %></a><ul class="dropdown-menu"><li><a href="#">Ver exame</a></li><li><a href="#">Apagar exame</a></li></ul></li> <li style="display: block;" class="dropdown"><a style="cursor: pointer; color: #000;" href="#" class="dropdown-toggle" data-toggle="dropdown"><%= appointment.duration %> min.</a></li> </h1>';
+
+      $("#conteudo<%= appointment.appointment_day.strftime('%d-%m-%Y') %> .cons .h<%= appointment.appointment_day.strftime('%H-%M') %>").html(conteudo);
+    
+    </script>
+
+  <% end %>
+<% end %>
+
+
+
+
+
+<script type="text/javascript">
+  document.getElementById("appointment_appointment_status_id").className = "select2";
+  document.getElementById("appointment_appointment_type_id").className = "select2";
+  document.getElementById("appointment_neuropsychologist_id").className = "select2";
+  document.getElementById("appointment_patient_id").className = "select2";
+  document.getElementById("start").className = "select2";
+  document.getElementById("end").className = "select2";
+</script>
 
 <!--<div class="container">
     <div class="row-fluid">  
@@ -132,12 +316,12 @@
                     <td><%= appointment.appointment_day.strftime('%d-%m-%Y') %></td>
                     <td><%= link_to appointment.patient.name, appointment.patient%></td>
                     <td><%= appointment.appointment_type.name %></td>
-					<!--   MUDAR COR CONSOANTE ESTADO -->    <!--                                  
+          <!--   MUDAR COR CONSOANTE ESTADO -->    <!--                                  
                     <% if appointment.appointment_status.name == 'Marcada' %>
-                    	<td><p class="text-success"><%= appointment.appointment_status.name %></p></td>
-                   	<% else %>
-                   		<td><p class="text-error"><%= appointment.appointment_status.name %></p></td>
-                   	<% end %>
+                      <td><p class="text-success"><%= appointment.appointment_status.name %></p></td>
+                    <% else %>
+                      <td><p class="text-error"><%= appointment.appointment_status.name %></p></td>
+                    <% end %>
                 </tr>
             <% end %>
             </tbody>
@@ -151,36 +335,67 @@
 <%= javascript_include_tag 'jquery-ui-1.8rc3.custom.min.js' %>
 <%= javascript_include_tag 'jquery.weekcalendar.js' %>
 <%= javascript_include_tag 'demo.js' %>
-
+<%= javascript_include_tag 'turn.min.js' %>
 <%= javascript_include_tag 'bootstrap-datepicker.js' %>
+
+<script type="text/javascript">
+  $(window).ready(function() {
+    $('#magazine').turn({
+      display: 'double',
+      acceleration: true,
+      gradients: !$.isTouch,
+      elevation:50,
+      when: {
+        turned: function(e, page) {
+                /*console.log('Current view: ', $(this).turn('view'));*/
+        }
+      }
+    });
+  });
+
+
+  $(window).bind('keydown', function(e){
+    if (e.keyCode==37)
+      $('#magazine').turn('previous');
+    else if (e.keyCode==39)
+      $('#magazine').turn('next');
+  });
+</script>
+
+
 <script type="text/javascript">
 $(function(){
-        window.prettyPrint && prettyPrint();
-        var startDate = new Date(2012,1,20);
-        var endDate = new Date(2012,1,25);
-        var contador = 0;
-        
-        var $calendar = $('#calendar');
-        
-        $('#dpYears').datepicker()
-        .on('changeDate', function(ev){
-            
-            globalev = ev;
-            
-            contador ++;
-            if(contador == 3)
-            {
-                $calendar.weekCalendar("goToDate");
-                contador = 0;
-                document.getElementById("datapickerid").style.display="none";
-                
-            }
-            
-          if (ev.date.valueOf() > startDate.valueOf()){
-          }
-          if (ev.date.valueOf() > startDate.valueOf()){
-          }
-        });        
+  window.prettyPrint && prettyPrint();
+  var startDate = new Date(2012,1,20);
+  var endDate = new Date(2012,1,25);
+  var contador = 0;
+  
+  var $calendar = $('#calendar');
+  
+  $('#dpYears').datepicker()
+  .on('changeDate', function(ev){
+      
+      globalev = ev;
+      
+      contador ++;
+      if(contador == 3)
+      {
+        $calendar.weekCalendar("goToDate");
+        contador = 0;
+        document.getElementById("datapickerid").style.display="none";
+      }
+      
+    if (ev.date.valueOf() > startDate.valueOf()){
+    }
+    if (ev.date.valueOf() > startDate.valueOf()){
+    }
+  });
+
+  //para fazer reset senao podia sair e da proxima vez bastava clicar no ano e ele saltava para outra data
+  $(".add-on").click(function() {
+    contador = 0;
+  });
+
 });
 </script>
 
@@ -191,7 +406,7 @@ $(document).ready(function() {
    var id = 10;
 
    $calendar.weekCalendar({
-      timeslotsPerHour : 4,
+      timeslotsPerHour : 2,
       allowCalEventOverlap : true,
       overlapEventsSeparate: true,
       firstDayOfWeek : 1,
@@ -221,7 +436,8 @@ $(document).ready(function() {
 
           //alert('valor render:' + e.options[e.selectedIndex].value);
           //alert(e.options[e.selectedIndex].value);
-         if (e.options[e.selectedIndex].value == 1) {
+
+         if (e.options[e.selectedIndex].value == 4 || calEvent.tipo == 4) {
             $event.css("backgroundColor", "#e8fac6");
             $event.css("color", "#247428");
             $event.find(".wc-time").css({
@@ -238,22 +454,35 @@ $(document).ready(function() {
          return calEvent.readOnly != true;
       },
       eventNew : function(calEvent, $event) {
+
+        $("#ver_consulta").css("display", "none");
+
          var $dialogContent = $("#event_edit_container");
          resetForm($dialogContent);
          var startField = $dialogContent.find("select[name='start']").val(calEvent.start);
          var endField = $dialogContent.find("select[name='end']").val(calEvent.end);
-         var descriptionField = $dialogContent.find("input[name2='description']");
+         var descriptionField = $dialogContent.find("textarea[name2='description']");
 
-         var pacienteField = $dialogContent.find("input[name='paciente']");
+         var tipoField = $dialogContent.find("select[name='appointment[appointment_type_id]']").val(calEvent.start);
+         var estadoField = $dialogContent.find("select[name='appointment[appointment_status_id]']").val(calEvent.start);
+         var pacienteField = $dialogContent.find("select[name='appointment[patient_id]']").val(calEvent.start);
+         var neuropsicologoField = $dialogContent.find("select[name='appointment[neuropsychologist_id]']").val(calEvent.start);
+
+         
+         /* var pacienteField = $dialogContent.find("input[name='paciente']");
          var neuropsicologoField = $dialogContent.find("input[name='neuropsicologo']");
          var tipoField = $dialogContent.find("input[name='tipo']");
-         var estadoField = $dialogContent.find("input[name='estado']");
-         var bodyField = $dialogContent.find("textarea[name='body']");
+         var estadoField = $dialogContent.find("input[name='estado']"); */
+         
+         //var bodyField = $dialogContent.find("textarea[name='body']");
 
          $dialogContent.dialog({
             modal: true,
             description: "Descrição da sessão",
             close: function() {
+              $('span.select2').each(function(){
+                    $(this).remove();
+                  });
                $dialogContent.dialog("destroy");
                $dialogContent.hide();
                $('#calendar').weekCalendar("removeUnsavedEvents");
@@ -267,24 +496,99 @@ $(document).ready(function() {
                   calEvent.description = descriptionField.val();
                   calEvent.tipo = tipoField.val();
                   calEvent.estado = estadoField.val();
-                  calEvent.paciente = pacienteField.val();
-                  calEvent.neuropsicologo = neuropsicologoField.val();
-                  calEvent.body = bodyField.val();
-
+                  var pacid = pacienteField.val();
+                  var pacnome = $("#appointment_patient_id option[value='"+pacid+"']").text();
+                  calEvent.paciente = pacnome;
+                  var neuid = neuropsicologoField.val();
+                  var neunome = $("#appointment_neuropsychologist_id option[value='"+neuid+"']").text();
+                  calEvent.neuropsicologo = neunome;
+                  
+                  //calEvent.body = bodyField.val();
                   $('#submeterDados').click();
+
+                  $('span.select2').each(function(){
+                    $(this).remove();
+                  });
+
+                  var tipoC = "";
+                  if(calEvent.tipo == "3")
+                  {
+                    tipoC = "Avaliação";
+                  }
+                  else
+                  {
+                    tipoC = "Estimulação";
+                  }
+
+                  var conteudo = '<h1 style="margin-left: 10%;padding-left: 55px;width: 20%;float: left;margin-right: 5%;margin-top: 1px;font: 12px/5px Avenir, sans-serif;text-align: left;padding-bottom: 15px;"><b>Neuropsicólogo:</b> <li style="display: block;" class="dropdown"><a style="color: #000;" href="#" class="dropdown-toggle" data-toggle="dropdown">'+ neunome +'</a><ul class="dropdown-menu"><li><a href="#">Ver página pessoal</a></li><li class="divider"></li><li style="display: block;"><a href="#">Enviar email</a></li></ul></li> </h1><h1 style="width: 20%;float: left;margin-right: 0%;margin-top: 1px;font: 12px/5px Avenir, sans-serif;text-align: left;padding-bottom: 15px;"><b>Paciente:</b> <li style="display: block;" class="dropdown"><a style="cursor: pointer; color: #000;" href="#" class="dropdown-toggle" data-toggle="dropdown">'+ pacnome +'</a><ul class="dropdown-menu"><li><a href="#">Ver página paciente</a></li><li class="divider"></li><li><a href="#">Enviar email</a></li></ul></li> </h1><h1 style="width: 20%;float: left;margin-top: 1px;font: 12px/5px Avenir, sans-serif;text-align: left;padding-bottom: 15px;border-bottom: solid 1px #E2E2E2;"><li style="display: block; margin-top: -10px;" class="dropdown"><a style="cursor: pointer; color: #000;" href="#" class="dropdown-toggle" data-toggle="dropdown">'+ tipoC +'</a><ul class="dropdown-menu"><li><a href="#">Ver exame</a></li><li><a href="#">Apagar exame</a></li></ul></li> <li style="display: block;" class="dropdown"><a style="cursor: pointer; color: #000;" href="#" class="dropdown-toggle" data-toggle="dropdown">'+ $("#appointment_duration").val() +' min.</a></li> </h1>';
+
+                    var dataI = calEvent.start;
+
+                    var horas = dataI.getHours();
+                    var bI = "";
+                    if( horas < 10)
+                    {
+                      bI += '0';
+                    }
+                    bI += horas.toString();
+                    if( dataI.getMinutes() == 0 )
+                    {
+                      bI += "-0" + dataI.getMinutes();
+                    }
+                    else
+                    {
+                      bI += "-" + dataI.getMinutes() + "";
+                    }
+                     
+                    var aI = "";
+                    var mes = dataI.getMonth() + 1;
+                    var dia = dataI.getDate();
+                    if( dia < 10 )
+                    {
+                      aI += "0";
+                    }
+                    aI += dia.toString() + "-";
+                    if( mes < 10 )
+                    {
+                      aI += "0";
+                    }
+                    aI += mes.toString() + "-" + dataI.getFullYear();
+
+
+                    $("#conteudo" + aI + " .cons .h" + bI +"").html(conteudo);
 
                   $calendar.weekCalendar("removeUnsavedEvents");
                   $calendar.weekCalendar("updateEvent", calEvent);
                   $dialogContent.dialog("close");
                },
                cancel : function() {
+                  $('span.select2').each(function(){
+                    $(this).remove();
+                  });
                   $dialogContent.dialog("close");
                }
             }
          }).show();
 
+        var timeMin = get_time_difference(calEvent.start, calEvent.end);
+        $("#appointment_duration").val(timeMin);
+
          $dialogContent.find(".date_holder").text($calendar.weekCalendar("formatDate", calEvent.start));
          setupStartAndEndTimeFields(startField, endField, calEvent, $calendar.weekCalendar("getTimeslotTimes", calEvent.start));
+
+         if (!$.browser.opera) {
+            $('select.select2').each(function(){
+              var title = $(this).attr('title');
+              if( $('option:selected', this).val() != ''  ) title = $('option:selected',this).text();
+              $(this)
+                  .css({'z-index':10,'opacity':0,'-khtml-appearance':'none'})
+                  .after('<span class="select2">' + title + '</span>')
+                  .change(function(){
+                      val = $('option:selected',this).text();
+                      $(this).next().text(val);
+                      })
+            });
+          };
 
       },
       eventDrop : function(calEvent, $event) {
@@ -296,12 +600,20 @@ $(document).ready(function() {
          if (calEvent.readOnly) {
             return;
          }
+
+         $("#ver_consulta").css("display", "block");
+
+         $("#ver_consulta").click(function(){
+          window.location = 'appointment_plans/'+calEvent.id+'' ;
+        });
+
          var $dialogContent = $("#event_edit_container");
          resetForm($dialogContent);
          var startField = $dialogContent.find("select[name='start']").val(calEvent.start);
          var endField = $dialogContent.find("select[name='end']").val(calEvent.end);
-         var descriptionField = $dialogContent.find("input[name2='description']").val(calEvent.description);
-         var tipoField = $dialogContent.find("input[name='tipo']").val(calEvent.tipo);
+         
+         var descriptionField = $dialogContent.find("textarea[name2='description']").val(calEvent.description);
+         
          //document.getElementById('appointment_appointment_type_id').selectedIndex = document.getElementById('tipocons').value - 1;
          
          //alert(document.getElementById('tipocons').value);
@@ -309,21 +621,36 @@ $(document).ready(function() {
          //f = document.getElementById("appointment_appointment_type_id");
          //alert('valor:' + f.options[f.selectedIndex].value);
 
-         var estadoField = $dialogContent.find("input[name='estado']").val(calEvent.estado);
          //document.getElementById('appointment_appointment_status_id').selectedIndex = document.getElementById('estadocons').value - 1;
+         
+         var tipoField = $dialogContent.find("input[name='tipo']").val(calEvent.tipo);
+         var estadoField = $dialogContent.find("input[name='estado']").val(calEvent.estado);
          var pacienteField = $dialogContent.find("input[name='paciente']").val(calEvent.paciente);
          var neuropsicologoField =  $dialogContent.find("input[name='neuropsicologo']").val(calEvent.neuropsicologo);
-         var bodyField = $dialogContent.find("textarea[name='body']");
-         
+         /* var bodyField = $dialogContent.find("textarea[name='body']"); */
+
+         var tipoField = $dialogContent.find("select[name='appointment[appointment_type_id]']").val(calEvent.tipo);
+         var estadoField = $dialogContent.find("select[name='appointment[appointment_status_id]']").val(calEvent.estado);
+         var pacienteField = $dialogContent.find("select[name='appointment[patient_id]']").val(calEvent.paciente);
+         var neuropsicologoField = $dialogContent.find("select[name='appointment[neuropsychologist_id]']").val(calEvent.neuropsicologo);
+
+         //aqui vai atualizar os selects
+         //alert(calEvent.neuropsicologo);
+         //$('#appointment_neuropsychologist_id').val('Susana Amaral Antunes');
+
 
          //aqui vai fazer append do id para depois o controller saber que ele tem de fazer update e nao create
          $('#idtoappend').append('<input id="appointment_id" name="appointment[id]" size="30" type="text" value="'+calEvent.id+'"/>');
 
-         bodyField.val(calEvent.body);
+         //bodyField.val(calEvent.body);
+         
          $dialogContent.dialog({
             modal: true,
             description: "Edit - " + calEvent.description,
             close: function() {
+              $('span.select2').each(function(){
+                    $(this).remove();
+                  });
                $dialogContent.dialog("destroy");
                $dialogContent.hide();
                $('#calendar').weekCalendar("removeUnsavedEvents");
@@ -336,9 +663,19 @@ $(document).ready(function() {
                   calEvent.description = descriptionField.val();
                   calEvent.tipo = tipoField.val();
                   calEvent.estado = estadoField.val();
-                  calEvent.paciente = pacienteField.val();
-                  calEvent.neuropsicologo = neuropsicologoField.val();
-                  calEvent.body = bodyField.val();
+                  var pacid = pacienteField.val();
+                  var pacnome = $("#appointment_patient_id option[value='"+pacid+"']").text();
+                  calEvent.paciente = pacnome;
+                  var neuid = neuropsicologoField.val();
+                  var neunome = $("#appointment_neuropsychologist_id option[value='"+neuid+"']").text();
+                  calEvent.neuropsicologo = neunome;
+                  //calEvent.body = bodyField.val();
+
+                  $('#submeterDados').click();
+
+                  $('span.select2').each(function(){
+                    $(this).remove();
+                  });
 
                   $calendar.weekCalendar("updateEvent", calEvent);
                   $dialogContent.dialog("close");
@@ -348,6 +685,9 @@ $(document).ready(function() {
                   $dialogContent.dialog("close");
                },*/
                cancel : function() {
+                  $('span.select2').each(function(){
+                    $(this).remove();
+                  });
                   $dialogContent.dialog("close");
                }
             }
@@ -355,8 +695,40 @@ $(document).ready(function() {
 
          var startField = $dialogContent.find("select[name='start']").val(calEvent.start);
          var endField = $dialogContent.find("select[name='end']").val(calEvent.end);
+
+         /*var tipoField = $dialogContent.find("select[name='appointment[appointment_type_id]']").val(calEvent.tipo);
+         var estadoField = $dialogContent.find("select[name='appointment[appointment_status_id]']").val(calEvent.estado);
+         var pacienteField = $dialogContent.find("select[name='appointment[patient_id]']").val(calEvent.paciente);
+         var neuropsicologoField = $dialogContent.find("select[name='appointment[neuropsychologist_id]']").val(calEvent.neuropsicologo);*/
+         
+         // para atualizar os selects
+         ChangeSelectByValue('appointment_patient_id', calEvent.paciente, true);
+         ChangeSelectByValuePorID('appointment_appointment_status_id', calEvent.estado, true);
+         ChangeSelectByValuePorID('appointment_appointment_type_id', calEvent.tipo, true);
+         <% if @neuropsychologists.nil? %>
+         <% else %>
+         ChangeSelectByValue('appointment_neuropsychologist_id', calEvent.neuropsicologo, true);
+         <% end %>
+         var timeMin = get_time_difference(calEvent.start, calEvent.end);
+         $("#appointment_duration").val(timeMin);
+
          $dialogContent.find(".date_holder").text($calendar.weekCalendar("formatDate", calEvent.start));
          setupStartAndEndTimeFields(startField, endField, calEvent, $calendar.weekCalendar("getTimeslotTimes", calEvent.start));
+
+         if (!$.browser.opera) {
+            $('select.select2').each(function(){
+              var title = $(this).attr('title');
+              if( $('option:selected', this).val() != ''  ) title = $('option:selected',this).text();
+              $(this)
+                  .css({'z-index':10,'opacity':0,'-khtml-appearance':'none'})
+                  .after('<span class="select2">' + title + '</span>')
+                  .change(function(){
+                      val = $('option:selected',this).text();
+                      $(this).next().text(val);
+                      })
+            });
+          };
+
          $(window).resize().resize(); //fixes a bug in modal overlay size ??
 
       },
@@ -385,13 +757,21 @@ $(document).ready(function() {
       return {
          events : [
             <% @appointments.each do |appointment| %>
-            <% @hora = appointment.appointment_day.strftime('%H').to_i + 2 %>
+            <% @hora = appointment.appointment_day.strftime('%H').to_i + appointment.duration / 60 %> /* aqui !!! vai passar a ter o appointment.appointment_duration */
+            <% if appointment.duration / 60 > 0 && appointment.appointment_day.strftime('%M').to_i == 0 %>
+              <% @minuto = 30 %>
+            <% elsif appointment.duration / 60 > 0 && appointment.appointment_day.strftime('%M').to_i == 30 %>
+              <% @minuto = 0 %>
+              <% @hora = @hora + 1 %>
+            <% else %>
+              <% @minuto = appointment.appointment_day.strftime('%M').to_i %>
+            <% end %>
             <% @mes = appointment.appointment_day.strftime('%m').to_i - 1 %>
-              <% if( appointment.appointment_status.id != 3 ) %>
+              <% if( appointment.appointment_status.id != 3 ) %> //isto é para nao por os appointments cancelados
               {
                   "id":<%= appointment.id %>,
                   "start": new Date(<%= appointment.appointment_day.strftime('%Y, '+ @mes.to_s() +', %d, %H, %M, %S') %>),
-                  "end": new Date(<%= appointment.appointment_day.strftime('%Y, '+ @mes.to_s() +', %d, '+ @hora.to_s() +', %M, %S') %>),
+                  "end": new Date(<%= appointment.appointment_day.strftime('%Y, '+ @mes.to_s() +', %d, '+ @hora.to_s() +', '+ @minuto.to_s() +', %S') %>),
                   "description": "<%= appointment.description %>",
                   "paciente": "<%= appointment.patient.name %>",
                   "neuropsicologo": "<%= appointment.neuropsychologist.name %>",
@@ -438,6 +818,34 @@ $(document).ready(function() {
       $endTimeOptions = $endTimeField.find("option");
       $startTimeField.trigger("change");
    }
+
+   function ChangeSelectByValue(ddlID, value, change) {
+     var ddl = document.getElementById(ddlID);
+     for (var i = 0; i < ddl.options.length; i++) {
+         if (ddl.options[i].innerHTML == value) {
+             if (ddl.selectedIndex != i) {
+                 ddl.selectedIndex = i;
+                 //if (change)
+                     //ddl.onchange();
+             }
+             break;
+         }
+     }
+    }  
+
+    function ChangeSelectByValuePorID(ddlID, value, change) {
+     var ddl = document.getElementById(ddlID);
+     for (var i = 0; i < ddl.options.length; i++) {
+         if (ddl.options[i].value == value) {
+             if (ddl.selectedIndex != i) {
+                 ddl.selectedIndex = i;
+                 //if (change)
+                     //ddl.onchange();
+             }
+             break;
+         }
+     }
+    }
 
    var $endTimeField = $("select[name='end']");
    var $endTimeOptions = $endTimeField.find("option");
@@ -489,7 +897,590 @@ $(document).ready(function() {
          }
       }).show();
    });
-
-
 });
 </script>
+
+<script type="text/javascript">
+  $(document).ready(
+    function() {
+    
+    $(".day-1").stop().hover(function(){
+      $( ".day-1 .wc-cal-event" ).stop().each(function() {        
+        var largura1 = parseInt($(this).css("width"));
+        $(this).css("max-width", largura1);
+        var larguraInt1 = parseInt( largura1 * 0.6 );
+        $(this).css("min-width", larguraInt1);
+        var esquerda1 = parseInt($(this).css("left"));
+        if(esquerda1 > 0)
+        {
+          if( esquerda1 >= 3 * (largura1-1) )
+          {
+            var esquerdaInt1 = larguraInt1 * 3;
+          }
+          else if(esquerda1 >= 2 * (largura1-1))
+          {
+            var esquerdaInt1 = larguraInt1 * 2;
+          }
+          else
+          {
+            var esquerdaInt1 = larguraInt1;
+          }
+        }
+        else
+        {
+          var esquerdaInt1 = 0;
+        }
+        $(this).stop().animate({
+          width: larguraInt1,
+          left: esquerdaInt1
+        }, 350, function() {
+        });
+      });
+    },function(){
+      $( ".day-1 .wc-cal-event" ).stop().each(function() {
+        var largura11 = parseInt($(this).css("width"));
+        var larguraInt11 = parseInt( largura11 / 0.6 ) + 1;
+        var esquerda11 = parseInt($(this).css("left"));
+        if(esquerda11 > 0)
+        {
+          if( esquerda11 >= 3 * largura11 )
+          {
+            var esquerdaInt11 = parseInt(($(this).css("max-width"))) * 3 ;
+          }
+          else if( esquerda11 >= (2 * largura11) )
+          {
+            var esquerdaInt11 = parseInt(($(this).css("max-width"))) * 2 ;
+          }
+          else
+          {
+            var esquerdaInt11 = parseInt($(this).css("max-width"));
+          }
+        }
+        else
+        {
+          var esquerdaInt11 = 0;
+        }
+        $(this).stop().animate({
+          width: larguraInt11,
+          left: esquerdaInt11
+        }, 350, function() {
+        });
+      });
+    }
+    );
+
+    
+    $(".day-2").stop().hover(function(){
+      $( ".day-2 .wc-cal-event" ).stop().each(function() {        
+        var largura2 = parseInt($(this).css("width"));
+        $(this).css("max-width", largura2);
+        var larguraInt2 = parseInt( largura2 * 0.6 );
+        $(this).css("min-width", larguraInt2);
+        var esquerda2 = parseInt($(this).css("left"));
+        if(esquerda2 > 0)
+        {
+          if( esquerda2 >= 3 * (largura2-1) )
+          {
+            var esquerdaInt2 = larguraInt2 * 3;
+          }
+          else if(esquerda2 >= 2 * (largura2-1))
+          {
+            var esquerdaInt2 = larguraInt2 * 2;
+          }
+          else
+          {
+            var esquerdaInt2 = larguraInt2;
+          }
+        }
+        else
+        {
+          var esquerdaInt2 = 0;
+        }
+        $(this).stop().animate({
+          width: larguraInt2,
+          left: esquerdaInt2
+        }, 350, function() {
+        });
+      });
+    },function(){
+      $( ".day-2 .wc-cal-event" ).stop().each(function() {
+        var largura22 = parseInt($(this).css("width"));
+        var larguraInt22 = parseInt( largura22 / 0.6 ) + 1;
+        var esquerda22 = parseInt($(this).css("left"));
+        if(esquerda22 > 0)
+        {
+          if( esquerda22 >= 3 * largura22 )
+          {
+            var esquerdaInt22 = parseInt(($(this).css("max-width"))) * 3 ;
+          }
+          else if( esquerda22 >= (2 * largura22) )
+          {
+            var esquerdaInt22 = parseInt(($(this).css("max-width"))) * 2 ;
+          }
+          else
+          {
+            var esquerdaInt22 = parseInt($(this).css("max-width"));
+          }
+        }
+        else
+        {
+          var esquerdaInt22 = 0;
+        }
+        $(this).stop().animate({
+          width: larguraInt22,
+          left: esquerdaInt22
+        }, 350, function() {
+        });
+      });
+    }
+    );
+
+    $(".day-3").stop().hover(function(){
+      $( ".day-3 .wc-cal-event" ).stop().each(function() {        
+        var largura3 = parseInt($(this).css("width"));
+        $(this).css("max-width", largura3);
+        var larguraInt3 = parseInt( largura3 * 0.6 );
+        $(this).css("min-width", larguraInt3);
+        var esquerda3 = parseInt($(this).css("left"));
+        if(esquerda3 > 0)
+        {
+          if( esquerda3 >= 3 * (largura3-1) )
+          {
+            var esquerdaInt3 = larguraInt3 * 3;
+          }
+          else if(esquerda3 >= 2 * (largura3-1))
+          {
+            var esquerdaInt3 = larguraInt3 * 2;
+          }
+          else
+          {
+            var esquerdaInt3 = larguraInt3;
+          }
+        }
+        else
+        {
+          var esquerdaInt3 = 0;
+        }
+        $(this).stop().animate({
+          width: larguraInt3,
+          left: esquerdaInt3
+        }, 350, function() {
+        });
+      });
+    },function(){
+      $( ".day-3 .wc-cal-event" ).stop().each(function() {
+        var largura33 = parseInt($(this).css("width"));
+        var larguraInt33 = parseInt( largura33 / 0.6 ) + 1;
+        var esquerda33 = parseInt($(this).css("left"));
+        if(esquerda33 > 0)
+        {
+          if( esquerda33 >= 3 * largura33 )
+          {
+            var esquerdaInt33 = parseInt(($(this).css("max-width"))) * 3 ;
+          }
+          else if( esquerda33 >= (2 * largura33) )
+          {
+            var esquerdaInt33 = parseInt(($(this).css("max-width"))) * 2 ;
+          }
+          else
+          {
+            var esquerdaInt33 = parseInt($(this).css("max-width"));
+          }
+        }
+        else
+        {
+          var esquerdaInt33 = 0;
+        }
+        $(this).stop().animate({
+          width: larguraInt33,
+          left: esquerdaInt33
+        }, 350, function() {
+        });
+      });
+    }
+    );
+
+    $(".day-4").stop().hover(function(){
+      $( ".day-4 .wc-cal-event" ).stop().each(function() {        
+        var largura4 = parseInt($(this).css("width"));
+        $(this).css("max-width", largura4);
+        var larguraInt4 = parseInt( largura4 * 0.6 );
+        $(this).css("min-width", larguraInt4);
+        var esquerda4 = parseInt($(this).css("left"));
+        if(esquerda4 > 0)
+        {
+          if( esquerda4 >= 3 * (largura4-1) )
+          {
+            var esquerdaInt4 = larguraInt4 * 3;
+          }
+          else if(esquerda4 >= 2 * (largura4-1))
+          {
+            var esquerdaInt4 = larguraInt4 * 2;
+          }
+          else
+          {
+            var esquerdaInt4 = larguraInt4;
+          }
+        }
+        else
+        {
+          var esquerdaInt4 = 0;
+        }
+        $(this).stop().animate({
+          width: larguraInt4,
+          left: esquerdaInt4
+        }, 350, function() {
+        });
+      });
+    },function(){
+      $( ".day-4 .wc-cal-event" ).stop().each(function() {
+        var largura44 = parseInt($(this).css("width"));
+        var larguraInt44 = parseInt( largura44 / 0.6 ) + 1;
+        var esquerda44 = parseInt($(this).css("left"));
+        if(esquerda44 > 0)
+        {
+          if( esquerda44 >= 3 * largura44 )
+          {
+            var esquerdaInt44 = parseInt(($(this).css("max-width"))) * 3 ;
+          }
+          else if( esquerda44 >= (2 * largura44) )
+          {
+            var esquerdaInt44 = parseInt(($(this).css("max-width"))) * 2 ;
+          }
+          else
+          {
+            var esquerdaInt44 = parseInt($(this).css("max-width"));
+          }
+        }
+        else
+        {
+          var esquerdaInt44 = 0;
+        }
+        $(this).stop().animate({
+          width: larguraInt44,
+          left: esquerdaInt44
+        }, 350, function() {
+        });
+      });
+    }
+    );
+
+    $(".day-5").stop().hover(function(){
+      $( ".day-5 .wc-cal-event" ).stop().each(function() {        
+        var largura5 = parseInt($(this).css("width"));
+        $(this).css("max-width", largura5);
+        var larguraInt5 = parseInt( largura5 * 0.6 );
+        $(this).css("min-width", larguraInt5);
+        var esquerda5 = parseInt($(this).css("left"));
+        if(esquerda5 > 0)
+        {
+          if( esquerda5 >= 3 * (largura5-1) )
+          {
+            var esquerdaInt5 = larguraInt5 * 3;
+          }
+          else if(esquerda5 >= 2 * (largura5-1))
+          {
+            var esquerdaInt5 = larguraInt5 * 2;
+          }
+          else
+          {
+            var esquerdaInt5 = larguraInt5;
+          }
+        }
+        else
+        {
+          var esquerdaInt5 = 0;
+        }
+        $(this).stop().animate({
+          width: larguraInt5,
+          left: esquerdaInt5
+        }, 350, function() {
+        });
+      });
+    },function(){
+      $( ".day-5 .wc-cal-event" ).stop().each(function() {
+        var largura55 = parseInt($(this).css("width"));
+        var larguraInt55 = parseInt( largura55 / 0.6 ) + 1;
+        var esquerda55 = parseInt($(this).css("left"));
+        if(esquerda55 > 0)
+        {
+          if( esquerda55 >= 3 * largura55 )
+          {
+            var esquerdaInt55 = parseInt(($(this).css("max-width"))) * 3 ;
+          }
+          else if( esquerda55 >= (2 * largura55) )
+          {
+            var esquerdaInt55 = parseInt(($(this).css("max-width"))) * 2 ;
+          }
+          else
+          {
+            var esquerdaInt55 = parseInt($(this).css("max-width"));
+          }
+        }
+        else
+        {
+          var esquerdaInt55 = 0;
+        }
+        $(this).stop().animate({
+          width: larguraInt55,
+          left: esquerdaInt55
+        }, 350, function() {
+        });
+      });
+    }
+    );
+
+    $(".day-6").stop().hover(function(){
+      $( ".day-6 .wc-cal-event" ).stop().each(function() {        
+        var largura6 = parseInt($(this).css("width"));
+        $(this).css("max-width", largura6);
+        var larguraInt6 = parseInt( largura6 * 0.6 );
+        $(this).css("min-width", larguraInt6);
+        var esquerda6 = parseInt($(this).css("left"));
+        if(esquerda6 > 0)
+        {
+          if( esquerda6 >= 3 * (largura6-1) )
+          {
+            var esquerdaInt6 = larguraInt6 * 3;
+          }
+          else if(esquerda6 >= 2 * (largura6-1))
+          {
+            var esquerdaInt6 = larguraInt6 * 2;
+          }
+          else
+          {
+            var esquerdaInt6 = larguraInt6;
+          }
+        }
+        else
+        {
+          var esquerdaInt6 = 0;
+        }
+        $(this).stop().animate({
+          width: larguraInt6,
+          left: esquerdaInt6
+        }, 350, function() {
+        });
+      });
+    },function(){
+      $( ".day-6 .wc-cal-event" ).stop().each(function() {
+        var largura66 = parseInt($(this).css("width"));
+        var larguraInt66 = parseInt( largura66 / 0.6 ) + 1;
+        var esquerda66 = parseInt($(this).css("left"));
+        if(esquerda66 > 0)
+        {
+          if( esquerda66 >= 3 * largura66 )
+          {
+            var esquerdaInt66 = parseInt(($(this).css("max-width"))) * 3 ;
+          }
+          else if( esquerda66 >= (2 * largura66) )
+          {
+            var esquerdaInt66 = parseInt(($(this).css("max-width"))) * 2 ;
+          }
+          else
+          {
+            var esquerdaInt66 = parseInt($(this).css("max-width"));
+          }
+        }
+        else
+        {
+          var esquerdaInt66 = 0;
+        }
+        $(this).stop().animate({
+          width: larguraInt66,
+          left: esquerdaInt66
+        }, 350, function() {
+        });
+      });
+    }
+    );
+
+  });
+</script>
+
+<script type="text/javascript">
+function get_time_difference(earlierDate,laterDate)
+{
+       var nTotalDiff = laterDate.getTime() - earlierDate.getTime();
+ 
+       return (nTotalDiff / 1000 / 60);
+
+       /*oDiff.days = Math.floor(nTotalDiff/1000/60/60/24);
+       nTotalDiff -= oDiff.days*1000*60*60*24;
+ 
+       oDiff.hours = Math.floor(nTotalDiff/1000/60/60);
+       nTotalDiff -= oDiff.hours*1000*60*60;
+       
+       oDiff.minutes = Math.floor(nTotalDiff/1000/60);
+       nTotalDiff -= oDiff.minutes*1000*60;
+
+       oDiff.seconds = Math.floor(nTotalDiff/1000);
+ 
+       return oDiff;*/
+ 
+}
+
+function get_time_differenceTotalDias(earlierDate,laterDate)
+{
+       var nTotalDiff = laterDate.getTime() - earlierDate.getTime();
+ 
+       return parseInt((nTotalDiff) / (24 * 60 * 60 * 1000)) + 1;
+}
+
+function atualizaDuracaoMinutos()
+{
+  var $dialogContent = $("#event_edit_container");
+
+  var startField = $dialogContent.find("select[name='start']").val();
+  var dataInicio = new Date(startField);
+
+  var endField = $dialogContent.find("select[name='end']").val();
+  var dataFim = new Date(endField);
+
+  var timeMin = get_time_difference(dataInicio, dataFim);
+  $("#appointment_duration").val(timeMin);
+}
+
+function mudaViews()
+{
+  if($('#calendario_view').css('opacity') == '0')
+  {
+    $('#calendario_view').css('display', 'block');
+    $('#calendario_view').animate({
+        opacity: 1
+      }, 850, function() {
+    });
+
+    $('#magazine').animate({
+        opacity: 0
+      }, 850, function() {
+        $(this).css('display', 'none');
+    });
+
+    $('#capa').animate({
+        opacity: 0
+      }, 850, function() {
+        $(this).css('display', 'none');
+    });
+  }
+  else
+  {
+    // aqui tem de calcular quantas paginas vai andar para a frente para ficar com a mesma data que o calendario
+    var primeiraData = new Date('<%= @appointments[0].appointment_day %>');
+    var ultimaData = new Date('<%= @appointments[@appointments.size - 1].appointment_day %>');
+    // mais 4 para assumir a data do meio do calendario
+    var dif = get_time_differenceTotalDias(primeiraData, dataAtual) + 4;
+    var difMax = get_time_differenceTotalDias(primeiraData, ultimaData);
+    if(dif > 0 && dif <= difMax)
+    {
+      $("#magazine").turn("page", dif); 
+    }
+    else if(dif > difMax)
+    {
+      alert('A data escolhida não tem consultas marcadas e, portanto, não poderá ser apresentada. Lembre-se que o primeiro dia da agenda apresenta a 1ª consulta agendada e o último apresenta a consulta mais recente agendada. Se por algum motivo pensa que a página não está a mostrar os resultados corretos por favor faça refresh da mesma.');
+      $("#magazine").turn("page", 2);
+    }
+    else
+    {
+      $("#magazine").turn("page", 2);
+    }
+
+    $('#calendario_view').animate({
+        opacity: 0
+      }, 850, function() {
+        $(this).css('display', 'none');
+    });
+
+    $('#magazine').css('display', 'block');
+    $('#magazine').animate({
+        opacity: 1
+      }, 850, function() {
+    });
+
+    $('#capa').css('display', 'block');
+    $('#capa').animate({
+        opacity: 1
+      }, 850, function() {
+    });
+  }
+}
+
+function aumentaLargura()
+{
+  $('#change_view').animate({
+      width: 60
+    }, 850, function() {
+  });
+}
+
+function diminuiuLargura()
+{
+  $('#change_view').animate({
+      width: 22
+    }, 850, function() {
+  });
+}
+
+</script>
+
+<style>
+select.select2{
+    position: relative;
+    z-index: 1004 !important;
+    width: 250px !important;
+    height: 26px !important;
+    line-height: 26px;
+    margin-bottom: 0px;
+}
+
+span.select2{
+    position: absolute;
+    bottom: 0;
+    float: left;
+    left: 0;
+    width: 251px;
+    height: 26px;
+    line-height: 26px;
+    text-indent: 10px;
+    background: url(assets/select-bg.gif) no-repeat 0 0;
+    cursor: default;
+    z-index: 1003;
+    text-align: center;
+    color: #777 !important;
+}
+
+label{
+  margin-top: 25px;
+  color: #777;
+  font: 11px/10px "Avenir", sans-serif !important;
+  font-size: 1em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+textarea{
+  width: 100%;
+  margin-left: -3%;
+  color: #454545 !important;
+  padding: 4px;
+  padding-top: 0px;
+  border: 0;
+  background: url("assets/textarea-bg.gif") 0 -7px repeat-x;
+  height: 85px;
+  overflow: hidden;
+  resize: none;
+  font: 11px/24px "Avenir", sans-serif !important;
+  text-align: justify;
+  -webkit-box-shadow: inset 0 0px 0px rgba(0, 0, 0, 0.075);
+  -moz-box-shadow: inset 0 0px 0px rgba(0, 0, 0, 0.075);
+  box-shadow: inset 0 0px 0px rgba(0, 0, 0, 0.075);
+  -webkit-transition: border linear 0.2s, box-shadow linear 0.2s;
+  -moz-transition: border linear 0.2s, box-shadow linear 0.2s;
+  -o-transition: border linear 0.2s, box-shadow linear 0.2s;
+  transition: border linear 0.2s, box-shadow linear 0.2s;
+}
+
+textarea:focus{
+  outline: none;
+}
+</style>

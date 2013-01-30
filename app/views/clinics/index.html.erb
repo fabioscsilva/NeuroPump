@@ -12,7 +12,8 @@
 							<th>Nome</th>
 							<th>Telefone</th>
 							<th>Email</th>
-							<th>Capacidade</th>
+							<th>Subscrição</th>
+							<th>Sessões</th>
 							<th>Estado</th>
 						</tr>
 					</thead>
@@ -20,21 +21,45 @@
 					<tbody>
 						<% @clinics.each do |clinic| %>
 						<tr onmouseover="this.style.cursor = 'pointer'" onclick="location.href='<%= clinic_path(clinic) %>'">
-							<td><%= clinic.name %></td>
+							<td style="color: #0088CC"><%= clinic.name %></td>
 							<td><%= clinic.telephone %></td>
 							<td><%= clinic.email %></td>
+							<td><%= @packagesClinicsHash[clinic.id].package.name %></td>
 							<td>
+
+							<%  
+								@progressBarClass = "progress-success"
+								@spent = 0
+								@appointmentsSpent = 0
+								@percentage = 100
+								@appointmentsTotal = @packagesClinicsHash[clinic.id].package.n_appointments 
+								if @appointmentsTotal == -1
+									@appointmentsTotal = '∞'
+									@spent = @packagesClinicsHash[clinic.id].appointment_token * -1 - 1
+								else
+									@spent = @appointmentsTotal - @packagesClinicsHash[clinic.id].appointment_token 
+								end
+
+								if @appointmentsTotal != '∞'
+									@percentage = @spent / @appointmentsTotal.to_f * 100
+									
+									if (60..79).member?(@percentage)  
+										@progressBarClass = "progress-warning"
+									elsif (80..100).member?(@percentage)
+										@progressBarClass = "progress-danger"
+									end
+								end
+							%>
 							<div class="row-fluid">
 								<div class="span7">
-									<div class="progress">
-										<div class="bar bar-danger" style="width: 100%;"></div>
+									<div class="progress <%= @progressBarClass %>" style="min-width: 80px;">
+										<div class="bar" style="width: <%= @percentage %>%; color: #000; text-shadow: none;text-align: center">
+										<%= @spent %>/<%= @appointmentsTotal %>
+										</div>
 									</div>
 								</div>
-								<div class="span2 offset1">
-									10/10
-								</div>
 							</div></td>
-							<td> <% if clinic.active == true %>
+							<td> <% if clinic.deleted_at == nil %>
 							<p class="text-success">
 								Activa
 							</p> <%else%>
@@ -50,6 +75,7 @@
 			</div>
 			<br>
 			<%= link_to 'Adicionar Clínica',new_clinic_path, :class => "btn btn-primary pull-right" %>
+			<!-- <%= link_to "Label", :controller => :payments, :action => :check %>-->
 
 		</div>
 

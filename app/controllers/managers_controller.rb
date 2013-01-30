@@ -10,7 +10,182 @@ class ManagersController < ApplicationController
     @clinic = manager.clinic
 
     @managers = Manager.all
-
+    
+    
+    neuropsychologists = @clinic.neuropsychologists
+    
+    @appointments = []
+    neuropsychologists.each do |neuropsychologist|
+      @appointments << neuropsychologist.appointments
+    end
+    
+    # get all appointment's statuses
+    appointmentStatuses = Array.new(0)
+    AppointmentStatus.all.each do |status|
+      appointmentStatuses << status.id
+    end
+    
+    # print appointmentStatuses.to_s + "\n \n \n"
+    
+    year = Time.new.year
+    datepart = "date_part('month', appointment_day)"
+    appointmentsValues = Appointment.joins(:neuropsychologist).select(datepart + ", appointments.appointment_status_id, COUNT(*)").where("neuropsychologists.clinic_id = ? AND date_part('year', appointment_day) = ? ", @clinic.id, year.to_s).group(datepart + ", appointments.appointment_status_id").order(datepart + " ASC, appointments.appointment_status_id ASC").all
+    
+    print "\n \n \n \n \n \n \n \n \n \n"
+    print appointmentsValues.to_yaml
+    print "\n \n \n \n \n \n \n \n \n"
+    
+    monthlyVals = Array.new(13)
+    
+    # monthlyVals["Jan"] = appointmentsValues["1"].nil? ? 0 : appointmentsValues["1"]
+    months = Hash.new
+    months[1] = "Janeiro"
+    months[2] = "Fevereiro"
+    months[3] = "Marco"
+    months[4] = "Abril"
+    months[5] = "Maio"
+    months[6] = "Junho"
+    months[7] = "Julho"
+    months[8] = "Agosto"
+    months[9] = "Setembro"
+    months[10] = "Outubro"
+    months[11] = "Novembro"
+    months[12] = "Dezembro"
+    
+    month = 1
+    size = appointmentStatuses.size
+    index = 0
+    c=0
+    aux = Array.new(size)
+    while c<size
+      aux[c] = AppointmentStatus.find(appointmentStatuses[c]).name
+      c+=1
+    end
+    aux.unshift("Months")
+    monthlyVals[0] = aux
+    while month<=12
+      #monthlyVals[months[x]] = appointmentsValues.row(x).nil? ? 0 : appointmentsValues.row(x).count
+      c = 0
+      aux = Array.new(size)
+      while c<size
+        
+        #aux[c] = appointmentsValues.where("appointment_status_id = ? AND date_part = ?", appointmentStatuses[c], x)
+        if (index < appointmentsValues.size)
+          
+          #print appointmentsValues[index].date_part.to_s + " <- valor de mes\n"
+          #print appointmentsValues[index].appointment_status_id.to_s + " <- valor de status\n"
+  
+          #print month.to_s + " <- valor a comparar (mes)\n"
+          #print appointmentStatuses[c].to_s + " <- valor a comparar (status)\n"
+          
+          #print index.to_s + " <- valor de indice\n"
+          
+          
+          if ((appointmentsValues[index].date_part.to_s == month.to_s) && (appointmentsValues[index].appointment_status_id.to_s == appointmentStatuses[c].to_s))
+            aux[c] = appointmentsValues[index].count.to_i
+            index += 1
+          else
+            aux[c] = 0
+          end
+        else
+          aux[c] = 0
+        end
+        
+        c += 1
+      end
+      
+      monthlyVals[month] = aux
+      aux.unshift(months[month])
+      #print monthlyVals[month-1].to_s + "\n\n"
+      
+      month = month + 1
+    end
+    
+    #print monthlyVals.to_s
+    
+    print "\n \n \n \n \n \n \n \n \n"
+    print monthlyVals.to_yaml + "\n"
+    print "\n \n \n \n \n \n \n \n \n"
+    
+    
+    
+    @monthlyValues = monthlyVals
+    
+    # Appointment.select("date_part('month', appointment_day), COUNT(date_part('month', appointment_day))").group("date_part('month', appointment_day)")
+    
+    
+    
+    
+    
+    # Ages Graph
+    aggrClause = "floor((EXTRACT(year from AGE(NOW(), date_of_birth)))/10)"
+    agesValues = Patient.select(aggrClause + " as agerange, COUNT(*)").group(aggrClause).order(aggrClause).all
+    
+    print "\n \n \n \n \n \n \n \n \n ##########"
+    print agesValues.to_yaml
+    print "\n \n \n \n \n \n \n \n \n ##########"
+    
+    agesRanges = [
+      [0,9],
+      [10,19],
+      [20,29],
+      [30,39],
+      [40,49],
+      [50,59],
+      [60,69],
+      [70,79],
+      [80,89],
+      [90,99],
+      [100, 1000]
+    ]
+    
+    @agesArray = [
+      ["0-9",0],
+      ["10-19",0],
+      ["20-29",0],
+      ["30-39",0],
+      ["40-49",0],
+      ["50-59",0],
+      ["60-69",0],
+      ["70-79",0],
+      ["80-89",0],
+      ["90-99",0],
+      ["100+",0]
+    ]
+    
+    agesIndex = 0
+    agesRanges.each do |range|
+      agesValues = Patient.select("COUNT(*)").where("EXTRACT(year from AGE(NOW(), date_of_birth)) >= " + range[0].to_s + " AND EXTRACT(year from AGE(NOW(), date_of_birth)) <= " + range[1].to_s).where("patients.clinic_id = " + @clinic.id.to_s)
+      
+      @agesArray[agesIndex][1] = Integer(agesValues[0].count)
+      agesIndex += 1
+      
+      # print "\n ## \n" + agesValues[0].count.to_s
+    end
+    
+    @agesArray.unshift(["Intervalo de Idades", "Quantidade"])
+    
+    
+    # Sex Graph
+    gendersValues = Patient.joins(:gender).select("COUNT(*) as count, genders.description as description").where("patients.clinic_id = " + @clinic.id.to_s).group("genders.description")
+    
+    @gendersArray = Array.new
+    gendersDescriptions = Array.new
+    gendersQuantities = Array.new
+    gendersDescriptions.push("")
+    gendersQuantities.push("")
+    gendersValues.each do |val|
+      gendersDescriptions.push(val.description)
+      gendersQuantities.push(Integer(val.count))
+    end
+    
+    @gendersArray.push(gendersDescriptions)
+    @gendersArray.push(gendersQuantities)
+        
+    print "\n\n\n\n" + @gendersArray.to_s + "\n\n\n"
+    
+    
+    
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @managers }

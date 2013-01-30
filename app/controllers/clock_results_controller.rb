@@ -1,4 +1,6 @@
 class ClockResultsController < ApplicationController
+  before_filter :authenticate_login!
+  load_and_authorize_resource
   # GET /clocks
   # GET /clocks.json
   def index
@@ -40,11 +42,23 @@ class ClockResultsController < ApplicationController
   # POST /clocks
   # POST /clocks.json
   def create
-    @clock = ClockResult.new(params[:clock])
+    @clock = ClockResult.new(params[:clock_result])
+    appoint_id = session["current_appointment"].to_f
+    if(!appoint_id.blank?)
+      ev_test = EvaluationTest.find_by_name("clock")
+      app = AppointmentPlan.where(:appointment_id => appoint_id, :evaluation_test_id => ev_test.id)
+      @clock.appointment_plan_id = app.first.id
+    end
 
     respond_to do |format|
       if @clock.save
-        format.html { redirect_to @clock, notice: 'Clock was successfully created.' }
+         if session["test_sequence"].blank?
+            appID = session["current_appointment"]
+            session["current_appointment"] = nil
+            format.html { redirect_to :controller => "evaluation_results", :action => "new" , :appID => appID}
+          else
+            format.html { redirect_to appointment_plans_path, notice: 'Teste do Relogio - Resultados gravados com sucesso.' }
+          end          
         format.json { render json: @clock, status: :created, location: @clock }
       else
         format.html { render action: "new" }

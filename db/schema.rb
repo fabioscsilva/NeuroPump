@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130116160432) do
+ActiveRecord::Schema.define(:version => 20130116142756) do
 
   create_table "administrators", :force => true do |t|
     t.string   "name",        :null => false
@@ -45,6 +45,7 @@ ActiveRecord::Schema.define(:version => 20130116160432) do
   create_table "appointments", :force => true do |t|
     t.datetime "appointment_day",                       :null => false
     t.text     "description"
+    t.integer  "duration",              :default => 60
     t.integer  "patient_id"
     t.integer  "secretary_id"
     t.integer  "neuropsychologist_id"
@@ -52,7 +53,6 @@ ActiveRecord::Schema.define(:version => 20130116160432) do
     t.integer  "appointment_status_id"
     t.datetime "created_at",                            :null => false
     t.datetime "updated_at",                            :null => false
-    t.integer  "duration",              :default => 60
   end
 
   create_table "civil_statuses", :force => true do |t|
@@ -140,6 +140,7 @@ ActiveRecord::Schema.define(:version => 20130116160432) do
   create_table "logins", :force => true do |t|
     t.string   "email",                                 :null => false
     t.string   "encrypted_password",                    :null => false
+    t.datetime "deleted_at"
     t.datetime "created_at",                            :null => false
     t.datetime "updated_at",                            :null => false
     t.string   "reset_password_token"
@@ -150,7 +151,6 @@ ActiveRecord::Schema.define(:version => 20130116160432) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
-    t.datetime "deleted_at"
     t.integer  "clinic_id"
   end
 

@@ -6,11 +6,11 @@ class HomeController < ApplicationController
       elsif current_login.has_role? :secretary
           redirect_to patients_path
       elsif current_login.has_role? :administrator
-        redirect_to clinics_path
+        redirect_to administrators_path
       elsif current_login.has_role? :patient
         redirect_to patient_path(Patient.find_by_login_id(current_login.id))
       elsif current_login.has_role? :neuropsychologist
-        redirect_to patients_path
+        redirect_to appointments_path
       end
     else
       redirect_to :controller => 'devise/sessions', :action => 'new'

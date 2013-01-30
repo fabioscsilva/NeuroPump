@@ -17,6 +17,8 @@ NeuroPump::Application.configure do
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.delivery_method = :smtp
 
+  config.action_mailer.default_url_options = { :host => 'localhost:3000' }
+
   config.action_mailer.smtp_settings =  {
       :enable_starttls_auto => true,
       :address        => 'smtp.gmail.com',
@@ -26,6 +28,9 @@ NeuroPump::Application.configure do
       :user_name      => "support@neuropump.com",
       :password       => "pumpneuro"
   }
+
+  #O Devise parece precisar disto para enviar o e-mail para recuperar password.
+  #config.action_mailer.default_url_options = { :host => 'localhost:3000' }
 
   config.action_mailer.perform_deliveries = true
   config.action_mailer.raise_delivery_errors = true

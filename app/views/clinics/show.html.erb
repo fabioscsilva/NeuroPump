@@ -3,54 +3,18 @@
 		<div class="span10 offset1">
 			<div class="span4 pull-right offset1">
 				<div style="margin-top: 60px;">
-					<h6 style="color: lightgray; font-weight: normal; text-transform: uppercase;">Capacidade da clínica</h6>
+					<h6 style="color: lightgray; font-weight: normal; text-transform: uppercase;">Consumos da Clínica</h6>
 					<hr/>
 					<div class="row-fluid">
 						<div class="span10">
-							Pacientes
-							<div class="progress progress-success">
-								<div class="bar" style="width: 30%;"></div>
+							Consultas
+							<div class="progress <%= @progressBarClass %>">
+								<div class="bar" style="width: <%= @appointmentsRatio %>%;"></div>
 							</div>
 						</div>
 						<div class="span2">
 							<br/>
-							3/10
-						</div>
-					</div>
-					<div class="row-fluid">
-						<div class="span10">
-							Neuropsicólogos (as)
-							<div class="progress progress-warning">
-								<div class="bar" style="width: 60%;"></div>
-							</div>
-						</div>
-						<div class="span2">
-							<br/>
-							6/10
-						</div>
-					</div>
-					<div class="row-fluid">
-						<div class="span10">
-							Secretários (as)
-							<div class="progress progress-danger">
-								<div class="bar" style="width: 80%;"></div>
-							</div>
-						</div>
-						<div class="span2">
-							<br/>
-							8/10
-						</div>
-					</div>
-					<div class="row-fluid">
-						<div class="span10">
-							Consultas Agendadas
-							<div class="progress progress-danger">
-								<div class="bar" style="width: 80%;"></div>
-							</div>
-						</div>
-						<div class="span2">
-							<br/>
-							8/10
+							<%= @appointmentsLeft %>/<%= @nAppointments %>
 						</div>
 					</div>
 				</div>
@@ -97,7 +61,7 @@
 					<div class="span3">
 						<b>Estado</b>
 					</div>
-					<% if @clinic.active == true %>
+					<% if @clinic.deleted_at == nil %>
 					<div class="span9">
 						Ativa
 					</div>
@@ -132,15 +96,18 @@
 			<br/>
 			<div class="span12">
 				<h3>Historial de Pagamentos</h3>
-
-				<div class="span12" id="chart_div3" style="height: 300px;"></div>
+			    <%if current_login.has_role? :administrator %>
+		            <%= render 'paymentsAdministrator' %>
+		        <%elsif current_login.has_role? :manager %>
+		            <%= render 'paymentsManager' %>
+		        <%end%>
 			</div>
 
 			<div class="row-fluid span12">
 				<%= link_to "Editar" ,edit_clinic_path(@clinic),  :class => 'btn btn-warning span2', :style => 'margin-top:10px;' %>
 
 				<% if current_login.has_role? :administrator%>
-					<% if @clinic.active == true%>
+					<% if @clinic.deleted_at == nil%>
 						<%= link_to "Desativar" , clinic_path(@clinic), :method => :delete, :confirm => "Tem a certeza?", :class => 'btn btn-danger span2', :style => 'margin-top:10px;' %>
 					<% else %>
 						<%= link_to "Ativar" , clinic_path(@clinic), :method => :delete, :confirm => "Tem a certeza?", :class => 'btn btn-success span2', :style => 'margin-top:10px;' %>

@@ -21,7 +21,7 @@
 							<td><%= secretary.name %></td>
 							<td><%= secretary.login.email %></td>
 							<td><%= secretary.mobilephone %></td>
-							<td> <% if secretary.active == true  %>
+							<td> <% if secretary.login.deleted_at == nil  %>
 								<p class="text-success">
 									Ativo
 								</p> <%else%>

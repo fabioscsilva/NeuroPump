@@ -1,6 +1,17 @@
 NeuroPump::Application.routes.draw do
 
+  resources :evaluation_results
+
   resources :wms_results
+
+  resources :packages
+
+  match "packages_clinics/update" => 'packages_clinics#update'
+  resources :packages_clinics
+  
+  resources :evaluation_tests
+  
+  resources :evaluation_results
 
   resources :wais_results
   match 'downloadWais' => 'wais_results#download'
@@ -13,6 +24,8 @@ NeuroPump::Application.routes.draw do
   match 'downloadClock' => 'clock_results#download'
 
   resources :appointments
+  
+  resources :appointment_plans
 
   authenticated :user do
     root :to => 'home#index'
@@ -32,8 +45,8 @@ NeuroPump::Application.routes.draw do
 
   resources :clinical_histories
 
-  match "patients/:id/games/:xid", :as => "stimulation", :controller => 'patients', :id => /[1-9]+/, :action => 'stimulation'
-  match "patients/:id/games", :as => "games", :controller => 'patients', :id => /[1-9]+/, :action => 'games'
+  match "patients/:id/games/:xid", :as => "stimulation", :controller => 'patients', :id => /[0-9]+/, :action => 'stimulation'
+  match "patients/:id/games", :as => "games", :controller => 'patients', :id => /[0-9]+/, :action => 'games'
   resources :patients 
 
   resources :secretaries
@@ -46,8 +59,12 @@ NeuroPump::Application.routes.draw do
 
   resources :managers
 
+  match "payments/generate" => 'payments#generate'
+  match "payments/check" => 'payments#check'
   resources :payments
 
+  match "clinics/changePackage" => 'clinics#changePackage'
+  match "clinics/changePackageSubmit" => 'clinics#changePackageSubmit'
   resources :clinics
 
   resources :genders

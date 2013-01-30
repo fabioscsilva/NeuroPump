@@ -4,4 +4,8 @@ class Payment < ActiveRecord::Base
   attr_accessible :creation_date, :due_date, :payed, :payment_date, :reference, :value
   
   validates_presence_of :creation_date, :due_date, :reference, :value
+
+  scope :in_clinic, lambda { |clinic_id| 
+  	where(:clinic_id => clinic_id)
+  }
 end

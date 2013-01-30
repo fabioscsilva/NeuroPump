@@ -4,26 +4,85 @@
       google.load("visualization", "1", {packages:["corechart"]});
       google.setOnLoadCallback(drawChart2);
       function drawChart2() {
-        var data2 = google.visualization.arrayToDataTable([
-          ['Termo', 'Total', 'Máximo'],
-          ['Pacientes',  <%= @clinic.patients.count %>, 20],
-          ['Secretários', <%= @clinic.secretaries.count %>, 10],
-          ['Neuropsicólogos', <%= @clinic.neuropsychologists.count %>, 5],
-          ['Consultas', 13, 20]
-        ]);
-
-        var options2 = {
-          title: 'Gestão de recursos',
-          vAxis: {title: '',  titleTextStyle: {color: 'red'}}
+        var appointmentsData = google.visualization.arrayToDataTable(
+          <%=
+            @monthlyValues.to_s.html_safe
+          %>
+        );
+        
+        var appointmentsOptions = {
+          title: 'Visão Mensal das Consultas do Ano Atual',
+          vAxis: {minValue: 0}
         };
 
-        var chart2 = new google.visualization.BarChart(document.getElementById('chart_div'));
-        chart2.draw(data2, options2);
+        var appointmentsChart = new google.visualization.BarChart(document.getElementById('chart_div_appointments'));
+        appointmentsChart.draw(appointmentsData, appointmentsOptions);
         
-        var chart3 = new google.visualization.BarChart(document.getElementById('chart_div2'));
-        chart3.draw(data2, options2);
-      }
+        
+       /****/
+       var resourcesData = google.visualization.arrayToDataTable([
+         ['', 'Pacientes', 'Neuropsicólogos', 'Secretários'],
+         ['', <%= @clinic.patients.count %>, <%= @clinic.neuropsychologists.count %>, <%= @clinic.secretaries.count %>]
+        ]);
+
+        var resourcesOptions = {
+          title: 'Número de Recursos Humanos/Pacientes',
+          'chartArea':{width:"50%"},
+          vAxis: {minValue: 0}
+        };
+       
+       var resourcesChart = new google.visualization.ColumnChart(document.getElementById('chart_div_resources'));
+        resourcesChart.draw(resourcesData, resourcesOptions);
+      
+      
+      /******/
+     var agesData = google.visualization.arrayToDataTable(
+          <%=
+            @agesArray.to_s.html_safe
+          %>
+        );
+        
+        var agesOptions = {
+          title: 'Idades dos Pacientes',
+          hAxis: {title: 'Quantidade', minValue: 0},
+          vAxis: {title: 'Intervalo de Idades (anos)'},
+          'chartArea':{width:"60%"}
+        };
+
+        var agesChart = new google.visualization.BarChart(document.getElementById('chart_div_ages'));
+        agesChart.draw(agesData, agesOptions);
+        
+        
+     /******/
+     var gendersData = google.visualization.arrayToDataTable(
+          <%=
+            @gendersArray.to_s.html_safe
+          %>
+        );
+        
+        var gendersOptions = {
+          title: 'Género dos Pacientes',
+          hAxis: {title: 'Género'},
+          vAxis: {title: 'Quantidade', minValue: 0},
+          'chartArea':{width:"60%"}
+        };
+
+        var gendersChart = new google.visualization.ColumnChart(document.getElementById('chart_div_genders'));
+        gendersChart.draw(gendersData, gendersOptions);
+    }
+     
     </script>
+
+    <%
+    count = 0 
+    @clinic.neuropsychologists.each do |neuro|
+      neuro.appointments.each do |app|
+        if app.appointment_status.name == "Marcada"
+          count += 1
+        end
+      end
+    end
+    %>
 
 <div class="container row-fluid">
 
@@ -33,72 +92,24 @@
 			<a class="span2 stat-column" href="#"> <span class="number"><%= @clinic.patients.count %></span> <span>Pacientes</span> </a>
 			<a class="span2 stat-column" href="#"> <span class="number"><%= @clinic.secretaries.count %></span> <span>Secretários</span> </a>
 			<a class="span2 stat-column" href="#"> <span class="number"><%= @clinic.neuropsychologists.count %></span> <span>Neuropsicólogos</span> </a>
-			<a class="span2 stat-column" href="#"> <span class="number"> !! </span> <span>Consultas agendadas</span> </a>
+			<a class="span2 stat-column" href="#"> <span class="number"> <%= count %> </span> <span>Consultas agendadas</span> </a>
 		</div>
 	</div>
+
+    <div class="row-fluid">
+        <div class="span6" id="chart_div_appointments" style="height: 500px;">
+        </div>
+        <div class="span6" id="chart_div_resources" style="height: 500px;">
+      </div>
+    </div>
 
 	<div class="row-fluid">
-			<div class="span6" id="chart_div" style="height: 500px;">
+			<div class="span6" id="chart_div_ages" style="height: 500px;">
 			</div>
 
-			<div class="span6 pull-right" id="chart_div2" style="height: 500px;">
+			<div class="span6 pull-right" id="chart_div_genders" style="height: 500px;">
 			</div>
 	</div>
-
-		<div class="row-fluid">
-			<div class="span6 pull-left">
-				<h4>Lista de Secretários</h4>
-
-				<div class="accordion" id="accordion">
-					<% i = 0 %>
-					<% @clinic.secretaries.each do |secretary| %>
-					<% i=i+1 %>
-					<div class="accordion-group">
-						<div class="accordion-heading">
-							<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapse<%= i %>"> <%= secretary.name %> </a>
-						</div>
-						<div id="collapse<%= i %>" class="accordion-body collapse">
-							<div class="accordion-inner">
-								Email: <%= secretary.login.email %>
-								<br/>
-								Data de Nascimento: <%= secretary.date_of_birth %>
-								<br/>
-								Nº de consultas marcadas: !!
-							</div>
-						</div>
-					</div>
-					<% end %>
-				</div>
-			</div>
-
-			<div class="span6 pull-right">
-
-				<h4>Lista de Neuropsicólogos</h4>
-
-				<div class="accordion" id="accordion2">
-					<% @clinic.neuropsychologists.each do |neuropsychologist| %>
-					<% i=i+1 %>
-					<div class="accordion-group">
-						<div class="accordion-heading">
-							<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapse<%= i %>"> <%= neuropsychologist.name %> </a>
-						</div>
-						<div id="collapse<%= i %>" class="accordion-body collapse">
-							<div class="accordion-inner">
-								Email: <%= neuropsychologist.login.email %>
-								<br/>
-								Data de Nascimento: <%= neuropsychologist.date_of_birth %>
-								<br/>
-								Nº de consultas marcadas: !!
-							</div>
-						</div>
-					</div>
-					<% end %>
-				</div>
-			</div>
 		</div>
-
-		<h2>Historial de Pagamentos</h2>
-
-		<!--div class="span12" id="chart_div3" style="height: 300px; margin-bottom: 60px;"></div-->
 	</div>
 

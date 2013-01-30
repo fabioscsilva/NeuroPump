@@ -67,7 +67,7 @@ class PatientsController < ApplicationController
   def create
     login = Login.new
     login.email = params[:patient][:email]
-    login.password = "passwordGerada" 
+    login.password = SecureRandom.hex(3)
 
     login.add_role :patient
 

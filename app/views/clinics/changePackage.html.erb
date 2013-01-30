@@ -1,0 +1,58 @@
+
+<h2>Mudar Subscrição</h2>
+
+<p>Atenção, so pode alterar o seu subscrição para um superior</p>
+    <% @packages.each do |p| %>
+    <% if p.price > @packagePrice %>
+
+    
+    <div class="table_container">
+      <table border = "1">
+        <tr> <th>
+            <%= p.name %>
+          </th> 
+        </tr>
+        <tr> <td>
+            Preço: <%= p.price %>
+          </td> 
+        </tr>
+        <tr> <td>
+            Sessões por Semana:
+            <%if p.n_appointments == -1 %>
+            <%= "Illimitado" %>
+            <%elsif%>
+            <%= p.n_appointments %>
+            <%end%>
+
+          </td> 
+        </tr>
+        <tr> <td>
+            Exercícios:
+            <%if p.n_exercises == -1 %>
+            <%= "Illimitado" %>
+            <%elsif%>
+            <%= p.n_exercises %>
+            <%end%>
+          </td> 
+        </tr>
+        <tr> <td>
+            Avaliações:
+            <%if p.n_evaluations == -1 %>
+            <%= "Illimitado" %>
+            <%elsif%>
+            <%= p.n_evaluations %>
+            <%end%>
+          </td> 
+        </tr>
+      </table>
+      <input type="radio" value = "<%= p.id %>" id = "<%= p.id %>" name= "packageType" required />
+    </div>
+    <% end %>
+    <%end%>
+    </br>
+    <div>
+      <%= button_to "Cancelar", clinic_path( Manager.first(:conditions => "login_id = #{current_login.id}").clinic), :method => "get", :class => "btn btn-warning span2" %>
+    </div>
+    <div>
+      <%= button_to "Submeter", {:controller => :clinics, :action => :changePackageSubmit}, :class => "btn btn-success span2", :onclick => "return getCheckedRadio();" %>
+    </div>

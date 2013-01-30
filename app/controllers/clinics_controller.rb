@@ -1,13 +1,21 @@
 class ClinicsController < ApplicationController
-  before_filter :authenticate_login!
-  load_and_authorize_resource
+  before_filter :authenticate_login!, :except => :new
+  #load_and_authorize_resource
   # GET /clinics
   # GET /clinics.json
   def index
+    authorize! :index, @clinic
+
     if current_login.has_role? :manager
-      @clinics = Clinic.where(:active => true)
+      @clinics = Clinic.joins(:login).where("deleted_at IS NULL")
     elsif current_login.has_role? :administrator
       @clinics = Clinic.all
+    end
+
+    @packagesClinicsHash = Hash.new;
+
+    @clinics.each do |c|
+      @packagesClinicsHash[c.id] = PackagesClinic.where('clinic_id' => c.id).first;
     end
 
     respond_to do |format|
@@ -19,6 +27,40 @@ class ClinicsController < ApplicationController
   # GET /clinics/1
   # GET /clinics/1.json
   def show
+    @clinic = Clinic.find(params[:id])
+    authorize! :show, @clinic
+    @payments = Payment.in_clinic(@clinic.id).order('creation_date DESC').all
+    
+    @package = Package.joins(:packages_clinics).where("packages_clinics.clinic_id = " + @clinic.id.to_s).first
+    @packageClinic = PackagesClinic.joins(:clinic).where("packages_clinics.clinic_id = " + @clinic.id.to_s).first
+    
+    @nAppointments = @package.n_appointments
+    @appointmentsLeft = @packageClinic.appointment_token    
+    
+    if @nAppointments > 0
+      @appointmentsRatio = (@nAppointments-@appointmentsLeft)/@nAppointments*100
+    else
+      @appointmentsRatio = 100
+      @nAppointments = 0x221E.chr
+      @appointmentsLeft = @appointmentsLeft * -1 - 1
+    end
+    
+    @progressBarClass = "progress-success"
+    
+    if @nAppointments != 0x221E.chr
+      if (60..79).member?(@appointmentsRatio)  
+        @progressBarClass = "progress-warning"
+      elsif (80..100).member?(@appointmentsRatio)
+        @progressBarClass = "progress-danger"
+      end
+    end
+    
+    
+    
+    print "\n\n\n\n\n\n\n\ ################## \n" + @nAppointments.to_s + "\n"
+    print @appointmentsLeft.to_s + "\n"
+    print @appointmentsRatio.to_s + "\n\n\n\n\n\n\n\n\n\n"
+    
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @clinic }
@@ -29,6 +71,8 @@ class ClinicsController < ApplicationController
   # GET /clinics/new.json
   def new
     @clinic = Clinic.new
+    @packages = Package.all
+    @pageType = "new"
 
     respond_to do |format|
       format.html # new.html.erb
@@ -36,33 +80,151 @@ class ClinicsController < ApplicationController
     end
   end
 
+  def changePackage
+    @packages = Package.all
+
+    manager = Manager.first(:conditions => "login_id = #{current_login.id}")
+    @cID = manager.clinic_id
+    clinic = Clinic.find(@cID)
+
+    p = Payment.where(:clinic_id => @cID).where(:payed => false).count
+    if p > 0
+      flash[:error] = "Nao pode mudar a sua subscricap o ate efetuar todos os pagamentos em atraso!"
+      respond_to do |format|
+        format.html {redirect_to edit_clinic_path(clinic)}
+        end
+    else
+      packageClinic = PackagesClinic.where(:clinic_id => @cID).first
+      packageID = packageClinic.package_id
+      @bestPackageID = Package.order("id DESC").first.id
+      bestPackagePrice = Package.order("price DESC").first.price
+      @packagePrice = packageClinic.package.price
+
+      if @packagePrice >= bestPackagePrice
+        flash[:error] = "Nao existe melhor subscricao do que a sua clinica ja tem"
+        respond_to do |format|
+        format.html {redirect_to edit_clinic_path(clinic)}
+        end
+      end
+
+      
+    
+    end
+
+      
+
+  end
+
+  def changePackageSubmit
+    packageType = params[:packageType]
+    p = Package.find(packageType.to_i)
+    idP = p.id
+    tokenNum = p.n_appointments
+    price = p.price
+
+
+    manager = Manager.first(:conditions => "login_id = #{current_login.id}")
+    cID = manager.clinic_id
+    packages_clinic = PackagesClinic.where(:clinic_id => @cID).first
+    packages_clinic.appointment_token = tokenNum
+    packages_clinic.start_date = DateTime.now.to_date
+    packages_clinic.week = 1
+    packages_clinic.package_id = idP
+
+    ref = rand(999999999).to_s.center(9, rand(9).to_s);
+    ent = 27035
+
+    @clinic = Clinic.find(cID)
+    email = Login.find(manager.login_id)
+
+     respond_to do |format|
+      if packages_clinic.save
+        UserMailer.send_email_managerUpdate(email.to_s,@clinic.name.to_s,ref.to_s, ent.to_s, price.to_s).deliver
+        format.html { redirect_to @clinic, notice: 'Subscricao da clinica mudado com successo.' }
+      else
+        format.html { redirect_to @clinic, notice: 'Subscricao da clinica nao foi mudado com successo' }
+      end
+    end
+
+  end
   # GET /clinics/1/edit
   def edit
-
+    @clinic = Clinic.find(params[:id])
+    authorize! :edit, @clinic
+    @pageType = "edit"
+    @clinic.mobilephone = Manager.where(:clinic_id => @clinic.id).first.mobilephone
   end
 
   # POST /clinics
   # POST /clinics.json
   def create
-    admin_id = params[:clinic].delete(:administrator_id)
-    @clinic = Clinic.new(params[:clinic])
-    @clinic.active = true;
-    @clinic.administrator_id = admin_id
+  
+   
+    ref = rand(999999999).to_s.center(9, rand(9).to_s);
+    ent = 27035
 
-    respond_to do |format|
-      if @clinic.save
-        format.html { redirect_to @clinic, notice: 'Clinica criada com sucesso.' }
-        format.json { render json: @clinic, status: :created, location: @clinic }
-      else
-        format.html { render action: "new" }
-        format.json { render json: @clinic.errors, status: :unprocessable_entity }
+    login = Login.new
+    login.email = params[:clinic][:email]
+    login.password = "passwordGerada"
+    login.add_role :manager
+
+    manager = Manager.new
+    manager.telephone = params[:clinic][:telephone]
+    manager.mobilephone = params[:clinic][:mobilephone]
+
+    packageType = params[:packageType]
+    p = Package.find(packageType.to_i)
+    idP = p.id
+    tokenNum = p.n_appointments
+    price = p.price
+ 
+
+    packages_clinic = PackagesClinic.new
+    packages_clinic.appointment_token = tokenNum
+    packages_clinic.start_date = DateTime.now.to_date
+    packages_clinic.week = 1
+    packages_clinic.package_id = idP
+
+    @clinic = Clinic.new(params[:clinic])
+
+    flag = true
+    begin
+      Manager.transaction do
+        PackagesClinic.transaction do
+          Clinic.transaction do
+            Login.transaction do
+              login.save
+              manager.login_id = login.id
+              @clinic.save
+              packages_clinic.clinic_id = @clinic.id
+              packages_clinic.save
+              manager.clinic_id = @clinic.id
+              manager.save
+            end
+          end
+        end
       end
+    rescue ActiveRecord::RecordInvalid => invalid
+      flag = false
+    end
+
+    if flag == true
+      respond_to do |format|
+        UserMailer.send_email_manager(login.email.to_s,login.password.to_s,@clinic.name.to_s,ref.to_s, ent.to_s, price.to_s).deliver
+        format.html { redirect_to @clinic, notice: 'Clinica criado com successo.' }
+      end
+    else
+      respond_to do |format| 
+          format.html { render action: "new", notice: 'Clinica nao foi criado com successo' }
+        end
     end
   end
 
   # PUT /clinics/1
   # PUT /clinics/1.json
   def update
+    @clinic = Clinic.find(params[:id])
+    authorize! :update, @clinic
     #raise params.inspect
     #admin_id = params[:clinic].delete(:administrator_id)
     
@@ -83,12 +245,13 @@ class ClinicsController < ApplicationController
   # DELETE /clinics/1
   # DELETE /clinics/1.json
   def destroy
-    #authorize! :index, @login, :message => 'Nao autorizado!'
     @clinic = Clinic.find(params[:id])
-    if @clinic.active == true 
-      @clinic.update_attribute(:active ,false)
+    authorize! :destroy, @clinic
+    #authorize! :index, @login, :message => 'Nao autorizado!'
+    if @clinic.deleted_at == nil
+      @clinic.update_attribute(:deleted_at ,Time.now)
     else
-       @clinic.update_attribute(:active ,true)
+       @clinic.update_attribute(:deleted_at ,nil)
     end
 
     respond_to do |format|

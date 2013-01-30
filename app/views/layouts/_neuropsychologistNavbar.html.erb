@@ -2,9 +2,7 @@
 
 <!-- <% secretary = Secretary.first(:conditions => "login_id = #{current_login.id}") %> -->
 <% @neuropsychologist = Neuropsychologist.first(:conditions => "login_id = #{current_login.id}") %>
-<li>
-	<%= link_to "Home", "#" %>
-</li>
+
 <li>
 	<%= link_to('Sessões', appointments_path) %>
 </li>
@@ -13,7 +11,7 @@
 </li>
 <ul class="nav pull-right">
 	<li id="fat-menu" class="dropdown">
-		<a href="#" id="drop3" role="button" class="dropdown-toggle" data-toggle="dropdown"><b class="caret"></b></a>
+		<a href="#" id="drop3" role="button" class="dropdown-toggle" data-toggle="dropdown"><%= image_tag @neuropsychologist.photo.url, :size => "21x21" %> <%= @neuropsychologist.name %> <b class="caret"></b></a>
 		<ul class="dropdown-menu" role="menu" aria-labelledby="drop3">
 			<li>
 				<%= link_to "Ver Perfil", neuropsychologist_path(@neuropsychologist) %>
@@ -28,3 +26,7 @@
 		</ul>
 	</li>
 </ul>
+
+<script>
+	$('.dropdown-toggle').dropdown()
+</script>

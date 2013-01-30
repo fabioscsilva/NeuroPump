@@ -5,7 +5,6 @@ gem 'rails', '3.2.8'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-# gem 'sqlite3'
 gem 'pg'
 #gem 'activerecord-postgresql-adapter'
 gem 'simple_form'
@@ -25,17 +24,28 @@ group :assets do
 
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 
-
-
-group :production do
+group :production do  
   gem 'therubyracer', :platforms => :ruby
 end
+
+# gem 'sqlite3'
+# group :development, :test do
+  # gem 'rspec-rails'
+  # gem 'factory_girl_rails'
+# end
+# group :test do
+  # gem 'faker'
+  # gem 'capybara'
+  # gem 'guard-rspec'
+  # gem 'launchy'
+# end
+
 
   gem 'uglifier', '>= 1.0.3'
   
   gem 'jquery-datatables-rails'
-  gem 'bootstrap-sass'
-  gem 'bootswatch-rails'
+  # gem 'bootstrap-sass'
+  # gem 'bootswatch-rails'
   
   # gem 'twitter-bootstrap-rails'
   # gem 'less-rails-bootstrap'

@@ -1,67 +1,237 @@
-    <div class="container">
-    <div class="row-fluid">
-    <div class="span8 offset2" style="padding: 40px;padding-right:80px;padding-top: 20px;-webkit-box-shadow: 0 2px 10px rgba(0, 0, 0, .25);-moz-box-shadow: 0 2px 10px rgba(0,0,0,.25);box-shadow: 0 2px 10px rgba(0, 0, 0, .25);background-color: white;">
+<!-- Updated by Fábio Silva - 05/01/2013 -->
+<%= form_for(@patient) do |f| %>
+<% if @patient.errors.any? %>
+<div id="error_explanation">
+	<h2><%= pluralize(@patient.errors.count, "error") %> prohibited this patient from being saved:</h2>
 
-    <div class="span4 pull-right">
-      <img style="margin-top: 10px;" src=<%= @patient.photo %> >
-      <%= link_to "Editar", edit_patient_path(@patient), :method => "get", :class => "btn btn-success", :style => "margin-top:10px;width:100%;" %>
-    </div>
+	<ul>
+		<% @patient.errors.full_messages.each do |msg| %>
+		<li>
+			<%= msg %>
+		</li>
+		<% end %>
+	</ul>
+</div>
+<% end %>
 
-    <div class="span8">
-      <h3 style="margin-bottom: 30px;"><%= @patient.name %></h3>
-      <div class="row-fluid">
-        <div class="span3"><b>Morada</b></div>
-        <div class="span9"><%= @patient.address %></div>
-      </div>
-      <div class="row-fluid">
-        <div class="span3"><b>BI</b></div>
-        <div class="span9"><%= @patient.identification_code %></div>      
-      </div>
-      <div class="row-fluid">
-        <div class="span3"><b>Sexo</b></div>
-        <div class="span9"><%= @patient.gender.description %></div>
-      </div>
-      <div class="row-fluid">
-        <div class="span3"><b>Data de Nascimento</b></div>
-        <div class="span9"><%= @patient.date_of_birth %></div>
-      </div>
-      <div class="row-fluid">
-        <div class="span3"><b>Telefone</b></div>
-        <div class="span9"><%= @patient.telephone %></div>      
-      </div>
-      <div class="row-fluid">
-        <div class="span3"><b>Telemóvel</b></div>
-        <div class="span9"><%= @patient.mobilephone %></div>      
-      </div>
-      <div class="row-fluid">
-        <div class="span3"><b>Email</b></div>
-        <div class="span9"><%= @patient.login.email %></div>      
-      </div>
-      <div class="row-fluid">
-        <div class="span3"><b>Estado civil</b></div>
-        <div class="span9"><%= @patient.civil_status.description %></div>      
-      </div>
-      <div class="row-fluid">
-        <div class="span3"><b>lateralidadde</b></div>
-        <div class="span9"><%= @patient.handedness.description %></div>      
-      </div>
-      <div class="row-fluid">
-        <div class="span3"><b>Escolaridade</b></div>
-        <div class="span9"><%= @patient.education %></div>      
-      </div>
-      <div class="row-fluid">
-        <div class="span3"><b>Profissão</b></div>
-        <div class="span9"><%= @patient.profession%></div>      
-      </div>
+<div class="container" id="la-slide">
+	<div class="row-fluid">
+		<div class="span10 offset1">
+			<legend>
+				<h2 class="h2-title"><%= @patient.name %></h2>
+			</legend>
+			<!-- Patient Data Image -->
+			<div class="row-fluid">
+				<!-- Patient Data -->
 
-      <br/>
+				<div class="span4">
+				<!--<div class="row-fluid">-->
+					<div class="span12" style="margin: 12px; margin-left: 0px; margin-right: 0px; border: 1px solid #c4cde0; background: #e7ebf2; border-bottom-width: 2px; -webkit-border-radius: 3px; padding: 15px 25px;">
+						<div class="span12">
+							<div style="width: 15px; height: 16px; background-image: url(http://static.ak.fbcdn.net/rsrc.php/v2/yG/x/4GxErz9TbmS.png); background-size: auto; background-repeat: no-repeat; display: inline-block; background-position: -294px -327px"></div> <b>&nbsp;&nbsp;&nbsp;Dados Pessoais</b>
+						</div>
+						<div class="span5" style="font-size: 12px; margin-left: 0px;">
+							<b>BI:</b>
+						</div>
+						<div class="span6" style="font-size: 11px;">
+							<%= @patient.identification_code %>
+						</div>
+						<div class="span5" style="font-size: 12px; margin-left: 0px;">
+							<b>Sexo:</b>
+						</div>
+						<div class="span6" style="font-size: 11px;">
+							<%= @patient.gender.description %>
+						</div>
+						<div class="span5" style="font-size: 12px; margin-left: 0px;">
+							<b>Idade:</b>
+						</div>
+						<div class="span6" style="font-size: 11px;">
+							<%= ((DateTime.now - @patient.date_of_birth).to_int) / 365 %>
+						</div>
+						<div class="span5" style="font-size: 12px; margin-left: 0px;">
+							<b>Estado civil:</b>
+						</div>
+						<div class="span6" style="font-size: 11px;">
+							<%= @patient.civil_status.description %>
+						</div>
+					</div>
+				<!--</div>-->
 
-      
-    </div>
+				<!--<div class="row-fluid">-->
+					<div class="span12" style="margin: 12px; margin-left: 0px; margin-right: 0px; border: 1px solid #c4cde0; background: #e7ebf2; border-bottom-width: 2px; -webkit-border-radius: 3px; padding: 15px 25px;">
+						<div class="span12">
+							<div style="width: 15px; height: 16px; background-image: url(http://static.ak.fbcdn.net/rsrc.php/v2/yG/x/4GxErz9TbmS.png); background-size: auto; background-repeat: no-repeat; display: inline-block; background-position: -34px -400px;"></div> 
+							<b>&nbsp;&nbsp;&nbsp;Contactos</b>
+						</div>
+						<div class="span5" style="font-size: 12px; margin-left: 0px;">
+							<b>Telefone:</b>
+						</div>
+						<div class="span6" style="font-size: 11px;">
+							<%= @patient.telephone %>
+						</div>
+				
+						<div class="span5" style="font-size: 12px; margin-left: 0px;">
+							<b>Telemóvel:</b>
+						</div>
+						<div class="span6" style="font-size: 11px;">
+							<%= @patient.mobilephone %>
+						</div>
+				
+						<div class="span5" style="font-size: 12px; margin-left: 0px;">
+							<b>Email:</b>
+						</div>
+						<div class="span6" style="font-size: 11px;">
+							<%= @patient.login.email %>
+						</div>
+					</div>
+				<!--</div>-->
+				</div>
+
+				<!-- Patient Image -->
+				<div class="span4 pull-right" style = "margin-top: 12px;">
+					<%= image_tag @patient.photo.url %>
+					<%= link_to 'Editar', edit_patient_path(@patient), :class => "btn btn-warning pull-right span12", :style => "margin-top:27px;" %>
+				</div>
+
+				<div class="span4">
+				<!--<div class="row-fluid">-->
+					<div class="span12" style="margin: 12px; margin-left: 0px; margin-right: 0px; border: 1px solid #c4cde0; background: #e7ebf2; border-bottom-width: 2px; -webkit-border-radius: 3px; padding: 15px 25px;">
+						<div class="span12">
+							<div style="width: 15px; height: 16px; background-image: url(http://static.ak.fbcdn.net/rsrc.php/v2/yG/x/4GxErz9TbmS.png); background-size: auto; background-repeat: no-repeat; display: inline-block; background-position: -187px -400px;"></div> <b>&nbsp;&nbsp;&nbsp;Residência</b>
+						</div>
+						<div class="span5" style="font-size: 12px; margin-left: 0px;">
+							Morada:
+						</div>
+						<div class="span6" style="font-size: 11px;">
+							<%= @patient.address %>
+						</div>
+					</div>
+				<!--</div>-->
+				
+				<!--<div class="row-fluid">-->
+					<div class="span12" style="margin: 12px; margin-top: 10px; margin-left: 0px; margin-right: 0px; border: 1px solid #c4cde0; background: #e7ebf2; border-bottom-width: 2px; -webkit-border-radius: 3px; padding: 15px 25px;">
+						<div class="span12">
+							<div style="width: 16px; height: 16px; background-image: url(http://static.ak.fbcdn.net/rsrc.php/v2/yG/x/4GxErz9TbmS.png); background-size: auto; background-repeat: no-repeat; display: inline-block; background-position: -17px -400px;"></div> <b>&nbsp;&nbsp;&nbsp;Dados Médicos</b>
+						</div>
+						<div class="span5" style="font-size: 12px; margin-left: 0px;">
+							<b>Lateralidadde:</b>
+						</div>
+						<div class="span6" style="font-size: 11px;">
+							<%= @patient.handedness.description %>
+						</div>
+					</div>
+				<!--</div>-->
+
+				<!--<div class="row-fluid">-->
+					<div class="span12" style="margin: 12px; margin-top: 10px; margin-left: 0px; margin-right: 0px; border: 1px solid #c4cde0; background: #e7ebf2; border-bottom-width: 2px; -webkit-border-radius: 3px; padding: 15px 25px;">
+						<div class="span12">
+							<div style="width: 16px; height: 16px; background-image: url(http://static.ak.fbcdn.net/rsrc.php/v2/yG/x/4GxErz9TbmS.png); background-size: auto; background-repeat: no-repeat; display: inline-block; background-position: -171px -400px;"></div> <b>&nbsp;&nbsp;&nbsp;Percurso</b>
+						</div>
+						<div class="span5" style="font-size: 12px; margin-left: 0px;">
+							<b>Escolaridade:</b>
+						</div>
+						<div class="span6" style="font-size: 11px;">
+							<%= @patient.education %>
+						</div>
+						<div class="span5" style="font-size: 12px; margin-left: 0px;">
+							<b>Profissão:</b>
+						</div>
+						<div class="span6" style="font-size: 11px;">
+							<%= @patient.profession %>
+						</div>
+					</div>
+				<!--</div>-->
+				</div>
+
+			</div>
+			</br>
+			<!-- Patient Historial Data -->
+			<%if current_login.has_role? :neuropsychologist %>
+			<div class="row-fluid">
+				<legend>
+					Historial Clínico
+				</legend>
+				<div>
+					<p align="justify">
+						<% if  @patient.clinical_histories.first.nil? %>
+						Historial Clínico Inexistente
+						<% else %>
+						<%= @patient.clinical_histories.first.description %>
+						<% end %>
+					</p>
+				</div>
+			</div>
+			<%end%>
+			</br>
+			<!-- Patient Sessions List -->
+			<div class="row-fluid">
+				<div class="span12">
+					<legend>
+						Sessões Agendadas
+					</legend>
+					<table id="appointments" class="table table-hover table-condensed">
+						<!-- 						class="table table-hover table-condensed" -->
+						<thead>
+							<tr>
+								<th>Data</th>
+								<th>Hora</th>
+								<%if current_login.has_role? :secretary or current_login.has_role? :patient %>
+								<th>Neuropsicólogo</th>
+								<%end%>
+								<th>Tipo</th>
+								<%if current_login.has_role? :secretary or current_login.has_role? :neuropsychologist %>
+								<th>Opções</th>
+								<%end%>
+							</tr>
+						</thead>
+						<tbody>
+							<% @patient.appointments.each do |appointment| %>
+							<%if appointment.appointment_status.name == "Marcada"%>
+							<tr>
+								<td><%= appointment.appointment_day.strftime('%a,%d de %b de %Y') %></td>
+								<td><%= appointment.appointment_day.strftime('%H:%M') %></td>
+								<%if current_login.has_role? :secretary or current_login.has_role? :patient %>
+								<td><%= appointment.neuropsychologist.name%></td>
+								<%end%>
+								<td><%= appointment.appointment_type.name %></td>
+								<td> <%if current_login.has_role? :neuropsychologist %>
+
+								<% if appointment.appointment_type.name == 'Avaliacao' %>
+								<% appoitment_plan = AppointmentPlan.where(:appointment_id => appointment.id )  %>
+								<% if appoitment_plan.first.nil? %>
+								<%= link_to "Criar Plano", :controller => "appointment_plans", :action => "new" , :appID => appointment.id %>
+								<% else %>
+								<%= link_to "Visualizar Plano", :controller => "appointment_plans", :action => "show", :id => appointment.id %>
+								<% end %>
+								<% else %>
+								--
+								<% end  %>
+								<%end%> 
+								
+								<%if current_login.has_role? :secretary %>
+
+								<%= link_to "Apagar", appointment, :method=>:delete, :class=>:destroy %>
 
 
-    </div>
-    </div>
-    <div class="span3"></div>
-    </div>
-    <br/> 
+								<%end%>
+								
+								</td>
+							</tr>
+							<%end%>
+							<% end %>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<% end %>
+
+<script type="text/javascript">
+$(window).ready(function() {
+	$(window).bind('popstate', function() {
+	  $('#slider').slideTo(location.pathname)
+	})
+});
+</script>

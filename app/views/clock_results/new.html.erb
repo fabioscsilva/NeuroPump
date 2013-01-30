@@ -15,15 +15,20 @@
 				</legend>
 				<div class="well">
 					<ul class="nav nav-list" style="float:none">
-						<li>
-							<a href="#"><i class="icon-chevron-right"></i> TMT</a>
-						</li>
-						<li>
-							<a href="#"><i class="icon-chevron-right"></i> FTT</a>
-						</li>
-						<li class="active">
-							<a href="#"><i class="icon-chevron-right"></i> Relógio</a>
-						</li>
+						<% appoint_id = session["current_appointment"].to_f %> 
+						<% appoint_plan = AppointmentPlan.where(:appointment_id => appoint_id) %>
+						<% appoint_plan.each do |a|%>
+							<%if a.evaluation_test.name == "clock"%>
+								<li class="active">
+									<a href="#"><i class="icon-chevron-right"></i> <%= a.evaluation_test.name %></a>
+								</li>
+							<%else%>
+								<li>
+									<a href="#"><i class="icon-chevron-right"></i> <%= a.evaluation_test.name %></a>
+								</li>
+							<%end%>
+
+						<%end%>
 					</ul>
 				</div>
 			</div>
@@ -31,9 +36,8 @@
 				<legend>
 					Teste do Relógio
 					<div class="pull-right">
-						<!-- 						<%= link_to 'Template',{:controller => "clocks", :action => "download" }%> -->
-						<a id="downloadClock" href="/downloadClock" role="button" class="btn btn-info" data-toggle="modal" rel="tooltip" data-placement="bottom" data-original-title="Descarregar Template"><i class="icon-white icon-print"></i></a>
-						<a id="descriptionTeste" href="#myModal" role="button" class="btn btn-info" data-toggle="modal" rel="tooltip" data-placement="bottom" data-original-title="Descrição Teste"><i class="icon-white icon-info-sign"></i></a>
+						<a id="downloadClock" href="/downloadClock" role="button" class="btn btn-small btn-info" data-toggle="modal" rel="tooltip" data-placement="bottom" data-original-title="Descarregar Template"><i class="icon-white icon-print"></i></a>
+						<a id="descriptionTeste" href="#myModal" role="button" class="btn btn-small btn-info" data-toggle="modal" rel="tooltip" data-placement="bottom" data-original-title="Descrição Teste"><i class="icon-white icon-info-sign"></i></a>
 
 						<!-- Modal -->
 						<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -41,16 +45,45 @@
 								<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
 									×
 								</button>
-								<h4 id="myModalLabel">Wescheler Memory Scale III</h4>
+								<h4 id="myModalLabel">Teste do Relógio</h4>
 							</div>
 							<div class="modal-body" style="font-size: 12px; line-height: 20px;">
 								<p align="justify">
-									O teste Wescheler Memory Scale III Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum
-									Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum
-									Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum
-									Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum
-									Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum
-									Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum
+									O teste de desenho do relógio consiste num simples desenho de um mostrador de um relógio anológico.
+									Permite avaliar as capacidades cognitivas visuo-espaciais e de construção.<br<br>
+									
+									É um teste de administração rápida, onde apenas é necessário um papel e um lápis.
+									O administrador deve pedir ao sujeito para desenhar um mostrador de um relógio e de seguida deve
+									solicitar o desenho de uma determinada hora no mesmo mostrador.<br><br>
+
+									<b>Mostrador do Relógio</b>
+									<ul>
+										<li>2 Pontos - Desenho Normal (circulo quase perfeito)</li>
+										<li>1 Pontos - Desenho Incompleto (com algumas distorções)</li>
+										<li>0 Pontos - Ausência do desenho ou totalmete distorcido</li>
+									</ul>
+									<br>
+									<b>Presença ou Sequência de Números</b>
+									<ul>
+										<li>4 Pontos - Todos os números e na ordem (númerica e espacial) correta</li>
+										<li>3,5 Pontos - Erros na localização espacial ocorrem mais de quatro vezes</li>
+										<li>3 Pontos - Todos os números mas um erro significativo na localização espacial</li>
+										<li>2 Pontos - Omissão ou adição de algum número; Números desordenados;
+											Os 12 números no sentido anti-horário; Grande distorção espacial; Números
+											na vertical</li>
+										<li>1 Pontos - Ausência ou excesso de números com grande distorção espacial</li>
+										<li>0 Pontos - Ausência ou excassa representação de números (menos de 6)</li>
+									</ul>
+									<br>
+									<b>Presença e localização dos ponteiros</b>
+									<ul>
+										<li>4 Pontos - Posição correta e com as proporções adequadas</li>
+										<li>3,5 Pontos - Posição correta mas são do mesmo tamanho</li>
+										<li>3 Pontos - Pequenos erros na localização do ponteiro; Ponteiro dos minutos mais curto que o das horas</li>
+										<li>2 Pontos - Grande distorção na localização dos ponteiros; Ponteiros não se juntam num ponto central</li>
+										<li>1 Pontos - Presença de um só ponteiro ou um esboço dos dois</li>
+										<li>0 Pontos - Ausência de ponteiros</li>
+									</ul>
 								</p>
 							</div>
 

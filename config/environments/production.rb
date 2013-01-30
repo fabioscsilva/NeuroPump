@@ -15,7 +15,7 @@ NeuroPump::Application.configure do
   config.assets.compress = true
 
   # Precompile André
-  config.assets.precompile = ['*.js', '*.css', '*.png', '*.jpeg', '*.jpg']
+  config.assets.precompile = ['*.js', '*.css', '*.png', '*.jpeg', '*.jpg','*.swf']
 
   # Don't fallback to assets pipeline if a precompiled asset is missed
   config.assets.compile = false

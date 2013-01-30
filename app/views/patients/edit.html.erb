@@ -1,14 +1,15 @@
 <div class="container">
 	<div class="row-fluid">
-		<div class="span8 offset2" style="padding: 40px;padding-right:80px;padding-top: 20px;-webkit-box-shadow: 0 2px 10px rgba(0, 0, 0, .25);-moz-box-shadow: 0 2px 10px rgba(0,0,0,.25);box-shadow: 0 2px 10px rgba(0, 0, 0, .25);background-color: white;">
+		<div class="span8 offset2">
+			<div class="row-fluid">
+				<div class="span9">
+					<h2>Editar Paciente</h2>
+				</div>
 
-			<h2>Editar Paciente</h2>
-
-			<% if @pageType == "edit"%>
-					<% if current_login.has_role? :patient%>
-						( <%= link_to "Mudar password", edit_login_registration_path %> )
-					
-					<%end%>
-				<% end %>
-
+			</div>
+				
 			<%= render 'form' %>
+
+		</div>
+	</div>
+</div>

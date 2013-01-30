@@ -7,10 +7,12 @@
 				<button type="button" class="btn-danger" style="width:100%; margin-top:10px;">Remover Perfil</button> -->
 				<%= link_to "Editar", edit_secretary_path(@secretary), :method => "get", :class => "btn btn-warning pull-right span12", :style => "margin-top:10px;"%>
 
-				<% if @secretary.active == true %>
-				<%= link_to "Desativar", @secretary, :method => :delete, :confirm => "Tem a certeza?",  :class => "btn btn-danger pull-right span12", :style => "margin-top:10px;" %>
+				<% if @secretary.login.deleted_at == nil %>
+					<%if !current_login.has_role? :secretary%>
+					<%= link_to "Desativar", @secretary, :method => :delete, :confirm => "Tem a certeza?",  :class => "btn btn-danger pull-right span12", :style => "margin-top:10px;" %>
+					<%end%>
 				<%else%>
-				<%= link_to "Ativar", @secretary, :method => :delete, :confirm => "Tem a certeza?",  :class => "btn btn-success pull-right span12", :style => "margin-top:10px;" %>
+					<%= link_to "Ativar", @secretary, :method => :delete, :confirm => "Tem a certeza?",  :class => "btn btn-success pull-right span12", :style => "margin-top:10px;" %>
 				<%end%>
 			</div>
 			<div class="span8">
@@ -87,64 +89,3 @@
 	</div>
 	<div class="span3"></div>
 </div>
-
-<!--
-<p id="notice"><%= notice %></p>
-
-<p>
-<b>Name:</b>
-<%= @secretary.name %>
-</p>
-
-<p>
-<b>Address:</b>
-<%= @secretary.address %>
-</p>
-
-<p>
-<b>Telephone:</b>
-<%= @secretary.telephone %>
-</p>
-
-<p>
-<b>Mobilephone:</b>
-<%= @secretary.mobilephone %>
-</p>
-
-<p>
-<b>Photo:</b>
-<%= @secretary.photo %>
-</p>
-
-<p>
-<b>Date of birth:</b>
-<%= @secretary.date_of_birth %>
-</p>
-
-<p>
-<b>Identification code:</b>
-<%= @secretary.identification_code %>
-</p>
-
-<p>
-<b>Active:</b>
-<%= @secretary.active %>
-</p>
-
-<p>
-<b>Gender ID:</b>
-<%= @secretary.gender_id %>
-</p>
-
-<p>
-<b>Clinic ID:</b>
-<%= @secretary.clinic_id %>
-</p>
-
-<p>
-<b>Login ID:</b>
-<%= @secretary.login_id %>
-</p>
-
-<%= link_to 'Edit', edit_secretary_path(@secretary) %> |
-<%= link_to 'Back', secretaries_path %> -->
