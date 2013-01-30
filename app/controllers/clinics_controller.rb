@@ -4,7 +4,8 @@ class ClinicsController < ApplicationController
   # GET /clinics
   # GET /clinics.json
   def index
-    authorize! :index
+    authorize! :index, @clinic
+
     if current_login.has_role? :manager
       @clinics = Clinic.joins(:login).where("deleted_at IS NULL")
     elsif current_login.has_role? :administrator
@@ -57,15 +58,23 @@ class ClinicsController < ApplicationController
 
     p = Payment.where(:clinic_id => @cID).where(:payed => false).count
     if p > 0
-      flash[:error] = "Não pode mudar a sua subscrição até efetuar todos os pagamentos em atraso!"
+      flash[:error] = "Nao pode mudar a sua subscricap o ate efetuar todos os pagamentos em atraso!"
       respond_to do |format| 
           format.html {redirect_to edit_clinic_path(clinic)}
         end
     else
       packageClinic = PackagesClinic.where(:clinic_id => @cID).first
-      @packageID = packageClinic.package_id
+      packageID = packageClinic.package_id
       @bestPackageID = Package.order("id DESC").first.id
+      bestPackagePrice = Package.order("price DESC").first.price
+      @packagePrice = 5
 
+      if @packagePrice >= bestPackagePrice
+      flash[:error] = "Nao existe melhor subscricao do que a sua clinica ja tem"
+      respond_to do |format| 
+          format.html {redirect_to edit_clinic_path(clinic)}
+        end
+      end
 
 
       respond_to do |format|
@@ -101,9 +110,9 @@ class ClinicsController < ApplicationController
      respond_to do |format|
       if packages_clinic.save
         UserMailer.send_email_managerUpdate(email.to_s,@clinic.name.to_s,ref.to_s, ent.to_s, price.to_s).deliver
-        format.html { redirect_to @clinic, notice: 'Pacote da clinica mudado com successo.' }
+        format.html { redirect_to @clinic, notice: 'Subscricao da clinica mudado com successo.' }
       else
-        format.html { redirect_to @clinic, notice: 'Pacote da clinica nao foi mudado com successo' }
+        format.html { redirect_to @clinic, notice: 'Subscricao da clinica nao foi mudado com successo' }
       end
     end
 
