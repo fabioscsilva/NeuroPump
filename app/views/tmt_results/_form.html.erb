@@ -124,20 +124,20 @@ text-align:center;
 	
 	</center>
 </div>
-
-	<div class="span11">
+	<div style="clear:both;"></div>
+	<div class="row-fluid">
 			<%= f.label :observations, "Observações Trails A" %><br />
 				<%= text_area_tag  'observationsA' , nil , :style => "width: 98%; max-width: 98%;",  :rows=> "5" , :placeholder => "Insira as suas observações"  %>
 	</div>
 
-	<div class="span11">
+	<div class="row-fluid">
 		<%= f.label :observations, "Observações Trails B" %>
 		<br />
 		<%= text_area_tag 'observationsB' , nil , :style => "width: 98%; max-width: 98%;",  :rows=> "5" , :placeholder => "Insira as suas observações" %>
 
 	</div>
 	
-	<div class="span11">
+	<div class="row-fluid">
 	<%if session["test_sequence"].blank? %>
 		<button type="submit" id="submit" class="btn btn-success pull-right" >
 			Terminar Avaliação

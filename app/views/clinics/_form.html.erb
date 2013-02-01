@@ -48,48 +48,62 @@
    .table_container{width:200px;margin:0 auto;float:left;}
   </style>
 
+  <div style="clear:both; margin-bottom: 30px;"></div>
   <div class="row-fluid">
     <% @packages.each do |p| %>
-    <div class="table_container">
-      <table border = "1">
+    <div class="pricing-table">
+      <%
+        @class = "color-666777";
+        if p.n_appointments == -1
+          @class = "color-custom";
+        end
+      %>
+      <table class="<%= @class %>">
         <tr> <th>
             <%= p.name %>
           </th> 
         </tr>
-        <tr> <td>
-            Preço: <%= p.price %>
+        <tr> <td class="large">
+            <span class="time">Preço:</span> <span class="price"><%= p.price %></span>
           </td> 
         </tr>
         <tr> <td>
-            Sessões por Semana:
-            <%if p.n_appointments == -1 %>
-            <%= "Illimitado" %>
-            <%elsif%>
-            <%= p.n_appointments %>
-            <%end%>
-
+            <span class="time">Sessões por Semana:</span>
+            <span class="price">
+              <%if p.n_appointments == -1 %>
+              <%= "Illimitado" %>
+              <%elsif%>
+              <%= p.n_appointments %>
+              <%end%>
+            </span>
           </td> 
         </tr>
         <tr> <td>
-            Exercícios:
-            <%if p.n_exercises == -1 %>
-            <%= "Illimitado" %>
-            <%elsif%>
-            <%= p.n_exercises %>
-            <%end%>
+            <span class="time">Exercícios:</span>
+            <span class="price">
+                <%if p.n_exercises == -1 %>
+                <%= "Illimitado" %>
+                <%elsif%>
+                <%= p.n_exercises %>
+                <%end%>
+            </span>
           </td> 
         </tr>
         <tr> <td>
-            Avaliações:
-            <%if p.n_evaluations == -1 %>
-            <%= "Illimitado" %>
-            <%elsif%>
-            <%= p.n_evaluations %>
-            <%end%>
+            <span class="time">Avaliações:</span>
+            <span class="price">
+              <%if p.n_evaluations == -1 %>
+              <%= "Illimitado" %>
+              <%elsif%>
+              <%= p.n_evaluations %>
+              <%end%>
+            </span>
           </td> 
         </tr>
       </table>
-      <input type="radio" value = "<%= p.id %>" id = "<%= p.id %>" name= "packageType" required />
+      <center>
+        <input style="margin-top:15px;" type="radio" value = "<%= p.id %>" id = "<%= p.id %>" name= "packageType" required />
+      </center>
     </div>
     <%end%>
   </div>

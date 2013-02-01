@@ -1,3 +1,4 @@
+<div style="margin-bottom: 50px;"></div>
 <%= form_for(@clock) do |f| %>
 <% if @clock.errors.any? %>
 <div id="error_explanation">
@@ -89,14 +90,15 @@
 </table>
 <b>Observações:</b>
 <%= f.text_area :observations, :rows => 5, :class => "span12", :style => "resize:vertical;", :placeholder => "Insira as suas observações"%>
-
-<%if session["test_sequence"].blank? %>
-	<div class="actions">
-		<%= f.submit :Terminar ,:class => "btn btn-success span2 pull-right", :value => "Terminar Avaliação"%>
-	</div>
-<%else %>
-	<div class="actions">
-		<%= f.submit :Terminar ,:class => "btn btn-success span2 pull-right", :value => "Próximo teste"%>
-	</div>
-<%end%>
+<div class="row-fluid">
+	<%if session["test_sequence"].blank? %>
+		<div class="actions">
+			<%= f.submit :Terminar ,:class => "btn btn-success pull-right", :value => "Terminar Avaliação"%>
+		</div>
+	<%else %>
+		<div class="actions">
+			<%= f.submit :Terminar ,:class => "btn btn-success pull-right", :value => "Próximo teste"%>
+		</div>
+	<%end%>
+</div>
 <% end %>
