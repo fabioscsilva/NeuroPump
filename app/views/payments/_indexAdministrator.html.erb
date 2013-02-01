@@ -1,5 +1,5 @@
 
-<table id="payments" class="table table-striped table-hover">
+<table id="payments" class="table table-striped table-condensed table-hover">
             <thead>
                 <tr>
                     <th>Clínica</th>
@@ -34,6 +34,6 @@
             <% end %>
             </tbody>
 </table>
-<%= link_to "Atualizar Consumos Semanais", {:controller => :packages_clinics, :action => :update}, :class => "btn btn-primary pull-right span1.5" %>
-<%= link_to "Verificar Estado de Pagamentos", {:controller => :payments, :action => :check}, :class => "btn btn-primary pull-right span1.5" %>
-<%= link_to "Gerar Referências de Pagamentos", {:controller => :payments, :action => :generate}, :class => "btn btn-primary pull-right" %>
+<%= link_to "Atualizar Consumos Semanais", {:controller => :packages_clinics, :action => :update}, :class => "btn btn-primary pull-right span1.5", :style => "margin-top:10px;" %>
+<%= link_to "Verificar Estado de Pagamentos", {:controller => :payments, :action => :check}, :class => "btn btn-primary pull-right span1.5", :style => "margin-top:10px;" %>
+<%= link_to "Gerar Referências de Pagamentos", {:controller => :payments, :action => :generate}, :class => "btn btn-primary pull-right",  :style => "margin-top:10px;" %>

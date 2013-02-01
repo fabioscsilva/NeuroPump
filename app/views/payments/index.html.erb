@@ -1,7 +1,7 @@
 
-
-        <h2>Lista de Pagamentos</h2>
-
+		<legend>
+        	<h2 class="h2-title">Lista de Pagamentos</h2>
+    	</legend>
         <%if current_login.has_role? :administrator %>
             <%= render 'indexAdministrator' %>
         <%elsif current_login.has_role? :manager %>

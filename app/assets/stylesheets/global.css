@@ -470,3 +470,127 @@ body {
   -moz-transform: translate(-300px, 0) scale(4);
   direction: ltr;
 }
+
+
+
+
+
+
+
+/* Pricing Tables
+=================================================================== */
+.pricing-table {
+  width: 33%;
+  float: left;
+}
+
+.pricing-table table {
+  border-collapse:collapse;
+  border-spacing: 0px;
+  padding: 0px;
+  padding-bottom: 5px;
+}
+
+
+.pricing-table tr {
+  border: 0px solid black!important;
+}
+
+.pricing-table tr td{
+  color: #555;
+}
+
+.pricing-table tr td .price {
+  font-size: 18px;
+}
+
+.pricing-table tr td.large .price {
+  font-size: 24px;
+  text-align: center;
+  color: #fff;
+  padding: 0px 0 6px 0px;
+  margin: 0;
+}
+
+.pricing-table tr {
+  color: #888;
+  background: #fff;
+  text-align: center;
+  border-bottom: 1px solid #fff;
+}
+
+.pricing-table tr:nth-child(2n) {
+  background: #f6f6f6;
+}
+  
+.pricing-table h4 {
+  padding:0 0 10px
+}
+
+
+/* Table
+=================================================================== */
+.pricing-table th,
+.pricing-table td.large {
+  color: #fff;
+  margin: 0;
+}
+
+.pricing-table th {
+  padding: 15px 0;
+  font-weight: normal;
+}
+
+.price,
+.time {
+  display: block;
+  text-align: center;
+  line-height: 24px;
+}
+
+.price {
+  font-size: 24px;
+  font-weight: normal;
+}
+
+.time {
+  font-size: 12px;
+  font-weight: normal;
+}
+
+/* Color Schemes
+=================================================================== */
+
+/* Color - 1 */
+.pricing-table .color-cccddd h3, .color-cccddd .buy {background-color: #ccc;}
+.pricing-table .color-cccddd h4 {background-color: #ddd;}
+
+/* Color - 2 */
+.pricing-table .color-666777 th, .color-666777 .buy {background-color: #666;}
+.pricing-table .color-666777 td.large {background-color: #777; border: 1px solid #999;}
+
+/* Color - 3 */
+.pricing-table .color-custom th, .color-custom .buy {background-color: #1d7ea7; padding: 15px 0;}
+.pricing-table .color-custom td.large {background-color: #29a9df; padding: 25px 0;}
+
+
+
+.color-custom {
+  margin-top:-37px;
+  -webkit-box-shadow: 0px 2px 5px rgba(0,0,0,.5);
+    box-shadow: 0px 2px 5px rgba(0,0,0,.5);
+}
+
+.pricing-table {
+  position: relative !important;
+  z-index: 5 !important;
+  margin: 60px 0px;
+}
+
+.pricing-table.best-option {
+  position: relative !important;
+  z-index: 6 !important;
+}
+
+
+

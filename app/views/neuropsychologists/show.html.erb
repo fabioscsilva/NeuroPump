@@ -2,87 +2,101 @@
 <!-- Updated by Fábio Silva - 24/12/2012 -->
 <div class="container">
 	<div class="row-fluid">
-		<div class="span8 offset2">
-			<div class="span4 pull-right" style = "margin-top: 20px;">
-				<%= image_tag @neuropsychologist.photo.url %>
-				<%= link_to 'Editar', edit_neuropsychologist_path(@neuropsychologist), :class => "btn btn-warning pull-right span12", :style => "margin-top:10px;" %>
-				<%if current_login.has_role? :manager %>
-				<% if @neuropsychologist.login.deleted_at == nil %>
-				<%= link_to 'Desativar', neuropsychologist_path(@neuropsychologist), :method => :delete, :confirm => "Tem a certeza?", :class => "btn btn-danger pull-right span12", :style => "margin-top:10px;" %>
-				<%else%>
-				<%= link_to 'Ativar', neuropsychologist_path(@neuropsychologist), :method => :delete, :confirm => "Tem a certeza?", :class => "btn btn-success pull-right span12", :style => "margin-top:10px;" %>
-				<%end%>
-				<%end%>
+		<div class="span10 offset1">
+			<legend>
+				<h2 class="h2-title"> <%= @neuropsychologist.name %> </h2>
+			</legend>
+			<div class="row-fluid">
+				<div class="span4">
+					<div class="span12" style="margin: 12px; margin-left: 0px; margin-right: 0px; border: 1px solid #c4cde0; background: #e7ebf2; border-bottom-width: 2px; -webkit-border-radius: 3px; padding: 15px 25px; min-height:193px;">
+						<div class="span12">
+							<div style="width: 15px; height: 16px; background-image: url(http://static.ak.fbcdn.net/rsrc.php/v2/yG/x/4GxErz9TbmS.png); background-size: auto; background-repeat: no-repeat; display: inline-block; background-position: -294px -327px"></div> <b>&nbsp;&nbsp;&nbsp;Dados Pessoais</b>
+						</div>
+						<div class="span5" style="font-size: 12px; margin-left: 0px;">
+							<b>BI:</b>
+						</div>
+						<div class="span6" style="font-size: 11px;">
+							<%= @neuropsychologist.identification_code %>
+						</div>
+						<div class="span5" style="font-size: 12px; margin-left: 0px;">
+							<b>Sexo:</b>
+						</div>
+						<div class="span6" style="font-size: 11px;">
+							<%= @neuropsychologist.gender.description %>
+						</div>
+						<div class="span5" style="font-size: 12px; margin-left: 0px;">
+							<b>Nascido em:</b>
+						</div>
+						<div class="span6" style="font-size: 11px;">
+							<%= @neuropsychologist.date_of_birth %>
+						</div>
+						<div class="span5" style="font-size: 12px; margin-left: 0px;">
+							<b>Morada:</b>
+						</div>
+						<div class="span6" style="font-size: 11px;">
+							<%= @neuropsychologist.address %>
+						</div>
+					</div>
+				</div>
+
+				<div class="span4 pull-right" style = "margin-top: 12px;">
+					<%= image_tag @neuropsychologist.photo.url %>
+					<%= link_to 'Editar', edit_neuropsychologist_path(@neuropsychologist), :class => "btn btn-warning pull-right span12", :style => "margin-top:10px;" %>
+					<%if current_login.has_role? :manager %>
+					<% if @neuropsychologist.login.deleted_at == nil %>
+					<%= link_to 'Desativar', neuropsychologist_path(@neuropsychologist), :method => :delete, :confirm => "Tem a certeza?", :class => "btn btn-danger pull-right span12", :style => "margin-top:10px;" %>
+					<%else%>
+					<%= link_to 'Ativar', neuropsychologist_path(@neuropsychologist), :method => :delete, :confirm => "Tem a certeza?", :class => "btn btn-success pull-right span12", :style => "margin-top:10px;" %>
+					<%end%>
+					<%end%>
+				</div>
+
+
+
+		
+			<div class="span4">
+				<!--<div class="row-fluid">-->
+					<div class="span12" style="margin: 12px; margin-left: 0px; margin-right: 0px; border: 1px solid #c4cde0; background: #e7ebf2; border-bottom-width: 2px; -webkit-border-radius: 3px; padding: 15px 25px; min-height:193px;">
+						<div class="span12">
+							<div style="width: 15px; height: 16px; background-image: url(http://static.ak.fbcdn.net/rsrc.php/v2/yG/x/4GxErz9TbmS.png); background-size: auto; background-repeat: no-repeat; display: inline-block; background-position: -34px -400px;"></div> 
+							<b>&nbsp;&nbsp;&nbsp;Contactos</b>
+						</div>
+						<div class="span5" style="font-size: 12px; margin-left: 0px;">
+							<b>Telefone:</b>
+						</div>
+						<div class="span6" style="font-size: 11px;">
+							<% if @neuropsychologist.telephone.to_str.blank?  %>
+							Sem contacto
+							<% else %>
+							<%= @neuropsychologist.telephone %>
+							<% end %>
+						</div>
+				
+						<div class="span5" style="font-size: 12px; margin-left: 0px;">
+							<b>Telemóvel:</b>
+						</div>
+						<div class="span6" style="font-size: 11px;">
+							<% if @neuropsychologist.mobilephone.to_str.blank?  %>
+							Sem contacto
+							<% else %>
+							<%= @neuropsychologist.mobilephone %>
+							<% end %>
+						</div>
+						<div class="span5" style="font-size: 12px; margin-left: 0px;">
+							<b>Email:</b>
+						</div>
+						<div class="span6" style="font-size: 11px;">
+							<%= @neuropsychologist.login.email %>
+						</div>
+					</div>
+				</div>
 			</div>
-			<div class="span8">
-				<h3 style="margin-bottom: 30px;"> <%= @neuropsychologist.name %> </h3>
-				<div class="row-fluid">
-					<div class="span3">
-						<b>BI</b>
-					</div>
-					<div class="span9">
-						<%= @neuropsychologist.identification_code %>
-					</div>
-				</div>
-				<div class="row-fluid">
-					<div class="span3">
-						<b>Morada</b>
-					</div>
-					<div class="span9">
-						<%= @neuropsychologist.address %>
-					</div>
-				</div>
-				<div class="row-fluid">
-					<div class="span3">
-						<b>Sexo</b>
-					</div>
-					<div class="span9">
-						<%= @neuropsychologist.gender.description %>
-					</div>
-				</div>
-				<div class="row-fluid">
-					<div class="span3">
-						<b>Data de Nascimento</b>
-					</div>
-					<div class="span9">
-						<%= @neuropsychologist.date_of_birth %>
-					</div>
-				</div>
-				<br/>
-				<div class="row-fluid">
-					<div class="span3">
-						<b>Telefone</b>
-					</div>
-					<div class="span9">
-						<% if @neuropsychologist.telephone.to_str.blank?  %>
-						Sem contacto
-						<% else %>
-						<%= @neuropsychologist.telephone %>
-						<% end %>
-					</div>
-				</div>
-				<div class="row-fluid">
-					<div class="span3">
-						<b>Telemóvel</b>
-					</div>
-					<div class="span9">
-						<% if @neuropsychologist.mobilephone.to_str.blank?  %>
-						Sem contacto
-						<% else %>
-						<%= @neuropsychologist.mobilephone %>
-						<% end %>
-					</div>
-				</div>
-				<div class="row-fluid">
-					<div class="span3">
-						<b>Email</b>
-					</div>
-					<div class="span9">
-						<%= @neuropsychologist.login.email %>
-					</div>
-				</div>
+
+
 			</div>
-		</div>
+
+			
+		
 	</div>
 	<div class="span3"></div>
 </div>

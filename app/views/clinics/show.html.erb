@@ -1,8 +1,37 @@
 <div class="container">
 	<div class="row-fluid">
 		<div class="span10 offset1">
-			<div class="span4 pull-right offset1">
-				<div style="margin-top: 60px;">
+			<div class="span12">
+				<legend>
+					<h2 class="h2-title"> <%= @clinic.name %> </h2>
+				</legend>
+			</div>
+			<div class="span4 pull-right">
+				<div>
+					<% if current_login.has_role? :administrator %>
+					<h6 style="color: lightgray; font-weight: normal; text-transform: uppercase;">Dados do gestor</h6>
+					<hr/>
+					<div class="row-fluid">
+						<div class="span3">
+							<b>Email</b>
+						</div>
+						<div class="span9">
+							<%= @clinic.email %>
+						</div>
+					</div>
+					<div class="row-fluid">
+						<div class="span3">
+							<b>Telemóvel</b>
+						</div>
+						<div class="span9">
+							<%= @clinic.telephone %>
+						</div>
+					</div>
+					<br/>
+					<%end%>
+				</div>
+	
+				<div>
 					<h6 style="color: lightgray; font-weight: normal; text-transform: uppercase;">Consumos da Clínica</h6>
 					<hr/>
 					<div class="row-fluid">
@@ -14,13 +43,13 @@
 						</div>
 						<div class="span2">
 							<br/>
-							<%= @appointmentsLeft %>/<%= @nAppointments %>
+							<%= @nAppointments - @appointmentsLeft %>/<%= @nAppointments %>
 						</div>
 					</div>
 				</div>
 			</div>
-			<div class="span7">
-				<h4 style="margin-bottom: 30px;"> <%= @clinic.name %> </h4>
+			<div class="span6 pull-left" style="margin-left:0px;">
+
 				<h6 style="color: lightgray; font-weight: normal; text-transform: uppercase;">Dados da clínica</h6>
 				<hr/>
 				<div class="row-fluid">
@@ -72,30 +101,13 @@
 					<% end %>
 				</div>
 				<% end %>
-				<% if current_login.has_role? :administrator %>
-				<h6 style="color: lightgray; font-weight: normal; text-transform: uppercase;">Dados do gestor</h6>
-				<hr/>
-				<div class="row-fluid">
-					<div class="span3">
-						<b>Email</b>
-					</div>
-					<div class="span9">
-						<%= @clinic.email %>
-					</div>
-				</div>
-				<div class="row-fluid">
-					<div class="span3">
-						<b>Telemóvel</b>
-					</div>
-					<div class="span9">
-						<%= @clinic.telephone %>
-					</div>
-				</div>
-				<%end%>
 			</div>
 			<br/>
-			<div class="span12">
-				<h3>Historial de Pagamentos</h3>
+			<div style="clear:both;margin-bottom: 15px;"></div>
+			<div class="row-fluid">
+				<legend>
+					<h3 class="h2-title">Historial de Pagamentos</h3>
+				</legend>
 			    <%if current_login.has_role? :administrator %>
 		            <%= render 'paymentsAdministrator' %>
 		        <%elsif current_login.has_role? :manager %>
@@ -103,16 +115,18 @@
 		        <%end%>
 			</div>
 
-			<div class="row-fluid span12">
-				<%= link_to "Editar" ,edit_clinic_path(@clinic),  :class => 'btn btn-warning span2', :style => 'margin-top:10px;' %>
+			<div class="row-fluid">
 
 				<% if current_login.has_role? :administrator%>
 					<% if @clinic.deleted_at == nil%>
-						<%= link_to "Desativar" , clinic_path(@clinic), :method => :delete, :confirm => "Tem a certeza?", :class => 'btn btn-danger span2', :style => 'margin-top:10px;' %>
+						<%= link_to "Desativar" , clinic_path(@clinic), :method => :delete, :confirm => "Tem a certeza?", :class => 'btn btn-danger span2 pull-right', :style => 'margin-left: 10px; margin-top:10px;' %>
 					<% else %>
-						<%= link_to "Ativar" , clinic_path(@clinic), :method => :delete, :confirm => "Tem a certeza?", :class => 'btn btn-success span2', :style => 'margin-top:10px;' %>
+						<%= link_to "Ativar" , clinic_path(@clinic), :method => :delete, :confirm => "Tem a certeza?", :class => 'btn btn-success span2 pull-right', :style => 'margin-left: 10px; margin-top:10px;' %>
+					<% end %>
 				<% end %>
-				<% end %>
+
+				<%= link_to "Editar" ,edit_clinic_path(@clinic),  :class => 'btn btn-warning span2 pull-right', :style => 'margin-top:10px;' %>
+
 			</div>
 
 		</div>
