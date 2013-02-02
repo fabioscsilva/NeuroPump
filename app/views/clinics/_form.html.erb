@@ -50,15 +50,17 @@
 
   <div style="clear:both; margin-bottom: 30px;"></div>
   <div class="row-fluid">
+    <% @numTabelas = 0; %>
     <% @packages.each do |p| %>
-    <div class="pricing-table">
+    <% @numTabelas = @numTabelas + 1; %>
+    <div class="pricing-table" >
       <%
         @class = "color-666777";
         if p.n_appointments == -1
           @class = "color-custom";
         end
       %>
-      <table class="<%= @class %>">
+      <table class="<%= @class %>" id="table<%= @numTabelas %>">
         <tr> <th>
             <%= p.name %>
           </th> 
@@ -102,7 +104,7 @@
         </tr>
       </table>
       <center>
-        <input style="margin-top:15px;" type="radio" value = "<%= p.id %>" id = "<%= p.id %>" name= "packageType" required />
+        <input style="margin-top:15px;" type="radio" value = "<%= p.id %>" id = "<%= p.id %>" name= "packageType" required onClick="destaca(<%= @numTabelas %>)"/>
       </center>
     </div>
     <%end%>
@@ -123,4 +125,15 @@
 
   <% end %>
 
+<script type="text/javascript">
+  function destaca(id) {
+    lim = <%= @numTabelas %>;
+    for(i = 1; i <= lim; i++) {
+      document.getElementById("table"+i).style.opacity = 0.5;
+      document.getElementById("table"+i).style.filter = 'alpha(opacity=50)'; 
+    }
+    document.getElementById("table"+id).style.opacity = 1;
+    document.getElementById("table"+id).style.filter = 'alpha(opacity=100)';
+  }
+</script>
 
