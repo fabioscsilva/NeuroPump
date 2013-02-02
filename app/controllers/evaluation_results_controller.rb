@@ -1,6 +1,6 @@
 class EvaluationResultsController < ApplicationController
   before_filter :authenticate_login!
-  load_and_authorize_resource
+  #load_and_authorize_resource
   # GET /evaluation_results
   # GET /evaluation_results.json
   def index
@@ -73,7 +73,7 @@ class EvaluationResultsController < ApplicationController
     @fttOld = nil
     @clockOld = nil
         
-    old_appoint =  Appointment.joins(:appointment_status).where("appointments.patient_id = #{@patient.id} AND appointments.id != #{@appoint_id} AND appointment_statuses.name = 'Realizada'").order("appointments.appointment_day DESC")
+    old_appoint =  Appointment.joins(:appointment_status).where("appointments.patient_id = #{@patient.id} AND appointments.id != #{@appoint_id} AND appointments.appointment_day < '#{app.appointment_day.strftime("%Y-%m-%d")}' AND appointment_statuses.name = 'Realizada'").order("appointments.appointment_day DESC")
     
     if old_appoint.count > 0
       appoint_old_plan = AppointmentPlan.where(:appointment_id => old_appoint.first.id)
@@ -113,7 +113,15 @@ class EvaluationResultsController < ApplicationController
   def create
     #raise params.inspect
     @evaluation_result = EvaluationResult.new(params[:evaluation_result])
-    @evaluation_result.appointment_id = params[:appoint_id].to_f
+    @evaluation_result.appointment_id = params[:appoint_id].to_i
+    
+    if params[:commit].to_s == "Gravar Rascunho"
+      app = Appointment.find(params[:appoint_id].to_i)
+      s = AppointmentStatus.find_by_name("Em Avaliacao")
+      app.appointment_status = s
+      app.save
+    end
+
 
     respond_to do |format|
       if @evaluation_result.save
@@ -152,5 +160,5 @@ class EvaluationResultsController < ApplicationController
       format.html { redirect_to evaluation_results_url }
       format.json { head :no_content }
     end
-  end
+  end  
 end
