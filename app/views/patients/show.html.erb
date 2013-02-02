@@ -188,8 +188,8 @@
 							<% @patient.appointments.each do |appointment| %>
 							<%if appointment.appointment_status.name == "Marcada"%>
 							<tr>
-								<td><%= appointment.appointment_day.strftime('%a,%d de %b de %Y') %></td>
-								<td><%= appointment.appointment_day.strftime('%H:%M') %></td>
+								<td><%= l appointment.appointment_day, :format => :default  %></td>
+								<td><%= l appointment.appointment_day, :format => :short %></td>
 								<%if current_login.has_role? :secretary or current_login.has_role? :patient %>
 								<td><%= appointment.neuropsychologist.name%></td>
 								<%end%>
