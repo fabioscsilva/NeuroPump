@@ -1,5 +1,5 @@
 class ClinicsController < ApplicationController
-  before_filter :authenticate_login!, :except => {:new, :create}
+  before_filter :authenticate_login!, :except => [:new, :create]
   #load_and_authorize_resource
   # GET /clinics
   # GET /clinics.json
@@ -186,21 +186,35 @@ class ClinicsController < ApplicationController
     packages_clinic.week = 1
     packages_clinic.package_id = idP
 
+
+    p = Payment.new
+    timeNow = Time.new;
+    p.creation_date = timeNow;
+    p.due_date = Time.new.advance(:months => 1);
+    p.payed = false;
+    p.reference = ref
+    p.value = price
+
+
     @clinic = Clinic.new(params[:clinic])
+    p.clinic_id = @clinic.id
 
     flag = true
     begin
-      Manager.transaction do
-        PackagesClinic.transaction do
-          Clinic.transaction do
-            Login.transaction do
-              login.save
-              manager.login_id = login.id
-              @clinic.save
-              packages_clinic.clinic_id = @clinic.id
-              packages_clinic.save
-              manager.clinic_id = @clinic.id
-              manager.save
+      Payment.transaction do
+        Manager.transaction do
+          PackagesClinic.transaction do
+            Clinic.transaction do
+              Login.transaction do
+                login.save
+                manager.login_id = login.id
+                @clinic.save
+                packages_clinic.clinic_id = @clinic.id
+                packages_clinic.save
+                manager.clinic_id = @clinic.id
+                manager.save
+                p.save
+              end
             end
           end
         end
