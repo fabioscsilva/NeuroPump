@@ -55,7 +55,7 @@ class WaisResultsController < ApplicationController
   # POST /wais
   # POST /wais.json
   def create
-    #raise params.inspect
+   # raise params.inspect
     @wai = WaisResult.new(params[:wais_result])
     @wai.phase = session["wais_phase"]
     @wai.spent_time =  Time.at(params[:wais_result][:spent_time].to_i).utc.strftime("%H:%M:%S")
@@ -64,6 +64,14 @@ class WaisResultsController < ApplicationController
       ev_test = EvaluationTest.find_by_name("wais")
       app = AppointmentPlan.where(:appointment_id => appoint_id, :evaluation_test_id => ev_test.id)
     @wai.appointment_plan_id = app.first.id
+    end
+
+    if params[:correct_items].nil?
+     @wai.correct_items = 0;
+    end
+
+    if params[:wrong_items].nil?
+     @wai.wrong_items = 0;
     end
 
     respond_to do |format|

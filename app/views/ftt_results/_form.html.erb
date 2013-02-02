@@ -30,8 +30,9 @@
 	var cont = 0;
 	var aux = 0;
 	var inputSelec = 0;
+	var descanco = false;
 
-	function updateDisplay() {
+	function updateDisplay(descanco) {
 		var value = parseInt($('#timer').find('.value').text(), 10);
 		value--;
 		$('#timer').find('.value').text(value);
@@ -43,9 +44,15 @@
 				$('#submit').attr("disabled", false);
 			}
 			$('#btnReiniciar').attr("disabled", true);
-			mostra(cont);
-			cont++;
+
+			if (!descanco) {
+				mostra(cont);
+				cont++;
+
+			}
+
 		}
+
 	}
 
 	function mostra(lblNum) {
@@ -93,9 +100,29 @@
 
 	function iniciaRelogio() {
 		var aux = document.getElementById("timer2");
-		aux.innerHTML = "10";
 		clearInterval(myVar);
-		myVar = setInterval(updateDisplay, 1000);
+
+		if (cont == 2 || cont == 6 || cont == 9) {
+			if (descanco == false) {
+				aux.innerHTML = "10";
+				myVar = setInterval(function() {
+					updateDisplay(false)
+				}, 1000);
+			} else {
+				descanco = false;
+				aux.innerHTML = "15";
+				myVar = setInterval(function() {
+					updateDisplay(true)
+				}, 1000);
+			}
+		} else {
+			descanco = true;
+			aux.innerHTML = "10";
+			myVar = setInterval(function() {
+				updateDisplay(false)
+			}, 1000);
+		}
+
 		$('#btnIniciar').attr("disabled", "disabled");
 		$('#btnReiniciar').attr("disabled", false);
 	}
@@ -110,19 +137,6 @@
 </script>
 
 <style>
-	/*table{
-	 table-layout: fixed;
-	 /*width: 200px;
-	 }
-
-	 th, td {
-	 width: 150px;
-	 }
-
-	 *
-	 *
-	 * */
-
 	td {
 		text-align: center;
 		vertical-align: middle; /* center checkbox vertically */
@@ -156,11 +170,18 @@
 			</thead>
 			<tbody>
 				<% for i in 0..9 %>
-				<tr>
-					<td><label class="lblTable" style="font-weight: bold;" ><%= i+1 %></label></td>
-					<td class="tdTable"><label id="teste<%= i %>" class="lblTable" onclick="mostra(<%= i %>)">0</label></td>
-					<td class="tdTable"><label id="teste<%= i+10 %>" class="lblTable" onclick="mostra(<%= i+10 %>)">0</label></td>
-				</tr>
+					<% if i == 2 or i== 5 or i==8 %>
+						<tr>
+							<td colspan="3"> <label class="lblTable" >Descanco (15 seg.)</label></td>
+						</tr>
+					<% else %>
+						
+					<% end %>
+					<tr>
+						<td><label class="lblTable" style="font-weight: bold;" ><%= i+1 %></label></td>
+						<td class="tdTable"><label id="teste<%= i %>" class="lblTable" onclick="mostra(<%= i %>)">0</label></td>
+						<td class="tdTable"><label id="teste<%= i+10 %>" class="lblTable" onclick="mostra(<%= i+10 %>)">0</label></td>
+					</tr>
 				<% end %>
 			</tbody>
 		</table>
