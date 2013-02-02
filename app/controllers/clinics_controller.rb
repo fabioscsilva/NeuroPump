@@ -31,6 +31,11 @@ class ClinicsController < ApplicationController
     authorize! :show, @clinic
     @payments = Payment.in_clinic(@clinic.id).order('creation_date DESC').all
     
+
+    manager = Manager.where(:clinic_id => @clinic.id).first
+    @managerEmail = manager.login.email
+    @managerMobile = manager.mobilephone
+
     @package = Package.joins(:packages_clinics).where("packages_clinics.clinic_id = " + @clinic.id.to_s).first
     @packageClinic = PackagesClinic.joins(:clinic).where("packages_clinics.clinic_id = " + @clinic.id.to_s).first
     
@@ -165,12 +170,12 @@ class ClinicsController < ApplicationController
     ent = 27035
 
     login = Login.new
-    login.email = params[:clinic][:email]
+    login.email = params[:clinic][:managerEmail]
     login.password = "passwordGerada"
     login.add_role :manager
 
     manager = Manager.new
-    manager.telephone = params[:clinic][:telephone]
+    
     manager.mobilephone = params[:clinic][:mobilephone]
 
     packageType = params[:packageType]
@@ -194,6 +199,7 @@ class ClinicsController < ApplicationController
     p.payed = false;
     p.reference = ref
     p.value = price
+    p.entity = ent
 
 
     @clinic = Clinic.new(params[:clinic])
