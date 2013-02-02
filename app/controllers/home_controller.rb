@@ -4,7 +4,7 @@ class HomeController < ApplicationController
       if current_login.has_role? :manager
         redirect_to managers_path
       elsif current_login.has_role? :secretary
-          redirect_to patients_path
+          redirect_to appointments_path
       elsif current_login.has_role? :administrator
         redirect_to administrators_path
       elsif current_login.has_role? :patient
