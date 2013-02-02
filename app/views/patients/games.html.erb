@@ -16,12 +16,12 @@
 	</div>
 </div>
 
-<div class="span9" style="top:-20px; position:relative; left: 300px;">
+<div class="span8" style="top:-20px; position:relative; left: 300px;">
 	<% Dir['app/assets/images/swfs_images/*'].map { |xfilename| %>
 		<a class="anchor" name="<%=File.basename(xfilename)%>">
 			<h1 style="padding-top: 80px; margin-top: -80px;"></h1>
 		</a>
-		<legend><%=File.basename(xfilename)%></legend>
+		<legend><h2 class="h2-title"><%=File.basename(xfilename)%></h2></legend>
 		<ul>
 			<% Dir["app/assets/images/swfs_images/#{File.basename(xfilename)}/*.jpg"].each_with_index.map { |filename,i| %>
 			<li style="width:225px; height:150px; position:relative; margin-bottom:20px; margin-right:20px; float:left; list-style-type:none;">
