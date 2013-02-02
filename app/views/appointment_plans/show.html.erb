@@ -57,7 +57,7 @@
 				<tbody>
 					<% @appointment_plans.each do |app_test| %>
 					<tr onmouseover="this.style.cursor ='normal'">
-						<td><%= app_test.evaluation_test.name%></td>
+						<td style="text-transform:capitalize;"><%= app_test.evaluation_test.name%></td>
 						<td><%= app_test.evaluation_test.description %></td>
 					</tr>
 					<% end %>

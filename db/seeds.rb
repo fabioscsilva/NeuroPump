@@ -261,7 +261,7 @@ app_type1 = appointment_types.first.id
 app_type2 = appointment_types.second.id
 
 
-appointment_statuses = AppointmentStatus.create([{name:'Marcada'},{name:'Realizada'}])
+appointment_statuses = AppointmentStatus.create([{name:'Marcada'},{name:'Realizada'},{name:'Em Avaliacao'}])
 app_status1 = appointment_statuses.first.id
 app_status2 = appointment_statuses.second.id
 
