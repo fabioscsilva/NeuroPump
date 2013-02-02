@@ -237,7 +237,7 @@ a {
 
 a:hover {
   color: #005580;
-  text-decoration: none;
+  text-decoration: underline;
 }
 
 .img-rounded {
@@ -749,18 +749,6 @@ h1 {
   font-size: 38.5px;
 }
 
-.h2-title {
-  color: #444;
-  text-align: left;
-  font-size: 24.5px;
-  border-bottom: solid 1px rgb(221, 221, 221);
-  margin-bottom: 0px;
-}
-
-h3.h2-title {
-  font-size: 20px;
-}
-
 h2 {
   font-size: 31.5px;
 }
@@ -1035,7 +1023,7 @@ legend {
   line-height: 40px;
   color: #333333;
   border: 0;
-  /*border-bottom: 1px solid #e5e5e5;*/
+  border-bottom: 1px solid #e5e5e5;
 }
 
 legend small {
@@ -1619,11 +1607,11 @@ select:focus:invalid:focus {
 }
 
 .form-actions {
-  padding: 2px 0px 20px;
-  margin-top: 0px;
+  padding: 19px 20px 20px;
+  margin-top: 20px;
   margin-bottom: 20px;
-  background-color: #fff;
-  border-top: 1px solid #fff;
+  background-color: #f5f5f5;
+  border-top: 1px solid #e5e5e5;
   *zoom: 1;
 }
 
@@ -1881,8 +1869,6 @@ input.search-query {
   *display: inline;
   margin-bottom: 0;
   vertical-align: middle;
-  width: 200px;
-  margin-left: 10px;
   *zoom: 1;
 }
 
@@ -1994,8 +1980,6 @@ table {
 .table {
   width: 100%;
   margin-bottom: 20px;
-  border: solid 1px rgb(221, 221, 221);
-  border-radius: 90px;
 }
 
 .table th,
@@ -2126,7 +2110,7 @@ table {
 
 .table-striped tbody > tr:nth-child(odd) > td,
 .table-striped tbody > tr:nth-child(odd) > th {
-  background-color: #fff;
+  background-color: #f9f9f9;
 }
 
 .table-hover tbody tr:hover td,
@@ -4306,8 +4290,8 @@ input[type="submit"].btn.btn-mini {
 .navbar {
   *position: relative;
   *z-index: 2;
+  margin-bottom: 20px;
   overflow: visible;
-  height: 60px;
 }
 
 .navbar-inner {
@@ -4545,13 +4529,11 @@ input[type="submit"].btn.btn-mini {
 
 .navbar .nav > li {
   float: left;
-  height: 60px;
 }
 
 .navbar .nav > li > a {
-  height: 20px;
   float: none;
-  /*padding: 10px 15px 10px;*/
+  padding: 10px 15px 10px;
   color: #777777;
   text-decoration: none;
   text-shadow: 0 1px 0 #ffffff;
@@ -4563,8 +4545,7 @@ input[type="submit"].btn.btn-mini {
 
 .navbar .nav > li > a:focus,
 .navbar .nav > li > a:hover {
-  color: #fff;
-  text-shadow: 0px 0px 0px !important;
+  color: #333333;
   text-decoration: none;
   background-color: transparent;
 }
@@ -4688,7 +4669,6 @@ input[type="submit"].btn.btn-mini {
 }
 
 .navbar .nav li.dropdown > .dropdown-toggle .caret {
-  margin-left: 10px;
   border-top-color: #777777;
   border-bottom-color: #777777;
 }
@@ -5697,6 +5677,7 @@ a.badge:hover {
 
 .progress {
   height: 20px;
+  margin-bottom: 20px;
   overflow: hidden;
   background-color: #f7f7f7;
   background-image: -moz-linear-gradient(top, #f5f5f5, #f9f9f9);
@@ -6055,8 +6036,4 @@ a.badge:hover {
 
 .affix {
   position: fixed;
-}
-
-thead {
-  background-color: #f6f6f6 !important;
 }
