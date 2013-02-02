@@ -1,5 +1,5 @@
 class ClinicsController < ApplicationController
-  before_filter :authenticate_login!, :except => :new
+  before_filter :authenticate_login!, :except => {:new, :create}
   #load_and_authorize_resource
   # GET /clinics
   # GET /clinics.json
