@@ -8,7 +8,7 @@ class AdministratorsController < ApplicationController
     
     
     # Packages Chart
-    packages= Package.joins(:packages_clinics).select("COUNT(*) as count, name").group("name").all
+    packages= Package.all
     
     @packagesArray = Array.new
     
@@ -19,7 +19,10 @@ class AdministratorsController < ApplicationController
     
     packages.each do |package|
       packagesNames.push(package.name)
-      packagesCount.push(Integer(package.count))
+      
+      packCount = Package.joins(:packages_clinics).select("COUNT(*) as count").where("packages.name = '" + package.name + "'")
+      
+      packagesCount.push(Integer(packCount.first.count))
     end
     
     @packagesArray.push(packagesNames)
@@ -37,6 +40,58 @@ class AdministratorsController < ApplicationController
       @revenueArray.push([value.date, Float(value.sum)])
     end
     
+    #
+    months = Hash.new
+    months[1] = "Jan"
+    months[2] = "Fev"
+    months[3] = "Mar"
+    months[4] = "Abr"
+    months[5] = "Mai"
+    months[6] = "Jun"
+    months[7] = "Jul"
+    months[8] = "Ago"
+    months[9] = "Set"
+    months[10] = "Out"
+    months[11] = "Nov"
+    months[12] = "Dez"
+    
+    @clinicsArray = Array.new
+    headerTemp = Array.new
+    headerTemp.push("Mes do Ano")
+    packages.each do |package|
+      headerTemp.push(package.name)
+    end
+    
+    @clinicsArray.push(headerTemp)
+    
+    year = Time.new.year
+    initialMonth = (Time.new.month % 12) + 1
+    currentMonth = initialMonth
+    
+    if initialMonth != 1
+      year = year - 1
+    end
+    
+    
+    for i in 1..12
+      if initialMonth != 1 && currentMonth == 1
+        year = year + 1
+      end
+      
+      
+      clinicTemp = Array.new
+      clinicTemp.push(months[currentMonth].to_s + "/" + year.to_s[2..3])
+      
+      packages.each do |package|
+        nClinics = PackagesClinic.select("COUNT(*) as count").joins(:package).where("date_part('month', start_date) <= " + currentMonth.to_s + " AND date_part('year', start_date) <= " + year.to_s + " AND packages.name = '" + package.name + "'")
+        
+        clinicTemp.push(Integer(nClinics.first.count))
+      end
+      
+      @clinicsArray.push(clinicTemp)
+
+      currentMonth = (currentMonth % 12) + 1
+    end
     
     respond_to do |format|
       format.html # index.html.erb

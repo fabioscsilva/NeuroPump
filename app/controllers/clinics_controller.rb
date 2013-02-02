@@ -36,13 +36,14 @@ class ClinicsController < ApplicationController
     
     @nAppointments = @package.n_appointments
     @appointmentsLeft = @packageClinic.appointment_token    
+    @appointmentsUsed = @nAppointments - @appointmentsLeft
     
     if @nAppointments > 0
       @appointmentsRatio = (@nAppointments-@appointmentsLeft)/@nAppointments*100
     else
       @appointmentsRatio = 100
       @nAppointments = 0x221E.chr
-      @appointmentsLeft = @appointmentsLeft * -1 - 1
+      @appointmentsUsed = @appointmentsLeft * -1 - 1
     end
     
     @progressBarClass = "progress-success"
