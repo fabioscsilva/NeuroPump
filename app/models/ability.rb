@@ -32,19 +32,19 @@ class Ability
         appointment.neuropsychologist_id == login.neuropsychologists.first.id
       end
       can [:new,:create], ClockResult
-      can [:edit,:update,:destroy], ClockResult do |clock_results|
+      can [:edit,:update,:destroy, :download], ClockResult do |clock_results|
         clock_results.appointment_plan.appointment.neuropsychologist_id == login.neuropsychologists.first.id
       end
       can [:new,:create], FttResult
-      can [:edit,:update,:destroy], FttResult do |ftt_results|
+      can [:edit,:update,:destroy, :download], FttResult do |ftt_results|
         ftt_results.appointment_plan.appointment.neuropsychologist_id == login.neuropsychologists.first.id
       end
       can [:new,:create], TmtResult
-      can [:edit,:update,:destroy], TmtResult do |tnt_results|
+      can [:edit,:update,:destroy, :download], TmtResult do |tnt_results|
         tmt_results.appointment_plan.appointment.neuropsychologist_id == login.neuropsychologists.first.id
       end
       can [:new,:create], WaisResult
-      can [:edit,:update,:destroy], WaisResult do |wais_results|
+      can [:edit,:update,:destroy, :download], WaisResult do |wais_results|
         wais_results.appointment_plan.appointment.neuropsychologist_id == login.neuropsychologists.first.id
       end
       can [:new,:create], WmsResult
