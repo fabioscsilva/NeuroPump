@@ -100,16 +100,7 @@ class ClinicsController < ApplicationController
       bestPackagePrice = Package.order("price DESC").first.price
       @packagePrice = packageClinic.package.price
 
-      if @packagePrice >= bestPackagePrice
-        flash[:error] = "Nao existe melhor subscricao do que a sua clinica ja tem"
-        respond_to do |format|
-        format.html {redirect_to edit_clinic_path(clinic)}
-        end
-      end
-
-      
-    
-    end
+   end
 
       
 
@@ -153,6 +144,16 @@ class ClinicsController < ApplicationController
     authorize! :edit, @clinic
     @pageType = "edit"
     @clinic.mobilephone = Manager.where(:clinic_id => @clinic.id).first.mobilephone
+
+    packageClinic = PackagesClinic.where(:clinic_id => @clinic.id).first
+    bestPackagePrice = Package.order("price DESC").first.price
+    packagePrice = packageClinic.package.price
+    if packagePrice >= bestPackagePrice
+      @canChange = false
+    else
+      @canChange = true
+    end
+
   end
 
   # POST /clinics

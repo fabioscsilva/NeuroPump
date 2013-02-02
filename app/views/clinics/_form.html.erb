@@ -107,7 +107,7 @@
     </div>
     <%end%>
   </div>
-<% elsif current_login.has_role? :manager %>
+<% elsif (current_login.has_role? :manager) && (@canChange == true) %>
   <div>
     <%= link_to 'Alterar Subscrição',{:controller => "clinics", :action => "changePackage" }, :class => "btn btn-primary span3 offset05 pull-left" %>
   </div>
