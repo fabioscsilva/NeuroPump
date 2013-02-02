@@ -87,6 +87,7 @@ class ClinicsController < ApplicationController
   end
 
   def changePackage
+    @package = Package.new
     @packages = Package.all
 
     manager = Manager.first(:conditions => "login_id = #{current_login.id}")
@@ -107,9 +108,6 @@ class ClinicsController < ApplicationController
       @packagePrice = packageClinic.package.price
 
    end
-
-      
-
   end
 
   def changePackageSubmit

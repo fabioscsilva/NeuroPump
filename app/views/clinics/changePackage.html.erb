@@ -1,4 +1,4 @@
-
+<form method="POST" action="/clinics/changePackageSubmit" >
 <h2>Mudar Subscrição</h2>
 
 <p>Atenção, so pode alterar o seu subscrição para um superior</p>
@@ -67,7 +67,7 @@
         </tr>
       </table>
       <center>
-          <%= radio_button_tag :packageType, "#{p.id}", false, :style => "margin-top:15px;", :onClick => "destaca(#{@numTabelas})" %>
+        <input style="margin-top:15px;" type="radio" value = "<%= p.id %>" id = "<%= p.id %>" name= "packageType" required onClick="destaca(<%= @numTabelas %>)"/>
       </center>
     </div>
     <%end%>
@@ -81,10 +81,10 @@
     </div>
 
     <div>
+      <input type="submit"/>
       <%= button_to "Submeter", {:controller => :clinics, :action => :changePackageSubmit}, :class => "btn btn-success span2  pull-right" %>
     </div>
-
-
+</form>
 <script type="text/javascript">
   function destaca(id) {
     lim = <%= @numTabelas %>;
