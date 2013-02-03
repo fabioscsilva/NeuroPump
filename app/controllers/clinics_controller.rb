@@ -169,7 +169,7 @@ class ClinicsController < ApplicationController
 
     login = Login.new
     login.email = params[:clinic][:managerEmail]
-    login.password = "passwordGerada"
+    login.password = SecureRandom.hex(3)
     login.add_role :manager
 
     manager = Manager.new
