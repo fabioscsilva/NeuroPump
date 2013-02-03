@@ -1,5 +1,5 @@
 class ClinicsController < ApplicationController
-  before_filter :authenticate_login!, :except => [:new, :create]
+  #before_filter :authenticate_login!, :except => [:new, :create]
   #load_and_authorize_resource
   # GET /clinics
   # GET /clinics.json
@@ -116,11 +116,10 @@ class ClinicsController < ApplicationController
     idP = p.id
     tokenNum = p.n_appointments
     price = p.price
-
-
-    manager = Manager.first(:conditions => "login_id = #{current_login.id}")
-    cID = manager.clinic_id
-    packages_clinic = PackagesClinic.where(:clinic_id => @cID).first
+    
+    manager = Manager.where(:login_id => 761).first
+    cID = manager.clinic.id
+    packages_clinic = PackagesClinic.where(:clinic_id => cID).first
     packages_clinic.appointment_token = tokenNum
     packages_clinic.start_date = DateTime.now.to_date
     packages_clinic.week = 1
@@ -134,7 +133,7 @@ class ClinicsController < ApplicationController
 
      respond_to do |format|
       if packages_clinic.save
-        UserMailer.send_email_managerUpdate(email.to_s,@clinic.name.to_s,ref.to_s, ent.to_s, price.to_s).deliver
+        #UserMailer.send_email_managerUpdate(email.to_s,@clinic.name.to_s,ref.to_s, ent.to_s, price.to_s).deliver
         format.html { redirect_to @clinic, notice: 'Subscricao da clinica mudado com successo.' }
       else
         format.html { redirect_to @clinic, notice: 'Subscricao da clinica nao foi mudado com successo' }

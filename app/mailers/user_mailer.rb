@@ -49,8 +49,6 @@ class UserMailer < ActionMailer::Base
     @price = price
     @entity = ent
     @emailM = email
-    mail( :to => email,
-          :subject => "[NeuroPump] Pacote mudado no NeuroPump",
-      )
+    mail( :to => email,:subject => "[NeuroPump] Pacote mudado no NeuroPump")
   end
 end
