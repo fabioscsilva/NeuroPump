@@ -141,6 +141,7 @@ class ClinicsController < ApplicationController
     end
 
   end
+
   # GET /clinics/1/edit
   def edit
     @clinic = Clinic.find(params[:id])

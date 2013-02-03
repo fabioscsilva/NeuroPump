@@ -43,7 +43,7 @@ class UserMailer < ActionMailer::Base
       )
   end
 
-    def send_email_managerUpdate(email,clinicName,ref,ent,price)
+  def send_email_managerUpdate(email,clinicName,ref,ent,price)
     @cName = clinicName
     @reference = ref
     @price = price
