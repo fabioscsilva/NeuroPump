@@ -250,7 +250,13 @@
 
 								<td><%= appointment.appointment_type.name %></td>
 								<td>
-									<%= link_to "Editar Avaliação"%>
+									<% if appointment.appointment_type.name == 'Avaliacao' %>
+										<%  evaluation = EvaluationResult.find_by_appointment_id(appointment.id) %>
+									 	<a href="/evaluation_results/<%=evaluation.id%>/edit?appID=<%= appointment.id %>" target="_blank">Editar Avaliação</a>
+							 		<%else%>
+							 			N.A.
+							 		<%end%>
+									
 								</td>
 							</tr>
 							<%end%>
@@ -279,13 +285,19 @@
 						</thead>
 						<tbody>
 							<% @patient.appointments.each do |appointment| %>
-							<%if appointment.appointment_status.name == "Marcada"%>
+							<%if appointment.appointment_status.name == "Realizada"%>
 							<tr>
 								<td><%= appointment.appointment_day.strftime('%a,%d de %b de %Y') %></td>
 								<td><%= appointment.appointment_day.strftime('%H:%M') %></td>
 
 								<td><%= appointment.appointment_type.name %></td>
-								<td> <a href="http://localhost:8000/reporting?report=Avaliacao&Appointment_Id=<%= appointment.id %>">Visualizar Relatório</a> </td>
+								<td>
+									<% if appointment.appointment_type.name == 'Avaliacao' %>
+									 	<a href="http://localhost:8000/reporting?report=Avaliacao&Appointment_Id=<%= appointment.id %>">Visualizar Relatório</a> 
+							 		<%else%>
+							 			N.A.
+							 		<%end%>
+							 	</td>
 							</tr>
 							<%end%>
 							<% end %>
