@@ -7,8 +7,8 @@ class Clinic < ActiveRecord::Base
   has_many :patients
   has_many :logins
 
-  attr_accessible :address, :email, :name, :fiscal_number, :name, :telephone, :administrator_id, :mobilephone
-  attr_accessor :mobilephone
+  attr_accessible :address, :email, :name, :fiscal_number, :name, :telephone, :administrator_id, :mobilephone, :managerEmail
+  attr_accessor :mobilephone, :managerEmail
   
   validates_presence_of :address, :email, :fiscal_number, :name
   validates  :email,

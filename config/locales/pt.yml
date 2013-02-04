@@ -1,0 +1,5 @@
+pt:
+  datetime:
+    formats:
+      short: "%H:%M"
+      default: "%a,%d de %b de %Y"

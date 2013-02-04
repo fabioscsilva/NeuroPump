@@ -534,6 +534,8 @@
 	<%= f.text_area :solution, :class => "span12", :rows => 7, :placeholder => "Refira a proposta de intervenção futura" %>
 </div>
 <div class="row-fluid">
-	<%= f.submit :class => "btn btn-success pull-right", :value => "Gerar relatório da avaliação" %>
+	<%= f.submit :class => "btn btn-success pull-right", :style => "margin-left: 10px;" ,:value => "Gerar relatório da avaliação" %>
+	<%= f.submit 'Gravar Rascunho', :class => "btn btn-info pull-right" %>
+
 </div>
 <% end %>

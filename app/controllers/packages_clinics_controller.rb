@@ -1,6 +1,6 @@
 class PackagesClinicsController < ApplicationController
   before_filter :authenticate_login!
-  load_and_authorize_resource
+  #load_and_authorize_resource
   # GET /packages_clinics
   # GET /packages_clinics.json
   def index

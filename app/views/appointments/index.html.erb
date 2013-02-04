@@ -34,55 +34,11 @@ dataAtual = 0;
             <% end %>
 
             <input type="hidden" />
-            <ul id="ulform">
+            <ul id="ulform" >
                 <li id="idtoappend" style="display: none; list-style-type: none;"></li>
                 <!--<p style="width: 100%" class="date_holder"></p> -->
-                <div style="float: left; width: 40%; margin-right: 10%;font-size: 10px;">
-                <li style="list-style-type: none;">
-                        <label for="start">Hora de Início: </label>
-
-                        <div style="width: 250px; position: relative;">
-                        <select name="start" id="start" onchange="atualizaDuracaoMinutos()">
-                          <option value="">Escolha a hora de início</option>
-                        </select>
-                        </div>
-                </li>
-                <li style="list-style-type: none;">
-
-                  <!-- <%= f.label :date, "Data" %> -->
-                  <%= f.text_field :appointment_day, :id => "valor_data", :class => "span3", :placeholder => "Introduza a data", :required => true, :type => "hidden" %>
-
-                  <!-- <%= f.label :date, "Data" %> 
-                  <div class="input-append date" data-date="01-01-2013" data-date-format="dd-mm-yyyy" >
-                    <%= f.text_field :appointment_day, :class => "span2", :value => @appointment.appointment_day, :readonly => true, :required => true, :id => 'dp', :style => "cursor:pointer"%> <!-- , :type => 'hidden' %> -->
-                    <!-- <span class="add-on"><i class="icon-calendar"></i></span> -->
-                  <!--</div>-->
-
-                  <li style="list-style-type: none;">
-                      <%= f.input :duration, :required => true, :input_html => {:style => 'display: none;'} %>
-                  </li>
-
-                </li>
-                <li style="list-style-type: none;">
-                        <label for="end">Hora de Fim: </label>
-
-                        <div style="width: 250px; position: relative;">
-                        <select name="end" id="end" onchange="atualizaDuracaoMinutos()">
-                          <option value="">Escolha a hora de fim</option>
-                        </select>
-                        </div>
-                </li>
-
-                <li style="list-style-type: none;">
-                  <div style="width: 250px; position: relative;">
-                    <div id="ver_consulta" style="display: none; background-color: #fefefe;text-align: center;padding-top: 4px;padding-bottom: 4px;margin-top: 50px;border: solid 1px #999; cursor: pointer;">
-                      Plano da Sessão
-                    </div>
-                  </div>
-                </li>
-
-                </div>
-                <div style="float: left; width: 45%;font-size: 10px;">
+                
+                <div style="float: left; width: 43%;margin-left: 2%;font-size: 12px;">
                 <li style="list-style-type: none;">
                         <label for="paciente">Paciente: </label>
                         <div style="width: 250px; position: relative;">
@@ -136,10 +92,59 @@ dataAtual = 0;
                 </li>
                 </div>
  
-                <div style="margin-left: 5%; width: 88%; margin-top: 53%;">
+                <div style="float: left; width: 40%; margin-left: 9%;font-size:12px;">
+                <li style="list-style-type: none;">
+                        <label for="start">Hora de Início: </label>
+
+                        <div style="width: 250px; position: relative;">
+                        <select name="start" id="start" onchange="atualizaDuracaoMinutos()">
+                          <option value="">Escolha a hora de início</option>
+                        </select>
+                        </div>
+                </li>
+                <li style="list-style-type: none;">
+
+                  <!-- <%= f.label :date, "Data" %> -->
+                  <%= f.text_field :appointment_day, :id => "valor_data", :class => "span3", :placeholder => "Introduza a data", :required => true, :type => "hidden" %>
+
+                  <!-- <%= f.label :date, "Data" %> 
+                  <div class="input-append date" data-date="01-01-2013" data-date-format="dd-mm-yyyy" >
+                    <%= f.text_field :appointment_day, :class => "span2", :value => @appointment.appointment_day, :readonly => true, :required => true, :id => 'dp', :style => "cursor:pointer"%> <!-- , :type => 'hidden' %> -->
+                    <!-- <span class="add-on"><i class="icon-calendar"></i></span> -->
+                  <!--</div>-->
+
+                  <li style="list-style-type: none;">
+                      <%= f.input :duration, :as => :hidden, :required => true %>
+                  </li>
+
+                </li>
+                <li style="list-style-type: none;">
+                        <label for="end">Hora de Fim: </label>
+
+                        <div style="width: 250px; position: relative;">
+                        <select name="end" id="end" onchange="atualizaDuracaoMinutos()">
+                          <option value="">Escolha a hora de fim</option>
+                        </select>
+                        </div>
+                </li>
+
+                <li style="list-style-type: none;">
+                  <div style="width: 220px; position: relative;">
+                    <button class="btn btn-primary" id="ver_consulta" style="width: 100%; display: none;margin-top: 35px;">
+                      Plano da Sessão
+                    </button>
+                  </div>
+                </li>
+
+                </div>
+
+
+
+                <div style="clear:both"></div>
+                <div style="margin-left: 3%; width: 90%; margin-top: 20px;">
                   <li style="list-style-type: none;">
                       <label for="description">Descrição: </label>
-                      <%= f.text_area :description, :name2 => "description", :required => true %>
+                      <%= f.text_area :description, :name2 => "description", :required => true, :style => "font-family: Verdana, Arial, sans-serif!important;font-size:12px!important; line-height:25px!important"%>
                   </li>
                 </div>
 
@@ -289,12 +294,12 @@ dataAtual = 0;
 
 
 <script type="text/javascript">
-  document.getElementById("appointment_appointment_status_id").className = "select2";
+  /*document.getElementById("appointment_appointment_status_id").className = "select2";
   document.getElementById("appointment_appointment_type_id").className = "select2";
   document.getElementById("appointment_neuropsychologist_id").className = "select2";
   document.getElementById("appointment_patient_id").className = "select2";
   document.getElementById("start").className = "select2";
-  document.getElementById("end").className = "select2";
+  document.getElementById("end").className = "select2";*/
 </script>
 
 <!--<div class="container">
@@ -600,8 +605,15 @@ $(document).ready(function() {
          if (calEvent.readOnly) {
             return;
          }
-
-         $("#ver_consulta").css("display", "block");
+         
+         if (calEvent.tipo == 53)
+         {
+          $("#ver_consulta").css("display", "block");
+         } 
+         else
+         {
+          $("#ver_consulta").css("display", "none");
+         }
 
          $("#ver_consulta").click(function(){
           window.location = 'appointment_plans/'+calEvent.id+'' ;
@@ -1424,6 +1436,12 @@ function diminuiuLargura()
 </script>
 
 <style>
+
+select, input[type="file"] {
+height: 24px;
+line-height: 30px;
+}
+
 select.select2{
     position: relative;
     z-index: 1004 !important;
@@ -1442,7 +1460,7 @@ span.select2{
     height: 26px;
     line-height: 26px;
     text-indent: 10px;
-    background: url(assets/select-bg.gif) no-repeat 0 0;
+    /*background: url(assets/select-bg.gif) no-repeat 0 0;*/
     cursor: default;
     z-index: 1003;
     text-align: center;
@@ -1452,20 +1470,16 @@ span.select2{
 label{
   margin-top: 25px;
   color: #777;
-  font: 11px/10px "Avenir", sans-serif !important;
-  font-size: 1em;
-  text-align: center;
-  text-transform: uppercase;
+  font-size: 12px;
 }
 
 textarea{
   width: 100%;
-  margin-left: -3%;
   color: #454545 !important;
   padding: 4px;
   padding-top: 0px;
   border: 0;
-  background: url("assets/textarea-bg.gif") 0 -7px repeat-x;
+  background: url("assets/textarea-bg.png") 0 -7px repeat-x;
   height: 85px;
   overflow: hidden;
   resize: none;
@@ -1481,6 +1495,6 @@ textarea{
 }
 
 textarea:focus{
-  outline: none;
+  outline: none !important;
 }
 </style>

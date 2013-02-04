@@ -33,7 +33,9 @@ Gender.delete_all
 Role.delete_all
 Login.delete_all
 Handedness.delete_all
-CivilStatus.delete_all
+CivilStatus.delete_all
+
+
 
 #Civil_Statuses
 statuses = CivilStatus.create([{description:'Solteiro'},{description: 'Casado'}, {description: 'Divorciado'}, {description: 'Viuvo'}])
@@ -53,9 +55,9 @@ female = genders.first.id
 male = genders.second.id
 
 #Packages
-packages = Package.create([{n_exercises:'20',n_evaluations: '10', n_appointments: '10', price: '49.90', name: 'Standard'},
-                          {n_exercises:'100',n_evaluations: '30', n_appointments: '20', price: '89.90', name: 'Premium'},
-                          {n_exercises:'-1',n_evaluations: '-1', n_appointments: '-1', price: '109.90', name: 'Professional'}])
+packages = Package.create([{n_exercises:'20',n_evaluations: '10', n_appointments: '10', price: '89.90', name: 'Standard'},
+                          {n_exercises:'100',n_evaluations: '30', n_appointments: '20', price: '249.90', name: 'Premium'},
+                          {n_exercises:'-1',n_evaluations: '-1', n_appointments: '-1', price: '749.90', name: 'Professional'}])
 
 
 #Logins
@@ -261,7 +263,7 @@ app_type1 = appointment_types.first.id
 app_type2 = appointment_types.second.id
 
 
-appointment_statuses = AppointmentStatus.create([{name:'Marcada'},{name:'Realizada'}])
+appointment_statuses = AppointmentStatus.create([{name:'Marcada'},{name:'Realizada'},{name:'Em Avaliacao'}])
 app_status1 = appointment_statuses.first.id
 app_status2 = appointment_statuses.second.id
 

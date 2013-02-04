@@ -1,5 +1,5 @@
 class ClinicsController < ApplicationController
-  before_filter :authenticate_login!, :except => :new
+  #before_filter :authenticate_login!, :except => [:new, :create]
   #load_and_authorize_resource
   # GET /clinics
   # GET /clinics.json
@@ -31,18 +31,24 @@ class ClinicsController < ApplicationController
     authorize! :show, @clinic
     @payments = Payment.in_clinic(@clinic.id).order('creation_date DESC').all
     
+
+    manager = Manager.where(:clinic_id => @clinic.id).first
+    @managerEmail = manager.login.email
+    @managerMobile = manager.mobilephone
+
     @package = Package.joins(:packages_clinics).where("packages_clinics.clinic_id = " + @clinic.id.to_s).first
     @packageClinic = PackagesClinic.joins(:clinic).where("packages_clinics.clinic_id = " + @clinic.id.to_s).first
     
     @nAppointments = @package.n_appointments
     @appointmentsLeft = @packageClinic.appointment_token    
+    @appointmentsUsed = @nAppointments - @appointmentsLeft
     
     if @nAppointments > 0
       @appointmentsRatio = (@nAppointments-@appointmentsLeft)/@nAppointments*100
     else
       @appointmentsRatio = 100
       @nAppointments = 0x221E.chr
-      @appointmentsLeft = @appointmentsLeft * -1 - 1
+      @appointmentsUsed = @appointmentsLeft * -1 - 1
     end
     
     @progressBarClass = "progress-success"
@@ -81,6 +87,7 @@ class ClinicsController < ApplicationController
   end
 
   def changePackage
+    @package = Package.new
     @packages = Package.all
 
     manager = Manager.first(:conditions => "login_id = #{current_login.id}")
@@ -100,19 +107,7 @@ class ClinicsController < ApplicationController
       bestPackagePrice = Package.order("price DESC").first.price
       @packagePrice = packageClinic.package.price
 
-      if @packagePrice >= bestPackagePrice
-        flash[:error] = "Nao existe melhor subscricao do que a sua clinica ja tem"
-        respond_to do |format|
-        format.html {redirect_to edit_clinic_path(clinic)}
-        end
-      end
-
-      
-    
-    end
-
-      
-
+   end
   end
 
   def changePackageSubmit
@@ -121,11 +116,10 @@ class ClinicsController < ApplicationController
     idP = p.id
     tokenNum = p.n_appointments
     price = p.price
-
-
-    manager = Manager.first(:conditions => "login_id = #{current_login.id}")
-    cID = manager.clinic_id
-    packages_clinic = PackagesClinic.where(:clinic_id => @cID).first
+    
+    manager = Manager.where(:login_id => 761).first
+    cID = manager.clinic.id
+    packages_clinic = PackagesClinic.where(:clinic_id => cID).first
     packages_clinic.appointment_token = tokenNum
     packages_clinic.start_date = DateTime.now.to_date
     packages_clinic.week = 1
@@ -139,7 +133,7 @@ class ClinicsController < ApplicationController
 
      respond_to do |format|
       if packages_clinic.save
-        UserMailer.send_email_managerUpdate(email.to_s,@clinic.name.to_s,ref.to_s, ent.to_s, price.to_s).deliver
+        #UserMailer.send_email_managerUpdate(email.to_s,@clinic.name.to_s,ref.to_s, ent.to_s, price.to_s).deliver
         format.html { redirect_to @clinic, notice: 'Subscricao da clinica mudado com successo.' }
       else
         format.html { redirect_to @clinic, notice: 'Subscricao da clinica nao foi mudado com successo' }
@@ -147,12 +141,23 @@ class ClinicsController < ApplicationController
     end
 
   end
+
   # GET /clinics/1/edit
   def edit
     @clinic = Clinic.find(params[:id])
     authorize! :edit, @clinic
     @pageType = "edit"
     @clinic.mobilephone = Manager.where(:clinic_id => @clinic.id).first.mobilephone
+
+    packageClinic = PackagesClinic.where(:clinic_id => @clinic.id).first
+    bestPackagePrice = Package.order("price DESC").first.price
+    packagePrice = packageClinic.package.price
+    if packagePrice >= bestPackagePrice
+      @canChange = false
+    else
+      @canChange = true
+    end
+
   end
 
   # POST /clinics
@@ -164,12 +169,12 @@ class ClinicsController < ApplicationController
     ent = 27035
 
     login = Login.new
-    login.email = params[:clinic][:email]
-    login.password = "passwordGerada"
+    login.email = params[:clinic][:managerEmail]
+    login.password = SecureRandom.hex(3)
     login.add_role :manager
 
     manager = Manager.new
-    manager.telephone = params[:clinic][:telephone]
+    
     manager.mobilephone = params[:clinic][:mobilephone]
 
     packageType = params[:packageType]
@@ -185,21 +190,36 @@ class ClinicsController < ApplicationController
     packages_clinic.week = 1
     packages_clinic.package_id = idP
 
+
+    p = Payment.new
+    timeNow = Time.new;
+    p.creation_date = timeNow;
+    p.due_date = Time.new.advance(:months => 1);
+    p.payed = false;
+    p.reference = ref
+    p.value = price
+    p.entity = ent
+
+
     @clinic = Clinic.new(params[:clinic])
+    p.clinic_id = @clinic.id
 
     flag = true
     begin
-      Manager.transaction do
-        PackagesClinic.transaction do
-          Clinic.transaction do
-            Login.transaction do
-              login.save
-              manager.login_id = login.id
-              @clinic.save
-              packages_clinic.clinic_id = @clinic.id
-              packages_clinic.save
-              manager.clinic_id = @clinic.id
-              manager.save
+      Payment.transaction do
+        Manager.transaction do
+          PackagesClinic.transaction do
+            Clinic.transaction do
+              Login.transaction do
+                login.save
+                manager.login_id = login.id
+                @clinic.save
+                packages_clinic.clinic_id = @clinic.id
+                packages_clinic.save
+                manager.clinic_id = @clinic.id
+                manager.save
+                p.save
+              end
             end
           end
         end

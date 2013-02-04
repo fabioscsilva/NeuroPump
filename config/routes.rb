@@ -17,8 +17,10 @@ NeuroPump::Application.routes.draw do
   match 'downloadWais' => 'wais_results#download'
 
   resources :tmt_results
+  match 'downloadTmt' => 'tmt_results#download'
 
   resources :ftt_results
+  match 'downloadFtt' => 'ftt_results#download'
 
   resources :clock_results
   match 'downloadClock' => 'clock_results#download'
