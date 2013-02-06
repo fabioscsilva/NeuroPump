@@ -147,7 +147,9 @@ class ClinicsController < ApplicationController
     @clinic = Clinic.find(params[:id])
     authorize! :edit, @clinic
     @pageType = "edit"
-    @clinic.mobilephone = Manager.where(:clinic_id => @clinic.id).first.mobilephone
+    manager = Manager.where(:clinic_id => @clinic.id).first
+    @clinic.mobilephone = manager.mobilephone
+    @clinic.managerEmail = manager.login.email
 
     packageClinic = PackagesClinic.where(:clinic_id => @clinic.id).first
     bestPackagePrice = Package.order("price DESC").first.price
@@ -170,7 +172,7 @@ class ClinicsController < ApplicationController
 
     login = Login.new
     login.email = params[:clinic][:managerEmail]
-    login.password = SecureRandom.hex(3)
+    login.password = "qwerty"
     login.add_role :manager
 
     manager = Manager.new
