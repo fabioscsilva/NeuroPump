@@ -179,9 +179,12 @@ class ManagersController < ApplicationController
       gendersQuantities.push(Integer(val.count))
     end
     
-    @gendersArray.push(gendersDescriptions)
-    @gendersArray.push(gendersQuantities)
-        
+    if (gendersDescriptions.length > 1)
+      @gendersArray.push(gendersDescriptions)
+    end
+    if (gendersQuantities.length > 1)
+      @gendersArray.push(gendersQuantities)
+      end  
     print "\n\n\n\n" + @gendersArray.to_s + "\n\n\n"
     
     
