@@ -18,7 +18,6 @@
         var appointmentsChart = new google.visualization.BarChart(document.getElementById('chart_div_appointments'));
         appointmentsChart.draw(appointmentsData, appointmentsOptions);
         
-        
        /****/
        var resourcesData = google.visualization.arrayToDataTable([
          ['', 'Pacientes', 'Neuropsicólogos', 'Secretários'],
@@ -50,8 +49,8 @@
         };
 
         var agesChart = new google.visualization.BarChart(document.getElementById('chart_div_ages'));
-        agesChart.draw(agesData, agesOptions);
         
+        agesChart.draw(agesData, agesOptions);
         
      /******/
      var gendersData = google.visualization.arrayToDataTable(
@@ -68,7 +67,10 @@
         };
 
         var gendersChart = new google.visualization.ColumnChart(document.getElementById('chart_div_genders'));
-        gendersChart.draw(gendersData, gendersOptions);
+        
+        if (<%= @gendersArray.length %> > 1) {
+            gendersChart.draw(gendersData, gendersOptions);
+        }
     }
      
     </script>

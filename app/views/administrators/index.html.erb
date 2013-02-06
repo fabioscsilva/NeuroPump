@@ -17,8 +17,10 @@
         };
 
         var subscriptionsChart = new google.visualization.ColumnChart(document.getElementById('chart_div_subscriptions'));
-        subscriptionsChart.draw(subscriptionsData, subscriptionsOptions);
         
+        if (<%= @packagesArray.length %> > 1) {
+            subscriptionsChart.draw(subscriptionsData, subscriptionsOptions);
+        }
         
         /* Monthly Income Graph */
         var revenueData = google.visualization.arrayToDataTable(
@@ -34,15 +36,15 @@
           'chartArea':{width:"50%"}
         };
         
-        if (<%= @revenueArray.length %> < 3) {
-          var revenueChart = new google.visualization.ColumnChart(document.getElementById('chart_div_revenue'));
+        if (<%= @revenueArray.length %> > 1) {
+          if (<%= @revenueArray.length %> < 3) {
+            var revenueChart = new google.visualization.ColumnChart(document.getElementById('chart_div_revenue'));
+          }
+          else {
+            var revenueChart = new google.visualization.LineChart(document.getElementById('chart_div_revenue'));
+          }
+          revenueChart.draw(revenueData, revenueOptions);
         }
-        else {
-          var revenueChart = new google.visualization.LineChart(document.getElementById('chart_div_revenue'));
-        }
-        
-        revenueChart.draw(revenueData, revenueOptions);
-        
         
         /* Number of Patients/Secretaries/Neuropsychologists Graph */
         var resourcesData = google.visualization.arrayToDataTable([
@@ -75,7 +77,10 @@
         };
 
         var clinicsChart = new google.visualization.AreaChart(document.getElementById('chart_div_clinics'));
-        clinicsChart.draw(clinicsData, clinicsOptions);
+        
+        if (<%= @clinicsArray.length %> > 1) {
+          clinicsChart.draw(clinicsData, clinicsOptions);
+        }
     }
      
     </script>
@@ -92,9 +97,9 @@
     </div>
     
     <div class="row-fluid">
-        <div class="span6" id="chart_div_revenue" style="height: 500px;">
-        </div>
         <div class="span6" id="chart_div_clinics" style="height: 500px;">
+        </div>
+        <div class="span6" id="chart_div_revenue" style="height: 500px;">
         </div>
     </div>
   </div>
