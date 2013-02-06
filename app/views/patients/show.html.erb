@@ -190,7 +190,7 @@
 						</thead>
 						<tbody>
 							<% @patient.appointments.each do |appointment| %>
-							<%if appointment.appointment_status.name == "Marcada"%>
+							<%if appointment.appointment_status.name == "Marcada" && appointment.neuropsychologist.login_id == current_login.id %>
 							<tr>
 								<td><%= l appointment.appointment_day, :format => :default  %></td>
 								<td><%= l appointment.appointment_day, :format => :short %></td>
@@ -243,7 +243,7 @@
 						</thead>
 						<tbody>
 							<% @patient.appointments.each do |appointment| %>
-							<%if appointment.appointment_status.name == "Em Avaliacao"%>
+							<%if appointment.appointment_status.name == "Em Avaliacao" && appointment.neuropsychologist.login_id == current_login.id %>
 							<tr>
 								<td><%= appointment.appointment_day.strftime('%a,%d de %b de %Y') %></td>
 								<td><%= appointment.appointment_day.strftime('%H:%M') %></td>
@@ -285,7 +285,7 @@
 						</thead>
 						<tbody>
 							<% @patient.appointments.each do |appointment| %>
-							<%if appointment.appointment_status.name == "Realizada"%>
+							<%if appointment.appointment_status.name == "Realizada" && appointment.neuropsychologist.login_id == current_login.id %>
 							<tr>
 								<td><%= appointment.appointment_day.strftime('%a,%d de %b de %Y') %></td>
 								<td><%= appointment.appointment_day.strftime('%H:%M') %></td>

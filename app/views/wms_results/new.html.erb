@@ -33,7 +33,7 @@
 					<% else %> <h2 class="h2-title">WMS III - Sequência Espacial Direta
 					<%end %>
 					<div class="pull-right">
-						<a id="descriptionTeste" href="#myModal" role="button" class="btn btn-small btn-info" data-toggle="modal" rel="tooltip" data-placement="bottom" data-original-title="Descrição do Teste"><i class="icon-white icon-info-sign"></i></a>
+						<a id="descriptionTeste" href="#myModal" role="button" class="btn btn-small btn-info" onclick="openModal()"rel="tooltip" data-placement="bottom" data-original-title="Descrição do Teste"><i class="icon-white icon-info-sign"></i></a>
 
 						<!-- Modal -->
 						<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -75,5 +75,9 @@
 </div>
 <script>
 	$('#downloadClock').tooltip();
-	$('#descriptionTeste').tooltip(); 
+	$('#descriptionTeste').tooltip();
+
+	function openModal() {
+		$('#myModal').modal('show')
+	}
 </script>
