@@ -62,6 +62,10 @@ class AppointmentsController < ApplicationController
     # é controlado, se vier com id faz update senao faz create
     if params[:appointment][:id] == nil
       @appointment = Appointment.new(params[:appointment])
+      if current_login.has_role? :secretary
+        sec = Secretary.find_by_login_id(current_login.id)
+        @appointment.secretary_id = sec.id
+      end
 
       respond_to do |format|
         if @appointment.save

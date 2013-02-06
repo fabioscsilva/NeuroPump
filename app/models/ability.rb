@@ -65,7 +65,8 @@ class Ability
       can [:index, :show, :edit, :update], Patient do |patient|
         patient.clinic_id == login.secretaries.first.clinic_id
       end
-      can :manage, Appointment do |appointment|
+      can [:new, :create, :index], Appointment
+      can [:edit, :update, :destroy], Appointment do |appointment|
         appointment.secretary_id == login.secretaries.first.id
       end
       can [:index, :show], Neuropsychologist do |neuropsychologist|
