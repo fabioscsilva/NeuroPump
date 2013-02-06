@@ -37,7 +37,7 @@
 					<h2 class="h2-title">Teste do Relógio
 					<div class="pull-right">
 						<a id="downloadClock" href="/downloadClock" role="button" class="btn btn-small btn-info" data-toggle="modal" rel="tooltip" data-placement="bottom" data-original-title="Descarregar Template"><i class="icon-white icon-print"></i></a>
-						<a id="descriptionTeste" href="#myModal" role="button" class="btn btn-small btn-info" data-toggle="modal" rel="tooltip" data-placement="bottom" data-original-title="Descrição Teste"><i class="icon-white icon-info-sign"></i></a>
+						<a id="descriptionTeste" href="#myModal" onclick="openModal()"  class="btn btn-small btn-info" rel="tooltip" data-placement="bottom" data-original-title="Descrição Teste"><i class="icon-white icon-info-sign"></i></a>
 
 						<!-- Modal -->
 						<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -98,5 +98,9 @@
 </div>
 <script>
 	$('#downloadClock').tooltip();
-	$('#descriptionTeste').tooltip(); 
+	$('#descriptionTeste').tooltip();
+
+		function openModal() {
+			$('#myModal').modal('show')
+		}
 </script>

@@ -1,3 +1,14 @@
+<!-- start: CSS -->
+<%= stylesheet_link_tag 'css/bootstrap.css' %>
+<%= stylesheet_link_tag 'css/bootstrap-responsive.css' %>
+<%= stylesheet_link_tag 'css/style.css' %>
+<%= stylesheet_link_tag 'css/parallax-slider.css' %>
+<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Droid+Sans:400,700">
+<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Droid+Serif">
+<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Boogaloo">
+<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Economica:700,400italic">
+<!-- end: CSS -->
+
 <!--start: Wrapper-->
 <div id="wrapper">
 
@@ -314,3 +325,18 @@
 
 </div>
 <!-- end: Wrapper  -->
+
+<!-- Placed at the end of the document so the pages load faster -->
+<%= javascript_include_tag 'js/jquery-1.8.2.js' %>
+<%= javascript_include_tag 'js/bootstrap.js' %>
+<%= javascript_include_tag 'js/isotope.js' %>
+<%= javascript_include_tag 'js/jquery.imagesloaded.js' %>
+<%= javascript_include_tag 'js/flexslider.js' %>
+<%= javascript_include_tag 'js/carousel.js' %>
+<%= javascript_include_tag 'js/jquery.cslider.js' %>
+<%= javascript_include_tag 'js/slider.js' %>
+<%= javascript_include_tag 'js/fancybox.js' %>
+<%= javascript_include_tag 'js/custom.js' %>
+<!-- end: Java Script -->
+
+<%= render :file => '/devise/sessions/_modal.html.erb' %>

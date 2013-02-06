@@ -8,18 +8,18 @@
 				</legend>
 				<div class="well">
 					<ul class="nav nav-list" style="float:none">
-						<% appoint_id = session["current_appointment"].to_f %> 
+						<% appoint_id = session["current_appointment"].to_f %>
 						<% appoint_plan = AppointmentPlan.where(:appointment_id => appoint_id) %>
 						<% appoint_plan.each do |a|%>
-							<%if a.evaluation_test.name == "tmt"%>
-								<li class="active" style="text-transform:capitalize;">
-									<a href="#"><i class="icon-chevron-right"></i> <%= a.evaluation_test.name %></a>
-								</li>
-							<%else%>
-								<li style="text-transform:capitalize;">
-									<a href="#"><i class="icon-chevron-right"></i> <%= a.evaluation_test.name %></a>
-								</li>
-							<%end%>
+						<%if a.evaluation_test.name == "tmt"%>
+						<li class="active" style="text-transform:capitalize;">
+							<a href="#"><i class="icon-chevron-right"></i> <%= a.evaluation_test.name %></a>
+						</li>
+						<%else%>
+						<li style="text-transform:capitalize;">
+							<a href="#"><i class="icon-chevron-right"></i> <%= a.evaluation_test.name %></a>
+						</li>
+						<%end%>
 
 						<%end%>
 					</ul>
@@ -30,7 +30,7 @@
 					<h2 class="h2-title">TMT - trails making test
 					<div class="pull-right">
 						<a id="downloadTmt" href="/downloadTmt" role="button" class="btn btn-small btn-info" data-toggle="modal" rel="tooltip" data-placement="bottom" data-original-title="Descarregar Template"><i class="icon-white icon-print"></i></a>
-						<a id="descriptionTeste" href="#myModal" role="button" class="btn btn-small btn-info" data-toggle="modal" rel="tooltip" data-placement="bottom" data-original-title="Descrição Teste"><i class="icon-white icon-info-sign"></i></a>
+						<a id="descriptionTeste" href="#myModal" role="button" class="btn btn-small btn-info" onclick="openModal()" rel="tooltip" data-placement="bottom" data-original-title="Descrição Teste"><i class="icon-white icon-info-sign"></i></a>
 
 						<!-- Modal -->
 						<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -44,15 +44,16 @@
 								<p align="justify">
 									Este teste mede a atenção, a fexibilidade mental, a procura visual e a função motora.
 									É constituido por duas partes, em que a primeira consiste na tarefa de ligar com linhas feitas a lápis, 25 circulos numerados de 1 a 25 e a segunda
-									consiste em unir circulos numerados de 1 a 12 aleternados com as as letras de A a K.<br><br>
+									consiste em unir circulos numerados de 1 a 12 aleternados com as as letras de A a K.
+									<br>
+									<br>
 									A cotação consta apenas da contabilização em segundos do tempo de cada umas das partes do teste. Os erros não são contabilizados uma vez que é necessário recomeçar a tarefa a partir do ponto de erro, implicando, por consequência,
-									o aumento do tempo de execução. 
+									o aumento do tempo de execução.
 								</p>
 							</div>
 
 						</div>
-					</div>
-					</h2>
+					</div></h2>
 				</legend>
 
 				<%= render 'form' %>
@@ -62,5 +63,9 @@
 </div>
 <script>
 	$('#downloadClock').tooltip();
-	$('#descriptionTeste').tooltip(); 
+	$('#descriptionTeste').tooltip();
+
+	function openModal() {
+		$('#myModal').modal('show')
+	}
 </script>

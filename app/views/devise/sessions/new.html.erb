@@ -456,34 +456,5 @@
 	<%= javascript_include_tag 'js/fancybox.js' %>
 	<%= javascript_include_tag 'js/custom.js' %>
 	<!-- end: Java Script -->
-
-	<!-- Modal -->
-	<div id="myModal" class="modal hide fade" style="tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-	<div class="modal-header">
-	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-	×
-	</button>
-	<h3 id="myModalLabel">Autenticação</h3>
-	</div>
-	<div class="modal-body" style="font-size: 12px; line-height: 20px;">
-	<%= simple_form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
-	<div class="span5">
-	<%= f.input :email, :autofocus => true, :style => "width: 100%",  :input_html => { :style => 'width: 97%!important;'}   %>
-	</div>
-	<div class="span5">
-	<%= f.input :password,  :input_html => { :class => 'span12', :style => 'width: 97%!important;'}   %>
-	</div>
-	<!--div>
-	<%= f.input :remember_me, :as => :boolean if devise_mapping.rememberable? %>
-	</div-->
-	<div class="span5">
-		<%= f.button :submit, "Login", :class => 'btn-primary pull-right', :style => "margin-top: 10px;" %>
-	</div>
-	<% end %>
 	
-	<div class="span5">
-		<%= render "devise/shared/links" %>
-	</div>
-	</div>
-	</div>
-
+	<%= render 'modal'%>

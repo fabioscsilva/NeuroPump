@@ -7,18 +7,18 @@
 				</legend>
 				<div class="well">
 					<ul class="nav nav-list" style="float:none">
-						<% appoint_id = session["current_appointment"].to_f %> 
+						<% appoint_id = session["current_appointment"].to_f %>
 						<% appoint_plan = AppointmentPlan.where(:appointment_id => appoint_id) %>
 						<% appoint_plan.each do |a|%>
-							<%if a.evaluation_test.name == "ftt"%>
-								<li class="active" style="text-transform:capitalize;">
-									<a href="#"><i class="icon-chevron-right"></i> <%= a.evaluation_test.name %></a>
-								</li>
-							<%else%>
-								<li style="text-transform:capitalize;">
-									<a href="#"><i class="icon-chevron-right"></i> <%= a.evaluation_test.name %></a>
-								</li>
-							<%end%>
+						<%if a.evaluation_test.name == "ftt"%>
+						<li class="active" style="text-transform:capitalize;">
+							<a href="#"><i class="icon-chevron-right"></i> <%= a.evaluation_test.name %></a>
+						</li>
+						<%else%>
+						<li style="text-transform:capitalize;">
+							<a href="#"><i class="icon-chevron-right"></i> <%= a.evaluation_test.name %></a>
+						</li>
+						<%end%>
 
 						<%end%>
 					</ul>
@@ -29,7 +29,7 @@
 					<h2 class="h2-title">FTT - Finger Tapper Test
 					<div class="pull-right">
 						<a id="downloadFtt" href="/downloadFtt" role="button" class="btn btn-small btn-info" data-toggle="modal" rel="tooltip" data-placement="bottom" data-original-title="Descarregar Template"><i class="icon-white icon-print"></i></a>
-						<a id="descriptionTeste" href="#myModal" role="button" class="btn btn-small btn-info" data-toggle="modal" rel="tooltip" data-placement="bottom" data-original-title="Descrição Teste"><i class="icon-white icon-info-sign"></i></a>
+						<a id="descriptionTeste" href="#myModal" role="button" class="btn btn-small btn-info" onclick="openModal()" rel="tooltip" data-placement="bottom" data-original-title="Descrição Teste"><i class="icon-white icon-info-sign"></i></a>
 
 						<!-- Modal -->
 						<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -42,17 +42,18 @@
 							<div class="modal-body" style="font-size: 12px; line-height: 20px;">
 								<p align="justify">
 									Este teste tem como intuito medir a velocididade motora, utilizando um dispositivo que regista mecanicamente
-									o número de toques que o sujeito dá com o dedo indicador numa peça desse dispositivo e num determinado 
-									intervalo de tempo (10 seg.).<br><br>
+									o número de toques que o sujeito dá com o dedo indicador numa peça desse dispositivo e num determinado
+									intervalo de tempo (10 seg.).
+									<br>
+									<br>
 									O teste efectua-se em duas sérias de 10 ensaios consecutivos, 10 para a mão dominante e 10 para a mão
 									não dominante. Cada ensaio dura 10 segundos, que devem ser cronometrados.<b></b>
-									A cotação é feita separadamente para cada mão, sendo obtida a média aritmética do número de toques dos 10 ensaios.							
+									A cotação é feita separadamente para cada mão, sendo obtida a média aritmética do número de toques dos 10 ensaios.
 								</p>
 							</div>
 
 						</div>
-					</div>
-				</h2>
+					</div></h2>
 				</legend>
 				<%= render 'form' %>
 			</div>
@@ -61,5 +62,9 @@
 </div>
 <script>
 	$('#downloadClock').tooltip();
-	$('#descriptionTeste').tooltip(); 
+	$('#descriptionTeste').tooltip();
+
+	function openModal() {
+		$('#myModal').modal('show')
+	}
 </script>
