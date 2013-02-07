@@ -170,7 +170,7 @@ neuro7 = neuropsychologists[6].id
 
 
 # ------------- SECRETARIAS
-secretaries = Secretary.create([{name:'Nuno Sousa Costa', address:'Rua dos Sousas n234 - Coimbra', telephone:'245895684', mobilephone:'964256984', date_of_birth:'09/11/1978', identification_code:'985685654', gender_id: male, clinic_id: clinic1, login_id: login4},
+secretaries = Secretary.create([{name:'Samuel Rodrigues', address:'Rua dos Sousas n234 - Coimbra', telephone:'245895684', mobilephone:'964256984', date_of_birth:'09/11/1978', identification_code:'985685654', gender_id: male, clinic_id: clinic1, login_id: login4},
                                 {name:'Ana Sofia Rebelo Pinto', address:'Rua Alvaro Cabral n23 - Lisboa', telephone:'214589569', mobilephone:'936547141', date_of_birth:'23/05/1986', identification_code:'745845123', gender_id: female, clinic_id: clinic1, login_id: login14},
                                 {name:'Ana Maria Vincente', address:'Praceta Pinto Rebelo n12 - Valongo', telephone:'223547852', mobilephone:'912585695', date_of_birth:'11/01/1960', identification_code:'856547845', gender_id: female, clinic_id: clinic2, login_id: login15},
                                 {name:'Tania Sousa Salgueiro', address:'Rua dos Reis n345 - Vila Real', telephone:'269547841', mobilephone:'963656325', date_of_birth:'05/04/1988', identification_code:'854754125', gender_id: female, clinic_id: clinic3, login_id: login16},
