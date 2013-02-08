@@ -63,12 +63,12 @@ packages = Package.create([{n_exercises:'20',n_evaluations: '10', n_appointments
 #Logins
 logins = Login.create([{email:'smr@fpce.uc.pt', password:'qwerty'},
                       {email:'sus.antunes@ipnp.pt', password:'qwerty'},
-                      {email:'fabioscsilva@gmail.pt', password:'qwerty'},
-                       {email:'srodrigues14@gmail.pt', password:'qwerty'},
+                      {email:'dPereira@gmail.com', password:'qwerty'},
+                       {email:'mAmaral@gmail.com', password:'qwerty'},
                         {email:'brunomiguelas@gmail.pt', password:'qwerty'},
-                        {email:'manager@gmail.com', password:'qwerty'},
-                        {email:'fabio@neuropump.com', password:'qwerty'},
-                        {email:'BLFPortela@gmail.com', password:'qwerty'},
+                        {email:'manager@cnaj.com', password:'qwerty'},
+                        {email:'admin@neuropump.com', password:'qwerty'},
+                        {email:'MariaAntunes@gmail.com', password:'qwerty'},
                         {email:'ruipereir@gmail.com', password:'qwerty'},
                         {email:'fabioSil@fpce.uc.pt', password:'qwerty'},
                         {email:'gabiCou@ipnp.pt', password:'qwerty'},
@@ -130,11 +130,11 @@ admins = Administrator.create([{name:'Nuno Filipe Ribeiro Costa', login_id: logi
 admin = admins.first.id
 
 #Clinics
-clinics = Clinic.create([{name:'Instituto de psicologia e neuropsicologia do porto', address:'Avenida da Boavista n245 - Porto',fiscal_number:'321456712', email:'geral@ipnp.pt', telephone:'232444111', administrator_id: admin},
-                         {name:'Clinica de Neuropsicologia Anita Taub', address:'Rua Joao Moura n 647 - Coimbra',fiscal_number:'865423598', email:'info@anitataub.pt', telephone:'236541489', administrator_id: admin},
-                          {name:'Neuropsicocentro', address:'Rua Coronel Linhares n 943 - Lisboa',fiscal_number:'875412547', email:'contacto@neuropsicocentro.pt', telephone:'215688954', administrator_id: admin},
-                           {name:'Casa de Saude de Carnaxide', address:'Quinta Igreja n 3 - CARNAXIDE',fiscal_number:'548632159', email:'info@cscarnaxide.pt', telephone:'214785632', administrator_id: admin}])
-clinic1 = clinics.first.id
+clinics = Clinic.create([{name:'Clinica de Neuropsicologia Dr. Alvin Jones', address:'Avenida da Boavista n245 - Porto',fiscal_number:'321456712', email:'geral@cnaj.pt', telephone:'232444111', administrator_id: admin},
+                         {name:'Instituto de Psicologia e neuropsicologia do Porto', address:'Rua Joao Moura n 647 - Coimbra',fiscal_number:'865423598', email:'info@anitataub.pt', telephone:'236541489', administrator_id: admin},
+                          {name:'NeuroPsicoCentro', address:'Rua Coronel Linhares n 943 - Lisboa',fiscal_number:'875412547', email:'contacto@neuropsicocentro.pt', telephone:'215688954', administrator_id: admin},
+                           {name:'Casa de Saude de Almada', address:'Quinta Igreja n 3 - Almada',fiscal_number:'548632159', email:'info@cscarnaxide.pt', telephone:'214785632', administrator_id: admin}])
+clinic1 = clinics.first.id  
 clinic2 = clinics.second.id
 clinic3 = clinics.third.id
 clinic4 = clinics.fourth.id
@@ -153,7 +153,7 @@ PackagesClinic.create([
 #Neuropsychologists
 neuropsychologists = Neuropsychologist.create([{name:'Mario Rodrigues Simoes', address:'Rua das Fontainhas, Coimbra', telephone:'223421566', mobilephone:'923214007', date_of_birth:'09/12/1960', identification_code:'981324214', gender_id: male, clinic_id: clinic1, login_id: login1},
                                                {name:'Susana Amaral Antunes', address:'Rua das Flores, Porto', telephone:'223421566', mobilephone:'915226087', date_of_birth:'10/11/1987', identification_code:'456845213', gender_id: female, clinic_id: clinic1, login_id: login2},
-                                               {name:'Fabio Samuel Coelho da Silva', address:'Rua Dr Joaquim Pedrosa, Lisboa', telephone:'214578963', mobilephone:'965114785', date_of_birth:'15/10/1986', identification_code:'125487539', gender_id: male, clinic_id: clinic1, login_id: login3},
+                                               {name:'Daniel de Matos Pereira', address:'Rua Dr Joaquim Pedrosa, Lisboa', telephone:'214578963', mobilephone:'965114785', date_of_birth:'15/10/1986', identification_code:'125487539', gender_id: male, clinic_id: clinic1, login_id: login3},
                                                {name:'Paulo Sousa Matos', address:'Rua Tomas Pimenta, Porto', telephone:'224224252', mobilephone:'913264006', date_of_birth:'04/07/1980', identification_code:'548756951', gender_id: male, clinic_id: clinic2, login_id: login10},
                                                {name:'Gabriela Sousa Coutinho', address:'Rua Marques de Sao Vincente n23, Faro', telephone:'289654478', mobilephone:'936523325', date_of_birth:'22/01/1975', identification_code:'258149632', gender_id: female, clinic_id: clinic2, login_id: login11},
                                                {name:'Bruno Miguel Sousa Santos', address:'Avenida da republica n 12, Gaia', telephone:'221544568', mobilephone:'9145898745', date_of_birth:'03/12/1979', identification_code:'986951475', gender_id: male, clinic_id: clinic3, login_id: login12},
@@ -170,7 +170,7 @@ neuro7 = neuropsychologists[6].id
 
 
 # ------------- SECRETARIAS
-secretaries = Secretary.create([{name:'Samuel Rodrigues', address:'Rua dos Sousas n234 - Coimbra', telephone:'245895684', mobilephone:'964256984', date_of_birth:'09/11/1978', identification_code:'985685654', gender_id: male, clinic_id: clinic1, login_id: login4},
+secretaries = Secretary.create([{name:'Marco Freitas Amaral', address:'Rua dos Sousas n234 - Coimbra', telephone:'245895684', mobilephone:'964256984', date_of_birth:'09/11/1978', identification_code:'985685654', gender_id: male, clinic_id: clinic1, login_id: login4},
                                 {name:'Ana Sofia Rebelo Pinto', address:'Rua Alvaro Cabral n23 - Lisboa', telephone:'214589569', mobilephone:'936547141', date_of_birth:'23/05/1986', identification_code:'745845123', gender_id: female, clinic_id: clinic1, login_id: login14},
                                 {name:'Ana Maria Vincente', address:'Praceta Pinto Rebelo n12 - Valongo', telephone:'223547852', mobilephone:'912585695', date_of_birth:'11/01/1960', identification_code:'856547845', gender_id: female, clinic_id: clinic2, login_id: login15},
                                 {name:'Tania Sousa Salgueiro', address:'Rua dos Reis n345 - Vila Real', telephone:'269547841', mobilephone:'963656325', date_of_birth:'05/04/1988', identification_code:'854754125', gender_id: female, clinic_id: clinic3, login_id: login16},
@@ -206,7 +206,7 @@ patients = Patient.create([{name:'Rui Santos Rodrigues',address:'Rua Cabral de S
                           {name:'Diogo Nuno Costa',address:'Avenida dos Santosn67 - Braga', telephone:'236951563', mobilephone:'965845784', education:'12 ano', profession:'Empregado', date_of_birth:'02/06/1978', identification_code:'875412415', gender_id: male, clinic_id: clinic3, civil_status_id: st2, handedness_id: h1, login_id: login30}, 
                           {name:'Marco Ferreira',address:'Rua Pinheiro n45 - Braga', telephone:'231475362', mobilephone:'923569512', education:'10 ano', profession:'Secretario', date_of_birth:'22/03/1978', identification_code:'758451254', gender_id: male, clinic_id: clinic3, civil_status_id: st2, handedness_id: h1, login_id: login31}, 
                           {name:'Pedro Sousa Pinto',address:'Rua 25 de Abril n78 - Lisboa', telephone:'215485357', mobilephone:'912352256', education:'4 classe', profession:'Desempregado', date_of_birth:'03/03/1979', identification_code:'874512541', gender_id: male, clinic_id: clinic4, civil_status_id: st1, handedness_id: h1, login_id: login9}, 
-                           {name:'Bernardo Portela',address:'Rua Aldeia Nova n67 - Tavira', telephone:'289654157', mobilephone:'963695412', education:'12', profession:'Estudante', date_of_birth:'23/06/1980', identification_code:'124153628', gender_id: male, clinic_id: clinic4, civil_status_id: st3, handedness_id: h2, login_id: login8}])
+                           {name:'Maria Sousa Antunes',address:'Rua Aldeia Nova n67 - Tavira', telephone:'289654157', mobilephone:'963695412', education:'12', profession:'Estudante', date_of_birth:'23/06/1980', identification_code:'124153628', gender_id: male, clinic_id: clinic4, civil_status_id: st3, handedness_id: h2, login_id: login8}])
 
 patient1 = patients.first.id
 patient2 = patients.second.id
@@ -322,9 +322,9 @@ appointment2 = appointments.fourth.id
 
 areas = TestArea.create([{name:'area1'},{name:'area2'}])
 
-testes = EvaluationTest.create([{name:'ftt',description:'intuito de medir a velocididade motora',test_area_id: areas.first.id},
+testes = EvaluationTest.create([{name:'ftt',description:'Intuito de medir a velocididade motora',test_area_id: areas.first.id},
   {name:'tmt',description:'Intuito de medir a atencao, a fexibilidade mental, a procura visual e a funcao motora',test_area_id: areas.first.id},
-  {name:'wais',description:'medir a velocidade de processamento',test_area_id:areas.first.id},
+  {name:'wais',description:'Permite medir a velocidade de processamento',test_area_id:areas.first.id},
   {name:'wms',description:'Intuito de avaliar a memoria de trabalho do paciente',test_area_id:areas.second.id},
   {name:'clock',description:'Permite avaliar as capacidades cognitivas visuo-espaciais e de construcao.',test_area_id:areas.second.id},])
 test1 = testes.first.id
