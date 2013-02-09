@@ -306,52 +306,55 @@
 	<!-- end: Wrapper  -->
 
 	<!-- start: Footer Menu -->
-	<div id="footer-menu" class="hidden-tablet hidden-phone">
+	
+		<div id="footer-menu" class="hidden-tablet hidden-phone">
 
-		<!-- start: Container -->
-		<div class="container">
+			<!-- start: Container -->
+			<div class="container">
 
-			<!-- start: Row -->
-			<div class="row">
+				<!-- start: Row -->
+				<div class="row">
 
-				<!-- start: Footer Menu Logo -->
-				<div class="span3">
-					<div id="footer-menu-logo">
-						<div>
-							<img style="margin-bottom: 20px;" src="img/logo.png" alt="NeuroPump" width="100px" height="80px">
+					<!-- start: Footer Menu Logo -->
+					<div class="span3">
+						<div id="footer-menu-logo">
+							<div>
+								<img style="margin-bottom: 20px;" src="img/logo.png" alt="NeuroPump" width="100px" height="80px">
+							</div>
+							<a class="brand" href="#"></a>
 						</div>
-						<a class="brand" href="#"></a>
 					</div>
-				</div>
-				<!-- end: Footer Menu Logo -->
+					<!-- end: Footer Menu Logo -->
 
-				<!-- start: Footer Menu Links-->
-				<div class="span8"></div>
-				<!-- end: Footer Menu Links-->
+					<!-- start: Footer Menu Links-->
+					<div class="span8"></div>
+					<!-- end: Footer Menu Links-->
 
-				<!-- start: Footer Menu Back To Top -->
-				<div class="span1">
+					<!-- start: Footer Menu Back To Top -->
+					<div class="span1">
 
-					<div id="footer-menu-back-to-top">
-						<a href="#"></a>
+						<div id="footer-menu-back-to-top">
+							<a href="#"></a>
+						</div>
+
 					</div>
+					<!-- end: Footer Menu Back To Top -->
 
 				</div>
-				<!-- end: Footer Menu Back To Top -->
+				<!-- end: Row -->
 
 			</div>
-			<!-- end: Row -->
+			<!-- end: Container  -->
 
 		</div>
-		<!-- end: Container  -->
 
-	</div>
 	<!-- end: Footer Menu -->
 
 	<!-- start: Footer
 	<div id="footer">
 
 	<!-- start: Container -->
+	<div id="footer">
 	<div class="container">
 
 		<!-- start: Row -->
@@ -359,19 +362,34 @@
 
 			<!-- start: About -->
 			<div class="span3">
-
-				<h3>Sobre nós</h3>
+				<div class="title">
+					<h3>Sobre nós</h3>
+				</div>
+				<br/>
 				<p align="justify">
 					NeuroPump é uma plataforma desenvolvida para ajudar os neuropsicologos no seu trabalho. Foi criada para economizar tempo e recursos, através da automatização dos processos que a neuropsicologia exige.
 				</p>
 
 			</div>
+
+			<div class="span3">
+				<div class="title">
+					<h3>Estámos aqui!</h3>
+				</div>
+				<div id="small-map-container" style="overflow:hidden;" onClick="window.location='/contact'">
+<img style="height: 210px; width:210px;" src="http://maps.googleapis.com/maps/api/staticmap?center=41.560549,-8.395863&zoom=16&size=240x240&maptype=roadmap&markers=color:red%7Ccolor:red%7Clabel:A%7C41.561078,-8.396624&sensor=false">
+
+					<%= link_to "", "/contact" %>
+				</div>
+			</div>
 			<!-- end: About -->
-			<div class="span2"></div>
-			<div class="span4">
+			<div class="span6">
 
 				<!-- start: Follow Us -->
-				<h3>Siga-nos!</h3>
+				<div class="title">
+					<h3>Siga-nos!</h3>
+				</div>
+				<br/>
 				<ul class="social-grid">
 					<li>
 						<div class="social-item">
@@ -438,6 +456,7 @@
 	</div>
 	<!-- end: Container  -->
 
+	</div>
 	</div>
 	<!-- end: Footer -->
 
