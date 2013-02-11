@@ -16,4 +16,17 @@ class VisitorsController < ApplicationController
   
   def contact
   end
+
+  def contactSubmit
+    email = params[:email]
+    name = params[:name]
+    message = params[:body]
+
+
+    UserMailer.send_email_contactUs(name, email, message).deliver
+    flash[:notice]  = "Successo, por favor aguarde pela nossa resposta"
+     respond_to do |format|
+      format.html { redirect_to contact_url }
+    end
+  end
 end
