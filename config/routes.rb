@@ -77,11 +77,11 @@ NeuroPump::Application.routes.draw do
 
   resources :handednesses
 
-  resources :visitors
   match "contact" => "visitors#contact"
   match "about" => "visitors#about"
   match "pricing" => "visitors#pricing"
-
+  match "contactSubmit" => "visitors#contactSubmit"
+  resources :visitors
 # The priority is based upon order of creation:
 # first created -> highest priority.
 

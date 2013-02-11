@@ -51,4 +51,11 @@ class UserMailer < ActionMailer::Base
     @emailM = email
     mail( :to => email,:subject => "[NeuroPump] Pacote mudado no NeuroPump")
   end
+
+  def send_email_contactUs(name,email,body)
+    @name = name
+    @email = email
+    @body = body
+    mail( :to => "info@neuropump.com", :subject => "Pedido de Contacto: " + @name)
+  end
 end
