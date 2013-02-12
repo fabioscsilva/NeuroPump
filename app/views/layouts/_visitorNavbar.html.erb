@@ -1,17 +1,17 @@
-<li>
+<li  class="<%= highlight("/sign_in") %>">
 	<%= link_to "Home", "/sign_in" %>
 </li>
-<li>
+<li class="<%= highlight("/pricing") %>">
 	<%= link_to "Preços", "/pricing" %>
 </li>
-<li>
+<li class="<%= highlight("/about") %>">
 	<%= link_to "Sobre Nós", "/about" %>
 </li>
-<li>
+<li class="<%= highlight("/contact") %>">
 	<%= link_to "Contactos", "/contact" %>
 </li>
-<li>
-	<%= link_to "Registar", new_clinic_path, :class => 'featured' %>
+<li style=" background-color: #29a9df;">
+	<%= link_to "Registar", new_clinic_path, :class => 'featured', :style =>'border-top: 4px solid #29a9df; background-color: #29a9df; color: white;' %>
 </li>
 
 

@@ -22,8 +22,6 @@ GEM
       activesupport (= 3.2.8)
       arel (~> 3.0.2)
       tzinfo (~> 0.3.29)
-    activerecord-postgresql-adapter (0.0.1)
-      pg
     activeresource (3.2.8)
       activemodel (= 3.2.8)
       activesupport (= 3.2.8)
@@ -33,10 +31,6 @@ GEM
     arel (3.0.2)
     bcrypt-ruby (3.0.1)
     bcrypt-ruby (3.0.1-x86-mingw32)
-    bootstrap-sass (2.2.1.1)
-      sass (~> 3.2)
-    bootswatch-rails (0.1.0)
-      railties (>= 3.1)
     builder (3.0.4)
     cancan (1.6.8)
     cocaine (0.4.2)
@@ -95,6 +89,8 @@ GEM
       activesupport (= 3.2.8)
       bundler (~> 1.0)
       railties (= 3.2.8)
+    rails-i18n (0.7.2)
+      i18n (~> 0.5)
     railties (3.2.8)
       actionpack (= 3.2.8)
       activesupport (= 3.2.8)
@@ -138,9 +134,6 @@ PLATFORMS
   x86-mingw32
 
 DEPENDENCIES
-  activerecord-postgresql-adapter
-  bootstrap-sass
-  bootswatch-rails
   cancan
   coffee-rails (~> 3.2.1)
   devise
@@ -149,8 +142,10 @@ DEPENDENCIES
   paperclip
   pg
   rails (= 3.2.8)
+  rails-i18n
   rolify
   sass-rails (~> 3.2.3)
   simple_form
   swf_fu (~> 2.0)
+  therubyracer
   uglifier (>= 1.0.3)
