@@ -190,7 +190,10 @@
 						</thead>
 						<tbody>
 							<% @patient.appointments.each do |appointment| %>
-							<%if appointment.appointment_status.name == "Marcada" && appointment.neuropsychologist.login_id == current_login.id %>
+							<%if appointment.appointment_status.name == "Marcada" && 
+								(
+									(current_login.has_role?(:neuropsychologist) && appointment.neuropsychologist.login_id == current_login.id) || current_login.has_role?(:secretary) || current_login.has_role?(:patient)
+								)  %>
 							<tr>
 								<td><%= l appointment.appointment_day, :format => :default  %></td>
 								<td><%= l appointment.appointment_day, :format => :short %></td>
@@ -198,8 +201,8 @@
 								<td><%= appointment.neuropsychologist.name%></td>
 								<%end%>
 								<td><%= appointment.appointment_type.name %></td>
-								<td> <%if current_login.has_role? :neuropsychologist %>
-
+								 <%if current_login.has_role? :neuropsychologist %>
+								 <td>
 								<% if appointment.appointment_type.name == 'Avaliacao' %>
 								<% appoitment_plan = AppointmentPlan.where(:appointment_id => appointment.id )  %>
 								<% if appoitment_plan.first.nil? %>
@@ -210,13 +213,14 @@
 								<% else %>
 								N.A.
 								<% end  %>
+								</td>
 								<%end%>
 
 								<%if current_login.has_role? :secretary %>
-
+								<td>
 								<%= link_to "Apagar", appointment, :method=>:delete, :class=>:destroy %>
-
-								<%end%> </td>
+								</td>
+								<%end%>
 							</tr>
 							<%end%>
 							<% end %>
