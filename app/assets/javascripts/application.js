@@ -11,7 +11,9 @@
 // GO AFTER THE REQUIRES BELOW.
 //
 //= require jquery
+//= require bootstrap
 //= require jquery_ujs
+//= require jquery-1.8.2
 //= require_tree .
 //= require dataTables/jquery.dataTables
 //= require dataTables/jquery.dataTables.bootstrap
