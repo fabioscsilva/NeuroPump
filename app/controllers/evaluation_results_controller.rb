@@ -201,7 +201,7 @@ class EvaluationResultsController < ApplicationController
         if params[:commit].to_s == "Gravar Rascunho"
           format.html { redirect_to appointments_path, notice: 'Resultados da avaliacao guardados com sucesso.' }
         else
-          format.html { redirect_to "http://localhost:8000/reporting?report=Avaliacao&Appointment_Id=#{params[:appoint_id].to_s}", notice: 'Resultados da avaliacao guardados com sucesso.' }
+          format.html { redirect_to "http://teste93.di.uminho.pt:8000/reporting?report=Avaliacao&Appointment_Id=#{params[:appoint_id].to_s}", notice: 'Resultados da avaliacao guardados com sucesso.' }
         end
         format.json { render json: @evaluation_result, status: :created, location: @evaluation_result }
       else
