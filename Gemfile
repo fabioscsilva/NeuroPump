@@ -28,6 +28,7 @@ group :assets do
 
 group :production do  
   gem 'therubyracer', :platforms => :ruby
+  gem 'execjs'
 end
 
 # gem 'sqlite3'
