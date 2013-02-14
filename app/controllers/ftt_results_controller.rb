@@ -59,7 +59,7 @@ class FttResultsController < ApplicationController
     # ftt1.save
 
     ftt2 = FttResult.new
-    ftt2.test_phase = 1;
+    ftt2.test_phase = 2;
     ftt2.observations = params[:observationsB]
     ftt2.first = params[:teste10]
     ftt2.second = params[:teste11]
